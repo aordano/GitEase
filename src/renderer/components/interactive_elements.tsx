@@ -27,7 +27,11 @@ const CommitMessageInput: React.FC = () => {
 
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
-        store.dispatch(basicWorkflowUpdateCommitMessageAction(event.currentTarget.value));
+        store.dispatch(
+            basicWorkflowUpdateCommitMessageAction(
+                event.currentTarget.value
+            )
+        );
     };
 
     return <input className={'commit-message'} value={input} onChange={handleCommitTextChange} />;
@@ -37,7 +41,12 @@ const CommitButton: React.FC = () => {
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitButtonPress = (event: React.MouseEvent<HTMLInputElement>) => {
         store.dispatch(
-            basicWorkflowStageAndCommitAction(currentState.commitMessage, files, branch, remote)
+            basicWorkflowStageAndCommitAction(
+                currentState.commitMessage, 
+                files, 
+                branch, 
+                remote
+            )
         );
     };
 
