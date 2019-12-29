@@ -1,0 +1,38 @@
+%basic-element {
+    background-color: #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+div.commit-box {
+    max-width: 25vw;
+    margin-left: 22px;
+    background-color: #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 5px;
+    position: relative;
+    max-height: 20vh;
+}
+
+div.changes-area {
+    max-width: 25vw;
+    min-height: 70%;
+    margin: 5px;
+    margin-bottom: 10px;
+    height: 57vh;
+    background-color: #ccc;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+div.actions-space {
+    width: 63vw;
+    min-height: 70%;
+    margin-left: 20px;
+
+    @extend %basic-element;
+}

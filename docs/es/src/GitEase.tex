@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Based on 
+% 
+% The Legrand Orange Book
+% LaTeX Template
+% Version 2.4 (26/09/2018)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Mathias Legrand (legrand.mathias@gmail.com) with modifications by:
+% Vel (vel@latextemplates.com) and further modifications by Agata Ordano (aordano@protonmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{book} % Default font size
+
+\input{structure.tex} % Insert the file which contains the structure behind the template
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	
+	\raggedleft % Right align* the title page
+    \sffamily
+    \pagecolor{BlueViolet!55}
+    \color{white}
+	\rule{3pt}{\textheight} % Vertical line
+	\hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
+	\parbox[b]{0.85\textwidth}{ % Paragraph box for holding the title page text, adjust the width to move the title page left or right on the page
+		{\fontsize{35}{45}\bfseries GitEase\\[1em] Documentation} % Author name, lower case for consistent small caps
+		
+        \vspace{0.5\textheight} % Whitespace between the title block and the publisher
+        
+	}
+
+\end{titlepage}
+
+\pagecolor{white}
+\rule{0pt}{\textheight}
+
+\thispagestyle{empty}
+\pagebreak
+
+
+\color{black}
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+
+
+\part{Design Document}
+
+\subfile{design.tex}
+
+
+
+%----------------------------------------------------------------------------------------
+%	INDEX
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage % Make sure the index starts on an odd (right side) page
+\phantomsection
+\setlength{\columnsep}{0.75cm} % Space between the 2 columns of the index
+\addcontentsline{toc}{chapter}{\textcolor{BlueViolet}{Index}} % Add an Index heading to the table of contents
+\printindex % Output the index
+
+%----------------------------------------------------------------------------------------
+
+
+\end{document}

@@ -1,0 +1,118 @@
+\documentclass[GitEase.tex]{subfiles}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\chapter{Reasoning behind this app}
+
+\chapter{Workflows}
+
+This app works with two predetermined workflows and a unopinionated mode for more advanced users.
+
+\section{Basic workflow}
+
+In this basic workflow, the user modifies files, and those files show up on a staging area where the user can choose to not add some files.
+The app by default disregards hidden and temporary files from the selection.
+
+Those files are permanently shown and updated as needed.
+
+Then the user adds the commit message and commits the changes. When this happens, under the hood the selected files are added to the staging area, commited with the chosen message and then pushed unto the predefined server on the configuration wizard.
+
+\section{Auto branched workflow}
+
+In this slightly more advanced workflow, the user modifies files, and those files on a staging area where the user can choose to not add some files.
+The app by default disregards hidden and temporary files from the selection.
+
+Those files are permanently shown and updated as needed.
+
+Then the user adds the commit message and commits the changes. WHen this happens, under the hood a new temporary branch is created, the files added to the staging area and commited.
+Further commits are kept under this branch, and when the user choses to, the branch is merged/rebased into the main branch. The master branch cannot be worked on, and only receives merge commits.
+
+\section{Unopinionated workflow}
+
+In this workflow, the full spectrum of commands are available, with the power user/developer in mind.
+
+
+\chapter{Core features}
+
+\section{Staging Area}
+
+The app should have a staging area where the modified files show up and can be seen, selected and deselected by the user.
+
+This staging area should include a list of the modified files in the working dir, alongside the status of each one and some kind of interaction (namely, a button) to be able to add/remove items from the staging area.
+
+Elements present in the staging area shall be added to Git's staging area when the user commits its changes, as to keep on with the workflow and make things easier.
+
+Therefore, no action shall be done on the elements shown here until the commit box fullfills succesfully the commit promise.
+
+The working dir is permanently screened so to update the staging area on any detected file change.
+
+\section{Actions space}
+
+The actions space is the place where the action occurrs. In here there should be buttons to execute the actions needed according to the workflow used.\\
+
+For basic workflow:
+
+\begin{itemize}
+    \item Undo commit
+    \item Change repo
+\end{itemize}\hfill\\
+
+For auto branched workflow:
+
+\begin{itemize}
+    \item Undo commit
+    \item Merge branch
+    \item Change repo
+\end{itemize}\hfill\\
+
+For unopinionated workflow:
+
+\begin{itemize}
+    \item Undo commit
+    \item Redo commit
+    \item Merge branch
+    \item Push
+    \item Pull
+    \item Sync
+    \item Rebase
+    \item Change repo
+\end{itemize}\hfill\\
+
+It should be noted that every push/commit executes a sync and resolves possible conflicts. Also if too much time passes (i.e. 10-20 minutes) the app should perform a checkout/pull to grav possible changes upstream.
+
+\section{Commit box}
+
+This is the simple commit box where the user writes its message and performs the commit by pushing a button.
+
+\section{Branch Viewer}
+
+This is the main interactive area of the app. Here the user can view the state of the branches, its pointers and who worked on which commit, commit info and status of everything.
+From here they can also select another branch or commit to update the workspace up to that point.
+The system automatically stashes, updates and restores points and files as needed.
+
+The branch view can be navigable in 2D by zooming in/out and displacing the view.
+
+THe view is horizontal and color coded for branches, status and commits.
+
+\section{Workflow switcher}
+
+This is a simple button in the actions space that allows the user to update the UI and change the workflow to one of the threee available.
+
+\section{Conflict solver}
+
+This is an under the hood feature that automatically solves merging issues arisen with the basis of the date (most recent has priority), stashing changes and allowing them to be restored if needed.
+
+This feature as well preemptively updates the working dir and the repo to avoid such conflicts if possible.
+
+As a last resort it may querry the user to select a version.
+
+\section{Configuration wizard}
+
+The system prompts a wizard that allows the user to configures remote/user/git service and connect to the appropiate repos.
+
+\chapter{Design mock-ups}
+
+\chapter{Tech stack}
+
+\end{document}

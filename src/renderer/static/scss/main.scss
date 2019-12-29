@@ -1,0 +1,26 @@
+body {
+    background-color: #333;
+}
+
+div.main-block {
+    height: 97vh;
+    width: 72vw;
+    margin-left: 25vw;
+
+    & div.upper-block {
+        height: 30%;
+    }
+
+    & div.lower-block {
+        height: 55%;
+    }
+}
+
+div.left-block {
+    width: 25vw;
+    position: absolute;
+}
+
+br.separator {
+    height: 30px;
+}
