@@ -7,7 +7,6 @@ import {
 } from '../types/constants';
 
 import {
-    basicWorkflowStageAndCommitAction,
     BasicWorkflowAction
 } from '../actions/basicWorkflowActions';
 

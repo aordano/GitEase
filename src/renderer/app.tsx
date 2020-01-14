@@ -10,6 +10,7 @@ import { store, sagaMiddleware } from './store';
 
 // Imports Sagas
 import { rootSaga } from './sagas';
+import { ViewModifiedFilesAction } from './actions/commonActions';
 
 // Create main element
 const mainElement = document.createElement('div');
@@ -30,6 +31,7 @@ const render = (Component: () => JSX.Element) => {
 render(Application);
 
 store.dispatch(basicWorkflowInitAction());
+store.dispatch(ViewModifiedFilesAction())
 
 // Executes root saga
 sagaMiddleware.run(rootSaga);
