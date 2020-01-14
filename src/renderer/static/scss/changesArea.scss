@@ -7,11 +7,14 @@ div.changes-area {
     background-color: #ccc;
     padding: 20px;
     padding-bottom: 5px;
+    padding-top: 10px;
     border-radius: 20px;
 
-    & h4.changes-list-title {
+    & p.changes-list-title {
         margin: 5px;
         font-weight: 100;
+        text-align: center;
+        height: 1em;
     }
 
     & ul.changes-list {

@@ -70,6 +70,7 @@ const CommitBox: React.FC = () => {
 const ChangesSpace: React.FC = () => {
     const changesAreaTree = useSelector(state => state.updateChangesAreaReducer.changesAreaTree)
     const elements = []
+    let title
     for (let i = 0; i < changesAreaTree.length ; i += 1) {
         elements.push(
             React.createElement(ChangesListElement,{
@@ -79,10 +80,16 @@ const ChangesSpace: React.FC = () => {
             })
         )
     }
+    if (changesAreaTree.length === 0 ){
+        title =  React.createElement('p', { className: "changes-list-title"}, "No changed files.")
+    }
+    else {
+        title = React.createElement('p', { className: "changes-list-title"}, `${changesAreaTree.length} changed files`)
+    }
     const changesList =  React.createElement('ul', { className: "changes-list"}, elements)
     return (
         <div className={'changes-area'}>
-            <h4 className={"changes-list-title"}>Changes Area</h4>
+            {title}
             {changesList}
         </div>
     );
