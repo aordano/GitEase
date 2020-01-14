@@ -4,12 +4,16 @@ import { useState } from 'react';
 
 import { store } from '../store';
 
-import { useSelector } from '../types';
+import { 
+    useSelector,
+    ChangesTreeType
+} from '../types';
 
 import {
     basicWorkflowStageAndCommitAction,
     basicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
+import { ViewModifiedFilesAction } from '../actions/commonActions';
 
 require('../static/scss/actions.scss');
 
@@ -65,11 +69,23 @@ const CommitBox: React.FC = () => {
 };
 
 const ChangesSpace: React.FC = () => {
+    const changesAreaTree = useSelector(state => state.updateChangesAreaReducer.changesAreaTree)
+    const elements = []
+    for (let i = 0; i < changesAreaTree.length ; i += 1) {
+        elements.push(
+            React.createElement(ChangesListElement,{
+                status: changesAreaTree[i].status,
+                content: changesAreaTree[i].content,
+                key: i
+            })
+        )
+    }
+    const changesList =  React.createElement('ul', {}, elements)
     return (
         <div className={'changes-area'}>
             <h2>Changes</h2>
             <h2>Area</h2>
-            <p>Changes list</p>
+            {changesList}
         </div>
     );
 };
@@ -84,10 +100,15 @@ export const CommitComponent: React.FC = () => {
 };
 
 const ActionsSpace: React.FC = () => {
+    const handlePlaceholderViewModifiedFilesButtonPress = (event: React.MouseEvent<HTMLInputElement>) => {
+        store.dispatch(
+            ViewModifiedFilesAction()
+        );
+    };
     return (
         <div className={'actions-space'}>
             <h2>Actions space</h2>
-            <input type={'button'} />
+            <input type={'button'} onClick={handlePlaceholderViewModifiedFilesButtonPress}/>
         </div>
     );
 };
@@ -99,3 +120,11 @@ export const ActionsComponent: React.FC = () => {
         </div>
     );
 };
+
+export const ChangesListElement: React.FC<ChangesTreeType> = (
+        {status, content}: ChangesTreeType
+    ) => {
+    return (
+        <li className={`files-${status}`}>{content}</li>
+    )
+}

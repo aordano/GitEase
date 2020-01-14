@@ -31,7 +31,9 @@ const render = (Component: () => JSX.Element) => {
 render(Application);
 
 store.dispatch(basicWorkflowInitAction());
-store.dispatch(ViewModifiedFilesAction())
+setTimeout(() => {
+    store.dispatch(ViewModifiedFilesAction())
+},50)
 
 // Executes root saga
 sagaMiddleware.run(rootSaga);

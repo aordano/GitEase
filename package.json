@@ -121,7 +121,7 @@
     "prettier": "^1.19.1",
     "react-hot-loader": "^4.12.18",
     "react-test-renderer": "^16.12.0",
-    "redux-devtools-extension": "^2.13.5",
+    "redux-devtools-extension": "latest",
     "sass-loader": "^7.3.1",
     "simple-git-types": "^1.53.10",
     "source-map-loader": "^0.2.4",

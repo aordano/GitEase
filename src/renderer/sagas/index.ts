@@ -1,4 +1,5 @@
 import { basicWorkflowSaga } from './basicWorkflowSagas';
+import { updateChangesSaga } from "./commonSagas"
 
 import { all, fork } from 'redux-saga/effects';
 
@@ -12,5 +13,8 @@ import { all, fork } from 'redux-saga/effects';
 
 // Main export that conforms all the sagas into a root saga
 export const rootSaga = function* root() {
-    yield all([fork(basicWorkflowSaga)]);
+    yield all([
+        fork(basicWorkflowSaga),
+        fork(updateChangesSaga)
+    ]);
 };

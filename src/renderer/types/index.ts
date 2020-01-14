@@ -15,33 +15,38 @@ export type workingDirDataType = {
 }
 
 export interface ModifiedFilesStructure {
-    _c: string[],
-    _s: string[] | number
-    _d: string[] | boolean
-    _h: string[] | number
-    _n: string[] | boolean
+    _c?: string[],
+    _s?: string[] | number
+    _d?: string[] | boolean
+    _h?: string[] | number
+    _n?: string[] | boolean
     _v: ModifiedFilesDescriptor
 }
 
 interface ModifiedFilesDescriptor {
-    not_added: string[],
-    conflicted: string[],
-    created: string[],
-    deleted: string[],
-    modified: string[],
-    renamed: string[],
-    files: GitFilesDescriptor[],
-    staged: string[],
-    ahead: string[] | number,
-    behind: string[] | number,
-    current: string,
-    tracking: string
+    not_added?: string[],
+    conflicted?: string[],
+    created?: string[],
+    deleted?: string[],
+    modified?: string[],
+    renamed?: string[],
+    files?: GitFilesDescriptor[],
+    staged?: string[],
+    ahead?: string[] | number,
+    behind?: string[] | number,
+    current?: string,
+    tracking?: string
 }
 
 interface GitFilesDescriptor {
     path: string,
     index: string,
     working_dir: string
+}
+
+export type ChangesTreeType = {
+    status: string,
+    content: string
 }
 
 // Exports typed redefinition of useSelector
