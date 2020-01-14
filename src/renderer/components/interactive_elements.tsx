@@ -13,7 +13,6 @@ import {
     basicWorkflowStageAndCommitAction,
     basicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
-import { ViewModifiedFilesAction } from '../actions/commonActions';
 
 require('../static/scss/actions.scss');
 
@@ -21,7 +20,7 @@ require('../static/scss/actions.scss');
 const files: string[] = ['testfile'];
 const branch: string = 'testing';
 const USER = 'aordano';
-const PASS = '';
+import {PASS} from "../../../.secrets"
 const REPO = 'github.com/aordano/GitEase';
 const remote = `https://${USER}:${PASS}@${REPO}`;
 // ----------------------------
@@ -80,7 +79,7 @@ const ChangesSpace: React.FC = () => {
             })
         )
     }
-    const changesList =  React.createElement('ul', {}, elements)
+    const changesList =  React.createElement('ul', { className: "changes-list"}, elements)
     return (
         <div className={'changes-area'}>
             <h2>Changes</h2>
@@ -100,15 +99,10 @@ export const CommitComponent: React.FC = () => {
 };
 
 const ActionsSpace: React.FC = () => {
-    const handlePlaceholderViewModifiedFilesButtonPress = (event: React.MouseEvent<HTMLInputElement>) => {
-        store.dispatch(
-            ViewModifiedFilesAction()
-        );
-    };
     return (
         <div className={'actions-space'}>
             <h2>Actions space</h2>
-            <input type={'button'} onClick={handlePlaceholderViewModifiedFilesButtonPress}/>
+            <input type={'button'}/>
         </div>
     );
 };

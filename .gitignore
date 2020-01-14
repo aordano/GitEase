@@ -99,3 +99,7 @@ out/
 *.ptc
 *.toc
 
+
+# Secrets
+
+.secrets.ts
