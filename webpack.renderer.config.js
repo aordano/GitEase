@@ -43,6 +43,10 @@ module.exports = merge.smart(baseConfig, {
                 loaders: ['style-loader', 'css-loader']
             },
             {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: "file-loader?mimetype=application/octet-stream"
+            },
+            {
                 test: /\.(gif|png|jpe?g|svg)$/,
                 use: [
                     'file-loader',

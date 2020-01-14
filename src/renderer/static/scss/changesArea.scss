@@ -1,0 +1,89 @@
+div.changes-area {
+    width: 250px;
+    min-height: 70%;
+    margin: 5px;
+    margin-bottom: 10px;
+    height: 57vh;
+    background-color: #ccc;
+    padding: 20px;
+    padding-bottom: 5px;
+    border-radius: 20px;
+
+    & h4.changes-list-title {
+        margin: 5px;
+        font-weight: 100;
+    }
+
+    & ul.changes-list {
+        font-weight: 100;
+        width: 100%;
+        position: relative;
+        list-style: none;
+        background-color: #333;
+        border-radius: 15px;
+        padding: 10px;
+        right: 10px;
+        height: 315px;
+        overflow-y: scroll;
+
+        & li.files-modified {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: rgb(255, 240, 223);
+
+            &:after {
+                content: "\e094";
+                font-family: "Icons";
+                color: rgb(255, 115, 0);
+                background-color: rgb(255, 207, 153);
+                border-radius: 3px;
+                margin: auto;
+                padding: 2px;
+                height: 1em;
+                width: 1em;
+                position: absolute;
+                right: 11px;
+            }
+        }
+
+        & li.files-deleted {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: rgb(255, 224, 224);
+
+            &:after {
+                content: "\e0db";
+                font-family: "Icons";
+                color: rgb(255, 0, 0);
+                background-color: rgb(255, 153, 153);
+                border-radius: 3px;
+                margin: auto;
+                padding: 2px;
+                height: 1em;
+                width: 1em;
+                position: absolute;
+                right: 11px;
+            }
+        }
+
+        & li.files-not_added {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: rgb(224, 255, 231);
+
+            &:after {
+                content: "\e0aa";
+                font-family: "Icons";
+                color: rgb(0, 175, 38);
+                background-color: rgb(153, 255, 170);
+                border-radius: 3px;
+                margin: auto;
+                padding: 2px;
+                height: 1em;
+                width: 1em;
+                position: absolute;
+                right: 11px;
+            }
+        }
+    }
+}

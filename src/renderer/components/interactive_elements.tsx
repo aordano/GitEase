@@ -82,8 +82,7 @@ const ChangesSpace: React.FC = () => {
     const changesList =  React.createElement('ul', { className: "changes-list"}, elements)
     return (
         <div className={'changes-area'}>
-            <h2>Changes</h2>
-            <h2>Area</h2>
+            <h4 className={"changes-list-title"}>Changes Area</h4>
             {changesList}
         </div>
     );
