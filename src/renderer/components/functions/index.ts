@@ -1,10 +1,12 @@
 import promise, { SimpleGit } from 'simple-git/promise';
 
-export const truncate = (str: string, num: number) => {
-    if (str.length <= num) {
-        return str
+export const truncate = (path: string, num: number) => {
+    if (path.length <= num) {
+        return path
     }
-    return  `...${str.slice(num, str.length)}`
+    const topFolders = path.slice(0,path.slice(path.indexOf("/"),path.lastIndexOf("/")).lastIndexOf("/")-1)
+    const fileName = path.slice(path.lastIndexOf("/"),path.length)
+    return  `${topFolders} ... ${fileName}`
 }
 
 export const parseStatus = (workingDir?: string) => {

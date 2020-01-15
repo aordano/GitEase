@@ -125,6 +125,9 @@ export const ChangesListElement: React.FC<ChangesTreeType> = (
         {status, content}: ChangesTreeType
     ) => {
     return (
-        <li className={`files-${status}`}>{content}</li>
+    <li className={`files-${status}`}>
+        {content.slice(0,content.lastIndexOf("/")+1)}
+        <b className={"filename"}>{content.slice(content.lastIndexOf("/")+1,content.length)}</b>
+    </li>
     )
 }

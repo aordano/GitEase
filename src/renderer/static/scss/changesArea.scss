@@ -27,17 +27,30 @@ div.changes-area {
         padding: 10px;
         right: 10px;
         height: 315px;
-        overflow-y: scroll;
+        overflow-y: auto;
+        font-size: 0.95em;
+
+        & b.filename {
+            font-weight: 500;
+        }
 
         & li.files-modified {
             border: 1px solid #ccc;
             border-radius: 3px;
             background-color: rgb(255, 240, 223);
 
+
+            &:hover:after {
+                content:"Modified";
+                color: black;
+                width: 50px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
             &:after {
-                content: "\e094";
-                font-family: "Icons";
-                color: rgb(255, 115, 0);
+                content: "";
+                color: rgba(0,0,0,0);
                 background-color: rgb(255, 207, 153);
                 border-radius: 3px;
                 margin: auto;
@@ -46,6 +59,7 @@ div.changes-area {
                 width: 1em;
                 position: absolute;
                 right: 11px;
+                transition-duration: 400ms;
             }
         }
 
@@ -54,10 +68,17 @@ div.changes-area {
             border-radius: 3px;
             background-color: rgb(255, 224, 224);
 
+            &:hover:after {
+                content:"Deleted";
+                color: black;
+                width: 50px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
             &:after {
-                content: "\e0db";
-                font-family: "Icons";
-                color: rgb(255, 0, 0);
+                content: "";
+                color: rgba(0,0,0,0);
                 background-color: rgb(255, 153, 153);
                 border-radius: 3px;
                 margin: auto;
@@ -66,6 +87,7 @@ div.changes-area {
                 width: 1em;
                 position: absolute;
                 right: 11px;
+                transition-duration: 400ms;
             }
         }
 
@@ -74,10 +96,17 @@ div.changes-area {
             border-radius: 3px;
             background-color: rgb(224, 255, 231);
 
+            &:hover:after {
+                content:"New File";
+                color: black;
+                width: 50px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
             &:after {
-                content: "\e0aa";
-                font-family: "Icons";
-                color: rgb(0, 175, 38);
+                content: "";
+                color: rgba(0,0,0,0);
                 background-color: rgb(153, 255, 170);
                 border-radius: 3px;
                 margin: auto;
@@ -86,6 +115,8 @@ div.changes-area {
                 width: 1em;
                 position: absolute;
                 right: 11px;
+                white-space: nowrap;
+                transition-duration: 400ms;
             }
         }
     }
