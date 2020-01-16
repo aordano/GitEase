@@ -37,7 +37,13 @@ const CommitMessageInput: React.FC = () => {
         );
     };
 
-    return <input className={'commit-message'} value={input} onChange={handleCommitTextChange} />;
+    return <input 
+        title={"Make it a short one that succintly describes your changes."} 
+        className={'commit-message'} 
+        placeholder={"Give a name to your changes"} 
+        value={input} 
+        onChange={handleCommitTextChange} 
+    />;
 };
 
 const CommitButton: React.FC = () => {
@@ -53,16 +59,22 @@ const CommitButton: React.FC = () => {
         );
     };
 
-    return <input type={'button'} className={'commit-button'} onClick={handleCommitButtonPress} />;
+    return <input 
+        title={"Publish your changes."} 
+        type={'button'} 
+        className={'commit-button'} 
+        onClick={handleCommitButtonPress} 
+        value={"Go"}
+    />;
 };
 
 const CommitBox: React.FC = () => {
     return (
         <div className={'commit-box'}>
-            <h2>Commit Box</h2>
+            <p>Commit your changes:</p>
             <CommitMessageInput />
             <CommitButton />
-            <textarea placeholder={'Description'} className={'commit-description'} />
+            <textarea placeholder={'Describe what you did with a short explanation'} className={'commit-description'} />
         </div>
     );
 };

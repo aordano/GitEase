@@ -1,6 +1,5 @@
 div.changes-area {
     width: 250px;
-    min-height: 70%;
     margin: 5px;
     margin-bottom: 10px;
     height: 57vh;
@@ -8,7 +7,7 @@ div.changes-area {
     padding: 20px;
     padding-bottom: 5px;
     padding-top: 10px;
-    border-radius: 20px;
+    border-radius: 5px;
 
     & p.changes-list-title {
         margin: 5px;
@@ -23,10 +22,11 @@ div.changes-area {
         position: relative;
         list-style: none;
         background-color: #333;
-        border-radius: 15px;
+        border-radius: 5px;
         padding: 10px;
         right: 10px;
-        height: 315px;
+        height: 84%;
+        bottom: 5px;
         overflow-y: auto;
         font-size: 0.95em;
 
@@ -51,7 +51,7 @@ div.changes-area {
             &:after {
                 content: "";
                 color: rgba(0,0,0,0);
-                background-color: rgb(255, 207, 153);
+                background-color: rgb(253, 182, 76);
                 border-radius: 3px;
                 margin: auto;
                 padding: 2px;
@@ -79,7 +79,7 @@ div.changes-area {
             &:after {
                 content: "";
                 color: rgba(0,0,0,0);
-                background-color: rgb(255, 153, 153);
+                background-color: rgb(255, 66, 66);
                 border-radius: 3px;
                 margin: auto;
                 padding: 2px;
@@ -107,7 +107,7 @@ div.changes-area {
             &:after {
                 content: "";
                 color: rgba(0,0,0,0);
-                background-color: rgb(153, 255, 170);
+                background-color: rgb(79, 255, 108);
                 border-radius: 3px;
                 margin: auto;
                 padding: 2px;

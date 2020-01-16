@@ -2,7 +2,7 @@
 
 %basic-element {
     background-color: #ccc;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 20px;
     margin: 5px;
     position: relative;
@@ -10,14 +10,69 @@
 }
 
 div.commit-box {
-    max-width: 25vw;
+    width: 250px;
     margin-left: 22px;
     background-color: #ccc;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 20px;
     margin: 5px;
     position: relative;
-    max-height: 20vh;
+    height: 25vh;
+
+    & p {
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+    & .commit-message {
+        width: 80%;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        height: 25px;
+        color: white;
+        padding: 5px;
+        font-size: 1em;
+        font-weight: 100;
+        font-family: "Roboto Condensed"
+    }
+    & .commit-button {
+        width: 13%;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        height: 35px;
+        color: white;
+        padding: 5px;
+        margin-left: 5px;
+        position: relative;
+        font-weight: 100;
+        font-family: "Roboto Condensed";
+        font-size: 1.3em;
+        transition-duration: 400ms;
+
+        &:hover {
+            background-color: #ccc;
+            color: #333;
+            box-shadow: 0px 0px 2px 2px #333;
+            cursor: pointer;
+        }
+    }
+
+    & textarea {
+        width: 95%;
+        margin-top: 5px;
+        min-height: 12vh;
+        background-color: #333;
+        border: none;
+        border-radius: 5px;
+        height: 25px;
+        color: white;
+        padding: 5px;
+        font-size: 1em;
+        font-weight: 100;
+        font-family: "Roboto Condensed"
+    }
 }
 
 div.actions-space {
