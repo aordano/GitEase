@@ -38,7 +38,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.remote ?? 'origin'
             );
             try {
-                console.log('trying...');
                 workflow.commitAndPush();
             } catch (err) {
                 console.log(`error... ${err}`);
@@ -46,8 +45,8 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     error: err
                 });
             } finally {
-                console.log(`profit?`);
                 return Object.assign({}, state, {
+                    commitMessage: "",
                     updateStatus: 'up to date'
                 });
             }
