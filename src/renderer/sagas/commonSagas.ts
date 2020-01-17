@@ -16,7 +16,7 @@ import {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
 
 function* updateChangesArea() {
-    yield delay(1000)
+    yield delay(500)
     yield put(UpdateChangesAreaAction(store.getState()?.viewModifiedFilesReducer.parsedData))
     yield put(ViewModifiedFilesAction())
     // do something
