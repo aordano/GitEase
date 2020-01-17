@@ -1,35 +1,60 @@
-import { put, takeLatest, all, fork, delay } from 'redux-saga/effects';
+// ! ###  - Common Sagas - ###
+
+// -----------------------
+// --- Effects Imports ---
+// -----------------------
+
+import { 
+    put, 
+    takeLatest, 
+    all, 
+    fork, 
+    delay 
+} from 'redux-saga/effects';
+
+// ---------------------
+// --- Store Imports ---
+// ---------------------
 
 import { store } from "../store"
+
+// ----------------------
+// --- Action Imports ---
+// ----------------------
 
 import { 
     ViewModifiedFilesAction,
     UpdateChangesAreaAction
 } from '../actions/commonActions';
 
-// -------------
-// --- Sagas ---
-// -------------
-
-// Generator that yields a dispatch by the put() method as to update the display on the parse event
-// More info about generators:
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+// --------------------
+// --- Effect Sagas ---
+// --------------------
 
 function* updateChangesArea() {
+    // -- Generator that yields a dispatch by the put() method as to update the changes area if
+    // there's a change on the git status.
     yield delay(500)
     yield put(UpdateChangesAreaAction(store.getState()?.viewModifiedFilesReducer.parsedData))
     yield put(ViewModifiedFilesAction())
-    // do something
 }
 
-// Watch generator that looks for PARSE events and fires up a saga to update the display
+// -------------------
+// --- Watch Sagas ---
+// -------------------
+
 function* watchModifiedFiles() {
-    // More info about this function on https://redux-saga.js.org/docs/api#takelatestpattern-saga-args
+    // -- Watch generator that looks for VIEW_MODIFIED_FILES events and fires up a saga 
+    // to update the changes area display
     yield takeLatest('VIEW_MODIFIED_FILES',updateChangesArea);
 }
 
-// Main export that conforms all the sagas into a root saga
+// --------------------
+// --- Export Sagas ---
+// --------------------
+
 export const updateChangesSaga = function* root() {
+    // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchModifiedFiles)
     ]);

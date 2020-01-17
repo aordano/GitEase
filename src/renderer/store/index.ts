@@ -1,15 +1,38 @@
-import { applyMiddleware, createStore, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// ! ###  - Redux Store - ###
 
-// Imports the Redux-Saga middleware creator
-// More info on https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html
-// And the documentation is on https://redux-saga.js.org/docs/api#createsagamiddlewareoptions
-// tslint:disable-next-line: import-name
-import createSagaMiddleware from 'redux-saga';
+// ---------------------
+// --- Redux Imports ---
+// ---------------------
+
+import { 
+    applyMiddleware, 
+    createStore, 
+    Store 
+} from 'redux';
 
 import { rootReducer } from '../reducers';
 
+// ------------------------
+// --- DevTools Imports ---
+// ------------------------
+
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+// -------------------------------
+// --- Saga Middleware Imports ---
+// -------------------------------
+
+import createSagaMiddleware from 'redux-saga';
+
+// -----------------------------------
+// --- Saga Middleware Declaration ---
+// -----------------------------------
+
 export const sagaMiddleware = createSagaMiddleware();
+
+// ---------------------------
+// --- Store Configuration ---
+// ---------------------------
 
 const configureStore = (initialState?: RootState): Store<RootState | undefined> => {
     const middlewares: any[] = [];
@@ -19,13 +42,20 @@ const configureStore = (initialState?: RootState): Store<RootState | undefined> 
 
 export const store = configureStore();
 
+// -----------------------------
+// --- Hot Reducer Reloading ---
+// -----------------------------
+
 if (typeof module.hot !== 'undefined') {
     module.hot.accept('../reducers', () =>
         store.replaceReducer(require('../reducers').rootReducer)
     );
 }
 
-// Exports RootState type as needed by TypeScript
+// ---------------
+// --- Exports ---
+// ---------------
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 export default store;

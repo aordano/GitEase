@@ -1,7 +1,20 @@
+// ! ###  - Main Types File - ###
+
+// ---------------------------
+// --- React-Redux Imports ---
+// ---------------------------
+
 import { useSelector as useReduxSelector, TypedUseSelectorHook } from 'react-redux';
 
-// Imports the RootState type as defined in the Store
+// ---------------------------
+// --- Store State Imports ---
+// ---------------------------
+
 import { RootState } from '../store';
+
+// ------------------
+// --- Data Types ---
+// ------------------
 
 export type gitBasicWorkflowDataType = {
     message: string;
@@ -13,6 +26,10 @@ export type gitBasicWorkflowDataType = {
 export type workingDirDataType = {
     workingDir: string
 }
+
+// --------------------------------------
+// --- Git Status Modified Files Type ---
+// --------------------------------------
 
 export interface ModifiedFilesStructure {
     _c?: string[],
@@ -44,6 +61,10 @@ interface GitFilesDescriptor {
     working_dir: string
 }
 
+// ----------------------------------
+// --- Staging Area-related Types ---
+// ----------------------------------
+
 export type ChangesTreeType = {
     status: string,
     content: string,
@@ -56,9 +77,8 @@ export type StagingCheckboxIndexType = {
     index: number | undefined
 }
 
-export type FileType = {
-    file: string
-}
+// -------------------------------------------
+// --- Typed Redefinition of useSelector() ---
+// -------------------------------------------
 
-// Exports typed redefinition of useSelector
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;

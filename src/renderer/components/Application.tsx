@@ -1,10 +1,32 @@
+// ! ###  - Main App Component - ###
+
+// ---------------------
+// --- React Imports ---
+// ---------------------
+
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 
+// ----------------------
+// --- Static Imports ---
+// ----------------------
+
 require('../static/scss/main.scss');
 
-import { CommitComponent, ActionsComponent } from './interactive_elements';
+// -------------------------
+// --- Component Imports ---
+// -------------------------
+
+import { 
+    CommitComponent, 
+    ActionsComponent 
+} from './interactive_elements';
+
 import { ViewerComponent } from './viewer';
+
+// --------------------------
+// --- Main App Component ---
+// --------------------------
 
 const Application = () => (
     <div>

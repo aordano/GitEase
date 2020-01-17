@@ -1,4 +1,14 @@
+// ! ###  - Main Reducers file - ###
+
+// ---------------
+// --- Imports ---
+// ---------------
+
 import { combineReducers } from 'redux';
+
+// -----------------------------------
+// --- Reducers and States Imports ---
+// -----------------------------------
 
 import { 
     viewModifiedFilesReducer, 
@@ -7,13 +17,24 @@ import {
     UpdateChangesAreaState
 } from "./commonReducers"
 
-import { BasicWorkflowState, basicWorkflowReducer } from './basicWorkflowReducer';
+import { 
+    BasicWorkflowState, 
+    basicWorkflowReducer 
+} from './basicWorkflowReducer';
+
+// ------------------------------------
+// --- Root Reducer Possible States ---
+// ------------------------------------
 
 export interface RootState {
     basicWorkflowReducer: BasicWorkflowState;
     viewModifiedFilesReducer: ViewModifiedFilesState
     updateChangesAreaReducer: UpdateChangesAreaState
 }
+
+// --------------------
+// --- Root Reducer ---
+// --------------------
 
 export const rootReducer = combineReducers<RootState | undefined>({
     basicWorkflowReducer,

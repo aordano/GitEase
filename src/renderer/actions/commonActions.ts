@@ -1,4 +1,14 @@
-import { ActionCreator, Action } from 'redux';
+// ! ###  - Common Action Creators - ###
+
+// ---------------------
+// --- Redux Imports ---
+// ---------------------
+
+import { ActionCreator} from 'redux';
+
+// --------------------
+// --- Type Imports ---
+// --------------------
 
 import {
     VIEW_MODIFIED_FILES,
@@ -11,10 +21,21 @@ import {
     SetGlobalStagingStatusType
 } from '../types/constants';
 
+
+// ---------------------------------------
+// --- Viable Action Types Definitions ---
+// ---------------------------------------
+
 export type UpdateChangesAreaAction = 
     UpdateChangesAreaType | 
     SetStagingStatusType | 
     SetGlobalStagingStatusType
+
+export type ViewModifiedFilesAction = ViewModifiedFilesType
+
+// -----------------------
+// --- Action Creators ---
+// -----------------------
 
 export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (filesTree) => {
     return {
@@ -42,8 +63,6 @@ export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (fi
         }
     }
 }
-
-export type ViewModifiedFilesAction = ViewModifiedFilesType
 
 export const ViewModifiedFilesAction: ActionCreator<ViewModifiedFilesType> = () => {
     return {

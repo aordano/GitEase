@@ -1,4 +1,14 @@
+// ! ###  - Basic Workflow Action Creators - ###
+
+// ---------------------
+// --- Redux Imports ---
+// ---------------------
+
 import { ActionCreator } from 'redux';
+
+// --------------------
+// --- Type Imports ---
+// --------------------
 
 import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
@@ -9,10 +19,18 @@ import {
     BasicWorkflowInitType
 } from '../types/constants';
 
+// ---------------------------------------
+// --- Viable Action Types Definitions ---
+// ---------------------------------------
+
 export type BasicWorkflowAction =
     | BasicWorkflowCommitAndPushType
     | BasicWorkflowUpdateCommitMessageType
     | BasicWorkflowInitType;
+
+// -----------------------
+// --- Action Creators ---
+// -----------------------
 
 export const BasicWorkflowUpdateCommitMessageAction: 
     ActionCreator<BasicWorkflowUpdateCommitMessageType> = (

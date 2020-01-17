@@ -1,8 +1,37 @@
+// ! ###  - Viewer - ###
+
+// TODO -- Refactor according to interactive_elements.tsx
+
+// ---------------------
+// --- React Imports ---
+// ---------------------
+
 import * as React from 'react';
 
-import { Gitgraph, Orientation } from '@gitgraph/react';
+// ------------------------
+// --- GitGraph Imports ---
+// ------------------------
+
+import { 
+    Gitgraph, 
+    Orientation 
+} from '@gitgraph/react';
+
+// ----------------------
+// --- Static Imports ---
+// ----------------------
 
 require('../static/scss/viewer.scss');
+
+// ------------------------
+// --- Viewer Component ---
+// ------------------------
+
+// TODO write a reducer to check the state of the commit/branches history 
+// TODO link the reducer state to the viewer as to display the current repo
+// TODO style the viewer
+// TODO make it zoomable and scrollable
+// TODO Document it better
 
 export const ViewerComponent: React.FC = () => {
     return (
