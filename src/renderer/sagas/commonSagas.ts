@@ -4,7 +4,7 @@ import { store } from "../store"
 
 import { 
     ViewModifiedFilesAction,
-    UpdateChangesAreaAction 
+    UpdateChangesAreaAction
 } from '../actions/commonActions';
 
 // -------------
@@ -30,5 +30,7 @@ function* watchModifiedFiles() {
 
 // Main export that conforms all the sagas into a root saga
 export const updateChangesSaga = function* root() {
-    yield all([fork(watchModifiedFiles)]);
+    yield all([
+        fork(watchModifiedFiles)
+    ]);
 };

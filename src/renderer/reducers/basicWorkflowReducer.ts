@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 
 import {
-    BASIC_WORKFLOW_STAGE_AND_COMMIT,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
-    BASIC_WORKFLOW_INIT
+    BASIC_WORKFLOW_INIT,
+    BASIC_WORKFLOW_COMMIT_AND_PUSH
 } from '../types/constants';
 
 import {
@@ -15,16 +15,15 @@ import { BasicWorkflow } from '../components/functions/workflows';
 export interface BasicWorkflowState {
     commitMessage: string;
     commitDescription?: string;
-    modifiedFiles: string[];
-    readyToStageFiles: string[];
     branch?: string;
     remote?: string;
 }
 
 const basicWorkflowDefaultState: BasicWorkflowState = {
     commitMessage: '',
-    modifiedFiles: [''],
-    readyToStageFiles: ['']
+    commitDescription: "",
+    branch: "master",
+    remote: "origin"
 };
 
 export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
@@ -32,16 +31,15 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     action: BasicWorkflowAction
 ) => {
     switch (action.type) {
-        case BASIC_WORKFLOW_STAGE_AND_COMMIT:
+        case BASIC_WORKFLOW_COMMIT_AND_PUSH:
             const workflow = new BasicWorkflow(
                 action.message,
-                action.files,
                 action.branch ?? 'master',
                 action.remote ?? 'origin'
             );
             try {
                 console.log('trying...');
-                workflow.stageAndCommit();
+                workflow.commitAndPush();
             } catch (err) {
                 console.log(`error... ${err}`);
                 return Object.assign({}, state, {

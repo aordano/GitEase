@@ -46,7 +46,18 @@ interface GitFilesDescriptor {
 
 export type ChangesTreeType = {
     status: string,
-    content: string
+    content: string,
+    displayContent: string,
+    staged: boolean,
+    index?: number
+}
+
+export type StagingCheckboxIndexType = {
+    index: number | undefined
+}
+
+export type FileType = {
+    file: string
 }
 
 // Exports typed redefinition of useSelector

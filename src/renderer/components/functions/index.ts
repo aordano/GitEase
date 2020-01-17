@@ -14,3 +14,13 @@ export const parseStatus = (workingDir?: string) => {
     const parsedData = git.status()
     return parsedData
 }
+
+export const stageFile = (file: string, workingDir?: string) => {
+    const git = promise(workingDir);
+    git.add(file)
+}
+
+export const unstageFile = (file: string, workingDir?: string) => {
+    const git = promise(workingDir);
+    git.reset(["--",file])
+}

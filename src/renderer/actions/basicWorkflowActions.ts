@@ -1,16 +1,16 @@
 import { ActionCreator } from 'redux';
 
 import {
-    BASIC_WORKFLOW_STAGE_AND_COMMIT,
+    BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
-    BasicWorkflowStageAndCommitType,
+    BasicWorkflowCommitAndPushType,
     BasicWorkflowUpdateCommitMessageType,
     BasicWorkflowInitType
 } from '../types/constants';
 
 export type BasicWorkflowAction =
-    | BasicWorkflowStageAndCommitType
+    | BasicWorkflowCommitAndPushType
     | BasicWorkflowUpdateCommitMessageType
     | BasicWorkflowInitType;
 
@@ -27,17 +27,15 @@ export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () 
     };
 };
 
-export const BasicWorkflowStageAndCommitAction: ActionCreator<BasicWorkflowStageAndCommitType> = (
+export const BasicWorkflowCommitAndPushAction: ActionCreator<BasicWorkflowCommitAndPushType> = (
     message,
-    files,
     branch?,
     remote?
 ) => {
     return {
         message,
-        files,
         branch,
         remote,
-        type: BASIC_WORKFLOW_STAGE_AND_COMMIT
+        type: BASIC_WORKFLOW_COMMIT_AND_PUSH
     };
 };

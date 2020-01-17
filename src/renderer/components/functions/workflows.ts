@@ -11,27 +11,24 @@ export class BasicWorkflow {
     // constructor()
     gitBasicWorkflowData: {
         message: gitBasicWorkflowDataType['message'];
-        files: gitBasicWorkflowDataType['files'];
         branch?: gitBasicWorkflowDataType['branch'];
         remote?: gitBasicWorkflowDataType['remote'];
     };
 
     constructor(
         message: gitBasicWorkflowDataType['message'],
-        files: gitBasicWorkflowDataType['files'],
         branch?: gitBasicWorkflowDataType['branch'],
         remote?: gitBasicWorkflowDataType['remote']
     ) {
-        this.gitBasicWorkflowData = { message, files, branch, remote };
+        this.gitBasicWorkflowData = { message, branch, remote };
     }
 
-    stageAndCommit() {
+    commitAndPush() {
         git.fetch(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-        git.add(this.gitBasicWorkflowData.files).then(() => {
-            git.commit(this.gitBasicWorkflowData.message);
-        });
+        git.commit(this.gitBasicWorkflowData.message);
+        git.push(this.gitBasicWorkflowData.remote ?? "origin",this.gitBasicWorkflowData.branch ?? "master")
     }
 }

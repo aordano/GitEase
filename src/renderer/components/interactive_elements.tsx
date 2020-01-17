@@ -6,13 +6,19 @@ import { store } from '../store';
 
 import { 
     useSelector,
-    ChangesTreeType
+    ChangesTreeType,
+    StagingCheckboxIndexType
 } from '../types';
 
 import {
-    basicWorkflowStageAndCommitAction,
-    basicWorkflowUpdateCommitMessageAction
+    BasicWorkflowStageAndCommitAction,
+    BasicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
+
+
+import {
+    SetStagingStatusAction
+} from '../actions/commonActions';
 
 require('../static/scss/actions.scss');
 
@@ -31,7 +37,7 @@ const CommitMessageInput: React.FC = () => {
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
         store.dispatch(
-            basicWorkflowUpdateCommitMessageAction(
+            BasicWorkflowUpdateCommitMessageAction(
                 event.currentTarget.value
             )
         );
@@ -50,7 +56,7 @@ const CommitButton: React.FC = () => {
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitButtonPress = (event: React.MouseEvent<HTMLInputElement>) => {
         store.dispatch(
-            basicWorkflowStageAndCommitAction(
+            BasicWorkflowStageAndCommitAction(
                 currentState.commitMessage, 
                 files, 
                 branch, 
@@ -88,7 +94,10 @@ const ChangesSpace: React.FC = () => {
             React.createElement(ChangesListElement,{
                 status: changesAreaTree[i].status,
                 content: changesAreaTree[i].content,
-                key: i
+                displayContent: changesAreaTree[i].displayContent,
+                staged: changesAreaTree[i].staged,
+                key: i,
+                index: i
             })
         )
     }
@@ -134,12 +143,32 @@ export const ActionsComponent: React.FC = () => {
 };
 
 export const ChangesListElement: React.FC<ChangesTreeType> = (
-        {status, content}: ChangesTreeType
+        {status, displayContent, index}: ChangesTreeType
     ) => {
     return (
     <li className={`files-${status}`}>
-        {content.slice(0,content.lastIndexOf("/")+1)}
-        <b className={"filename"}>{content.slice(content.lastIndexOf("/")+1,content.length)}</b>
+        <StagingCheckboxElement index={index}/>
+        {displayContent.slice(0,displayContent.lastIndexOf("/")+1)}
+        <b className={"filename"}>{displayContent.slice(displayContent.lastIndexOf("/")+1,displayContent.length)}</b>
     </li>
+    )
+}
+
+export const StagingCheckboxElement: React.FC<StagingCheckboxIndexType> = (
+    {index}: StagingCheckboxIndexType
+) => {
+    const handleStagingCheckbox = () => {
+        if (index !== undefined) {
+            store.dispatch(SetStagingStatusAction(index))
+        }
+        
+    };
+
+    return (
+        <input
+            className={"stage-checkbox"}
+            type={"checkbox"}  
+            onChange={handleStagingCheckbox}  
+        />
     )
 }

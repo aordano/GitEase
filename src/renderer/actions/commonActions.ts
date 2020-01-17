@@ -1,13 +1,20 @@
-import { ActionCreator } from 'redux';
+import { ActionCreator, Action } from 'redux';
 
 import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
+    SET_STAGING_STATUS,
+    SET_GLOBAL_STAGING_STATUS,
     ViewModifiedFilesType,
-    UpdateChangesAreaType
+    UpdateChangesAreaType,
+    SetStagingStatusType,
+    SetGlobalStagingStatusType
 } from '../types/constants';
 
-export type UpdateChangesAreaAction = UpdateChangesAreaType
+export type UpdateChangesAreaAction = 
+    UpdateChangesAreaType | 
+    SetStagingStatusType | 
+    SetGlobalStagingStatusType
 
 export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (filesTree) => {
     return {
@@ -43,3 +50,16 @@ export const ViewModifiedFilesAction: ActionCreator<ViewModifiedFilesType> = () 
         type: VIEW_MODIFIED_FILES
     };
 };
+
+export const SetStagingStatusAction: ActionCreator<SetStagingStatusType> = (index) => {
+    return {
+        index,
+        type: SET_STAGING_STATUS
+    };
+};
+
+export const SetGlobalStagingStatusAction: ActionCreator<SetGlobalStagingStatusType> = () => {
+    return {
+        type: SET_GLOBAL_STAGING_STATUS
+    }
+}
