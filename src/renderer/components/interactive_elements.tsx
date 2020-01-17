@@ -11,7 +11,7 @@ import {
 } from '../types';
 
 import {
-    BasicWorkflowStageAndCommitAction,
+    BasicWorkflowCommitAndPushAction,
     BasicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
 
@@ -23,8 +23,7 @@ import {
 require('../static/scss/actions.scss');
 
 // temporary statements for testing
-const files: string[] = ['testfile'];
-const branch: string = 'testing';
+const branch = 'master';
 const USER = 'aordano';
 import {PASS} from "../../../.secrets"
 const REPO = 'github.com/aordano/GitEase';
@@ -54,11 +53,11 @@ const CommitMessageInput: React.FC = () => {
 
 const CommitButton: React.FC = () => {
     const currentState = useSelector(state => state.basicWorkflowReducer);
-    const handleCommitButtonPress = (event: React.MouseEvent<HTMLInputElement>) => {
+    const handleCommitButtonPress = () => {
+        debugger
         store.dispatch(
-            BasicWorkflowStageAndCommitAction(
-                currentState.commitMessage, 
-                files, 
+            BasicWorkflowCommitAndPushAction(
+                currentState.commitMessage,
                 branch, 
                 remote
             )
