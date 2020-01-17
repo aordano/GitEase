@@ -96,7 +96,7 @@ const CommitMessageInput: React.FC = () => {
 const CommitButton: React.FC = () => {
     // -- Button that handles the commit/push on the basic workflow.
 
-    // TODO Change the naming of the button to be related to the basic workflow
+    // TODO Change the button logic to dispatch the correct action given the workflow
 
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitButtonPress = () => {
