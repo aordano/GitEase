@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 
-import { basicWorkflowInitAction } from './actions/basicWorkflowActions';
+import { BasicWorkflowInitAction } from './actions/basicWorkflowActions';
 
 import Application from './components/Application';
 import { store, sagaMiddleware } from './store';
@@ -30,7 +30,7 @@ const render = (Component: () => JSX.Element) => {
 
 render(Application);
 
-store.dispatch(basicWorkflowInitAction());
+store.dispatch(BasicWorkflowInitAction());
 setTimeout(() => {
     store.dispatch(ViewModifiedFilesAction())
 },50)
