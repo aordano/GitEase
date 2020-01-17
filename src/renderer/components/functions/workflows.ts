@@ -9,26 +9,24 @@ export class BasicWorkflow {
     // BasicWorkflow.gitBasicWorkflowData(props)
     // gitBasicWorkflowData: gitBasicWorkflowDataType
     // constructor()
-    gitBasicWorkflowData: {
-        message: gitBasicWorkflowDataType['message'];
-        branch?: gitBasicWorkflowDataType['branch'];
-        remote?: gitBasicWorkflowDataType['remote'];
-    };
+    gitBasicWorkflowData: gitBasicWorkflowDataType;
 
     constructor(
         message: gitBasicWorkflowDataType['message'],
+        description?: gitBasicWorkflowDataType['description'],
         branch?: gitBasicWorkflowDataType['branch'],
         remote?: gitBasicWorkflowDataType['remote']
     ) {
-        this.gitBasicWorkflowData = { message, branch, remote };
+        this.gitBasicWorkflowData = { branch, description, message, remote };
     }
 
     commitAndPush() {
+        debugger
         git.fetch(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-        git.commit(this.gitBasicWorkflowData.message);
+        git.commit(this.gitBasicWorkflowData.message,[], {"--description": this.gitBasicWorkflowData.description});
         git.push(this.gitBasicWorkflowData.remote ?? "origin",this.gitBasicWorkflowData.branch ?? "master")
     }
 }

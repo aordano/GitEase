@@ -35,7 +35,8 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             const workflow = new BasicWorkflow(
                 action.message,
                 action.branch ?? 'master',
-                action.remote ?? 'origin'
+                action.remote ?? 'origin',
+                action.description ?? ""
             );
             try {
                 workflow.commitAndPush();
@@ -52,11 +53,14 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             }
         case BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE:
             return Object.assign({}, state, {
-                commitMessage: action.message
+                commitMessage: action.message,
+                commitDescription: action.description
+
             });
         case BASIC_WORKFLOW_INIT:
             return Object.assign({}, state, {
-                commitMessage: 'Default'
+                commitMessage: 'Default',
+                commitDescription: "default"
             });
         default:
             return state;

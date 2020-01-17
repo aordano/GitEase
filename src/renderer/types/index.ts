@@ -5,7 +5,7 @@ import { RootState } from '../store';
 
 export type gitBasicWorkflowDataType = {
     message: string;
-    files: string[];
+    description?: string
     branch?: string;
     remote?: string;
 };

@@ -32,6 +32,7 @@ export interface ViewModifiedFilesType extends Action {
 export interface BasicWorkflowCommitAndPushType extends Action {
     type: 'BASIC_WORKFLOW_COMMIT_AND_PUSH';
     message: string;
+    description?: string;
     branch?: string;
     remote?: string;
 }
@@ -39,6 +40,7 @@ export interface BasicWorkflowCommitAndPushType extends Action {
 export interface BasicWorkflowUpdateCommitMessageType extends Action {
     type: 'BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE';
     message: string;
+    description: string;
 }
 
 export interface BasicWorkflowInitType extends Action {

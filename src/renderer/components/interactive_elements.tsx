@@ -32,12 +32,13 @@ const remote = `https://${USER}:${PASS}@${REPO}`;
 
 const CommitMessageInput: React.FC = () => {
     const [input, setInput] = useState('');
-
+    const currentState = useSelector(state => state.basicWorkflowReducer)
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
         store.dispatch(
             BasicWorkflowUpdateCommitMessageAction(
-                event.currentTarget.value
+                event.currentTarget.value,
+                currentState.commitDescription
             )
         );
     };
@@ -54,10 +55,10 @@ const CommitMessageInput: React.FC = () => {
 const CommitButton: React.FC = () => {
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitButtonPress = () => {
-        debugger
         store.dispatch(
             BasicWorkflowCommitAndPushAction(
                 currentState.commitMessage,
+                currentState.commitDescription,
                 branch, 
                 remote
             )
@@ -73,13 +74,37 @@ const CommitButton: React.FC = () => {
     />;
 };
 
+const CommmitDescription: React.FC = () => {
+    const [input, setInput] = useState('');
+    const currentState = useSelector(state => state.basicWorkflowReducer)
+
+    const handleCommitDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setInput(event.currentTarget.value);
+        store.dispatch(
+            BasicWorkflowUpdateCommitMessageAction(
+                currentState.commitMessage,
+                event.currentTarget.value
+            )
+        );
+    };
+
+    return (
+        <textarea 
+            placeholder={'Describe what you did with a short explanation'} 
+            className={'commit-description'} 
+            value={input} // handle change and upload it to the state for the commit
+            onChange={handleCommitDescriptionChange}
+        />
+    )
+}
+
 const CommitBox: React.FC = () => {
     return (
         <div className={'commit-box'}>
             <p>Commit your changes:</p>
             <CommitMessageInput />
             <CommitButton />
-            <textarea placeholder={'Describe what you did with a short explanation'} className={'commit-description'} />
+            <CommmitDescription />
         </div>
     );
 };
