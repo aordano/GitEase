@@ -1,6 +1,6 @@
 import { put, take, all, fork } from 'redux-saga/effects';
 
-import { basicWorkflowUpdateCommitMessageAction } from '../actions/basicWorkflowActions';
+import { BasicWorkflowUpdateCommitMessageAction } from '../actions/basicWorkflowActions';
 
 import { store } from '../store';
 

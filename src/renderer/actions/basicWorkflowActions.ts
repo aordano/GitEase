@@ -14,20 +14,20 @@ export type BasicWorkflowAction =
     | BasicWorkflowUpdateCommitMessageType
     | BasicWorkflowInitType;
 
-export const basicWorkflowUpdateCommitMessageAction: ActionCreator<BasicWorkflowUpdateCommitMessageType> = message => {
+export const BasicWorkflowUpdateCommitMessageAction: ActionCreator<BasicWorkflowUpdateCommitMessageType> = message => {
     return {
         message,
         type: BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE
     };
 };
 
-export const basicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () => {
+export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () => {
     return {
         type: BASIC_WORKFLOW_INIT
     };
 };
 
-export const basicWorkflowStageAndCommitAction: ActionCreator<BasicWorkflowStageAndCommitType> = (
+export const BasicWorkflowStageAndCommitAction: ActionCreator<BasicWorkflowStageAndCommitType> = (
     message,
     files,
     branch?,
