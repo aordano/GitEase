@@ -21,7 +21,6 @@ import {
     SetGlobalStagingStatusType
 } from '../types/constants';
 
-
 // ---------------------------------------
 // --- Viable Action Types Definitions ---
 // ---------------------------------------
