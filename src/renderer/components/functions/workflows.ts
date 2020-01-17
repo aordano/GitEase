@@ -21,12 +21,11 @@ export class BasicWorkflow {
     }
 
     commitAndPush() {
-        debugger
         git.fetch(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-        git.commit(this.gitBasicWorkflowData.message,[], {"--description": this.gitBasicWorkflowData.description});
+        git.commit([this.gitBasicWorkflowData.message, this.gitBasicWorkflowData.description ?? ""]);
         git.push(this.gitBasicWorkflowData.remote ?? "origin",this.gitBasicWorkflowData.branch ?? "master")
     }
 }
