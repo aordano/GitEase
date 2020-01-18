@@ -20,7 +20,8 @@ import {
 
 import { 
     ModifiedFilesStructure, 
-    ChangesTreeType
+    ChangesTreeType,
+    ContentNameType
 } from "../types"
 
 // ----------------------
@@ -40,7 +41,8 @@ import {
     parseStatus, 
     truncate, 
     stageFile,
-    unstageFile 
+    unstageFile,
+    removeQuotes
 } from '../components/functions';
 
 // ---------------------------------
@@ -117,45 +119,6 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
     action: UpdateChangesAreaAction
 ) => {
     switch (action.type) {
-        case SET_GLOBAL_STAGING_STATUS:
-            // -- This reducer grabs the current files tree, and changes the staging state
-            // of every file in the tree. It also stages/unstages the files and changes the
-            // checked/unchecked status of the item on the list.
-
-            // TODO Change the checked/unchecked status of the element in the list
-
-            const currentGlobalChangesTree: ChangesTreeType[] = state.changesAreaTree
-            const newGlobalChangesTree: ChangesTreeType[] = []
-            // * -- currentGlobalChangesTree is the same as currentChangesTree and changesTree
-            // * -- newGlobalChangesTree is the same as newChangesTree and changesTree
-            // * -- This is this way because block-scoped const definitions can't be repeated
-            // * outside their scope.
-
-            for (let i = 0; i < currentGlobalChangesTree.length; i += 1) {
-                if (state.changesAreaTree[i]?.staged) {
-                    unstageFile(state.changesAreaTree[i].content)
-                    const element: ChangesTreeType = {
-                        status: state.changesAreaTree[i].status,
-                        content: state.changesAreaTree[i].content,
-                        displayContent: state.changesAreaTree[i].displayContent,
-                        staged: false
-                    }
-                    newGlobalChangesTree.push(element)
-                }
-                else {
-                    stageFile(state.changesAreaTree[i].content)
-                    const element: ChangesTreeType = {
-                        status: state.changesAreaTree[i].status,
-                        content: state.changesAreaTree[i].content,
-                        displayContent: state.changesAreaTree[i].displayContent,
-                        staged: true
-                    }
-                    newGlobalChangesTree.push(element)
-                }
-                return Object.assign({}, state, {
-                    changesTree: newGlobalChangesTree
-                });
-            }
         case SET_STAGING_STATUS:
             // -- This reducer grabs the current file in the tree as indicated by the index
             // passed in the action, and changes the staging state on the tree and stages/unstages
@@ -174,7 +137,9 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     staged: true
                 }
                 const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(action.index ?? 0,1,newChange)
+                
                 stageFile(state.changesAreaTree[action.index ?? 0].content)
+
                 return Object.assign({}, state, {
                     changesTree: newChangesTree
                 });
@@ -191,8 +156,9 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             // * -- This is this way because block-scoped const definitions can't be repeated
             // * outside their scope.
             // * -- In this case is not needed to fill the whole array and only is needed to replace one element.
-            unstageFile(state.changesAreaTree[action.index ?? 0].content)
 
+            unstageFile(state.changesAreaTree[action.index ?? 0].content)
+            
             return Object.assign({}, state, {
                 changesTree: newChangesTree
             });
@@ -215,8 +181,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
                             status: "modified",
-                            content: action.filesTree._v.modified[i],
-                            displayContent: truncate(action.filesTree?._v.modified[i],35),
+                            content: removeQuotes(action.filesTree._v.modified[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree?._v.modified[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
                         }
@@ -225,8 +191,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     else {
                         const element: ChangesTreeType = {
                             status: "modified",
-                            content: action.filesTree._v.modified[i],
-                            displayContent: truncate(action.filesTree?._v.modified[i],35),
+                            content: removeQuotes(action.filesTree._v.modified[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.modified[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
                         }
@@ -239,8 +205,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
                             status: "created",
-                            content: action.filesTree._v.created[i],
-                            displayContent: truncate(action.filesTree?._v.created[i],35),
+                            content: removeQuotes(action.filesTree._v.created[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.created[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
                         }
@@ -249,8 +215,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     else {
                         const element: ChangesTreeType = {
                             status: "created",
-                            content: action.filesTree._v.created[i],
-                            displayContent: truncate(action.filesTree?._v.created[i],35),
+                            content: removeQuotes(action.filesTree._v.created[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.created[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
                         }
@@ -260,26 +226,18 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             }
             if (action.filesTree?._v.renamed !== undefined) {
                 for (let i = 0; i < action.filesTree?._v.renamed?.length; i += 1) {
-                    if (state.changesAreaTree[i]?.staged) {
-                        const element: ChangesTreeType = {
-                            status: "renamed",
-                            content: action.filesTree._v.renamed[i],
-                            displayContent: truncate(action.filesTree?._v.renamed[i],35),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: state.changesAreaTree[i].staged
-                        }
-                        changesTree.push(element)
+                    // Renamed files by definition are staged so no need to check for it
+                    const element: ChangesTreeType = {
+                        status: "renamed",
+                        content: {
+                            from: removeQuotes(action.filesTree._v.renamed[i].from),
+                            to: removeQuotes(action.filesTree._v.renamed[i].to)
+                        },
+                        displayContent: truncate(removeQuotes(action.filesTree._v.renamed[i].to),35),
+                        // We truncate the filepath in a special way to display it properly
+                        staged: true
                     }
-                    else {
-                        const element: ChangesTreeType = {
-                            status: "renamed",
-                            content: action.filesTree._v.renamed[i],
-                            displayContent: truncate(action.filesTree?._v.renamed[i],35),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: false
-                        }
-                        changesTree.push(element)
-                    }
+                    changesTree.push(element)
                 }
             }
             if (action.filesTree?._v.not_added !== undefined) {
@@ -287,8 +245,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
                             status: "not_added",
-                            content: action.filesTree._v.not_added[i],
-                            displayContent: truncate(action.filesTree?._v.not_added[i],35),
+                            content: removeQuotes(action.filesTree._v.not_added[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.not_added[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
                         }
@@ -297,8 +255,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     else {
                         const element: ChangesTreeType = {
                             status: "not_added",
-                            content: action.filesTree._v.not_added[i],
-                            displayContent: truncate(action.filesTree?._v.not_added[i],35),
+                            content: removeQuotes(action.filesTree._v.not_added[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.not_added[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
                         }
@@ -311,8 +269,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
                             status: "deleted",
-                            content: action.filesTree._v.deleted[i],
-                            displayContent: truncate(action.filesTree?._v.deleted[i],35),
+                            content: removeQuotes(action.filesTree._v.deleted[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.deleted[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
                         }
@@ -321,8 +279,8 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     else {
                         const element: ChangesTreeType = {
                             status: "deleted",
-                            content: action.filesTree._v.deleted[i],
-                            displayContent: truncate(action.filesTree?._v.deleted[i],35),
+                            content: removeQuotes(action.filesTree._v.deleted[i]),
+                            displayContent: truncate(removeQuotes(action.filesTree._v.deleted[i]),35),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
                         }
