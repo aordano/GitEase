@@ -24,7 +24,8 @@ import { store } from "../store"
 
 import { 
     ViewModifiedFilesAction,
-    UpdateChangesAreaAction
+    UpdateChangesAreaAction,
+    SetStagingStatusAction
 } from '../actions/commonActions';
 
 // --------------------
@@ -39,6 +40,17 @@ function* updateChangesArea() {
     yield put(ViewModifiedFilesAction())
 }
 
+function* setGlobalStagingStatus() {
+    // -- Generator that yields a dispatch by the put() method to change the staging
+    // status of all elements present in the staging area.
+    const changesTree = store.getState()?.updateChangesAreaReducer.changesAreaTree ?? []
+    for (let i = 0; i < changesTree?.length ; i += 1) {
+        yield put(SetStagingStatusAction(i))
+        const currentCheckbox: any = document.querySelectorAll(".changes-list input")[i]
+        currentCheckbox.checked = !currentCheckbox.checked
+    }
+}
+
 // -------------------
 // --- Watch Sagas ---
 // -------------------
@@ -49,6 +61,12 @@ function* watchModifiedFiles() {
     yield takeLatest('VIEW_MODIFIED_FILES',updateChangesArea);
 }
 
+function* watchGlobalStagingstatus() {
+    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
+    // to change the staging status of all elements
+    yield takeLatest('SET_GLOBAL_STAGING_STATUS',setGlobalStagingStatus);
+}
+
 // --------------------
 // --- Export Sagas ---
 // --------------------
@@ -56,6 +74,7 @@ function* watchModifiedFiles() {
 export const updateChangesSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
-        fork(watchModifiedFiles)
+        fork(watchModifiedFiles),
+        fork(watchGlobalStagingstatus)
     ]);
 };

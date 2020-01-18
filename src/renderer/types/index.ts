@@ -46,7 +46,7 @@ interface ModifiedFilesDescriptor {
     created?: string[],
     deleted?: string[],
     modified?: string[],
-    renamed?: string[],
+    renamed?: ContentNameType[],
     files?: GitFilesDescriptor[],
     staged?: string[],
     ahead?: string[] | number,
@@ -61,13 +61,18 @@ interface GitFilesDescriptor {
     working_dir: string
 }
 
+export type ContentNameType = {
+    from: string,
+    to: string
+}
+
 // ----------------------------------
 // --- Staging Area-related Types ---
 // ----------------------------------
 
 export type ChangesTreeType = {
     status: string,
-    content: string,
+    content: string | ContentNameType,
     displayContent: string,
     staged: boolean,
     index?: number

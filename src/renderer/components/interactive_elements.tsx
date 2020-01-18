@@ -45,7 +45,8 @@ import {
 } from '../actions/basicWorkflowActions';
 
 import {
-    SetStagingStatusAction
+    SetStagingStatusAction,
+    SetGlobalStagingStatusAction
 } from '../actions/commonActions';
 
 // ----------------------
@@ -192,7 +193,10 @@ const ChangesSpace: React.FC = () => {
         title =  React.createElement('p', { className: "changes-list-title"}, "No changed files.")
     }
     else {
-        title = React.createElement('p', { className: "changes-list-title"}, `${changesAreaTree.length} changed files`)
+        title = [
+            React.createElement(GlobalStagingCheckboxElement),
+            React.createElement('p', { className: "changes-list-title"}, `${changesAreaTree.length} changed files`)
+        ]
     }
     // -- Creates the <ul> element that contains the staging area element list.
     const changesList =  React.createElement('ul', { className: "changes-list"}, elements)
@@ -236,6 +240,24 @@ export const StagingCheckboxElement: React.FC<StagingCheckboxIndexType> = (
             className={"stage-checkbox"}
             type={"checkbox"}  
             onChange={handleStagingCheckbox}  
+        />
+    )
+}
+
+export const GlobalStagingCheckboxElement: React.FC = (
+    // -- Component that creates the checkbox element for staging/unstaging the selected file.
+) => {
+    const handleGlobalStagingCheckbox = () => {
+        store.dispatch(SetGlobalStagingStatusAction())
+        
+    };
+
+    return (
+        <input
+            className={"stage-checkbox-global"}
+            title={"Stage/Unstage all changes"} 
+            type={"checkbox"}  
+            onChange={handleGlobalStagingCheckbox}  
         />
     )
 }

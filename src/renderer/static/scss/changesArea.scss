@@ -91,6 +91,34 @@ div.changes-area {
             }
         }
 
+        & li.files-renamed {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: rgb(224, 241, 255);
+
+            &:hover:after {
+                content:"Renamed";
+                color: black;
+                width: 55px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            &:after {
+                content: "";
+                color: rgba(0,0,0,0);
+                background-color: rgb(66, 142, 255);
+                border-radius: 3px;
+                margin: auto;
+                padding: 2px;
+                height: 1em;
+                width: 1em;
+                position: absolute;
+                right: 11px;
+                transition-duration: 400ms;
+            }
+        }
+
         & li.files-not_added {
             border: 1px solid #ccc;
             border-radius: 3px;

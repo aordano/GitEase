@@ -6,6 +6,13 @@
 
 import promise from 'simple-git/promise';
 
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { ContentNameType } from '../../types';
+import { Gitgraph } from '@gitgraph/react';
+
 // -----------------------------
 // --- Git-related Functions ---
 // -----------------------------
@@ -16,16 +23,48 @@ export const parseStatus = (workingDir?: string) => {
     return parsedData
 }
 
-export const stageFile = (file: string, workingDir?: string) => {
+export const stageFile = (file: string | ContentNameType, workingDir?: string) => {
     const git = promise(workingDir);
-    git.add(file)
+    if (typeof file === "string") {
+        git.add(file)  
+    }
+    else if (typeof file === "object") {
+        git.add(file.from)
+        git.add(file.to)
+    }
 }
 
-export const unstageFile = (file: string, workingDir?: string) => {
+export const unstageFile = (file: string | ContentNameType, workingDir?: string) => {
     const git = promise(workingDir);
-    git.reset(["--",file])
+    if (typeof file === "string") {
+        git.reset(["--",file])
+    }
+    else if (typeof file === "object") {
+        git.raw([
+            "restore",
+            "--staged",
+            file.to
+        ])
+        git.raw([
+            "restore",
+            "--staged",
+            file.from
+        ])
+    }
 }
 
+export const stageAll = (workingDir?: string) => {
+    const git = promise(workingDir);
+    git.raw([
+        "add",
+        "-A"
+    ])
+}
+
+export const unstageAll = (workingDir?: string) => {
+    const git = promise(workingDir);
+    git.reset("soft")
+}
 // -----------------------
 // --- Misc. Functions ---
 // -----------------------
@@ -42,4 +81,15 @@ export const truncate = (path: string, num: number) => {
     )
     const fileName = path.slice(path.lastIndexOf("/"),path.length)
     return  `${topFolders} ... ${fileName}`
+}
+
+export const removeQuotes = (string: string) => {
+    if (typeof string !== "string") {
+        return ""      
+    }
+    if (string.endsWith('"') || string.endsWith("'")) {
+        const quotelessString = string.slice(1,string.length - 1)
+        return quotelessString
+    }
+    return string
 }
