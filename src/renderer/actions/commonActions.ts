@@ -15,12 +15,10 @@ import {
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
     SET_GLOBAL_STAGING_STATUS,
-    COMMIT_SUCCESS_ALERT,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
-    SetGlobalStagingStatusType,
-    CommitSuccessAlertType
+    SetGlobalStagingStatusType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -34,11 +32,9 @@ export type UpdateChangesAreaAction =
 
 export type ViewModifiedFilesAction = ViewModifiedFilesType
 
-export type CommitSuccessAlertAction = CommitSuccessAlertType
-
-// ------------------------------
-// --- Update Action Creators ---
-// ------------------------------
+// -----------------------
+// --- Action Creators ---
+// -----------------------
 
 export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (filesTree) => {
     return {
@@ -73,10 +69,6 @@ export const ViewModifiedFilesAction: ActionCreator<ViewModifiedFilesType> = () 
     };
 };
 
-// -------------------------------
-// --- Staging Action Creators ---
-// -------------------------------
-
 export const SetStagingStatusAction: ActionCreator<SetStagingStatusType> = (index) => {
     return {
         index,
@@ -87,15 +79,5 @@ export const SetStagingStatusAction: ActionCreator<SetStagingStatusType> = (inde
 export const SetGlobalStagingStatusAction: ActionCreator<SetGlobalStagingStatusType> = () => {
     return {
         type: SET_GLOBAL_STAGING_STATUS
-    }
-}
-
-// ------------------------------
-// --- Alerts Action Creators ---
-// ------------------------------
-
-export const CommitSuccessAlertAction: ActionCreator<CommitSuccessAlertType> = () => {
-    return {
-        type: COMMIT_SUCCESS_ALERT
     }
 }

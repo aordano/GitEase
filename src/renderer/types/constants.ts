@@ -23,7 +23,6 @@ export const VIEW_MODIFIED_FILES = "VIEW_MODIFIED_FILES"
 export const UPDATE_CHANGES_AREA = "UPDATE_CHANGES_AREA"
 export const SET_STAGING_STATUS = "SET_STAGING_STATUS"
 export const SET_GLOBAL_STAGING_STATUS = "SET_GLOBAL_STAGING_STATUS"
-export const COMMIT_SUCCESS_ALERT = "COMMIT_SUCCESS_ALERT"
 
 // --------------------------
 // --- Action Definitions ---
@@ -64,8 +63,4 @@ export interface BasicWorkflowUpdateCommitMessageType extends Action {
 
 export interface BasicWorkflowInitType extends Action {
     type: 'BASIC_WORKFLOW_INIT';
-}
-
-export interface CommitSuccessAlertType extends Action {
-    type: 'COMMIT_SUCCESS_ALERT';
 }

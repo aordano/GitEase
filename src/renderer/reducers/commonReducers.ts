@@ -15,12 +15,13 @@ import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
-    COMMIT_SUCCESS_ALERT
+    SET_GLOBAL_STAGING_STATUS
 } from '../types/constants';
 
 import { 
     ModifiedFilesStructure, 
-    ChangesTreeType
+    ChangesTreeType,
+    ContentNameType
 } from "../types"
 
 // ----------------------
@@ -29,8 +30,7 @@ import {
 
 import {
     ViewModifiedFilesAction,
-    UpdateChangesAreaAction,
-    CommitSuccessAlertAction
+    UpdateChangesAreaAction
 } from '../actions/commonActions';
 
 // ------------------------
@@ -314,27 +314,6 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
             return Object.assign({}, state, {
                 parsedData: parseStatus()
             });
-        default: return state
-    }
-}
-
-export const CommitSuccessAlertReducer: Reducer = (
-    // -- This reducer takes care of handling the changes area.
-    // -- Does it by having a state that involves every status change on the files,
-    // and evaluationg the staging status of every file aswell as declaring the status as read
-    // from the parser function.
-    //
-    // -- It takes one possible action:
-    //
-    // -- COMM
-    // This action invokes the parsed git.status() data.
-    state = {},
-    action: CommitSuccessAlertAction
-) => {
-    switch (action.type) {
-        case COMMIT_SUCCESS_ALERT:
-            // generate alert
-            return state
         default: return state
     }
 }
