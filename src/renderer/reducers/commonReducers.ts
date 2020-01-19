@@ -326,8 +326,8 @@ export const CommitSuccessAlertReducer: Reducer = (
     //
     // -- It takes one possible action:
     //
-    // -- COMM
-    // This action invokes the parsed git.status() data.
+    // -- COMMIT_SUCCESS_ALERT
+    // This action generates the alert on a successful commit and push.
     state = {},
     action: CommitSuccessAlertAction
 ) => {
