@@ -9,8 +9,15 @@ div.changes-area {
     padding-top: 10px;
     border-radius: 5px;
 
-    & p.changes-list-title {
+    & .stage-checkbox-global {
+        position: absolute;
         margin: 5px;
+    }
+
+    & p.changes-list-title {
+        margin: auto;
+        margin-top: 5px;
+        margin-bottom: 5px;
         font-weight: 100;
         text-align: center;
         height: 1em;
