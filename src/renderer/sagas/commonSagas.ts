@@ -25,7 +25,9 @@ import { store } from "../store"
 import { 
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
-    SetStagingStatusAction
+    SetStagingStatusAction,
+    CommitSuccessAlertAction,
+    CommitErrorAlertAction
 } from '../actions/commonActions';
 
 // --------------------
@@ -50,6 +52,23 @@ function* setGlobalStagingStatus() {
         currentCheckbox.checked = !currentCheckbox.checked
     }
 }
+function* setCommitSuccessAlert() {
+    // -- Generator that yields a dispatch by the put() method as to update the changes area if
+    // there's a change on the git status.
+    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
+    const error = store.getState()?.basicWorkflowReducer.successStatus?.error
+    while (successStatus !== "pending") {
+        if (successStatus === "success") {
+            put(CommitSuccessAlertAction())
+            break
+        }
+        if (successStatus === "error") {
+            put(CommitErrorAlertAction(error))
+            break
+        }
+        yield delay(50)
+    }
+}
 
 // -------------------
 // --- Watch Sagas ---
@@ -61,10 +80,16 @@ function* watchModifiedFiles() {
     yield takeLatest('VIEW_MODIFIED_FILES',updateChangesArea);
 }
 
-function* watchGlobalStagingstatus() {
+function* watchGlobalStagingStatus() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
     yield takeLatest('SET_GLOBAL_STAGING_STATUS',setGlobalStagingStatus);
+}
+
+function* watchCommitSuccessStatus() {
+    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
+    // to change the staging status of all elements
+    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',setCommitSuccessAlert);
 }
 
 // --------------------
@@ -75,6 +100,7 @@ export const commonSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchModifiedFiles),
-        fork(watchGlobalStagingstatus)
+        fork(watchGlobalStagingStatus),
+        fork(watchCommitSuccessStatus)
     ]);
 };

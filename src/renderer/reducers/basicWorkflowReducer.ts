@@ -17,6 +17,10 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH
 } from '../types/constants';
 
+import {
+    GitCommitType
+} from "../types"
+
 
 // ----------------------
 // --- Action Imports ---
@@ -36,12 +40,7 @@ import { BasicWorkflow } from '../components/functions/workflows';
 // --- Reducer State Definitions ---
 // ---------------------------------
 
-export interface BasicWorkflowState {
-    commitMessage: string;
-    commitDescription?: string;
-    branch?: string;
-    remote?: string;
-}
+export type BasicWorkflowState = GitCommitType
 
 // -----------------------------------------
 // --- Reducer Default State Definitions ---
@@ -51,7 +50,11 @@ const basicWorkflowDefaultState: BasicWorkflowState = {
     commitMessage: '',
     commitDescription: "",
     branch: "master",
-    remote: "origin"
+    remote: "origin",
+    successStatus: {
+        error: "none",
+        success: "pending"
+    }
 };
 
 // ----------------
@@ -92,14 +95,19 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             );
             try {
                 workflow.commitAndPush();
+                return Object.assign({}, state, {
+                    succesStatus: {
+                        error: "none",
+                        success: "success"
+                    }
+                });
             } catch (error) {
                 console.log(`error... ${error}`);
                 return Object.assign({}, state, {
-                    error: {error}
-                });
-            } finally {
-                return Object.assign({}, state, {
-                    updateStatus: 'up to date'
+                    succesStatus: {
+                        error: {error},
+                        success: "error"
+                    }
                 });
             }
         case BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE:

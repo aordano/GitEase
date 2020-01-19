@@ -16,11 +16,13 @@ import {
     SET_STAGING_STATUS,
     SET_GLOBAL_STAGING_STATUS,
     COMMIT_SUCCESS_ALERT,
+    COMMIT_ERROR_ALERT,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
     SetGlobalStagingStatusType,
-    CommitSuccessAlertType
+    CommitSuccessAlertType,
+    CommitErrorAlertType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -35,6 +37,8 @@ export type UpdateChangesAreaAction =
 export type ViewModifiedFilesAction = ViewModifiedFilesType
 
 export type CommitSuccessAlertAction = CommitSuccessAlertType
+
+export type CommitErrorAlertAction = CommitErrorAlertType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -97,5 +101,12 @@ export const SetGlobalStagingStatusAction: ActionCreator<SetGlobalStagingStatusT
 export const CommitSuccessAlertAction: ActionCreator<CommitSuccessAlertType> = () => {
     return {
         type: COMMIT_SUCCESS_ALERT
+    }
+}
+
+export const CommitErrorAlertAction: ActionCreator<CommitErrorAlertType> = (error) => {
+    return {
+        error,
+        type: COMMIT_ERROR_ALERT
     }
 }

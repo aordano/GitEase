@@ -15,7 +15,8 @@ import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
-    COMMIT_SUCCESS_ALERT
+    COMMIT_SUCCESS_ALERT,
+    COMMIT_ERROR_ALERT
 } from '../types/constants';
 
 import { 
@@ -30,7 +31,8 @@ import {
 import {
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
-    CommitSuccessAlertAction
+    CommitSuccessAlertAction,
+    CommitErrorAlertAction
 } from '../actions/commonActions';
 
 // ------------------------
@@ -318,11 +320,8 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
     }
 }
 
-export const CommitSuccessAlertReducer: Reducer = (
-    // -- This reducer takes care of handling the changes area.
-    // -- Does it by having a state that involves every status change on the files,
-    // and evaluationg the staging status of every file aswell as declaring the status as read
-    // from the parser function.
+export const CommitSuccessAlertReducer: Reducer<{}> = (
+    // -- 
     //
     // -- It takes one possible action:
     //
@@ -333,7 +332,25 @@ export const CommitSuccessAlertReducer: Reducer = (
 ) => {
     switch (action.type) {
         case COMMIT_SUCCESS_ALERT:
-            // generate alert
+            console.log("success")
+            return state
+        default: return state
+    }
+}
+
+export const CommitErrorAlertReducer: Reducer<{}, any> = (
+    // -- 
+    //
+    // -- It takes one possible action:
+    //
+    // -- COMMIT_ERROR_ALERT
+    // This action generates the alert on an unsuccessful commit and push.
+    state = {},
+    action: CommitErrorAlertAction
+) => {
+    switch (action.type) {
+        case COMMIT_ERROR_ALERT:
+            console.log(action.error)
             return state
         default: return state
     }

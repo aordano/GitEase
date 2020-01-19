@@ -32,14 +32,13 @@ import {
 
 function* clearCommitBox() {
     // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
-    debugger
+    yield put(BasicWorkflowUpdateCommitMessageAction("",""))
     const commitMessageBox: HTMLInputElement = 
         document.querySelector(".commit-box .commit-message") as HTMLInputElement
     const commitMessageDescription: HTMLTextAreaElement = 
         document.querySelector(".commit-box .commit-description") as HTMLTextAreaElement
     commitMessageBox.value  = ""
     commitMessageDescription.value = ""
-    yield put(BasicWorkflowUpdateCommitMessageAction("",""))
 }
 
 // -------------------
@@ -49,7 +48,7 @@ function* clearCommitBox() {
 function* watchCommit() {
     // -- Watch generator that looks for VIEW_MODIFIED_FILES events and fires up a saga 
     // to update the changes area display
-    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',clearCommitBox);
+    yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
 }
 
 // --------------------

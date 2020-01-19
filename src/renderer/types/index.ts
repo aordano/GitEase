@@ -82,6 +82,24 @@ export type StagingCheckboxIndexType = {
     index: number | undefined
 }
 
+// --------------------------------------
+// --- Git Status Modified Files Type ---
+// --------------------------------------
+
+export type GitCommitType = {
+    commitMessage: string,
+    commitDescription?: string,
+    branch?: string,
+    remote?: string,
+    successStatus?: GitCommitStatusType
+}
+
+type GitCommitStatusType = {
+    error: string,
+    success: string
+}
+
+
 // -------------------------------------------
 // --- Typed Redefinition of useSelector() ---
 // -------------------------------------------

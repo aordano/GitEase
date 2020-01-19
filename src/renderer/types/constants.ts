@@ -24,6 +24,7 @@ export const UPDATE_CHANGES_AREA = "UPDATE_CHANGES_AREA"
 export const SET_STAGING_STATUS = "SET_STAGING_STATUS"
 export const SET_GLOBAL_STAGING_STATUS = "SET_GLOBAL_STAGING_STATUS"
 export const COMMIT_SUCCESS_ALERT = "COMMIT_SUCCESS_ALERT"
+export const COMMIT_ERROR_ALERT = "COMMIT_ERROR_ALERT"
 
 // --------------------------
 // --- Action Definitions ---
@@ -69,3 +70,9 @@ export interface BasicWorkflowInitType extends Action {
 export interface CommitSuccessAlertType extends Action {
     type: 'COMMIT_SUCCESS_ALERT';
 }
+
+export interface CommitErrorAlertType extends Action {
+    type: 'COMMIT_ERROR_ALERT',
+    error: string;
+}
+
