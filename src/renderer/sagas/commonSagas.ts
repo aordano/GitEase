@@ -71,7 +71,7 @@ function* watchGlobalStagingstatus() {
 // --- Export Sagas ---
 // --------------------
 
-export const updateChangesSaga = function* root() {
+export const commonSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchModifiedFiles),

@@ -4,7 +4,8 @@
 // --- Sagas Imports ---
 // ---------------------
 
-import { updateChangesSaga } from "./commonSagas"
+import { commonSaga } from "./commonSagas"
+import { basicWorkflowSaga } from "./basicWorkflowSagas";
 
 // -----------------------
 // --- Effects Imports ---
@@ -22,6 +23,7 @@ import {
 export const rootSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
-        fork(updateChangesSaga)
+        fork(commonSaga),
+        fork(basicWorkflowSaga)
     ]);
 };

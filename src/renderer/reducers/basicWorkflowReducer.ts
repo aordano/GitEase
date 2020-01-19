@@ -91,6 +91,13 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
+                debugger
+                const commitMessageBox: HTMLInputElement = 
+                    document.querySelector(".commit-box .commit-message") as HTMLInputElement
+                const commitMessageDescription: HTMLTextAreaElement = 
+                    document.querySelector(".commit-box .commit-description") as HTMLTextAreaElement
+                commitMessageBox.value  = ""
+                commitMessageDescription.value = ""
                 workflow.commitAndPush();
             } catch (error) {
                 console.log(`error... ${error}`);
