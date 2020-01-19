@@ -55,6 +55,15 @@ import {
 
 require('../static/scss/actions.scss');
 
+// ----------------------------
+// --- Localization Imports ---
+// ----------------------------
+
+const lang = "en_US"
+
+const localization = require(`../lang/${lang}`)
+
+
 // -------------------------------------------
 // * --- Temporary statements for testing ---
 // -------------------------------------------
@@ -86,9 +95,9 @@ const CommitMessageInput: React.FC = () => {
     };
 
     return <input 
-        title={"Make it a short one that succintly describes your changes."} 
+        title={localization.commitMessageTooltip} 
         className={'commit-message'} 
-        placeholder={"Give a name to your changes"} 
+        placeholder={localization.commitMessagePlaceholder} 
         value={input} 
         onChange={handleCommitTextChange} 
     />;
@@ -112,11 +121,11 @@ const CommitButton: React.FC = () => {
     };
 
     return <input 
-        title={"Publish your changes."} 
+        title={localization.commitButtonTooltip} 
         type={'button'} 
         className={'commit-button'} 
         onClick={handleCommitButtonPress} 
-        value={"Go"}
+        value={localization.commitButtonText}
     />;
 };
 
@@ -139,7 +148,7 @@ const CommmitDescription: React.FC = () => {
 
     return (
         <textarea 
-            placeholder={'Describe what you did with a short explanation'} 
+            placeholder={localization.commitDescriptionPlaceholder} 
             className={'commit-description'} 
             value={input}
             onChange={handleCommitDescriptionChange}
@@ -156,7 +165,7 @@ const CommitBox: React.FC = () => {
 
     return (
         <div className={'commit-box'}>
-            <p>Commit your changes:</p>
+            <p>{localization.commitBoxTitle}</p>
             <CommitMessageInput />
             <CommitButton />
             <CommmitDescription />
@@ -190,12 +199,16 @@ const ChangesSpace: React.FC = () => {
     }
     // -- The title changes based on the presence of elements in the tree.
     if (changesAreaTree.length === 0 ){
-        title =  React.createElement('p', { className: "changes-list-title"}, "No changed files.")
+        title =  React.createElement('p', { className: "changes-list-title"}, localization.changesAreaNoChangesTitle)
     }
     else {
         title = [
             React.createElement(GlobalStagingCheckboxElement),
-            React.createElement('p', { className: "changes-list-title"}, `${changesAreaTree.length} changed files`)
+            React.createElement(
+                'p', 
+                { className: "changes-list-title"}, 
+                `${changesAreaTree.length} ${localization.changesAreaChangesTitle}`
+            )
         ]
     }
     // -- Creates the <ul> element that contains the staging area element list.
@@ -238,6 +251,7 @@ export const StagingCheckboxElement: React.FC<StagingCheckboxIndexType> = (
     return (
         <input
             className={"stage-checkbox"}
+            title={localization.changesAreaElementCheckboxTooltip} 
             type={"checkbox"}  
             onChange={handleStagingCheckbox}  
         />
@@ -255,7 +269,7 @@ export const GlobalStagingCheckboxElement: React.FC = (
     return (
         <input
             className={"stage-checkbox-global"}
-            title={"Stage/Unstage all changes"} 
+            title={localization.changesAreaGlobalCheckboxTooltip} 
             type={"checkbox"}  
             onChange={handleGlobalStagingCheckbox}  
         />
