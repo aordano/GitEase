@@ -32,6 +32,7 @@ import {
 
 function* clearCommitBox() {
     // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
+    debugger
     const commitMessageBox: HTMLInputElement = 
         document.querySelector(".commit-box .commit-message") as HTMLInputElement
     const commitMessageDescription: HTMLTextAreaElement = 
