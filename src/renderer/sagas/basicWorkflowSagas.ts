@@ -31,7 +31,13 @@ import {
 // --------------------
 
 function* clearCommitBox() {
-    // -- Generator that yields a dispatch by the put() method as to update the changes area if
+    // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
+    const commitMessageBox: HTMLInputElement = 
+        document.querySelector(".commit-box .commit-message") as HTMLInputElement
+    const commitMessageDescription: HTMLTextAreaElement = 
+        document.querySelector(".commit-box .commit-description") as HTMLTextAreaElement
+    commitMessageBox.value  = ""
+    commitMessageDescription.value = ""
     yield put(BasicWorkflowUpdateCommitMessageAction("",""))
 }
 
