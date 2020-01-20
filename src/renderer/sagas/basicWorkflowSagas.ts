@@ -62,20 +62,26 @@ function* setCommitSuccessAlert() { // ! currently not working
     debugger
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
-    while (successStatus === "pending") {
-        yield delay(100)
-        yield put(BasicWorkflowCommitAndPushAction(
-            store.getState()?.basicWorkflowReducer.commitMessage,
-            store.getState()?.basicWorkflowReducer.commitDescription,
-            branch, 
-            remote
-        ))
+    yield () => {
+        if (successStatus === "success") {
+            put(CommitSuccessAlertAction())
+        }
     }
-    if (successStatus === "success") {
-        yield put(CommitSuccessAlertAction())
+    yield () => {
+        if (successStatus === "error") {
+            put(CommitErrorAlertAction(error))
+        }
     }
-    if (successStatus === "error") {
-        yield put(CommitErrorAlertAction(error))
+    yield () => {
+        if (successStatus === "pending") {
+            delay(100)
+            put(BasicWorkflowCommitAndPushAction(
+                store.getState()?.basicWorkflowReducer.commitMessage,
+                store.getState()?.basicWorkflowReducer.commitDescription,
+                branch, 
+                remote
+            ))
+        }
     }
 }
 
