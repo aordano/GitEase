@@ -52,20 +52,21 @@ function* setGlobalStagingStatus() {
         currentCheckbox.checked = !currentCheckbox.checked
     }
 }
-function* setCommitSuccessAlert() { // ! currently not working
+const setCommitSuccessAlert = () => { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
     debugger
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error
+    const ble = async () => { delay(50) }  
     while (successStatus === "pending") {
-        yield delay(50)
+        ble()
     }
     if (successStatus === "success") {
-        yield put(CommitSuccessAlertAction())
+        put(CommitSuccessAlertAction())
     }
     if (successStatus === "error") {
-        yield put(CommitErrorAlertAction(error))
+        put(CommitErrorAlertAction(error))
     }
 }
 
