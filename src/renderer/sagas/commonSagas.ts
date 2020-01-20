@@ -57,10 +57,11 @@ const setCommitSuccessAlert = () => { // ! currently not working
     // there's a change on the git status. 
     debugger
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
-    const error = store.getState()?.basicWorkflowReducer.successStatus?.error
-    const ble = async () => { delay(50) }  
+    const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
     while (successStatus === "pending") {
-        ble()
+        setTimeout(() => {           
+            
+        }, 50)
     }
     if (successStatus === "success") {
         put(CommitSuccessAlertAction())
