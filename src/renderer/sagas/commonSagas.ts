@@ -25,9 +25,7 @@ import { store } from "../store"
 import { 
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
-    SetStagingStatusAction,
-    CommitSuccessAlertAction,
-    CommitErrorAlertAction
+    SetStagingStatusAction
 } from '../actions/commonActions';
 
 // --------------------
@@ -52,25 +50,6 @@ function* setGlobalStagingStatus() {
         currentCheckbox.checked = !currentCheckbox.checked
     }
 }
-const setCommitSuccessAlert = () => { // ! currently not working
-    // -- Generator that yields a dispatch by the put() method as to update the changes area if
-    // there's a change on the git status. 
-    debugger
-    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
-    const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
-    while (successStatus === "pending") {
-        setTimeout(() => {           
-            
-        }, 50)
-    }
-    if (successStatus === "success") {
-        put(CommitSuccessAlertAction())
-    }
-    if (successStatus === "error") {
-        put(CommitErrorAlertAction(error))
-    }
-}
-
 // -------------------
 // --- Watch Sagas ---
 // -------------------
@@ -87,12 +66,6 @@ function* watchGlobalStagingStatus() {
     yield takeLatest('SET_GLOBAL_STAGING_STATUS',setGlobalStagingStatus);
 }
 
-function* watchCommitSuccessStatus() {
-    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
-    // to change the staging status of all elements
-    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',setCommitSuccessAlert);
-}
-
 // --------------------
 // --- Export Sagas ---
 // --------------------
@@ -101,7 +74,6 @@ export const commonSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchModifiedFiles),
-        fork(watchGlobalStagingStatus),
-        fork(watchCommitSuccessStatus)
+        fork(watchGlobalStagingStatus)
     ]);
 };

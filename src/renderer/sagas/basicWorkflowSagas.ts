@@ -23,14 +23,29 @@ import { store } from "../store"
 // ----------------------
 
 import { 
-    BasicWorkflowUpdateCommitMessageAction
+    CommitSuccessAlertAction,
+    CommitErrorAlertAction
+} from '../actions/commonActions';
+
+import { 
+    BasicWorkflowUpdateCommitMessageAction,
+    BasicWorkflowCommitAndPushAction
 } from '../actions/basicWorkflowActions';
+
+// ---------------------------
+// --- Placeholder Imports ---
+// ---------------------------
+
+import {
+    branch,
+    remote
+} from "../components/interactive_elements"
 
 // --------------------
 // --- Effect Sagas ---
 // --------------------
 
-function* clearCommitBox() {
+function* clearCommitBox() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
     yield put(BasicWorkflowUpdateCommitMessageAction("",""))
     const commitMessageBox: HTMLInputElement = 
@@ -39,6 +54,29 @@ function* clearCommitBox() {
         document.querySelector(".commit-box .commit-description") as HTMLTextAreaElement
     commitMessageBox.value  = ""
     commitMessageDescription.value = ""
+}
+
+function* setCommitSuccessAlert() { // ! currently not working
+    // -- Generator that yields a dispatch by the put() method as to update the changes area if
+    // there's a change on the git status. 
+    debugger
+    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
+    const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
+    while (successStatus === "pending") {
+        yield delay(100)
+        yield put(BasicWorkflowCommitAndPushAction(
+            store.getState()?.basicWorkflowReducer.commitMessage,
+            store.getState()?.basicWorkflowReducer.commitDescription,
+            branch, 
+            remote
+        ))
+    }
+    if (successStatus === "success") {
+        yield put(CommitSuccessAlertAction())
+    }
+    if (successStatus === "error") {
+        yield put(CommitErrorAlertAction(error))
+    }
 }
 
 // -------------------
@@ -51,6 +89,12 @@ function* watchCommit() {
     yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
 }
 
+function* watchCommitSuccessStatus() {
+    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
+    // to change the staging status of all elements
+    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',setCommitSuccessAlert);
+}
+
 // --------------------
 // --- Export Sagas ---
 // --------------------
@@ -58,6 +102,7 @@ function* watchCommit() {
 export const basicWorkflowSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
-        fork(watchCommit)
+        fork(watchCommit),
+        fork(watchCommitSuccessStatus)
     ]);
 };
