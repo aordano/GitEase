@@ -82,6 +82,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 ) => {
     switch (action.type) {
         case UPDATE_COMMIT_SUCCESS_STATUS:
+            debugger
             if (state.successStatus?.success === "pending") {
                 return Object.assign({}, state, {
                     successStatus: {
