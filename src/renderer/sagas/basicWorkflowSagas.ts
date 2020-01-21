@@ -55,11 +55,11 @@ function* setCommitSuccessAlert() { // ! currently not working
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
 
     if (successStatus === "success") {
-        return put(CommitSuccessAlertAction())
+        return yield put(CommitSuccessAlertAction())
     }
 
     if (successStatus === "error") {
-        return put(CommitErrorAlertAction(error))
+        return yield put(CommitErrorAlertAction(error))
     }
     yield delay(200)
     yield put(UpdateCommitSuccessStatusAction())
