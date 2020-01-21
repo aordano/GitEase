@@ -45,21 +45,25 @@ export class BasicWorkflow {
     async commitAndPush() {
         // -- This method commits and pushes as it name says. If there's missing data it defaults
         // to "origin" and "master" for remote and branch.
-        const pull = await git.pull(
-            this.gitBasicWorkflowData.remote ?? 'origin',
-            this.gitBasicWorkflowData.branch ?? 'master'
-        );
-        const commit = await git.commit([
-            this.gitBasicWorkflowData.message, 
-            this.gitBasicWorkflowData.description ?? ""
-        ])
-        const push = await git.push(
-            this.gitBasicWorkflowData.remote ?? "origin",
-            this.gitBasicWorkflowData.branch ?? "master"
-        )
-        if (pull.summary && commit) {
+        
+        const global = async () => {
+            await git.push(
+                this.gitBasicWorkflowData.remote ?? "origin",
+                this.gitBasicWorkflowData.branch ?? "master"
+            )
+            await git.pull(
+                this.gitBasicWorkflowData.remote ?? 'origin',
+                this.gitBasicWorkflowData.branch ?? 'master'
+            );
+            await git.commit([
+                this.gitBasicWorkflowData.message, 
+                this.gitBasicWorkflowData.description ?? ""
+            ])
+            
+        } 
+        debugger
+        if (global()) {
             store.dispatch(CommitSuccessAlertAction())
         }
-        console.log(push)
     }
 }
