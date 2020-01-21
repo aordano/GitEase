@@ -127,34 +127,27 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 const commitDeed = async () => {
                     await workflow.commitAndPush()
                 }  
-                let successStatus: Object
                 const successResult = () => {
-                    successStatus = {
-                        error: "none",
-                        success: "success"
-                    }
+                    return Object.assign({}, state, {
+                        successStatus: {
+                            error: "none",
+                            success: "success"
+                        }
+                    }); 
                 }
                 const errorResult = () => {
-                    successStatus = {
-                        error: "Generic error",
-                        success: "error"
-                    }
+                    return Object.assign({}, state, {
+                        successStatus: {
+                            error: "Generic error",
+                            success: "error"
+                        }
+                    });                       
+                    
                 }
-                const status = commitDeed().then(
+                commitDeed().then(
                     successResult,
                     errorResult
-                ).finally(
-                    () => {
-                        debugger
-                        return successStatus
-                    }
-                ) 
-                debugger
-                return Object.assign({}, state, {
-                    successStatus: {status}
-                }); 
-                
-                    
+                )   
             } catch (error) {
                 console.log(`error... ${error}`);
                 return Object.assign({}, state, {
