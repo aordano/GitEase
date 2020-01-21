@@ -142,6 +142,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     errorResult
                 ).finally(
                     () => {
+                        debugger
                         Object.assign({}, state, {
                             successStatus: {status}
                         });  
