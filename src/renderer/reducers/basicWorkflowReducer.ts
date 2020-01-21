@@ -140,7 +140,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                         success: "error"
                     }
                 }
-                const status = () => commitDeed().then(
+                const status = commitDeed().then(
                     successResult,
                     errorResult
                 ).finally(
