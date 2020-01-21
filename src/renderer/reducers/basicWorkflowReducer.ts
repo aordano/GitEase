@@ -128,6 +128,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     await workflow.commitAndPush()
                 }  
                 const successResult = () => {
+                    debugger
                     return Object.assign({}, state, {
                         successStatus: {
                             error: "none",
