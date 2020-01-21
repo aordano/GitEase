@@ -14,7 +14,9 @@ import { Reducer } from 'redux';
 import {
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
-    BASIC_WORKFLOW_COMMIT_AND_PUSH
+    BASIC_WORKFLOW_COMMIT_AND_PUSH,
+    UPDATE_COMMIT_SUCCESS_STATUS,
+    BasicWorkflowCommitAndPushType
 } from '../types/constants';
 
 import {
@@ -79,6 +81,31 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     action: BasicWorkflowAction
 ) => {
     switch (action.type) {
+        case UPDATE_COMMIT_SUCCESS_STATUS:
+
+            if (state.successStatus?.success === "pending") {
+                return Object.assign({}, state, {
+                    successStatus: {
+                        success: "pending"
+                    }
+                });
+            }
+
+            if (state.successStatus?.success === "success") {
+                return Object.assign({}, state, {
+                    successStatus: {
+                        success: "success"
+                    }
+                });
+            }
+
+            return Object.assign({}, state, {
+                successStatus: {
+                    success: "error",
+                    error: action.error
+                }
+            });
+
         case BASIC_WORKFLOW_COMMIT_AND_PUSH:
             // -- This reducer grabs the current commit message data and executes the commit
             // for the previously staged files.
@@ -94,9 +121,9 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                workflow.commitAndPush();
+                workflow.commitAndPush()
                 return Object.assign({}, state, {
-                    succesStatus: {
+                    successStatus: {
                         error: "none",
                         success: "success"
                     }
@@ -104,7 +131,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             } catch (error) {
                 console.log(`error... ${error}`);
                 return Object.assign({}, state, {
-                    succesStatus: {
+                    successStatus: {
                         error: {error},
                         success: "error"
                     }

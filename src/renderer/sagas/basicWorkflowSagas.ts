@@ -24,22 +24,13 @@ import { store } from "../store"
 
 import { 
     CommitSuccessAlertAction,
-    CommitErrorAlertAction
+    CommitErrorAlertAction,
+    UpdateCommitSuccessStatusAction
 } from '../actions/commonActions';
 
 import { 
-    BasicWorkflowUpdateCommitMessageAction,
-    BasicWorkflowCommitAndPushAction
+    BasicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
-
-// ---------------------------
-// --- Placeholder Imports ---
-// ---------------------------
-
-import {
-    branch,
-    remote
-} from "../components/interactive_elements"
 
 // --------------------
 // --- Effect Sagas ---
@@ -59,29 +50,19 @@ function* clearCommitBox() { // ! currently not working
 function* setCommitSuccessAlert() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
-    debugger
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
-    yield () => {
-        if (successStatus === "success") {
-            put(CommitSuccessAlertAction())
-        }
+    if (successStatus === "success") {
+        yield put(CommitSuccessAlertAction())
     }
-    yield () => {
-        if (successStatus === "error") {
-            put(CommitErrorAlertAction(error))
-        }
+
+    if (successStatus === "error") {
+        yield put(CommitErrorAlertAction(error))
     }
-    yield () => {
-        if (successStatus === "pending") {
-            delay(100)
-            put(BasicWorkflowCommitAndPushAction(
-                store.getState()?.basicWorkflowReducer.commitMessage,
-                store.getState()?.basicWorkflowReducer.commitDescription,
-                branch, 
-                remote
-            ))
-        }
+
+    if (successStatus === "pending") {
+        yield delay(200)
+        yield put(UpdateCommitSuccessStatusAction())
     }
 }
 
@@ -98,7 +79,7 @@ function* watchCommit() {
 function* watchCommitSuccessStatus() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',setCommitSuccessAlert);
+    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH', "UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlert);
 }
 
 // --------------------

@@ -25,6 +25,7 @@ export const SET_STAGING_STATUS = "SET_STAGING_STATUS"
 export const SET_GLOBAL_STAGING_STATUS = "SET_GLOBAL_STAGING_STATUS"
 export const COMMIT_SUCCESS_ALERT = "COMMIT_SUCCESS_ALERT"
 export const COMMIT_ERROR_ALERT = "COMMIT_ERROR_ALERT"
+export const UPDATE_COMMIT_SUCCESS_STATUS = "UPDATE_COMMIT_SUCCESS_STATUS"
 
 // --------------------------
 // --- Action Definitions ---
@@ -74,5 +75,10 @@ export interface CommitSuccessAlertType extends Action {
 export interface CommitErrorAlertType extends Action {
     type: 'COMMIT_ERROR_ALERT',
     error: string;
+}
+
+export interface UpdateCommitSuccessStatusType extends Action {
+    type: 'UPDATE_COMMIT_SUCCESS_STATUS',
+    error?: string;
 }
 

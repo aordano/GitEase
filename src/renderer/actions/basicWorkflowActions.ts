@@ -14,9 +14,11 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
+    UPDATE_COMMIT_SUCCESS_STATUS,
     BasicWorkflowCommitAndPushType,
     BasicWorkflowUpdateCommitMessageType,
-    BasicWorkflowInitType
+    BasicWorkflowInitType,
+    UpdateCommitSuccessStatusType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -26,7 +28,8 @@ import {
 export type BasicWorkflowAction =
     | BasicWorkflowCommitAndPushType
     | BasicWorkflowUpdateCommitMessageType
-    | BasicWorkflowInitType;
+    | BasicWorkflowInitType
+    | UpdateCommitSuccessStatusType;
 
 // -----------------------
 // --- Action Creators ---
@@ -50,17 +53,18 @@ export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () 
     };
 };
 
-export const BasicWorkflowCommitAndPushAction: ActionCreator<BasicWorkflowCommitAndPushType> = (
-    message,
-    branch?,
-    remote?,
-    description?
-) => {
-    return {
+export const BasicWorkflowCommitAndPushAction: 
+    ActionCreator<BasicWorkflowCommitAndPushType> = (
         message,
-        description,
-        branch,
-        remote,
-        type: BASIC_WORKFLOW_COMMIT_AND_PUSH
+        branch?,
+        remote?,
+        description?
+) => {
+        return {
+            message,
+            description,
+            branch,
+            remote,
+            type: BASIC_WORKFLOW_COMMIT_AND_PUSH
+        };
     };
-};

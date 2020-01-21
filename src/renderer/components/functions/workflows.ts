@@ -41,11 +41,16 @@ export class BasicWorkflow {
     commitAndPush() {
         // -- This method commits and pushes as it name says. If there's missing data it defaults
         // to "origin" and "master" for remote and branch.
-        git.fetch(
+        debugger
+        const pull = git.pull(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-        git.commit([this.gitBasicWorkflowData.message, this.gitBasicWorkflowData.description ?? ""]);
+        const commit = git.commit([
+            this.gitBasicWorkflowData.message, 
+            this.gitBasicWorkflowData.description ?? ""
+        ])
+        commit.catch(console.error) 
         git.push(this.gitBasicWorkflowData.remote ?? "origin",this.gitBasicWorkflowData.branch ?? "master")
     }
 }
