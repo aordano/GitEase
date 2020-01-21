@@ -42,7 +42,7 @@ import { BasicWorkflow } from '../components/functions/workflows';
 // --- Reducer State Definitions ---
 // ---------------------------------
 
-export type BasicWorkflowState = GitCommitType
+export type BasicWorkflowState = GitCommitType |  Promise<void>
 
 // -----------------------------------------
 // --- Reducer Default State Definitions ---
@@ -82,29 +82,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 ) => {
     switch (action.type) {
         case UPDATE_COMMIT_SUCCESS_STATUS:
-
-            if (state.successStatus?.success === "pending") {
-                return Object.assign({}, state, {
-                    successStatus: {
-                        success: "pending"
-                    }
-                });
-            }
-
-            if (state.successStatus?.success === "success") {
-                return Object.assign({}, state, {
-                    successStatus: {
-                        success: "success"
-                    }
-                });
-            }
-
-            return Object.assign({}, state, {
-                successStatus: {
-                    success: "error",
-                    error: action.error
-                }
-            });
+            return state
 
         case BASIC_WORKFLOW_COMMIT_AND_PUSH:
             // -- This reducer grabs the current commit message data and executes the commit
