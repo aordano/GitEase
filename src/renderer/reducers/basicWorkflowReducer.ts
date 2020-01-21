@@ -121,13 +121,16 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                workflow.commitAndPush()
-                return Object.assign({}, state, {
-                    successStatus: {
-                        error: "none",
-                        success: "success"
-                    }
-                });
+                debugger
+                const commitAndPushPromise = workflow.commitAndPush()
+                if (commitAndPushPromise) {
+                    return Object.assign({}, state, {
+                        successStatus: {
+                            error: "none",
+                            success: "success"
+                        }
+                    });
+                }                
             } catch (error) {
                 console.log(`error... ${error}`);
                 return Object.assign({}, state, {
