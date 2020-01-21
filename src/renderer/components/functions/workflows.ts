@@ -12,6 +12,10 @@ import promise from 'simple-git/promise';
 
 import { gitBasicWorkflowDataType } from '../../types';
 
+import {store} from "../../store"
+
+import {CommitSuccessAlertAction} from "../../actions/commonActions"
+
 // -----------------------------
 // --- SimpleGit Definitions ---
 // -----------------------------
@@ -53,8 +57,9 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.remote ?? "origin",
             this.gitBasicWorkflowData.branch ?? "master"
         )
-        console.log(pull.summary)
-        console.log(commit)
+        if (pull.summary && commit) {
+            store.dispatch(CommitSuccessAlertAction())
+        }
         console.log(push)
     }
 }
