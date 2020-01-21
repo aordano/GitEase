@@ -121,7 +121,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                debugger
                 const deed = async () => {
                     await workflow.commitAndPush()
                 }  
@@ -143,6 +142,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     errorResult
                 ).finally(
                     () => {
+                        debugger
                         return Object.assign({}, state, {
                             successStatus: {successStatus}
                         });
