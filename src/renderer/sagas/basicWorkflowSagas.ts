@@ -47,23 +47,23 @@ function* clearCommitBox() { // ! currently not working
     commitMessageDescription.value = ""
 }
 
-function* setCommitSuccessAlert() { // ! currently not working
+const setCommitSuccessAlert = async () => { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
     debugger
     if (successStatus === "success") {
-        yield put(CommitSuccessAlertAction())
+        put(CommitSuccessAlertAction())
     }
 
     if (successStatus === "error") {
-        yield put(CommitErrorAlertAction(error))
+        put(CommitErrorAlertAction(error))
     }
 
     if (successStatus === "pending") {
-        yield delay(200)
-        yield put(UpdateCommitSuccessStatusAction())
+        await delay(200)
+        put(UpdateCommitSuccessStatusAction())
     }
 }
 
@@ -80,7 +80,13 @@ function* watchCommit() {
 function* watchCommitSuccessStatus() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH', "UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlert);
+    yield takeLatest('BASIC_WORKFLOW_COMMIT_AND_PUSH',setCommitSuccessAlert);
+}
+
+function* watchCommitSuccessUpdateStatus() {
+    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
+    // to change the staging status of all elements
+    yield takeLatest("UPDATE_COMMIT_SUCCESS_STATUS",setCommitSuccessAlert);
 }
 
 // --------------------
@@ -91,6 +97,7 @@ export const basicWorkflowSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchCommit),
-        fork(watchCommitSuccessStatus)
+        fork(watchCommitSuccessStatus),
+        fork(watchCommitSuccessUpdateStatus)
     ]);
 };
