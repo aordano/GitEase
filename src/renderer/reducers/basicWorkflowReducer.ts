@@ -121,7 +121,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                debugger
                 const commitAndPushPromise = workflow.commitAndPush()
                 if (commitAndPushPromise) {
                     return Object.assign({}, state, {
@@ -130,7 +129,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                             success: "success"
                         }
                     });
-                }                
+                }               
             } catch (error) {
                 console.log(`error... ${error}`);
                 return Object.assign({}, state, {
