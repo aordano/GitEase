@@ -52,6 +52,7 @@ function* setCommitSuccessAlert() { // ! currently not working
     // there's a change on the git status. 
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
+    debugger
     if (successStatus === "success") {
         yield put(CommitSuccessAlertAction())
     }
