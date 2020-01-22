@@ -128,7 +128,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     await workflow.commitAndPush()
                 }  
                 const successResult = () => {
-                    debugger
                     return {
                         error: "none",
                         success: "success"
@@ -144,8 +143,8 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 
                 return Object.assign({}, state, {
                     successStatus: commitDeed().then(
-                        successResult,
-                        errorResult
+                        successResult?._v,
+                        errorResult?._v
                     )
                 });
             } catch (error) {
