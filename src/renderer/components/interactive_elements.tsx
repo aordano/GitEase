@@ -32,7 +32,8 @@ import { store } from '../store';
 import { 
     useSelector,
     ChangesTreeType,
-    StagingCheckboxIndexType
+    StagingCheckboxIndexType,
+    SpinnerType
 } from '../types';
 
 // ----------------------
@@ -68,11 +69,11 @@ const localization = require(`../lang/${lang}`)
 // * --- Temporary statements for testing ---
 // -------------------------------------------
 
-const branch = 'experiments';
+export const branch = 'experiments';
 const USER = 'aordano';
 import {PASS} from "../../../.secrets"
 const REPO = 'github.com/aordano/GitEase';
-const remote = `https://${USER}:${PASS}@${REPO}`;
+export const remote = `https://${USER}:${PASS}@${REPO}`;
 
 // -------------------------
 // --- Commit Components ---
@@ -164,11 +165,14 @@ const CommitBox: React.FC = () => {
     // TODO Swap CommitButton for the correct one given the workflow context
 
     return (
-        <div className={'commit-box'}>
-            <p>{localization.commitBoxTitle}</p>
-            <CommitMessageInput />
-            <CommitButton />
-            <CommmitDescription />
+        <div className={"commit-overlay"}>
+            <SpinnerComponent name={"commit-box"}/>
+            <div className={'commit-box'}>
+                <p>{localization.commitBoxTitle}</p>
+                <CommitMessageInput />
+                <CommitButton />
+                <CommmitDescription />
+            </div>
         </div>
     );
 };
@@ -321,3 +325,30 @@ export const ActionsComponent: React.FC = () => {
         </div>
     );
 };
+
+
+// ------------------------
+// --- Misc. Components ---
+// ------------------------
+
+export const SpinnerComponent: React.FC<SpinnerType> = ({name}: SpinnerType)=> {
+    // -- Simple container that holds the loading spinner.
+
+    return (
+        <div className={`spinner-${name}`}>
+            <div className={"sk-cube-grid"}>
+                <div className={"sk-cube sk-cube1"}/>
+                <div className={"sk-cube sk-cube2"}/>
+                <div className={"sk-cube sk-cube3"}/>
+                <div className={"sk-cube sk-cube4"}/>
+                <div className={"sk-cube sk-cube5"}/>
+                <div className={"sk-cube sk-cube6"}/>
+                <div className={"sk-cube sk-cube7"}/>
+                <div className={"sk-cube sk-cube8"}/>
+                <div className={"sk-cube sk-cube9"}/>
+            </div>
+        </div>
+    );
+};
+
+            
