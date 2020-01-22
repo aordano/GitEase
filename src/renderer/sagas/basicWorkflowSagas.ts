@@ -106,6 +106,7 @@ function* doCommitAndPush() {
     }
 
     function* success() {
+        debugger
         yield put(BasicWorkflowDeedDoneAction())
     }
 
