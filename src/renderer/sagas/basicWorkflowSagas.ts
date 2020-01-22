@@ -101,12 +101,17 @@ function* doCommitAndPush() {
         workflow.commitAndPush()
     }  
 
+    function* failure() {
+        yield put(BasicWorkflowDeedDoneAction())
+    }
+
+    function* success() {
+        yield put(BasicWorkflowDeedDoneAction())
+    }
+
     yield commitDeed().then(
-        () => {
-            debugger
-            put(BasicWorkflowDeedDoneAction())
-        },
-        () => put(BasicWorkflowDeedFailedAction())
+        success,
+        failure
     )
 }
 // -------------------
