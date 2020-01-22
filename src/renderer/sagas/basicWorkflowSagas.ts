@@ -52,7 +52,7 @@ function* setCommitSuccessAlertPartOne() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
     if (store.getState()?.basicWorkflowReducer.successStatus === undefined) {
-        yield delay(500)
+        yield delay(3500)
         yield setCommitSuccessAlertPartOne
     }
     yield put(UpdateCommitSuccessStatusAction())

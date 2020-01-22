@@ -129,7 +129,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 }  
                 const successResult = () => {
                     debugger
-                    return Object.assign({}, state, {
+                    return Object.assign({}, state, { // ! Fix this, it does not return befor the saga completes
                         successStatus: {
                             error: "none",
                             success: "success"
