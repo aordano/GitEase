@@ -162,7 +162,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                const commitDeed = () => {
+                const commitDeed = async () => {
                     displayCommitInProcessAlert()
                     workflow.commitAndPush()
                 }  

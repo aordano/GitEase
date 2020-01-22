@@ -16,10 +16,11 @@ import {store} from "../../store"
 
 import {CommitSuccessAlertAction} from "../../actions/commonActions"
 
+import {delay} from "redux-saga/effects"
+
 // -----------------------------
 // --- SimpleGit Definitions ---
 // -----------------------------
-
 
 const git = promise();
 
@@ -45,16 +46,26 @@ export class BasicWorkflow {
     commitAndPush() {
         // -- This method commits and pushes as it name says. If there's missing data it defaults
         // to "origin" and "master" for remote and branch.
-        debugger
-        git.commit([
-            this.gitBasicWorkflowData.message, 
-            this.gitBasicWorkflowData.description ?? ""
-        ]).then(() => {
-            debugger
-            git.push(
-                this.gitBasicWorkflowData.remote ?? 'origin',
-                this.gitBasicWorkflowData.branch ?? 'master'
-            );
-        })
+        let waiting = false
+        let startedflag = false
+
+        while (!waiting) {
+            if (!startedflag) {
+                git.commit([
+                    this.gitBasicWorkflowData.message, 
+                    this.gitBasicWorkflowData.description ?? ""
+                ]).then(() => {
+                    debugger
+                    startedflag = true
+                    git.push(
+                        this.gitBasicWorkflowData.remote ?? 'origin',
+                        this.gitBasicWorkflowData.branch ?? 'master'
+                    ).then(() => {
+                        waiting = true
+                    });
+                })
+            }
+            delay(50)
+        }
     }
 }

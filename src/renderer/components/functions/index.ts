@@ -61,6 +61,26 @@ export const unstageFile = (file: string | ContentNameType, workingDir?: string)
     }
 }
 
+export const pull = (remote?: string, branch?: string, workingDir?: string) => {
+    const git = promise(workingDir);
+    git.pull(remote ?? 'origin', branch ?? "master")
+}
+
+export const commit = (message: string, description?: string, workingDir?: string) => {
+    const git = promise(workingDir);
+    git.commit([
+        message, 
+        description ?? ""
+    ])
+}
+
+export const push = (remote?: string, branch?: string, workingDir?: string) => {
+    const git = promise(workingDir);
+    git.push(remote ?? "origin", branch ?? 'master')
+}
+
+
+
 
 // ----------------------------------
 // --- Alert Generating Functions ---
