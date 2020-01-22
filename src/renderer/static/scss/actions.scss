@@ -17,7 +17,7 @@ div.spinner-commit-box {
     position: absolute;
     margin: auto;
     bottom: 10vh;
-    
+
     & p {
         position: absolute;
         top: 25vh;
@@ -28,7 +28,7 @@ div.spinner-commit-box {
 div.commit-overlay{
     width: 250px;
     margin-left: 22px;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     padding: 20px;
     margin: 5px;
