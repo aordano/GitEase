@@ -124,33 +124,30 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
+                let successStatus
                 const commitDeed = async () => {
                     await workflow.commitAndPush()
                 }  
                 const successResult = () => {
                     debugger
-                    return Object.assign({}, state, { // ! Fix this, it does not return befor the saga completes
-                        successStatus: {
-                            error: "none",
-                            success: "success"
-                        }
-                    }); 
+                    return successStatus = {
+                        error: "none",
+                        success: "success"
+                    } 
                 }
                 const errorResult = () => {
-                    return Object.assign({}, state, {
-                        successStatus: {
-                            error: "Generic error",
-                            success: "error"
-                        }
-                    });                       
+                    return successStatus = {
+                        error: "Generic error",
+                        success: "error"
+                    }                       
                     
                 }
 
                 return Object.assign({}, state, {
-                    successStatus: commitDeed().then(
+                    succesStatus: commitDeed().then(
                         successResult,
                         errorResult
-                    )   
+                    )
                 });
             } catch (error) {
                 console.log(`error... ${error}`);
