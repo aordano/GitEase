@@ -17,6 +17,7 @@ export const commitBoxTitle = "Commit your changes:"
 
 export const commitSuccessMessage = "Success!"
 export const commitFailureMessage = "There was an unexpected error :("
+export const commitProcessMessage = "Uploading changes..."
 
 // --------------------
 // --- Changes Area ---

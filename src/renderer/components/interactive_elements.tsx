@@ -347,6 +347,7 @@ export const SpinnerComponent: React.FC<SpinnerType> = ({name}: SpinnerType)=> {
                 <div className={"sk-cube sk-cube8"}/>
                 <div className={"sk-cube sk-cube9"}/>
             </div>
+            <p>{localization.commitProcessMessage}</p>
         </div>
     );
 };
