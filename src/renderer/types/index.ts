@@ -95,8 +95,10 @@ export type GitCommitType = {
 }
 
 type GitCommitStatusType = {
-    error: string,
-    success: string
+    _v: {
+        error: string,
+        success: string
+    }
 }
 
 

@@ -48,22 +48,11 @@ function* clearCommitBox() { // ! currently not working
     commitMessageDescription.value = ""
 }
 
-function* setCommitSuccessAlertPartOne() { // ! currently not working
+function* setCommitSuccessAlert() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
-    if (store.getState()?.basicWorkflowReducer.successStatus === undefined) {
-        debugger
-        yield delay(3500)
-        yield setCommitSuccessAlertPartOne
-    }
-    yield put(UpdateCommitSuccessStatusAction())
-}
-
-function* setCommitSuccessAlertPartTwo() { // ! currently not working
-    // -- Generator that yields a dispatch by the put() method as to update the changes area if
-    // there's a change on the git status. 
-    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?.success
-    const error = store.getState()?.basicWorkflowReducer.successStatus?.error 
+    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?._v.success
+    const error = store.getState()?.basicWorkflowReducer.successStatus?._v.error 
     debugger
 
     debugger
@@ -89,16 +78,10 @@ function* watchCommit() {
     yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
 }
 
-function* watchCommitSuccessStatusPartOne() {
+function* watchCommitSuccessStatus() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],setCommitSuccessAlertPartOne);
-}
-
-function* watchCommitSuccessStatusPartTwo() {
-    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
-    // to change the staging status of all elements
-    yield takeLatest(["UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlertPartTwo);
+    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH', "UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlert);
 }
 
 // --------------------
@@ -109,7 +92,6 @@ export const basicWorkflowSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchCommit),
-        fork(watchCommitSuccessStatusPartOne),
-        fork(watchCommitSuccessStatusPartTwo),
+        fork(watchCommitSuccessStatus)
     ]);
 };

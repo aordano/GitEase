@@ -54,8 +54,10 @@ const basicWorkflowDefaultState: BasicWorkflowState = {
     branch: "master",
     remote: "origin",
     successStatus: {
-        error: "none",
-        success: "pending"
+        _v: {
+            error: "none",
+            success: "pending"
+        }
     }
 };
 
@@ -82,8 +84,8 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 ) => {
     switch (action.type) {
         case UPDATE_COMMIT_SUCCESS_STATUS:
-            if (state.successStatus?.success !== undefined) {
-                if (state.successStatus?.success === "pending") {
+            if (state.successStatus?._v.success !== undefined) {
+                if (state.successStatus?._v.success === "pending") {
                     return Object.assign({}, state, {
                         successStatus: {
                             success: "pending"
@@ -91,7 +93,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     });
                 }
     
-                if (state.successStatus?.success === "success") {
+                if (state.successStatus?._v.success === "success") {
                     return Object.assign({}, state, {
                         successStatus: {
                             success: "success"
