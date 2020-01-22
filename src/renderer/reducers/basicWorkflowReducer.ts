@@ -124,19 +124,18 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                let successStatus
                 const commitDeed = async () => {
                     await workflow.commitAndPush()
                 }  
                 const successResult = () => {
                     debugger
-                    return successStatus = {
+                    return {
                         error: "none",
                         success: "success"
                     } 
                 }
                 const errorResult = () => {
-                    return successStatus = {
+                    return {
                         error: "Generic error",
                         success: "error"
                     }                       
@@ -147,7 +146,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     successStatus: commitDeed().then(
                         successResult,
                         errorResult
-                    )._v
+                    )
                 });
             } catch (error) {
                 console.log(`error... ${error}`);
