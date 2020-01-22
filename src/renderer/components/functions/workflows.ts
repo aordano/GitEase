@@ -58,9 +58,12 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-
-        pull
-        commit
-        push()
+        debugger
+        () => {
+            Promise.resolve(pull)
+            Promise.resolve(commit)
+            Promise.resolve(push())
+        }
+        debugger
     }
 }
