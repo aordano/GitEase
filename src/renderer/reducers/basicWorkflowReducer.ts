@@ -110,40 +110,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 }
             });
 
-        case UPDATE_COMMIT_SUCCESS_STATUS:
-            if (state.successStatus?._v.success !== undefined) {
-                if (state.successStatus?._v.success === "pending") {
-                    return Object.assign({}, state, {
-                        successStatus: {
-                            _v: {
-                                success: "pending"
-                            }
-                        }
-                    });
-                }
-    
-                if (state.successStatus?._v.success === "success") {
-                    return Object.assign({}, state, {
-                        successStatus: {
-                            _v: {
-                                success: "success"
-                            }
-                        }
-                    });
-                }
-    
-                return Object.assign({}, state, {
-                    successStatus: {
-                        _v: {
-                            error: action.error,
-                            success: "error"
-                        }
-                    }
-                });
-            }
-
-            return state
-
         case BASIC_WORKFLOW_DEED_DONE:
             return Object.assign({}, state, {
                 successStatus: {

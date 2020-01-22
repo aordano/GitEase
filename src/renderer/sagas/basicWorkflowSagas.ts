@@ -60,29 +60,6 @@ function* clearCommitBox() { // ! currently not working
     commitMessageDescription.value = ""
 }
 
-function* setCommitSuccessAlert() { // ! currently not working
-    // -- Generator that yields a dispatch by the put() method as to update the changes area if
-    // there's a change on the git status. 
-
-    yield delay(50)
-
-    const successStatus = store.getState()?.basicWorkflowReducer.successStatus?._v.success
-    const error = store.getState()?.basicWorkflowReducer.successStatus?._v.error 
-
-    if (successStatus === "success") {
-        yield put(CommitSuccessAlertAction())
-        return
-    }
-
-    if (successStatus === "error") {
-        yield put(CommitErrorAlertAction(error))
-        return
-    }
-
-    yield delay(200)
-    yield put(UpdateCommitSuccessStatusAction())
-}
-
 function* doCommitAndPush() {
     const message = store.getState()?.basicWorkflowReducer.commitMessage
     const description = store.getState()?.basicWorkflowReducer.commitDescription
@@ -101,19 +78,7 @@ function* doCommitAndPush() {
         workflow.commitAndPush()
     }  
 
-    function* failure() {
-        yield put(BasicWorkflowDeedDoneAction())
-    }
-
-    function* success() {
-        debugger
-        yield put(BasicWorkflowDeedDoneAction())
-    }
-
-    yield commitDeed().then(
-        success,
-        failure
-    )
+    yield commitDeed()
 }
 // -------------------
 // --- Watch Sagas ---
@@ -130,13 +95,6 @@ function* watchCommitSuccessStatusPartOne() {
     // to change the staging status of all elements
     yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],doCommitAndPush);
 }
-
-function* watchCommitSuccessStatusPartTwo() {
-    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
-    // to change the staging status of all elements
-    yield takeLatest(["UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlert);
-}
-
 // --------------------
 // --- Export Sagas ---
 // --------------------
@@ -145,7 +103,6 @@ export const basicWorkflowSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchCommit),
-        fork(watchCommitSuccessStatusPartOne),
-        fork(watchCommitSuccessStatusPartTwo),
+        fork(watchCommitSuccessStatusPartOne)
     ]);
 };

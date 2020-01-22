@@ -14,12 +14,14 @@ import { gitBasicWorkflowDataType } from '../../types';
 
 import {store} from "../../store"
 
-import {CommitSuccessAlertAction} from "../../actions/commonActions"
+import {
+    CommitSuccessAlertAction,
+    CommitErrorAlertAction
+} from "../../actions/commonActions"
 
 import {put} from "redux-saga/effects"
 
 import { 
-    BasicWorkflowUpdateCommitMessageAction,
     BasicWorkflowDeedDoneAction, 
     BasicWorkflowDeedFailedAction
 } from '../../actions/basicWorkflowActions';
@@ -67,8 +69,14 @@ export class BasicWorkflow {
             ]).then(() => {
                 git.push().then(() => {
                     git.fetch("origin",basicWorkflowData.branch).then(
-                        () => {debugger; store.dispatch(BasicWorkflowDeedDoneAction())},
-                        () => {store.dispatch(BasicWorkflowDeedFailedAction())}
+                        () => {
+                            store.dispatch(BasicWorkflowDeedDoneAction())
+                            store.dispatch(CommitSuccessAlertAction())
+                        },
+                        () => {
+                            store.dispatch(BasicWorkflowDeedFailedAction())
+                            store.dispatch(CommitErrorAlertAction())
+                        }
                     )
                 })
             })
