@@ -65,6 +65,7 @@ function* setCommitSuccessAlert() { // ! currently not working
         yield put(CommitErrorAlertAction(error))
         return
     }
+    
     yield delay(200)
     yield put(UpdateCommitSuccessStatusAction())
 }
