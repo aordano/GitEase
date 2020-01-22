@@ -61,17 +61,20 @@ function* setCommitSuccessAlertPartOne() { // ! currently not working
 function* setCommitSuccessAlertPartTwo() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
+    debugger
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?._v.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?._v.error 
 
     debugger
 
     if (successStatus === "success") {
-        return put(CommitSuccessAlertAction())
+        yield put(CommitSuccessAlertAction())
+        return
     }
 
     if (successStatus === "error") {
-        return put(CommitErrorAlertAction(error))
+        yield put(CommitErrorAlertAction(error))
+        return
     }
     yield delay(200)
     yield put(UpdateCommitSuccessStatusAction())

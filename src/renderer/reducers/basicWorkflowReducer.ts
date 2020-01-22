@@ -155,7 +155,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
-                debugger
                 const commitDeed = async () => {
                     await workflow.commitAndPush()
                 }  
