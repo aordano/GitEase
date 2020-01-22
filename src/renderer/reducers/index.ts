@@ -14,9 +14,7 @@ import {
     viewModifiedFilesReducer, 
     ViewModifiedFilesState,
     updateChangesAreaReducer,
-    UpdateChangesAreaState,
-    CommitErrorAlertReducer,
-    CommitSuccessAlertReducer
+    UpdateChangesAreaState
 } from "./commonReducers"
 
 import { 
