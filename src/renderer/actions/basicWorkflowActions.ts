@@ -14,11 +14,12 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
-    UPDATE_COMMIT_SUCCESS_STATUS,
     BasicWorkflowCommitAndPushType,
     BasicWorkflowUpdateCommitMessageType,
     BasicWorkflowInitType,
-    UpdateCommitSuccessStatusType
+    UpdateCommitSuccessStatusType,
+    CommitErrorAlertType,
+    CommitSuccessAlertType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -29,7 +30,9 @@ export type BasicWorkflowAction =
     | BasicWorkflowCommitAndPushType
     | BasicWorkflowUpdateCommitMessageType
     | BasicWorkflowInitType
-    | UpdateCommitSuccessStatusType;
+    | UpdateCommitSuccessStatusType
+    | CommitErrorAlertType
+    | CommitSuccessAlertType;
 
 // -----------------------
 // --- Action Creators ---

@@ -95,6 +95,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     }
                 }
             });
+
         case COMMIT_SUCCESS_ALERT:
             console.log("success")
             return Object.assign({}, state, {
@@ -104,6 +105,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                     }
                 }
             });
+
         case UPDATE_COMMIT_SUCCESS_STATUS:
             if (state.successStatus?._v.success !== undefined) {
                 if (state.successStatus?._v.success === "pending") {
@@ -153,6 +155,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 action.description ?? ""
             );
             try {
+                debugger
                 const commitDeed = async () => {
                     await workflow.commitAndPush()
                 }  
