@@ -59,6 +59,7 @@ export class BasicWorkflow {
                 basicWorkflowData.remote ?? "origin"
             ]).then(() => {
                 git.push().then(() => {
+                    debugger
                     git.fetch("origin",basicWorkflowData.branch)
                 })
             })
