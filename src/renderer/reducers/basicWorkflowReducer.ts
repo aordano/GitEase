@@ -144,10 +144,10 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 }
 
                 return Object.assign({}, state, {
-                    succesStatus: commitDeed().then(
+                    successStatus: commitDeed().then(
                         successResult,
                         errorResult
-                    )
+                    )._v
                 });
             } catch (error) {
                 console.log(`error... ${error}`);
