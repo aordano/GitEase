@@ -86,11 +86,11 @@ export const displayCommitSuccessAlert = () => {
     commitSpinner.style.zIndex = "-1"
     commitSpinner.style.display = "none"
     successText.textContent = localization.commitSuccessMessage
-    successText.style.fontWeight = "300"
+    successText.style.fontWeight = "500"
     setTimeout(() => {
         successText.textContent = localization.commitBoxTitle
         successText.style.fontWeight = "100"
-    }, 2000)
+    }, 3000)
 
 }
 
@@ -104,11 +104,11 @@ export const displayCommitErrorAlert = (error: string) => {
     commitSpinner.style.zIndex = "-1"
     commitSpinner.style.display = "none"
     failureText.textContent = localization.commitFailureMessage
-    failureText.style.fontWeight = "300"
+    failureText.style.fontWeight = "500"
     setTimeout(() => {
         failureText.textContent = localization.commitBoxTitle
         failureText.style.fontWeight = "100"
-    }, 2000)
+    }, 3000)
 }
 
 // -----------------------
