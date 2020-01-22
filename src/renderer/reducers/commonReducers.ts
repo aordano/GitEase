@@ -319,39 +319,3 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
         default: return state
     }
 }
-
-export const CommitSuccessAlertReducer: Reducer<{}> = (
-    // -- 
-    //
-    // -- It takes one possible action:
-    //
-    // -- COMMIT_SUCCESS_ALERT
-    // This action generates the alert on a successful commit and push.
-    state = {},
-    action: CommitSuccessAlertAction
-) => {
-    switch (action.type) {
-        case COMMIT_SUCCESS_ALERT:
-            console.log("success")
-            return state
-        default: return state
-    }
-}
-
-export const CommitErrorAlertReducer: Reducer<{}, any> = (
-    // -- 
-    //
-    // -- It takes one possible action:
-    //
-    // -- COMMIT_ERROR_ALERT
-    // This action generates the alert on an unsuccessful commit and push.
-    state = {},
-    action: CommitErrorAlertAction
-) => {
-    switch (action.type) {
-        case COMMIT_ERROR_ALERT:
-            console.log(action.error)
-            return state
-        default: return state
-    }
-}

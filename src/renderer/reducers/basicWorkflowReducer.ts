@@ -16,7 +16,9 @@ import {
     BASIC_WORKFLOW_INIT,
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     UPDATE_COMMIT_SUCCESS_STATUS,
-    BasicWorkflowCommitAndPushType
+    BasicWorkflowCommitAndPushType,
+    COMMIT_ERROR_ALERT,
+    COMMIT_SUCCESS_ALERT
 } from '../types/constants';
 
 import {
@@ -83,12 +85,33 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     action: BasicWorkflowAction
 ) => {
     switch (action.type) {
+        case COMMIT_ERROR_ALERT:
+            console.log(action.error)
+            return Object.assign({}, state, {
+                successStatus: {
+                    _v: {
+                        error: action.error,
+                        success: "pending"
+                    }
+                }
+            });
+        case COMMIT_SUCCESS_ALERT:
+            console.log("success")
+            return Object.assign({}, state, {
+                successStatus: {
+                    _v: {
+                        success: "pending"
+                    }
+                }
+            });
         case UPDATE_COMMIT_SUCCESS_STATUS:
             if (state.successStatus?._v.success !== undefined) {
                 if (state.successStatus?._v.success === "pending") {
                     return Object.assign({}, state, {
                         successStatus: {
-                            success: "pending"
+                            _v: {
+                                success: "pending"
+                            }
                         }
                     });
                 }
@@ -96,15 +119,19 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
                 if (state.successStatus?._v.success === "success") {
                     return Object.assign({}, state, {
                         successStatus: {
-                            success: "success"
+                            _v: {
+                                success: "success"
+                            }
                         }
                     });
                 }
     
                 return Object.assign({}, state, {
                     successStatus: {
-                        success: "error",
-                        error: action.error
+                        _v: {
+                            error: action.error,
+                            success: "error"
+                        }
                     }
                 });
             }

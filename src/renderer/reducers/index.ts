@@ -32,8 +32,6 @@ export interface RootState {
     basicWorkflowReducer: BasicWorkflowState;
     viewModifiedFilesReducer: ViewModifiedFilesState
     updateChangesAreaReducer: UpdateChangesAreaState
-    CommitErrorAlertReducer: {}
-    CommitSuccessAlertReducer: {}
 }
 
 // --------------------
@@ -43,7 +41,5 @@ export interface RootState {
 export const rootReducer = combineReducers<RootState | undefined>({
     basicWorkflowReducer,
     viewModifiedFilesReducer,
-    updateChangesAreaReducer,
-    CommitErrorAlertReducer,
-    CommitSuccessAlertReducer
+    updateChangesAreaReducer
 });
