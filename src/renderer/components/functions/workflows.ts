@@ -52,10 +52,12 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.description ?? ""
         ]).then(() => {
             debugger
-            git.push(
+            git.raw([
+                "push",
                 basicWorkflowData.remote ?? "origin",
-                basicWorkflowData.branch ?? "master"
-            );
+                basicWorkflowData.branch ?? "master",
+                "--verbose"
+            ]);
         })
     }
 }
