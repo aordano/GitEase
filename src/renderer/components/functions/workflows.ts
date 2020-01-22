@@ -16,7 +16,13 @@ import {store} from "../../store"
 
 import {CommitSuccessAlertAction} from "../../actions/commonActions"
 
-import {delay} from "redux-saga/effects"
+import {put} from "redux-saga/effects"
+
+import { 
+    BasicWorkflowUpdateCommitMessageAction,
+    BasicWorkflowDeedDoneAction, 
+    BasicWorkflowDeedFailedAction
+} from '../../actions/basicWorkflowActions';
 
 // -----------------------------
 // --- SimpleGit Definitions ---
@@ -47,6 +53,15 @@ export class BasicWorkflow {
         // -- This method commits and pushes as it name says. If there's missing data it defaults
         // to "origin" and "master" for remote and branch.
         const basicWorkflowData = this.gitBasicWorkflowData
+
+        function* failure() {
+            yield put(BasicWorkflowDeedDoneAction())
+        }
+
+        function* success() {
+            debugger
+            yield put(BasicWorkflowDeedDoneAction())
+        }
         git.commit([
             this.gitBasicWorkflowData.message, 
             this.gitBasicWorkflowData.description ?? ""
@@ -59,8 +74,10 @@ export class BasicWorkflow {
                 basicWorkflowData.remote ?? "origin"
             ]).then(() => {
                 git.push().then(() => {
-                    debugger
-                    git.fetch("origin",basicWorkflowData.branch)
+                    git.fetch("origin",basicWorkflowData.branch).then(
+                        failure,
+                        success
+                    )
                 })
             })
         })
