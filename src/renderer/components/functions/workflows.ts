@@ -54,16 +54,19 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.message, 
             this.gitBasicWorkflowData.description ?? ""
         ])
-        const push = async () => await git.push(
+        const push = git.push(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
-        debugger
-        () => {
-            Promise.resolve(pull)
-            Promise.resolve(commit)
-            Promise.resolve(push())
+        const deed = async () => {
+            await Promise.resolve(pull)
+            await Promise.resolve(commit)
+            await Promise.resolve(push)
         }
         debugger
+        while (!deed().then(() => {return true})) {
+
+        }
+        return
     }
 }
