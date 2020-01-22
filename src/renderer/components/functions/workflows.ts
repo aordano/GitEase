@@ -54,13 +54,13 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.message, 
             this.gitBasicWorkflowData.description ?? ""
         ])
-        const push = git.push(
+        const push = async () => await git.push(
             this.gitBasicWorkflowData.remote ?? 'origin',
             this.gitBasicWorkflowData.branch ?? 'master'
         );
 
         pull
         commit
-        push
+        push()
     }
 }
