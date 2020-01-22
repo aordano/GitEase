@@ -54,7 +54,8 @@ export class BasicWorkflow {
             git.raw([
                 "push",
                 this.gitBasicWorkflowData.remote ?? "origin",
-                this.gitBasicWorkflowData.branch ?? "master"
+                this.gitBasicWorkflowData.branch ?? "master",
+                "--verbose"
             ]);
         })
     }
