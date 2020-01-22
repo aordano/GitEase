@@ -57,8 +57,6 @@ function* setCommitSuccessAlert() { // ! currently not working
     const successStatus = store.getState()?.basicWorkflowReducer.successStatus?._v.success
     const error = store.getState()?.basicWorkflowReducer.successStatus?._v.error 
 
-    debugger
-
     if (successStatus === "success") {
         yield put(CommitSuccessAlertAction())
         return
