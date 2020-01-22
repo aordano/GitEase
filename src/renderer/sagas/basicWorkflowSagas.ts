@@ -101,10 +101,13 @@ function* doCommitAndPush() {
         workflow.commitAndPush()
     }  
 
-    yield Promise.resolve(commitDeed().then(
-        () => put(BasicWorkflowDeedDoneAction()),
+    yield commitDeed().then(
+        () => {
+            debugger
+            put(BasicWorkflowDeedDoneAction())
+        },
         () => put(BasicWorkflowDeedFailedAction())
-    ))
+    )
 }
 // -------------------
 // --- Watch Sagas ---
