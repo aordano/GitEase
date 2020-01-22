@@ -14,12 +14,16 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
+    BASIC_WORKFLOW_DEED_DONE,
+    BASIC_WORKFLOW_DEED_FAILED,
     BasicWorkflowCommitAndPushType,
     BasicWorkflowUpdateCommitMessageType,
     BasicWorkflowInitType,
     UpdateCommitSuccessStatusType,
     CommitErrorAlertType,
-    CommitSuccessAlertType
+    CommitSuccessAlertType,
+    BasicWorkflowDeedDoneType,
+    BasicWorkflowDeedFailedType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -32,7 +36,9 @@ export type BasicWorkflowAction =
     | BasicWorkflowInitType
     | UpdateCommitSuccessStatusType
     | CommitErrorAlertType
-    | CommitSuccessAlertType;
+    | CommitSuccessAlertType
+    | BasicWorkflowDeedDoneType
+    | BasicWorkflowDeedFailedType;
 
 // -----------------------
 // --- Action Creators ---
@@ -55,6 +61,18 @@ export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () 
         type: BASIC_WORKFLOW_INIT
     };
 };
+
+export const BasicWorkflowDeedDoneAction: ActionCreator<BasicWorkflowDeedDoneType> = () => {
+    return {
+        type: BASIC_WORKFLOW_DEED_DONE
+    }
+}
+
+export const BasicWorkflowDeedFailedAction: ActionCreator<BasicWorkflowDeedFailedType> = () => {
+    return {
+        type: BASIC_WORKFLOW_DEED_FAILED
+    }
+}
 
 export const BasicWorkflowCommitAndPushAction: 
     ActionCreator<BasicWorkflowCommitAndPushType> = (

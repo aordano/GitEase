@@ -46,26 +46,14 @@ export class BasicWorkflow {
     commitAndPush() {
         // -- This method commits and pushes as it name says. If there's missing data it defaults
         // to "origin" and "master" for remote and branch.
-        let waiting = false
-        let startedflag = false
-
-        while (!waiting) {
-            if (!startedflag) {
-                git.commit([
-                    this.gitBasicWorkflowData.message, 
-                    this.gitBasicWorkflowData.description ?? ""
-                ]).then(() => {
-                    debugger
-                    startedflag = true
-                    git.push(
-                        this.gitBasicWorkflowData.remote ?? 'origin',
-                        this.gitBasicWorkflowData.branch ?? 'master'
-                    ).then(() => {
-                        waiting = true
-                    });
-                })
-            }
-            delay(50)
-        }
+        git.commit([
+            this.gitBasicWorkflowData.message, 
+            this.gitBasicWorkflowData.description ?? ""
+        ]).then(() => {
+            git.push(
+                this.gitBasicWorkflowData.remote ?? 'origin',
+                this.gitBasicWorkflowData.branch ?? 'master'
+            );
+        })
     }
 }

@@ -7,7 +7,6 @@
 import { 
     put, 
     takeLatest, 
-    take,
     all, 
     fork, 
     delay 
@@ -30,8 +29,21 @@ import {
 } from '../actions/commonActions';
 
 import { 
-    BasicWorkflowUpdateCommitMessageAction, BasicWorkflowCommitAndPushAction
+    BasicWorkflowUpdateCommitMessageAction,
+    BasicWorkflowDeedDoneAction, 
+    BasicWorkflowDeedFailedAction
 } from '../actions/basicWorkflowActions';
+
+// ---------------------------------
+// --- Workflow Function Imports ---
+// ---------------------------------
+
+import { BasicWorkflow } from '../components/functions/workflows';
+
+
+import { 
+    displayCommitInProcessAlert
+} from '../components/functions';
 
 // --------------------
 // --- Effect Sagas ---
@@ -71,6 +83,29 @@ function* setCommitSuccessAlert() { // ! currently not working
     yield put(UpdateCommitSuccessStatusAction())
 }
 
+function* doCommitAndPush() {
+    const message = store.getState()?.basicWorkflowReducer.commitMessage
+    const description = store.getState()?.basicWorkflowReducer.commitDescription
+    const remote = store.getState()?.basicWorkflowReducer.remote
+    const branch = store.getState()?.basicWorkflowReducer.branch
+
+    const workflow = new BasicWorkflow(
+        message ?? "There was no supplied message.",
+        branch ?? 'master',
+        remote ?? 'origin',
+        description ?? ""
+    );
+
+    const commitDeed = async () => {
+        displayCommitInProcessAlert()
+        workflow.commitAndPush()
+    }  
+
+    yield Promise.resolve(commitDeed().then(
+        () => put(BasicWorkflowDeedDoneAction()),
+        () => put(BasicWorkflowDeedFailedAction())
+    ))
+}
 // -------------------
 // --- Watch Sagas ---
 // -------------------
@@ -84,7 +119,7 @@ function* watchCommit() {
 function* watchCommitSuccessStatusPartOne() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],setCommitSuccessAlert);
+    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],doCommitAndPush);
 }
 
 function* watchCommitSuccessStatusPartTwo() {

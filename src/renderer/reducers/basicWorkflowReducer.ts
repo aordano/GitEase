@@ -15,6 +15,8 @@ import {
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
+    BASIC_WORKFLOW_DEED_DONE,
+    BASIC_WORKFLOW_DEED_FAILED,
     UPDATE_COMMIT_SUCCESS_STATUS,
     COMMIT_ERROR_ALERT,
     COMMIT_SUCCESS_ALERT
@@ -33,18 +35,11 @@ import {
     BasicWorkflowAction
 } from '../actions/basicWorkflowActions';
 
-// ---------------------------------
-// --- Workflow Function Imports ---
-// ---------------------------------
-
-import { BasicWorkflow } from '../components/functions/workflows';
-
 // ------------------------------
 // --- Alert Function Imports ---
 // ------------------------------
 
 import { 
-    displayCommitInProcessAlert,
     displayCommitErrorAlert,
     displayCommitSuccessAlert
 } from '../components/functions';
@@ -149,52 +144,35 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 
             return state
 
+        case BASIC_WORKFLOW_DEED_DONE:
+            return Object.assign({}, state, {
+                successStatus: {
+                    success: "success"
+                }
+            });
+
+        case BASIC_WORKFLOW_DEED_FAILED:
+            return Object.assign({}, state, {
+                successStatus: {
+                    success: "error"
+                }
+            });
+
         case BASIC_WORKFLOW_COMMIT_AND_PUSH:
             // -- This reducer grabs the current commit message data and executes the commit
             // for the previously staged files.
             
             // TODO Clear input values of the input boxes on success
 
-            const workflow = new BasicWorkflow(
-                action.message,
-                action.branch ?? 'master',
-                action.remote ?? 'origin',
-                action.description ?? ""
-            );
-            try {
-                const commitDeed = async () => {
-                    displayCommitInProcessAlert()
-                    workflow.commitAndPush()
-                }  
-                const successResult = () => {
-                    return {
-                        error: "none",
-                        success: "success"
-                    } 
+            return Object.assign({}, state, {
+                commitMessage: action.message,
+                commitDescription: action.description,
+                branch: action.branch,
+                remote: action.remote,
+                successStatus: {
+                    success: "pending"
                 }
-                const errorResult = () => {
-                    return {
-                        error: "Generic error",
-                        success: "error"
-                    }                       
-                    
-                }
-
-                return Object.assign({}, state, {
-                    successStatus: Promise.resolve(commitDeed().then(
-                        successResult,
-                        errorResult
-                    ))
-                });
-            } catch (error) {
-                console.log(`error... ${error}`);
-                return Object.assign({}, state, {
-                    successStatus: {
-                        error: {error},
-                        success: "error"
-                    }
-                });
-            }
+            });
         case BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE:
             // -- This reducer grabs the current input value of the message boxes and links it
             // to the reducer state.

@@ -19,6 +19,8 @@ import {ModifiedFilesStructure} from "./index"
 export const BASIC_WORKFLOW_COMMIT_AND_PUSH = 'BASIC_WORKFLOW_COMMIT_AND_PUSH';
 export const BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE = 'BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE';
 export const BASIC_WORKFLOW_INIT = 'BASIC_WORKFLOW_INIT';
+export const BASIC_WORKFLOW_DEED_DONE = "BASIC_WORKFLOW_DEED_DONE"
+export const BASIC_WORKFLOW_DEED_FAILED = "BASIC_WORKFLOW_DEED_FAILED"
 export const VIEW_MODIFIED_FILES = "VIEW_MODIFIED_FILES"
 export const UPDATE_CHANGES_AREA = "UPDATE_CHANGES_AREA"
 export const SET_STAGING_STATUS = "SET_STAGING_STATUS"
@@ -66,6 +68,14 @@ export interface BasicWorkflowUpdateCommitMessageType extends Action {
 
 export interface BasicWorkflowInitType extends Action {
     type: 'BASIC_WORKFLOW_INIT';
+}
+
+export interface BasicWorkflowDeedDoneType extends Action {
+    type: "BASIC_WORKFLOW_DEED_DONE"
+}
+
+export interface BasicWorkflowDeedFailedType extends Action {
+    type: "BASIC_WORKFLOW_DEED_FAILED"
 }
 
 export interface CommitSuccessAlertType extends Action {
