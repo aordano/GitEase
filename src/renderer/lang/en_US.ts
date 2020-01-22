@@ -11,6 +11,13 @@ export const commitButtonText = "Go"
 export const commitDescriptionPlaceholder = 'Describe what you did with a short explanation'
 export const commitBoxTitle = "Commit your changes:"
 
+// --------------------------
+// --- Commit Box Alerts ---
+// --------------------------
+
+export const commitSuccessMessage = "Success!"
+export const commitFailureMessage = "There was an unexpected error :("
+
 // --------------------
 // --- Changes Area ---
 // --------------------

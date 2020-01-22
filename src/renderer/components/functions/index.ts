@@ -13,6 +13,14 @@ import promise from 'simple-git/promise';
 import { ContentNameType } from '../../types';
 import { Gitgraph } from '@gitgraph/react';
 
+// ----------------------------
+// --- Localization Imports ---
+// ----------------------------
+
+const lang = "en_US"
+
+const localization = require(`../../lang/${lang}`)
+
 // -----------------------------
 // --- Git-related Functions ---
 // -----------------------------
@@ -53,18 +61,56 @@ export const unstageFile = (file: string | ContentNameType, workingDir?: string)
     }
 }
 
-export const stageAll = (workingDir?: string) => {
-    const git = promise(workingDir);
-    git.raw([
-        "add",
-        "-A"
-    ])
+
+// ----------------------------------
+// --- Alert Generating Functions ---
+// ----------------------------------
+
+export const displayCommitInProcessAlert = () => {
+    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
+    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
+    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
+    commitBox.style.zIndex = "-1"
+    commitOverlay.style.zIndex = "1"
+    commitSpinner.style.zIndex = "9"
+    commitSpinner.style.display = "block"
 }
 
-export const unstageAll = (workingDir?: string) => {
-    const git = promise(workingDir);
-    git.reset("soft")
+export const displayCommitSuccessAlert = () => {
+    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
+    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
+    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
+    const successText = document.querySelector(".commit-box p") as HTMLParagraphElement
+    commitBox.style.zIndex = "9"
+    commitOverlay.style.zIndex = "-1"
+    commitSpinner.style.zIndex = "-1"
+    commitSpinner.style.display = "none"
+    successText.textContent = localization.commitSuccessMessage
+    successText.style.fontWeight = "300"
+    setTimeout(() => {
+        successText.textContent = localization.commitBoxTitle
+        successText.style.fontWeight = "100"
+    }, 2000)
+
 }
+
+export const displayCommitErrorAlert = (error: string) => {
+    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
+    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
+    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
+    const failureText = document.querySelector(".commit-box p") as HTMLParagraphElement
+    commitBox.style.zIndex = "9"
+    commitOverlay.style.zIndex = "-1"
+    commitSpinner.style.zIndex = "-1"
+    commitSpinner.style.display = "none"
+    failureText.textContent = localization.commitFailureMessage
+    failureText.style.fontWeight = "300"
+    setTimeout(() => {
+        failureText.textContent = localization.commitBoxTitle
+        failureText.style.fontWeight = "100"
+    }, 2000)
+}
+
 // -----------------------
 // --- Misc. Functions ---
 // -----------------------

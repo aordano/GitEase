@@ -82,6 +82,14 @@ export type StagingCheckboxIndexType = {
     index: number | undefined
 }
 
+// -------------------
+// --- Misc. Types ---
+// -------------------
+
+export type SpinnerType = {
+    name: string
+}
+
 // --------------------------------------
 // --- Git Status Modified Files Type ---
 // --------------------------------------

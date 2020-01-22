@@ -16,7 +16,6 @@ import {
     BASIC_WORKFLOW_INIT,
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     UPDATE_COMMIT_SUCCESS_STATUS,
-    BasicWorkflowCommitAndPushType,
     COMMIT_ERROR_ALERT,
     COMMIT_SUCCESS_ALERT
 } from '../types/constants';
@@ -39,6 +38,16 @@ import {
 // ---------------------------------
 
 import { BasicWorkflow } from '../components/functions/workflows';
+
+// ------------------------------
+// --- Alert Function Imports ---
+// ------------------------------
+
+import { 
+    displayCommitInProcessAlert,
+    displayCommitErrorAlert,
+    displayCommitSuccessAlert
+} from '../components/functions';
 
 // ---------------------------------
 // --- Reducer State Definitions ---
@@ -86,7 +95,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 ) => {
     switch (action.type) {
         case COMMIT_ERROR_ALERT:
-            console.log(action.error)
+            displayCommitErrorAlert(action.error)
             return Object.assign({}, state, {
                 successStatus: {
                     _v: {
@@ -97,7 +106,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             });
 
         case COMMIT_SUCCESS_ALERT:
-            console.log("success")
+            displayCommitSuccessAlert()
             return Object.assign({}, state, {
                 successStatus: {
                     _v: {
@@ -143,8 +152,6 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
         case BASIC_WORKFLOW_COMMIT_AND_PUSH:
             // -- This reducer grabs the current commit message data and executes the commit
             // for the previously staged files.
-
-            // TODO create alert on success or failure of the process
             
             // TODO Clear input values of the input boxes on success
 
@@ -156,6 +163,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
             );
             try {
                 const commitDeed = async () => {
+                    displayCommitInProcessAlert()
                     await workflow.commitAndPush()
                 }  
                 const successResult = () => {

@@ -11,6 +11,13 @@ export const commitButtonText = "Ir"
 export const commitDescriptionPlaceholder = "Describe lo que hiciste con una explicación breve."
 export const commitBoxTitle = "Confirma tus cambios:"
 
+// --------------------------
+// --- Commit Box Alerts ---
+// --------------------------
+
+export const commitSuccessMessage = "¡Éxito!"
+export const commitFailureMessage = "Hubo un error inesperado :("
+
 // --------------------
 // --- Changes Area ---
 // --------------------

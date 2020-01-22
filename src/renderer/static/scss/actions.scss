@@ -1,4 +1,5 @@
 @import "./changesArea.scss";
+@import "./spinkit.scss";
 
 %basic-element {
     background-color: #ccc;
@@ -9,15 +10,35 @@
     display: inline-block;
 }
 
-div.commit-box {
+div.spinner-commit-box {
+    display: none;
+    width: 250px;
+    height: 25vh;
+    position: absolute;
+    margin: auto;
+    bottom: 10vh;
+}
+
+div.commit-overlay{
     width: 250px;
     margin-left: 22px;
-    background-color: #ccc;
+    background-color: rgba(255, 255, 255, 0.582);
     border-radius: 5px;
     padding: 20px;
     margin: 5px;
+    height: 25vh;
+    z-index: -1;
+}
+
+div.commit-box {
+    width: 250px;
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: -20px;
     position: relative;
     height: 25vh;
+    z-index: 9;
 
     & p {
         text-align: center;
