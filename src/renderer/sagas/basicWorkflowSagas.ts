@@ -48,17 +48,7 @@ function* clearCommitBox() { // ! currently not working
     commitMessageDescription.value = ""
 }
 
-function* setCommitSuccessAlertPartOne() { // ! currently not working
-    // -- Generator that yields a dispatch by the put() method as to update the changes area if
-    // there's a change on the git status. 
-    if (store.getState()?.basicWorkflowReducer.successStatus === undefined) {
-        yield delay(500)
-        yield setCommitSuccessAlertPartOne
-    }
-    yield put(UpdateCommitSuccessStatusAction())
-}
-
-function* setCommitSuccessAlertPartTwo() { // ! currently not working
+function* setCommitSuccessAlert() { // ! currently not working
     // -- Generator that yields a dispatch by the put() method as to update the changes area if
     // there's a change on the git status. 
     debugger
@@ -93,13 +83,13 @@ function* watchCommit() {
 function* watchCommitSuccessStatusPartOne() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],setCommitSuccessAlertPartOne);
+    yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],setCommitSuccessAlert);
 }
 
 function* watchCommitSuccessStatusPartTwo() {
     // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
     // to change the staging status of all elements
-    yield takeLatest(["UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlertPartTwo);
+    yield takeLatest(["UPDATE_COMMIT_SUCCESS_STATUS"],setCommitSuccessAlert);
 }
 
 // --------------------
