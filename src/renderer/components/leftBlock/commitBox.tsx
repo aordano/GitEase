@@ -50,7 +50,7 @@ const localization = require(`../../lang/${lang}`)
 // -------------------------------------------
 
 export const branch = 'experiments';
-const REPO = 'github.com/aordano/GitEase';
+const REPO = 'github.com:aordano/GitEase';
 export const remote = `git@${REPO}`;
 
 // -------------------------
