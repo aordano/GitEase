@@ -71,18 +71,23 @@ export class BasicWorkflow {
                         () => {
                             store.dispatch(CommitSuccessAlertAction())
                         },
+                        // TODO | -- Add error handling, more in point check if the fetching error
+                        // TODO | was because of a conflict when fetching and take action to fix
+                        // TODO | the conflict
                         () => {
                             store.dispatch(CommitErrorAlertAction())
                         }
                     )
                 },
                 // On Push error
+                // TODO Add handling for the error and revert everything as it were
                 () => {
                     store.dispatch(CommitErrorAlertAction())
                 })
             })
         },
         // On Commit error
+        // TODO Add handling for the error and revert everything as it were
         () => {
             store.dispatch(CommitErrorAlertAction())
         })
