@@ -17,7 +17,6 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_DEED_DONE,
     BASIC_WORKFLOW_DEED_FAILED,
-    UPDATE_COMMIT_SUCCESS_STATUS,
     COMMIT_ERROR_ALERT,
     COMMIT_SUCCESS_ALERT
 } from '../types/constants';
@@ -42,7 +41,7 @@ import {
 import { 
     displayCommitErrorAlert,
     displayCommitSuccessAlert
-} from '../components/functions';
+} from '../functions';
 
 // ---------------------------------
 // --- Reducer State Definitions ---

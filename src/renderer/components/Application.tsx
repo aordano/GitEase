@@ -17,12 +17,17 @@ require('../static/scss/main.scss');
 // --- Component Imports ---
 // -------------------------
 
-import { 
-    CommitComponent, 
-    ActionsComponent 
-} from './interactive_elements';
+import {
+    LeftBlock
+} from "./leftBlock"
 
-import { ViewerComponent } from './viewer';
+import {
+    TopBlock
+} from "./topBlock"
+
+import {
+    BottomBlock
+} from "./bottomBlock"
 
 // --------------------------
 // --- Main App Component ---
@@ -31,11 +36,11 @@ import { ViewerComponent } from './viewer';
 const Application = () => (
     <div>
         <div className={'left-block'}>
-            <CommitComponent />
+            <LeftBlock />
         </div>
         <div className={'main-block'}>
-            <ActionsComponent />
-            <ViewerComponent />
+            <TopBlock />
+            <BottomBlock />
         </div>
     </div>
 );

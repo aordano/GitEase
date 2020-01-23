@@ -14,9 +14,7 @@ import { Reducer } from 'redux';
 import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
-    SET_STAGING_STATUS,
-    COMMIT_SUCCESS_ALERT,
-    COMMIT_ERROR_ALERT
+    SET_STAGING_STATUS
 } from '../types/constants';
 
 import { 
@@ -30,9 +28,7 @@ import {
 
 import {
     ViewModifiedFilesAction,
-    UpdateChangesAreaAction,
-    CommitSuccessAlertAction,
-    CommitErrorAlertAction
+    UpdateChangesAreaAction
 } from '../actions/commonActions';
 
 // ------------------------
@@ -45,7 +41,7 @@ import {
     stageFile,
     unstageFile,
     removeQuotes
-} from '../components/functions';
+} from '../functions';
 
 // ---------------------------------
 // --- Reducer State Definitions ---

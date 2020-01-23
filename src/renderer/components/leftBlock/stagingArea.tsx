@@ -1,0 +1,100 @@
+// ! ###  - Staging Area Components - ###
+// *
+// *  The Staging Area components handle the logic and 
+// *  behaviour of the staging/changes area elements.
+
+// ---------------------
+// --- React Imports ---
+// ---------------------
+
+import * as React from 'react';
+
+// ---------------------
+// --- Store Imports ---
+// ---------------------
+
+import { store } from '../../store';
+
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { 
+    ChangesTreeType,
+    StagingCheckboxIndexType
+} from '../../types';
+
+// ----------------------
+// --- Action Imports ---
+// ----------------------
+
+import {
+    SetStagingStatusAction,
+    SetGlobalStagingStatusAction
+} from '../../actions/commonActions';
+
+// ----------------------------
+// --- Localization Imports ---
+// ----------------------------
+
+const lang = "en_US"
+
+const localization = require(`../../lang/${lang}`)
+
+// -------------------------------
+// --- Staging Area Components ---
+// -------------------------------
+
+const StagingCheckboxElement: React.FC<StagingCheckboxIndexType> = (
+    // -- Component that creates the checkbox element for staging/unstaging the selected file.
+    {index}: StagingCheckboxIndexType
+) => {
+    const handleStagingCheckbox = () => {
+        if (index !== undefined) {
+            store.dispatch(SetStagingStatusAction(index))
+        }
+        
+    };
+
+    return (
+        <input
+            className={"stage-checkbox"}
+            title={localization.changesAreaElementCheckboxTooltip} 
+            type={"checkbox"}  
+            onChange={handleStagingCheckbox}  
+        />
+    )
+}
+
+export const ChangesListElement: React.FC<ChangesTreeType> = (
+    // -- Component that creates the list element based on the different status.
+    {status, displayContent, index}: ChangesTreeType
+) => {
+    return (
+        <li className={`files-${status}`}>
+            <StagingCheckboxElement index={index}/>
+            {displayContent.slice(0,displayContent.lastIndexOf("/")+1)}
+            <b className={"filename"}>{
+                displayContent.slice(displayContent.lastIndexOf("/")+1,displayContent.length)
+                // -- This highlights the displayed filename.
+            }</b>
+        </li>
+    )
+}
+
+export const GlobalStagingCheckboxElement: React.FC = (
+    // -- Component that creates the checkbox element for staging/unstaging all files.
+) => {
+    const handleGlobalStagingCheckbox = () => {
+        store.dispatch(SetGlobalStagingStatusAction())
+    };
+
+    return (
+        <input
+            className={"stage-checkbox-global"}
+            title={localization.changesAreaGlobalCheckboxTooltip} 
+            type={"checkbox"}  
+            onChange={handleGlobalStagingCheckbox}  
+        />
+    )
+}

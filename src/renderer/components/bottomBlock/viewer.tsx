@@ -21,7 +21,7 @@ import {
 // --- Static Imports ---
 // ----------------------
 
-require('../static/scss/viewer.scss');
+require('../../static/scss/viewer.scss');
 
 // ------------------------
 // --- Viewer Component ---

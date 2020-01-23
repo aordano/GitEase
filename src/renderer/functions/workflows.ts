@@ -10,21 +10,19 @@ import promise from 'simple-git/promise';
 // --- Type Imports ---
 // --------------------
 
-import { gitBasicWorkflowDataType } from '../../types';
+import { gitBasicWorkflowDataType } from '../types';
 
-import {store} from "../../store"
+import {store} from "../store"
 
 import {
     CommitSuccessAlertAction,
     CommitErrorAlertAction
-} from "../../actions/commonActions"
-
-import {put} from "redux-saga/effects"
+} from "../actions/commonActions"
 
 import { 
     BasicWorkflowDeedDoneAction, 
     BasicWorkflowDeedFailedAction
-} from '../../actions/basicWorkflowActions';
+} from '../actions/basicWorkflowActions';
 
 // -----------------------------
 // --- SimpleGit Definitions ---

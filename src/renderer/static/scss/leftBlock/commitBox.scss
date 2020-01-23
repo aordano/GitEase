@@ -1,14 +1,10 @@
-@import "./changesArea.scss";
-@import "./spinkit.scss";
+/*
+*
+*   Commit Box Style File
+*
+*/
 
-%basic-element {
-    background-color: #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 5px;
-    position: relative;
-    display: inline-block;
-}
+@import "../misc/spinkit.scss";
 
 div.spinner-commit-box {
     display: none;
@@ -100,12 +96,4 @@ div.commit-box {
         font-weight: 100;
         font-family: "Roboto Condensed"
     }
-}
-
-div.actions-space {
-    width: 63vw;
-    min-height: 70%;
-    margin-left: 20px;
-
-    @extend %basic-element;
 }

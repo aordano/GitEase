@@ -10,8 +10,7 @@ import promise from 'simple-git/promise';
 // --- Type Imports ---
 // --------------------
 
-import { ContentNameType } from '../../types';
-import { Gitgraph } from '@gitgraph/react';
+import { ContentNameType } from '../types';
 
 // ----------------------------
 // --- Localization Imports ---
@@ -19,7 +18,7 @@ import { Gitgraph } from '@gitgraph/react';
 
 const lang = "en_US"
 
-const localization = require(`../../lang/${lang}`)
+const localization = require(`../lang/${lang}`)
 
 // -----------------------------
 // --- Git-related Functions ---
@@ -78,9 +77,6 @@ export const push = (remote?: string, branch?: string, workingDir?: string) => {
     const git = promise(workingDir);
     git.push(remote ?? "origin", branch ?? 'master')
 }
-
-
-
 
 // ----------------------------------
 // --- Alert Generating Functions ---

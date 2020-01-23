@@ -8,8 +8,7 @@ import {
     put, 
     takeLatest, 
     all, 
-    fork, 
-    delay 
+    fork
 } from 'redux-saga/effects';
 
 // ---------------------
@@ -23,27 +22,19 @@ import { store } from "../store"
 // ----------------------
 
 import { 
-    CommitSuccessAlertAction,
-    CommitErrorAlertAction,
-    UpdateCommitSuccessStatusAction
-} from '../actions/commonActions';
-
-import { 
-    BasicWorkflowUpdateCommitMessageAction,
-    BasicWorkflowDeedDoneAction, 
-    BasicWorkflowDeedFailedAction
+    BasicWorkflowUpdateCommitMessageAction
 } from '../actions/basicWorkflowActions';
 
 // ---------------------------------
 // --- Workflow Function Imports ---
 // ---------------------------------
 
-import { BasicWorkflow } from '../components/functions/workflows';
+import { BasicWorkflow } from '../functions/workflows';
 
 
 import { 
     displayCommitInProcessAlert
-} from '../components/functions';
+} from '../functions';
 
 // --------------------
 // --- Effect Sagas ---
