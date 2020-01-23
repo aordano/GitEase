@@ -41,6 +41,7 @@ export type ViewModifiedFilesAction = ViewModifiedFilesType
 export type CommitSuccessAlertAction = CommitSuccessAlertType
 
 export type CommitErrorAlertAction = CommitErrorAlertType
+
 // ------------------------------
 // --- Update Action Creators ---
 // ------------------------------

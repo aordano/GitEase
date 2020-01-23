@@ -26,6 +26,8 @@ export const SET_GLOBAL_STAGING_STATUS = "SET_GLOBAL_STAGING_STATUS"
 export const COMMIT_SUCCESS_ALERT = "COMMIT_SUCCESS_ALERT"
 export const COMMIT_ERROR_ALERT = "COMMIT_ERROR_ALERT"
 export const UPDATE_COMMIT_SUCCESS_STATUS = "UPDATE_COMMIT_SUCCESS_STATUS"
+export const LAUNCH_REPO_CONFIGURATION_WIZARD = "LAUNCH_REPO_CONFIGURATION_WIZARD"
+export const LAUNCH_FIRST_TIME_WIZARD = "LAUNCH_FIRST_TIME_WIZARD"
 
 // --------------------------
 // --- Action Definitions ---
@@ -81,4 +83,13 @@ export interface UpdateCommitSuccessStatusType extends Action {
     type: 'UPDATE_COMMIT_SUCCESS_STATUS',
     error?: string;
 }
+
+export interface LaunchRepoConfigurationWizardType extends Action {
+    type: 'LAUNCH_REPO_CONFIGURATION_WIZARD'
+}
+
+export interface LaunchFirstTimeWizardType extends Action {
+    type: 'LAUNCH_FIRST_TIME_WIZARD'
+}
+
 

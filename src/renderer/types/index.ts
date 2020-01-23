@@ -28,6 +28,11 @@ export type workingDirDataType = {
     workingDir: string
 }
 
+export type RepoConfigDataType = {
+    repo: string,
+    workingDir: string,
+}
+
 // --------------------------------------
 // --- Git Status Modified Files Type ---
 // --------------------------------------
