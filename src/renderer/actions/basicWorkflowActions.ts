@@ -14,16 +14,12 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
-    BASIC_WORKFLOW_DEED_DONE,
-    BASIC_WORKFLOW_DEED_FAILED,
     BasicWorkflowCommitAndPushType,
     BasicWorkflowUpdateCommitMessageType,
     BasicWorkflowInitType,
     UpdateCommitSuccessStatusType,
     CommitErrorAlertType,
-    CommitSuccessAlertType,
-    BasicWorkflowDeedDoneType,
-    BasicWorkflowDeedFailedType
+    CommitSuccessAlertType
 } from '../types/constants';
 
 // ---------------------------------------

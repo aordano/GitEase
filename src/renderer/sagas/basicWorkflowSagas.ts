@@ -39,7 +39,9 @@ import {
 // --- Effect Sagas ---
 // --------------------
 
-function* clearCommitBox() { // ! currently not working
+function* clearCommitBox() {
+    // -- This generator is in place because sometimes because of race conditions the 
+    // state cleared on the success alert reducer may not get late enough as to keep cleared.
     // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
     yield put(BasicWorkflowUpdateCommitMessageAction("",""))
     const commitMessageBox: HTMLInputElement = 

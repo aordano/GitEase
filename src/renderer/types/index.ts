@@ -21,6 +21,7 @@ export type gitBasicWorkflowDataType = {
     description?: string
     branch?: string;
     remote?: string;
+    workingDir?: string;
 };
 
 export type workingDirDataType = {
