@@ -50,10 +50,8 @@ const localization = require(`../../lang/${lang}`)
 // -------------------------------------------
 
 export const branch = 'experiments';
-const USER = 'aordano';
-import {PASS} from "../../../../.secrets"
 const REPO = 'github.com/aordano/GitEase';
-export const remote = `https://${USER}:${PASS}@${REPO}`;
+export const remote = `git@${REPO}`;
 
 // -------------------------
 // --- Commit Components ---
