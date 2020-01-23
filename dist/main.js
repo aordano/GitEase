@@ -5797,6 +5797,35 @@ const installExtensions = async () => {
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
   return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.log);
+}; /// create a global var, wich will keep a reference to out loadingScreen window
+
+
+let loadingScreen;
+
+const createLoadingScreen = () => {
+  /// create a browser window
+  loadingScreen = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
+    /// define width and height for the window
+    width: 600,
+    height: 200,
+    backgroundColor: "#333",
+    /// remove the window frame, so it will become a frameless window
+    frame: false,
+    center: true,
+    alwaysOnTop: true,
+    title: "GitEase"
+  });
+  loadingScreen.setResizable(false);
+
+  if (true) {
+    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
+    loadingScreen.loadURL(`http://localhost:2003/loader.html`);
+  } else {}
+
+  loadingScreen.on('closed', () => loadingScreen = null);
+  loadingScreen.webContents.on('did-finish-load', () => {
+    loadingScreen.show();
+  });
 };
 
 const createWindow = async () => {
@@ -5806,13 +5835,25 @@ const createWindow = async () => {
 
   win = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
     width: 800,
-    height: 600
+    height: 600,
+    show: false,
+    title: "GitEase"
   });
 
   if (true) {
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
     win.loadURL(`http://localhost:2003`);
-  } else {}
+  } else {} /// keep listening on the did-finish-load event, when the mainWindow content has loaded
+
+
+  win.webContents.on('did-finish-load', () => {
+    /// then close the loading screen window and show the main window
+    if (loadingScreen) {
+      loadingScreen.close();
+    }
+
+    win.show();
+  });
 
   if (true) {
     // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
@@ -5826,7 +5867,10 @@ const createWindow = async () => {
   });
 };
 
-electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('ready', createWindow);
+electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('ready', () => {
+  createLoadingScreen();
+  createWindow();
+});
 electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     electron__WEBPACK_IMPORTED_MODULE_0__["app"].quit();
