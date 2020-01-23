@@ -107,7 +107,7 @@ const ChangesSpace: React.FC = () => {
                 content: changesAreaTree[i].content,
                 displayContent: changesAreaTree[i].displayContent,
                 staged: changesAreaTree[i].staged,
-                key: i,
+                key: `ID${i}`,
                 index: i
             })
         )
