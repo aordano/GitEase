@@ -15,10 +15,8 @@ import {
     BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE,
     BASIC_WORKFLOW_INIT,
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
-    BASIC_WORKFLOW_DEED_DONE,
-    BASIC_WORKFLOW_DEED_FAILED,
-    COMMIT_ERROR_ALERT,
-    COMMIT_SUCCESS_ALERT
+    COMMIT_SUCCESS_ALERT,
+    COMMIT_ERROR_ALERT
 } from '../types/constants';
 
 import {
@@ -74,7 +72,7 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     // -- This reducer takes care of handling the basic workflow
     // -- Does it by having a state that involves commit data and workflow initialization
     //
-    // -- It takes three possible actions:
+    // -- It takes five possible actions:
     //
     // -- BASIC_WORKFLOW_COMMIT_AND_PUSH
     // This action handles the commit and push of the previously-staged elements
@@ -84,6 +82,14 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     //
     // -- BASIC_WORKFLOW_INIT
     // This action initializes the workflow.
+    //
+    // -- COMMIT_ERROR_ALERT
+    // This action updates the state upon an unsuccessful commit/push, and displays
+    // an error message.
+    //
+    // -- COMMIT_SUCCESS_ALERT
+    // This action updates the state upon an successful commit/push, and displays
+    // an success message.
     state = basicWorkflowDefaultState,
     action: BasicWorkflowAction
 ) => {
@@ -102,24 +108,12 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
         case COMMIT_SUCCESS_ALERT:
             displayCommitSuccessAlert()
             return Object.assign({}, state, {
+                commitMessage: "",
+                commitDescription: "",
                 successStatus: {
                     _v: {
                         success: "pending"
                     }
-                }
-            });
-
-        case BASIC_WORKFLOW_DEED_DONE:
-            return Object.assign({}, state, {
-                successStatus: {
-                    success: "success"
-                }
-            });
-
-        case BASIC_WORKFLOW_DEED_FAILED:
-            return Object.assign({}, state, {
-                successStatus: {
-                    success: "error"
                 }
             });
 

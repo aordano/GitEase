@@ -19,11 +19,6 @@ import {
     CommitErrorAlertAction
 } from "../actions/commonActions"
 
-import { 
-    BasicWorkflowDeedDoneAction, 
-    BasicWorkflowDeedFailedAction
-} from '../actions/basicWorkflowActions';
-
 // -----------------------------
 // --- SimpleGit Definitions ---
 // -----------------------------
@@ -68,11 +63,9 @@ export class BasicWorkflow {
                 git.push().then(() => {
                     git.fetch("origin",basicWorkflowData.branch).then(
                         () => {
-                            store.dispatch(BasicWorkflowDeedDoneAction())
                             store.dispatch(CommitSuccessAlertAction())
                         },
                         () => {
-                            store.dispatch(BasicWorkflowDeedFailedAction())
                             store.dispatch(CommitErrorAlertAction())
                         }
                     )

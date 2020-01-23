@@ -103,10 +103,7 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
     // and evaluationg the staging status of every file aswell as declaring the status as read
     // from the parser function.
     //
-    // -- It takes three possible actions:
-    //
-    // -- SET_GLOBAL_STAGING_STATUS
-    // This action swaps the staging state of every element on the files tree.
+    // -- It takes two possible actions:
     //
     // -- SET_STAGING_STATUS
     // This action swaps the staging state of the selected element on the files tree.

@@ -36,9 +36,7 @@ export type BasicWorkflowAction =
     | BasicWorkflowInitType
     | UpdateCommitSuccessStatusType
     | CommitErrorAlertType
-    | CommitSuccessAlertType
-    | BasicWorkflowDeedDoneType
-    | BasicWorkflowDeedFailedType;
+    | CommitSuccessAlertType;
 
 // -----------------------
 // --- Action Creators ---
@@ -61,18 +59,6 @@ export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () 
         type: BASIC_WORKFLOW_INIT
     };
 };
-
-export const BasicWorkflowDeedDoneAction: ActionCreator<BasicWorkflowDeedDoneType> = () => {
-    return {
-        type: BASIC_WORKFLOW_DEED_DONE
-    }
-}
-
-export const BasicWorkflowDeedFailedAction: ActionCreator<BasicWorkflowDeedFailedType> = () => {
-    return {
-        type: BASIC_WORKFLOW_DEED_FAILED
-    }
-}
 
 export const BasicWorkflowCommitAndPushAction: 
     ActionCreator<BasicWorkflowCommitAndPushType> = (

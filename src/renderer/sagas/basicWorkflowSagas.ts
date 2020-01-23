@@ -31,7 +31,6 @@ import {
 
 import { BasicWorkflow } from '../functions/workflows';
 
-
 import { 
     displayCommitInProcessAlert
 } from '../functions';
@@ -52,11 +51,15 @@ function* clearCommitBox() { // ! currently not working
 }
 
 function* doCommitAndPush() {
+    // Function Generator that executes the commit and push process.
+
+    // Grabs information from the state
     const message = store.getState()?.basicWorkflowReducer.commitMessage
     const description = store.getState()?.basicWorkflowReducer.commitDescription
     const remote = store.getState()?.basicWorkflowReducer.remote
     const branch = store.getState()?.basicWorkflowReducer.branch
 
+    // Then passes the information to the workflow constructor
     const workflow = new BasicWorkflow(
         message ?? "There was no supplied message.",
         branch ?? 'master',
@@ -64,6 +67,8 @@ function* doCommitAndPush() {
         description ?? ""
     );
 
+    // -- Defines the async proccess for the displaying of the loader and the execution
+    // of the commit, push and fetch.
     const commitDeed = async () => {
         displayCommitInProcessAlert()
         workflow.commitAndPush()
@@ -76,14 +81,14 @@ function* doCommitAndPush() {
 // -------------------
 
 function* watchCommit() {
-    // -- Watch generator that looks for VIEW_MODIFIED_FILES events and fires up a saga 
-    // to update the changes area display
+    // -- Watch generator that looks for a commit succes flag and fires up a saga 
+    // to clear the commit textbox.
     yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
 }
 
 function* watchCommitSuccessStatusPartOne() {
-    // -- Watch generator that looks for SET_GLOBAL_STAGING_STATUS events and fires up a saga 
-    // to change the staging status of all elements
+    // -- Watch generator that looks for commit button events and fires up a saga 
+    // to execute the commit, push and fetch.
     yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],doCommitAndPush);
 }
 // --------------------

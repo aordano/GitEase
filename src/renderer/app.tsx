@@ -30,7 +30,12 @@ const render = (Component: () => JSX.Element) => {
 
 render(Application);
 
+// Inits the workflow given by the config file on the working dir
+// TODO -- Actually make this dependent on the .gitease file on the working dir
+// TODO and not preset to the basic workflow.
 store.dispatch(BasicWorkflowInitAction());
+
+// Executes the viewer initialization after a timeout to avoid race condition errors
 setTimeout(() => {
     store.dispatch(ViewModifiedFilesAction())
 },50)
