@@ -12,7 +12,9 @@ import { ActionCreator } from 'redux';
 
 import {
     LAUNCH_REPO_CONFIGURATION_WIZARD,
-    LaunchRepoConfigurationWizardType
+    LAUNCH_FIRST_TIME_WIZARD,
+    LaunchRepoConfigurationWizardType,
+    LaunchFirstTimeWizardType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -20,6 +22,8 @@ import {
 // ---------------------------------------
 
 export type LaunchRepoConfigurationWizardAction = LaunchRepoConfigurationWizardType
+
+export type LaunchFirstTimeWizardAction = LaunchFirstTimeWizardType
 
 // -------------------------------------------------
 // --- Repo Configuration Wizard Action Creators ---
@@ -33,5 +37,15 @@ export const LaunchRepoConfigurationWizardAction: ActionCreator<LaunchRepoConfig
         repo,
         workingDir,
         type: LAUNCH_REPO_CONFIGURATION_WIZARD
+    }
+}
+
+// -----------------------------------------
+// --- First Time Wizard Action Creators ---
+// -----------------------------------------
+
+export const LaunchFirstTimeWizardAction: ActionCreator<LaunchFirstTimeWizardType> = () => {
+    return {
+        type: LAUNCH_FIRST_TIME_WIZARD
     }
 }

@@ -27,3 +27,10 @@ export const changesAreaNoChangesTitle = "No changed files"
 export const changesAreaChangesTitle = "changed files"
 export const changesAreaGlobalCheckboxTooltip = "Stage/Unstage all changes."
 export const changesAreaElementCheckboxTooltip = "Stage/Unstage changes on this file."
+
+// -------------------------
+// --- First Time Wizard ---
+// -------------------------
+
+export const firstTimeWizardTitle = "First Time Configuration Wizard"
+export const firstTimeWizardDescription = "Welcome to GitEase! First we need to configure some stuff, so please follow the wizard and fill out all the forms."

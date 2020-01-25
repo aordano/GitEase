@@ -11,6 +11,7 @@ import { store, sagaMiddleware } from './store';
 // Imports Sagas
 import { rootSaga } from './sagas';
 import { ViewModifiedFilesAction } from './actions/commonActions';
+import { LaunchFirstTimeWizardAction } from './actions/wizardActions';
 
 // Create main element
 const mainElement = document.createElement('div');
@@ -29,6 +30,18 @@ const render = (Component: () => JSX.Element) => {
 };
 
 render(Application);
+
+
+if (
+    localStorage.getItem("firstTimeWizardCompleted") === undefined || 
+    localStorage.getItem("firstTimeWizardCompleted") === null
+) {
+    localStorage.setItem("firstTimeWizardCompleted","0")
+}
+
+if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
+    store.dispatch(LaunchFirstTimeWizardAction())
+}
 
 // Inits the workflow given by the config file on the working dir
 // TODO -- Actually make this dependent on the .gitease file on the working dir
