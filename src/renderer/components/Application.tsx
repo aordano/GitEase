@@ -29,20 +29,57 @@ import {
     BottomBlock
 } from "./bottomBlock"
 
+import {
+    FirstTimeWizard
+} from "./wizards/firstTime"
+
 // --------------------------
 // --- Main App Component ---
 // --------------------------
 
-const Application = () => (
-    <div>
-        <div className={'left-block'}>
-            <LeftBlock />
-        </div>
-        <div className={'main-block'}>
-            <TopBlock />
-            <BottomBlock />
-        </div>
-    </div>
-);
+const Application = () => {
+
+    const leftBlock = React.createElement(
+        "div", 
+        { className: "left-block"}, 
+        <LeftBlock key={"IDLEFT"}/>
+    )
+        
+
+    const mainBlock = React.createElement(
+        "div", 
+        { className: "main-block"}, 
+        [
+            <TopBlock  key={"IDTOP"}/>,
+            <BottomBlock key={"IDBOTTOM"}/>
+        ]
+    )
+    let app
+
+    if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
+        app = React.createElement (
+            "div",
+            { className: "main-app"},
+            [
+                <FirstTimeWizard key={"IDFIRSTWIZARD"}/>
+            ]
+        )
+    }
+
+    else {
+        app = React.createElement (
+            "div",
+            { className: "main-app"},
+            [
+                leftBlock,
+                mainBlock
+            ]
+        )  
+    }
+
+     
+
+    return app
+};
 
 export default hot(Application);

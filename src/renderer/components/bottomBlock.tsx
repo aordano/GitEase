@@ -68,7 +68,7 @@ export const BottomBlock: React.FC = () => {
     // TODO Make the viewer zoomable, scrollable and pan-able
 
     return (
-        <div className={'top-block'}>
+        <div className={'bottom-block'}>
             <ViewerComponent />
         </div>
     );
