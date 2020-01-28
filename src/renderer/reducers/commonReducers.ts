@@ -14,12 +14,14 @@ import { Reducer } from 'redux';
 import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
-    SET_STAGING_STATUS
+    SET_STAGING_STATUS,
+    UPDATE_VIEW_TREE
 } from '../types/constants';
 
 import { 
     ModifiedFilesStructure, 
-    ChangesTreeType
+    ChangesTreeType,
+    GitLogObjectType
 } from "../types"
 
 // ----------------------
@@ -28,7 +30,8 @@ import {
 
 import {
     ViewModifiedFilesAction,
-    UpdateChangesAreaAction
+    UpdateChangesAreaAction,
+    UpdateViewTreeAction
 } from '../actions/commonActions';
 
 // ------------------------
@@ -40,12 +43,22 @@ import {
     truncate, 
     stageFile,
     unstageFile,
-    removeQuotes
+    removeQuotes,
+    parseLogTree
 } from '../functions';
 
 // ---------------------------------
 // --- Reducer State Definitions ---
 // ---------------------------------
+
+export interface UpdateViewTreeState {
+    fullHistoryPromise: {
+        _v: {
+            fullHistory: GitLogObjectType[],
+            branchesList: string[]
+        }
+    }
+}
 
 export interface UpdateChangesAreaState {
     upToDate: boolean,
@@ -59,6 +72,15 @@ export interface ViewModifiedFilesState  {
 // -----------------------------------------
 // --- Reducer Default State Definitions ---
 // -----------------------------------------
+
+const UpdateViewTreeDefaultState: UpdateViewTreeState = {
+    fullHistoryPromise: {
+        _v: {
+            fullHistory: [],
+            branchesList: []
+        }
+    }
+}
 
 const updateChangesAreaDefaultState: UpdateChangesAreaState = {
     upToDate: false,
@@ -308,6 +330,29 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
         case VIEW_MODIFIED_FILES:
             return Object.assign({}, state, {
                 parsedData: parseStatus()
+            });
+        default: return state
+    }
+}
+
+export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
+    // -- This reducer takes care of handling the changes area.
+    // -- Does it by having a state that involves every status change on the files,
+    // and evaluationg the staging status of every file aswell as declaring the status as read
+    // from the parser function.
+    //
+    // -- It takes one possible action:
+    //
+    // -- VIEW_MODIFIED_FILES
+    // This action invokes the parsed git.status() data.
+    state = UpdateViewTreeDefaultState,
+    action: UpdateViewTreeAction
+) => {
+    switch (action.type) {
+        case UPDATE_VIEW_TREE:
+            const history = Promise.resolve(parseLogTree())
+            return Object.assign({}, state, {
+                fullHistoryPromise: history
             });
         default: return state
     }

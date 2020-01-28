@@ -14,8 +14,11 @@ import * as React from 'react';
 
 import { 
     Gitgraph, 
-    Orientation 
+    Orientation, 
+    Mode
 } from '@gitgraph/react';
+
+import {store} from "../../store"
 
 // ----------------------
 // --- Static Imports ---
@@ -37,27 +40,24 @@ export const ViewerComponent: React.FC = () => {
     return (
         <Gitgraph
             options={{
-                orientation: Orientation.Horizontal
+                mode: Mode.Compact,
             }}
         >
             {gitgraph => {
-                // Simulate git commands with Gitgraph API.
-                const master = gitgraph.branch('master');
-                master.commit('Initial commit');
 
-                const develop = gitgraph.branch('develop');
-                develop.commit('Add TypeScript');
+                const drawTree = () => {
+                    const fullHistory = store.getState()?.updateViewTreeReducer.fullHistoryPromise._v.fullHistory ?? []
+                    for (let i = fullHistory.length - 1 ?? 0; i > 0; i -= 1) {
+                        const curentBranch = gitgraph.branch(String(fullHistory[i].branch))
+                        curentBranch.commit(fullHistory[i].message)    
+                    }
+                }
 
-                const aFeature = gitgraph.branch('feature');
-                aFeature
-                    .commit('Make it work')
-                    .commit('Make it right')
-                    .commit('Make it fast');
+                setTimeout(() => {
+                    drawTree()
+                }, 3500)
 
-                develop.merge(aFeature);
-                develop.commit('Prepare v1');
-
-                master.merge(develop).tag('v1.0.0');
+                
             }}
         </Gitgraph>
     );

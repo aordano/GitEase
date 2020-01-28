@@ -14,7 +14,9 @@ import {
     viewModifiedFilesReducer, 
     ViewModifiedFilesState,
     updateChangesAreaReducer,
-    UpdateChangesAreaState
+    UpdateChangesAreaState,
+    UpdateViewTreeState,
+    updateViewTreeReducer
 } from "./commonReducers"
 
 import { 
@@ -30,6 +32,7 @@ export interface RootState {
     basicWorkflowReducer: BasicWorkflowState;
     viewModifiedFilesReducer: ViewModifiedFilesState
     updateChangesAreaReducer: UpdateChangesAreaState
+    updateViewTreeReducer: UpdateViewTreeState
 }
 
 // --------------------
@@ -39,5 +42,6 @@ export interface RootState {
 export const rootReducer = combineReducers<RootState | undefined>({
     basicWorkflowReducer,
     viewModifiedFilesReducer,
-    updateChangesAreaReducer
+    updateChangesAreaReducer,
+    updateViewTreeReducer
 });

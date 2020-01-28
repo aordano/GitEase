@@ -10,7 +10,7 @@ import { store, sagaMiddleware } from './store';
 
 // Imports Sagas
 import { rootSaga } from './sagas';
-import { ViewModifiedFilesAction } from './actions/commonActions';
+import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions';
 import { LaunchFirstTimeWizardAction } from './actions/wizardActions';
 
 // Create main element
@@ -36,7 +36,7 @@ if (
     localStorage.getItem("firstTimeWizardCompleted") === undefined || 
     localStorage.getItem("firstTimeWizardCompleted") === null
 ) {
-    localStorage.setItem("firstTimeWizardCompleted","0")
+    localStorage.setItem("firstTimeWizardCompleted","1") // ! Change this to "0" to avoid wizard skip
 }
 
 if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
@@ -47,6 +47,7 @@ if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
 // TODO -- Actually make this dependent on the .gitease file on the working dir
 // TODO and not preset to the basic workflow.
 store.dispatch(BasicWorkflowInitAction());
+store.dispatch(UpdateViewTreeAction())
 
 // Executes the viewer initialization after a timeout to avoid race condition errors
 setTimeout(() => {

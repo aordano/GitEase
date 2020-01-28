@@ -18,13 +18,15 @@ import {
     COMMIT_SUCCESS_ALERT,
     COMMIT_ERROR_ALERT,
     UPDATE_COMMIT_SUCCESS_STATUS,
+    UPDATE_VIEW_TREE,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
     SetGlobalStagingStatusType,
     CommitSuccessAlertType,
     CommitErrorAlertType,
-    UpdateCommitSuccessStatusType
+    UpdateCommitSuccessStatusType,
+    UpdateViewTreeType
 } from '../types/constants';
 
 // ---------------------------------------
@@ -41,6 +43,8 @@ export type ViewModifiedFilesAction = ViewModifiedFilesType
 export type CommitSuccessAlertAction = CommitSuccessAlertType
 
 export type CommitErrorAlertAction = CommitErrorAlertType
+
+export type UpdateViewTreeAction = UpdateViewTreeType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -117,5 +121,15 @@ export const UpdateCommitSuccessStatusAction: ActionCreator<UpdateCommitSuccessS
     return {
         error,
         type: UPDATE_COMMIT_SUCCESS_STATUS
+    }
+}
+
+// --------------------------
+// --- View Tree Creators ---
+// --------------------------
+
+export const UpdateViewTreeAction: ActionCreator<UpdateViewTreeType> = () => {
+    return {
+        type: UPDATE_VIEW_TREE
     }
 }

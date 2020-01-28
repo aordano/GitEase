@@ -1,5 +1,5 @@
 {
-  "name": "electron-react-typescript",
+  "name": "GitEase",
   "version": "0.0.6",
   "description": "",
   "main": "./dist/main.js",
@@ -53,10 +53,10 @@
     }
   },
   "build": {
-    "productName": "ProductName",
-    "appId": "org.your.productname",
+    "productName": "GitEase",
+    "appId": "org.nodoambiental.gitease",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "development"
     },
     "directories": {
       "output": "release"

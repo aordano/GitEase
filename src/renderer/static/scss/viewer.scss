@@ -4,7 +4,7 @@
 *
 */
 
-div.lower-block {
+div.bottom-block {
     background-color: #ccc;
     border-radius: 20px;
     padding: 20px;
@@ -12,7 +12,8 @@ div.lower-block {
     margin-top: 20px;
     position: relative;
     display: inline-block;
-    width: 63vw;
-    height: 70vh;
+    width: 400px;
+    height: 400px;
     margin-left: 20px;
+    overflow-y: scroll;
 }

@@ -115,6 +115,18 @@ type GitCommitStatusType = {
     }
 }
 
+// --------------------------------------
+// --- Git Status Modified Files Type ---
+// --------------------------------------
+
+export type GitLogObjectType = {
+    author_email: string,
+    author_name: string,
+    date: string,
+    hash: string,
+    message: string,
+    branch: string
+}
 
 // -------------------------------------------
 // --- Typed Redefinition of useSelector() ---

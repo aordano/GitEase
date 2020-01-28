@@ -19,6 +19,7 @@ import {ModifiedFilesStructure} from "./index"
 export const BASIC_WORKFLOW_COMMIT_AND_PUSH = 'BASIC_WORKFLOW_COMMIT_AND_PUSH';
 export const BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE = 'BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE';
 export const BASIC_WORKFLOW_INIT = 'BASIC_WORKFLOW_INIT'
+export const UPDATE_VIEW_TREE = 'UPDATE_VIEW_TREE'
 export const VIEW_MODIFIED_FILES = "VIEW_MODIFIED_FILES"
 export const UPDATE_CHANGES_AREA = "UPDATE_CHANGES_AREA"
 export const SET_STAGING_STATUS = "SET_STAGING_STATUS"
@@ -90,6 +91,10 @@ export interface LaunchRepoConfigurationWizardType extends Action {
 
 export interface LaunchFirstTimeWizardType extends Action {
     type: 'LAUNCH_FIRST_TIME_WIZARD'
+}
+
+export interface UpdateViewTreeType extends Action {
+    type: 'UPDATE_VIEW_TREE'
 }
 
 

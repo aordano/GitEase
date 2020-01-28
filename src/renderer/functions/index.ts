@@ -10,7 +10,11 @@ import promise from 'simple-git/promise';
 // --- Type Imports ---
 // --------------------
 
-import { ContentNameType } from '../types';
+import { 
+    ContentNameType,
+    GitLogObjectType
+} from '../types';
+import { ListLogLine } from 'simple-git/typings/response';
 
 // ----------------------------
 // --- Localization Imports ---
@@ -76,6 +80,53 @@ export const commit = (message: string, description?: string, workingDir?: strin
 export const push = (remote?: string, branch?: string, workingDir?: string) => {
     const git = promise(workingDir);
     git.push(remote ?? "origin", branch ?? 'master')
+}
+
+// ------------------------------------
+// --- Git-Viewer Related Functions ---
+// ------------------------------------
+
+export const parseLogTree = async (workingDir?: string) => {
+    const git = promise(workingDir);
+    const logList = (await Promise.resolve(git.log())).all
+
+    const branchesList: string[] = []
+    const fullHistory: GitLogObjectType[] = []
+
+    for (let i = 0; i < logList.length ; i += 1) {
+        const nameRev = String( await Promise.resolve(git.raw(["name-rev",logList[i].hash])))
+        let branchName
+
+        if (nameRev.indexOf("~") !== -1) {
+            branchName = nameRev.slice(nameRev.indexOf(" ")+1, nameRev.indexOf("~"))
+        } 
+        else {
+            branchName = nameRev.slice(nameRev.indexOf(" ")+1, nameRev.length-1)
+        }        
+
+        fullHistory.push({
+            author_email: logList[i].author_email,
+            author_name: logList[i].author_name,
+            date: logList[i].date,
+            hash: logList[i].hash,
+            message: logList[i].message,
+            branch: branchName
+        })
+
+        if (branchesList.indexOf(branchName) !== -1) {
+            continue
+        }
+
+        else {
+            branchesList.push(branchName)
+        }
+    }
+    
+    return {
+        fullHistory,
+        branchesList
+    }
+
 }
 
 // ----------------------------------
