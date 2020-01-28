@@ -47,6 +47,12 @@ import {
     parseLogTree
 } from '../functions';
 
+// -------------------------
+// --- Mock Data Imports ---
+// -------------------------
+
+import {data} from "../data.mock"
+
 // ---------------------------------
 // --- Reducer State Definitions ---
 // ---------------------------------
@@ -155,6 +161,10 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 }
                 const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(action.index ?? 0,1,newChange)
                 
+                data.workingDir ? 
+
+                stageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir) :
+
                 stageFile(state.changesAreaTree[action.index ?? 0].content)
 
                 return Object.assign({}, state, {
@@ -173,6 +183,10 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             // * -- This is this way because block-scoped const definitions can't be repeated
             // * outside their scope.
             // * -- In this case is not needed to fill the whole array and only is needed to replace one element.
+
+            data.workingDir ?
+
+            unstageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir) :
 
             unstageFile(state.changesAreaTree[action.index ?? 0].content)
             
@@ -329,7 +343,7 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
     switch (action.type) {
         case VIEW_MODIFIED_FILES:
             return Object.assign({}, state, {
-                parsedData: parseStatus()
+                parsedData:  data.workingDir ? parseStatus(data.workingDir) : parseStatus()
             });
         default: return state
     }
@@ -350,7 +364,10 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
 ) => {
     switch (action.type) {
         case UPDATE_VIEW_TREE:
-            const history = Promise.resolve(parseLogTree())
+            const history = 
+                data.workingDir ? 
+                Promise.resolve(parseLogTree(data.workingDir)) : 
+                Promise.resolve(parseLogTree())
             return Object.assign({}, state, {
                 fullHistoryPromise: history
             });

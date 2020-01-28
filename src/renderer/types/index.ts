@@ -105,7 +105,8 @@ export type GitCommitType = {
     commitDescription?: string,
     branch?: string,
     remote?: string,
-    successStatus?: GitCommitStatusType
+    successStatus?: GitCommitStatusType,
+    workingDir?: string
 }
 
 type GitCommitStatusType = {
@@ -115,9 +116,9 @@ type GitCommitStatusType = {
     }
 }
 
-// --------------------------------------
-// --- Git Status Modified Files Type ---
-// --------------------------------------
+// ---------------------------
+// --- Git Log Object Type ---
+// ---------------------------
 
 export type GitLogObjectType = {
     author_email: string,

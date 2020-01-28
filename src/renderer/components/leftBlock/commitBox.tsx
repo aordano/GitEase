@@ -49,9 +49,7 @@ const localization = require(`../../lang/${lang}`)
 // * --- Temporary statements for testing ---
 // -------------------------------------------
 
-export const branch = 'experiments';
-const REPO = 'github.com:aordano/GitEase';
-export const remote = `git@${REPO}`;
+import {data} from "../../data.mock"
 
 // -------------------------
 // --- Commit Components ---
@@ -93,8 +91,9 @@ export const CommitButton: React.FC = () => {
             BasicWorkflowCommitAndPushAction(
                 currentState.commitMessage,
                 currentState.commitDescription,
-                branch, 
-                remote
+                data.branch, // TODO Populate with values from config
+                data.remote,
+                data.workingDir
             )
         );
     };

@@ -55,7 +55,7 @@ export const ViewerComponent: React.FC = () => {
 
                 setTimeout(() => {
                     drawTree()
-                }, 3500)
+                }, 3500) // * artificial delay to avoid failure due to race conditions
 
                 
             }}

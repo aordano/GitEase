@@ -35,6 +35,8 @@ import {
     displayCommitInProcessAlert
 } from '../functions';
 
+import { UpdateViewTreeAction } from '../actions/commonActions';
+
 // --------------------
 // --- Effect Sagas ---
 // --------------------
@@ -77,6 +79,7 @@ function* doCommitAndPush() {
     }  
 
     yield commitDeed()
+    yield put(UpdateViewTreeAction())
 }
 // -------------------
 // --- Watch Sagas ---
@@ -88,7 +91,7 @@ function* watchCommit() {
     yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
 }
 
-function* watchCommitSuccessStatusPartOne() {
+function* watchCommitSuccessStatus() {
     // -- Watch generator that looks for commit button events and fires up a saga 
     // to execute the commit, push and fetch.
     yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],doCommitAndPush);
@@ -101,6 +104,6 @@ export const basicWorkflowSaga = function* root() {
     // -- Main export that conforms all the sagas into a root saga
     yield all([
         fork(watchCommit),
-        fork(watchCommitSuccessStatusPartOne)
+        fork(watchCommitSuccessStatus)
     ]);
 };
