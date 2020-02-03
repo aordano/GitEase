@@ -55,6 +55,12 @@ function* clearCommitBox() {
     commitMessageDescription.value = ""
 }
 
+function* updateViewTree() {
+    // -- 
+    yield put(UpdateViewTreeAction())
+}
+
+
 function* doCommitAndPush() {
     // Function Generator that executes the commit and push process.
 
@@ -82,7 +88,6 @@ function* doCommitAndPush() {
     }  
 
     yield commitDeed()
-    yield put(UpdateViewTreeAction())
 }
 // -------------------
 // --- Watch Sagas ---
@@ -92,6 +97,7 @@ function* watchCommit() {
     // -- Watch generator that looks for a commit succes flag and fires up a saga 
     // to clear the commit textbox.
     yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
+    yield takeLatest('COMMIT_SUCCESS_ALERT',updateViewTree);
 }
 
 function* watchCommitSuccessStatus() {
