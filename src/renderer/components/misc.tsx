@@ -29,7 +29,7 @@ const localization = require(`../lang/${lang}`)
 // --- Loading-Related Components ---
 // ----------------------------------
 
-export const SpinnerComponent: React.FC<SpinnerType> = ({name}: SpinnerType)=> {
+export const SpinnerComponent: React.FC<SpinnerType> = ({name, message}: SpinnerType)=> {
     // -- Simple container that holds the loading spinner.
 
     return (
@@ -45,7 +45,7 @@ export const SpinnerComponent: React.FC<SpinnerType> = ({name}: SpinnerType)=> {
                 <div className={"sk-cube sk-cube8"}/>
                 <div className={"sk-cube sk-cube9"}/>
             </div>
-            <p>{localization.commitProcessMessage}</p>
+            <p>{message}</p>
         </div>
     );
 };

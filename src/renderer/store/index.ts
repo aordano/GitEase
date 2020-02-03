@@ -16,12 +16,13 @@ import { rootReducer } from '../reducers';
 // --- DevTools Imports ---
 // ------------------------
 
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from "redux-devtools-extension";
 
 // -------------------------------
 // --- Saga Middleware Imports ---
 // -------------------------------
 
+// tslint:disable-next-line: import-name
 import createSagaMiddleware from 'redux-saga';
 
 // -----------------------------------

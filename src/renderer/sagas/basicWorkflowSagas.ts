@@ -8,7 +8,8 @@ import {
     put, 
     takeLatest, 
     all, 
-    fork
+    fork,
+    delay
 } from 'redux-saga/effects';
 
 // ---------------------
@@ -22,7 +23,7 @@ import { store } from "../store"
 // ----------------------
 
 import { 
-    BasicWorkflowUpdateCommitMessageAction
+    BasicWorkflowUpdateCommitMessageAction, BasicWorkflowInitAction
 } from '../actions/basicWorkflowActions';
 
 // ---------------------------------
@@ -62,13 +63,15 @@ function* doCommitAndPush() {
     const description = store.getState()?.basicWorkflowReducer.commitDescription
     const remote = store.getState()?.basicWorkflowReducer.remote
     const branch = store.getState()?.basicWorkflowReducer.branch
+    const workingDir = store.getState()?.basicWorkflowReducer.workingDir
 
     // Then passes the information to the workflow constructor
     const workflow = new BasicWorkflow(
         message ?? "There was no supplied message.",
         branch ?? 'master',
         remote ?? 'origin',
-        description ?? ""
+        description ?? "",
+        workingDir ?? ""
     );
 
     // -- Defines the async proccess for the displaying of the loader and the execution
@@ -96,6 +99,7 @@ function* watchCommitSuccessStatus() {
     // to execute the commit, push and fetch.
     yield takeLatest(['BASIC_WORKFLOW_COMMIT_AND_PUSH'],doCommitAndPush);
 }
+
 // --------------------
 // --- Export Sagas ---
 // --------------------

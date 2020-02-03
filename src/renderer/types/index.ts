@@ -93,7 +93,8 @@ export type StagingCheckboxIndexType = {
 // -------------------
 
 export type SpinnerType = {
-    name: string
+    name: string,
+    message?: string
 }
 
 // --------------------------------------
@@ -125,8 +126,113 @@ export type GitLogObjectType = {
     author_name: string,
     date: string,
     hash: string,
+    parentHash: string,
     message: string,
     branch: string
+}
+
+// --------------------------------------
+// --- Viewer Component-related Types ---
+// --------------------------------------
+
+export type ViewerComponentPropType = {
+    fullHistory: GitLogObjectType[],
+    branchesList: string[],
+    hashList: string[]
+}
+
+// --------------------------------------
+// --- Branch Color Information Types ---
+// --------------------------------------
+
+export type colorTripletType = {
+    r: number,
+    g: number,
+    b: number
+}
+
+export type branchDataType = {
+    branchName: string,
+    branchColor: colorTripletType
+}
+
+// --------------------------------------
+// --- JSON Commit Tree-related Types ---
+// --------------------------------------
+
+export type mergeJSONPropsType = {
+    destinationBranch: branchDataType,
+    destinationHash: string,
+    destinationCommitMessage: string
+}
+
+export type divergenceJSONPropsType = {
+    branch: branchDataType,
+    hash: string,
+    author: string,
+    message: string
+}
+
+export type divergenceJSONType = {
+    attributes: {
+        message: string,
+        author: string,
+        hash: string
+    },
+    nodeSvgShape: {
+        shape: string,
+        shapeProps: {
+            rx: number,
+            width: number,
+            height: number,
+            x: number,
+            y: number,
+            fill: string,
+        },
+    },
+    children: childrenJSONType[]
+}
+
+export type mergeJSONType = {
+    name: string,
+    attributes: {
+        message: string,
+        hash: string
+    },
+    nodeSvgShape: {
+        shape: string,
+        shapeProps: {
+            points: string,
+            width: number,
+            height: number,
+            x: number,
+            y: number,
+            fill: string,
+        },
+    },
+    children: childrenJSONType[]
+}
+
+export type childrenJSONType = commitJSONType | mergeJSONType | divergenceJSONType
+
+export type commitJSONType = {
+    attributes: {
+        message: string,
+        author: string,
+        hash: string
+    },
+    nodeSvgShape: {
+        shape: string,
+        shapeProps: {
+            r: string,
+            width: number,
+            height: number,
+            x: number,
+            y: number,
+            fill: string,
+        },
+    },
+    children: childrenJSONType[]
 }
 
 // -------------------------------------------

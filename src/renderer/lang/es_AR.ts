@@ -27,3 +27,16 @@ export const changesAreaNoChangesTitle = "No hay archivos modificados"
 export const changesAreaChangesTitle = "archivos modificados"
 export const changesAreaGlobalCheckboxTooltip = "Asigna/desasigna todos los cambios realizados."
 export const changesAreaElementCheckboxTooltip = "Asigna/desasigna los cambios en este archivo."
+
+// -------------------------
+// --- First Time Wizard ---
+// -------------------------
+
+export const firstTimeWizardTitle = "Asistente de configuración de GitEase"
+export const firstTimeWizardDescription = "Bienvenido a GitEase! Primero necesitamos configurar algunas cosas, así que por favor completa este asistente."
+
+// -------------------------
+// --- Git Tree Messages ---
+// --------------------------
+
+export const gitTreeLoadingMessage = "Cargando diagrama..."

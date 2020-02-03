@@ -61,7 +61,8 @@ const basicWorkflowDefaultState: BasicWorkflowState = {
             error: "none",
             success: "pending"
         }
-    }
+    },
+    workingDir: ""
 };
 
 // ----------------
@@ -143,8 +144,8 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
         case BASIC_WORKFLOW_INIT:
             // -- This reducer initializes the basic workflow.
             return Object.assign({}, state, {
-                commitMessage: 'Default',
-                commitDescription: "default"
+                commitMessage: '',
+                commitDescription: ""
             });
         default:
             return state;

@@ -28,6 +28,8 @@ import {
     SetStagingStatusAction
 } from '../actions/commonActions';
 
+import {ViewerComponent} from "../components/bottomBlock/viewer"
+
 // --------------------
 // --- Effect Sagas ---
 // --------------------

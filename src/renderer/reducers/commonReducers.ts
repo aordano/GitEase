@@ -1,11 +1,13 @@
 // ! ###  - Common reducers main file - ###
 // ! ###  - (common to all workflows) - ### 
 
-// ---------------
-// --- Imports ---
-// ---------------
+// ---------------------
+// --- Redux Imports ---
+// ---------------------
 
 import { Reducer } from 'redux';
+
+import {ViewerComponent} from "../components/bottomBlock/viewer"
 
 // --------------------
 // --- Type Imports ---
@@ -61,7 +63,11 @@ export interface UpdateViewTreeState {
     fullHistoryPromise: {
         _v: {
             fullHistory: GitLogObjectType[],
-            branchesList: string[]
+            branchesList: string[],
+            hashes: {
+                hashList: string[],
+                parentHashList: string[]
+            }
         }
     }
 }
@@ -79,11 +85,15 @@ export interface ViewModifiedFilesState  {
 // --- Reducer Default State Definitions ---
 // -----------------------------------------
 
-const UpdateViewTreeDefaultState: UpdateViewTreeState = {
+export const updateViewTreeDefaultState: UpdateViewTreeState = {
     fullHistoryPromise: {
         _v: {
             fullHistory: [],
-            branchesList: []
+            branchesList: [],
+            hashes: {
+                hashList: [],
+                parentHashList: []
+            }
         }
     }
 }
@@ -359,7 +369,7 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
     //
     // -- VIEW_MODIFIED_FILES
     // This action invokes the parsed git.status() data.
-    state = UpdateViewTreeDefaultState,
+    state = updateViewTreeDefaultState,
     action: UpdateViewTreeAction
 ) => {
     switch (action.type) {

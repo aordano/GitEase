@@ -77,7 +77,7 @@ export const CommitBox: React.FC = () => {
 
     return (
         <div className={"commit-overlay"}>
-            <SpinnerComponent name={"commit-box"}/>
+            <SpinnerComponent name={"commit-box"} message={localization.commitProcessMessage}/>
             <div className={'commit-box'}>
                 <p>{localization.commitBoxTitle}</p>
                 <CommitMessageInput />

@@ -8,17 +8,19 @@
 
 import * as React from 'react';
 
-// ------------------------
-// --- GitGraph Imports ---
-// ------------------------
 
-import { 
-    Gitgraph, 
-    Orientation, 
-    Mode
-} from '@gitgraph/react';
+// -----------------------------
+// --- React D3 Tree Imports ---
+// -----------------------------
 
-import {store} from "../../store"
+// tslint:disable-next-line: import-name
+import Tree from 'react-d3-tree';
+
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { useSelector } from "../../types"
 
 // ----------------------
 // --- Static Imports ---
@@ -27,38 +29,104 @@ import {store} from "../../store"
 require('../../static/scss/viewer.scss');
 
 // ------------------------
+// --- Function Imports ---
+// ------------------------
+
+import {
+    generateJSONTree
+} from "../../functions"
+
+// -------------------------
+// --- Component Imports ---
+// -------------------------
+
+import {
+    SpinnerComponent
+} from "../misc"
+
+// ----------------------------
+// --- Localization Imports ---
+// ----------------------------
+
+const lang = "en_US"
+
+const localization = require(`../../lang/${lang}`)
+
+// ------------------------
 // --- Viewer Component ---
 // ------------------------
 
-// TODO write a reducer to check the state of the commit/branches history 
-// TODO link the reducer state to the viewer as to display the current repo
 // TODO style the viewer
-// TODO make it zoomable and scrollable
 // TODO Document it better
 
 export const ViewerComponent: React.FC = () => {
-    return (
-        <Gitgraph
-            options={{
-                mode: Mode.Compact,
-            }}
-        >
-            {gitgraph => {
 
-                const drawTree = () => {
-                    const fullHistory = store.getState()?.updateViewTreeReducer.fullHistoryPromise._v.fullHistory ?? []
-                    for (let i = fullHistory.length - 1 ?? 0; i > 0; i -= 1) {
-                        const curentBranch = gitgraph.branch(String(fullHistory[i].branch))
-                        curentBranch.commit(fullHistory[i].message)    
+    const fullHistory = useSelector(state => 
+        state.updateViewTreeReducer.fullHistoryPromise?._v?.fullHistory ??
+            {
+                fullhistory: [{
+                    author_email: "default",
+                    author_name: "default",
+                    date: "default",
+                    hash: "default",
+                    parentHash: "default",
+                    message: "default",
+                    branch: "default"
+                }]
+            }
+    )
+
+    const hashList = useSelector(state => 
+        state.updateViewTreeReducer.fullHistoryPromise?._v?.hashes?.hashList ??
+            {
+                hashList: [
+                    "default"
+                ]
+            }
+    )
+
+    const branchesList = useSelector(state => 
+        state.updateViewTreeReducer.fullHistoryPromise?._v?.branchesList ??
+            {
+                branchesList: [
+                    "master"
+                ]
+            }
+    )  
+
+    const gitTree = generateJSONTree({fullHistory,branchesList,hashList})
+
+    let shownElement: any
+    
+    if (gitTree === undefined) {
+        shownElement = React.createElement(
+            SpinnerComponent,
+            {
+                name: "tree",
+                message: localization.gitTreeLoadingMessage
+            }
+        )
+    }
+
+    else {
+        shownElement = React.createElement(
+            Tree,
+            {
+                data: gitTree,
+                styles: {
+                    links: {
+                        strokeWidth: 5
                     }
-                }
+                },
+                transitionDuration: 0
+            }
+        )
+    }
 
-                setTimeout(() => {
-                    drawTree()
-                }, 3500) // * artificial delay to avoid failure due to race conditions
+    const generateTree = () => {
+        return shownElement
+    }
 
-                
-            }}
-        </Gitgraph>
-    );
+    
+    return generateTree()
 };

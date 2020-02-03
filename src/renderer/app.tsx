@@ -47,7 +47,7 @@ if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
 // TODO -- Actually make this dependent on the .gitease file on the working dir
 // TODO and not preset to the basic workflow.
 store.dispatch(BasicWorkflowInitAction());
-store.dispatch(UpdateViewTreeAction())
+
 
 // Executes the viewer initialization after a timeout to avoid race condition errors
 setTimeout(() => {
@@ -56,3 +56,8 @@ setTimeout(() => {
 
 // Executes root saga
 sagaMiddleware.run(rootSaga);
+
+// Executes the git tree viewer after a timeout to avoid race condition errors
+setTimeout(() => {
+    store.dispatch(UpdateViewTreeAction())
+}, 5000)
