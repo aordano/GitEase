@@ -19,7 +19,8 @@ import {
     mergeJSONPropsType,
     divergenceJSONPropsType,
     commitJSONType,
-    childrenJSONType
+    childrenJSONType,
+    MergeCommitType
 } from '../types';
 
 // ----------------------------
@@ -33,6 +34,7 @@ const localization = require(`../lang/${lang}`)
 // -----------------------------
 // --- Git-related Functions ---
 // -----------------------------
+
 
 export const parseStatus = (workingDir?: string) => {
     const git = promise(workingDir);
@@ -92,10 +94,13 @@ export const push = (remote?: string, branch?: string, workingDir?: string) => {
 // --- Git-Viewer Related Functions ---
 // ------------------------------------
 
+
+
 export const parseLogTree = async (workingDir?: string) => {
     const git = promise(workingDir);
     
-    const parentHashList: string[] = []
+    const parentHashList: string[] = [] 
+    const mergeCommitList: MergeCommitType[] = []
     const hashList: string[] = []
     const branchesList: string[] = []
     const fullHistory: GitLogObjectType[] = []
@@ -114,6 +119,27 @@ export const parseLogTree = async (workingDir?: string) => {
     }
 
     parentHashList.pop() // * The last element is a blank string because of the initial commit has no parent hash
+
+    // If a commit has multiple parent hashes list them in an array
+    for (let i = 0; i < parentHashList.length ; i += 1) {
+        if (parentHashList[i].length > 40) {
+            const thisCommitParentHashes: string[] = []
+            let hashesString: string = parentHashList[i]
+
+            while (hashesString.indexOf(" ") !== -1) {
+                const parentHash: string = hashesString.slice(0, hashesString.indexOf(" "))
+                hashesString = hashesString.slice(
+                    hashesString.indexOf(" ")+1,hashesString.length
+                )
+                thisCommitParentHashes.push(parentHash)
+            }
+            thisCommitParentHashes.push(hashesString)
+            mergeCommitList.push({
+                hash: logList[i].hash,
+                parentHashes: thisCommitParentHashes
+            })
+        }
+    }
 
     for (let i = 0; i < logList.length ; i += 1) {
         const nameRev = String( await Promise.resolve(git.raw(["name-rev", "--name-only",logList[i].hash])))
@@ -150,6 +176,7 @@ export const parseLogTree = async (workingDir?: string) => {
     }
     
     return {
+        mergeCommitList,
         fullHistory,
         branchesList,
         hashes: {
@@ -366,6 +393,7 @@ const buildDivergenceJSON = ({
             author,
             hash
         },
+        children: [],
         nodeSvgShape: {
             shape: 'rect',
             shapeProps: {
@@ -382,15 +410,15 @@ const buildDivergenceJSON = ({
                         String(branch.branchColor.b)
                 })`,
             },
-        },
-        children: []
+        }
     }
 }
 
 export const generateJSONTree = ({
     fullHistory,
     branchesList,
-    hashList
+    hashList,
+    mergeCommitList
 }:ViewerComponentPropType) => {
 
     const branchesData = generateBranchesColors(branchesList) 
@@ -424,18 +452,85 @@ export const generateJSONTree = ({
         }
 
         // Avoid undefined errors until there's a commit present in the data
-        let treeStructure: childrenJSONType
-        if (fullHistory.length > 0 ) {
-            treeStructure = generateInitialCommit()
+        let treeStructure: childrenJSONType = {
+            name: "loading",
+            attributes: {
+                message: "loading",
+                author: "loading",
+                hash: "loading"
+            },
+            nodeSvgShape: {
+                shape: 'rect',
+                shapeProps: {
+                    rx: 5,
+                    width: 20,
+                    height: 20,
+                    x: -10,
+                    y: -10,
+                    fill: `rgb(0,0,0)`,
+                },
+            },
+            children: []
         }
 
-        commitsJSON[fullHistory.length-1]
+        for (let i = fullHistory.length-1 ; i >= 0  ; i -= 1) {
 
-        for (let i = fullHistory.length-1 ; i > 0  ; i -= 1) {
-
-            // Forcefully do check once in the for loop to avoid "branch undefined" errorsz
+            // Forcefully do check once in the for loop to avoid "branch undefined" errors
             if (i === fullHistory.length-1) {
+                treeStructure = generateInitialCommit()
                 graphedBranches.push(fullHistory[i].branch)
+                continue
+            }
+
+            // Check if last commit
+            let isLastCommit = false
+            if (i === 0) {
+                isLastCommit = true
+            }
+
+            // Then check if commit has more than one parent hash
+            if (fullHistory[i].parentHash.length > 40) {
+                // If it does then is a merge commit so let's build it as such
+
+                const mergeCommitsHashList = []
+                for (let j = 0 ; j < mergeCommitList.length ; j += 1) {
+                    mergeCommitsHashList.push(mergeCommitList[j].hash)
+                }
+
+                const currentHash = fullHistory[i].hash
+                const parentHashes = mergeCommitList[mergeCommitsHashList.indexOf(currentHash)].parentHashes
+                
+                const branchsNameList = []
+                for (let j = 0 ; j < parentHashes.length ; j += 1 ) {
+                    branchsNameList.push(fullHistory[hashList.indexOf(parentHashes[j])].branch)
+                }
+
+                let branchWhereBelongsTo
+                for (let j = 0 ; j < branchsNameList.length ; j += 1) {
+                    if (fullHistory[i].branch === branchsNameList[j]) {
+                        branchWhereBelongsTo = branchsNameList.splice(j,1)
+                        break
+                    }
+                }
+
+                const destinationBranch = {
+                    branchName: `(${String(branchsNameList)}) -> ${branchWhereBelongsTo}`,
+                    branchColor: branchesData[branchesList.indexOf(fullHistory[i].branch)].branchColor
+                }
+                const destinationCommitMessage = fullHistory[i].message
+                const destinationHash = fullHistory[i].hash
+                const currentNode: childrenJSONType = buildMergeJSON({
+                    destinationBranch,
+                    destinationHash,
+                    destinationCommitMessage
+                })
+
+                // Then add the node as the last children
+                treeStructure = TraverseJSON.prototype.injectGivenChild(
+                    treeStructure,
+                    fullHistory[i].parentHash,
+                    [currentNode]
+                )
                 continue
             }
 
@@ -445,6 +540,18 @@ export const generateJSONTree = ({
 
                 // If it is then generate the current node
                 const currentNode: childrenJSONType = commitsJSON[i]
+
+                if (isLastCommit) {
+                    currentNode.name = fullHistory[i].branch 
+                     // Then add the node as the last children
+                    treeStructure = TraverseJSON.prototype.injectGivenChild(
+                        treeStructure,
+                        fullHistory[i].parentHash,
+                        [currentNode]
+                    )
+
+                    continue
+                }
 
                 // If next commit is a merge then add the merge children too
                 if (
@@ -542,8 +649,6 @@ export const generateJSONTree = ({
     return buildCausalityTree()
 
 }
-
-
 
 // ----------------------------------
 // --- Alert Generating Functions ---

@@ -130,17 +130,6 @@ export type GitLogObjectType = {
     message: string,
     branch: string
 }
-
-// --------------------------------------
-// --- Viewer Component-related Types ---
-// --------------------------------------
-
-export type ViewerComponentPropType = {
-    fullHistory: GitLogObjectType[],
-    branchesList: string[],
-    hashList: string[]
-}
-
 // --------------------------------------
 // --- Branch Color Information Types ---
 // --------------------------------------
@@ -160,6 +149,18 @@ export type branchDataType = {
 // --- JSON Commit Tree-related Types ---
 // --------------------------------------
 
+export type ViewerComponentPropType = {
+    fullHistory: GitLogObjectType[],
+    branchesList: string[],
+    hashList: string[],
+    mergeCommitList: MergeCommitType[]
+}
+
+export type MergeCommitType = {
+    hash: string,
+    parentHashes: string[]
+}
+
 export type mergeJSONPropsType = {
     destinationBranch: branchDataType,
     destinationHash: string,
@@ -167,6 +168,13 @@ export type mergeJSONPropsType = {
 }
 
 export type divergenceJSONPropsType = {
+    branch: branchDataType,
+    hash: string,
+    author: string,
+    message: string
+}
+
+export type commitJSONPropsType = {
     branch: branchDataType,
     hash: string,
     author: string,
@@ -232,7 +240,8 @@ export type commitJSONType = {
             fill: string,
         },
     },
-    children: childrenJSONType[]
+    children: childrenJSONType[],
+    name?: string
 }
 
 // -------------------------------------------

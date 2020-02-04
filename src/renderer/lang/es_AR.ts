@@ -40,3 +40,11 @@ export const firstTimeWizardDescription = "Bienvenido a GitEase! Primero necesit
 // --------------------------
 
 export const gitTreeLoadingMessage = "Cargando diagrama..."
+
+// ----------------------
+// --- Git Tree Nodes ---
+// ----------------------
+
+export const nodeHash = "Id"
+export const nodeAuthor = "Por"
+export const nodeSubject = "Mensaje" 

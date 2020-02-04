@@ -34,6 +34,11 @@ export const BottomBlock: React.FC = () => {
     return (
         <div className={'bottom-block'}>
             <ViewerComponent />
+            <div className={"node-details-popup"}>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
         </div>
     );
 };

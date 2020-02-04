@@ -23,7 +23,8 @@ import {
 import { 
     ModifiedFilesStructure, 
     ChangesTreeType,
-    GitLogObjectType
+    GitLogObjectType,
+    MergeCommitType
 } from "../types"
 
 // ----------------------
@@ -67,7 +68,8 @@ export interface UpdateViewTreeState {
             hashes: {
                 hashList: string[],
                 parentHashList: string[]
-            }
+            },
+            mergeCommitList: MergeCommitType[]
         }
     }
 }
@@ -93,7 +95,11 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
             hashes: {
                 hashList: [],
                 parentHashList: []
-            }
+            },
+            mergeCommitList: [{
+                hash: "",
+                parentHashes: [""]
+            }]
         }
     }
 }

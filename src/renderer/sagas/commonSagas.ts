@@ -28,8 +28,6 @@ import {
     SetStagingStatusAction
 } from '../actions/commonActions';
 
-import {ViewerComponent} from "../components/bottomBlock/viewer"
-
 // --------------------
 // --- Effect Sagas ---
 // --------------------
@@ -52,6 +50,7 @@ function* setGlobalStagingStatus() {
         currentCheckbox.checked = !currentCheckbox.checked
     }
 }
+
 // -------------------
 // --- Watch Sagas ---
 // -------------------
