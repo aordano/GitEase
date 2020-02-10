@@ -1,17 +1,5 @@
 // ! ###  - Main Types File - ###
 
-// ---------------------------
-// --- React-Redux Imports ---
-// ---------------------------
-
-import { useSelector as useReduxSelector, TypedUseSelectorHook } from 'react-redux';
-
-// ---------------------------
-// --- Store State Imports ---
-// ---------------------------
-
-import { RootState } from '../store';
-
 // ------------------
 // --- Data Types ---
 // ------------------
@@ -122,7 +110,6 @@ type GitCommitStatusType = {
 // ---------------------------
 
 export type GitLogObjectType = {
-    author_email: string,
     author_name: string,
     date: string,
     hash: string,
@@ -130,6 +117,7 @@ export type GitLogObjectType = {
     message: string,
     branch: string
 }
+
 // --------------------------------------
 // --- Branch Color Information Types ---
 // --------------------------------------
@@ -149,16 +137,33 @@ export type branchDataType = {
 // --- JSON Commit Tree-related Types ---
 // --------------------------------------
 
-export type ViewerComponentPropType = {
+export type JSONTreeGeneratorPropType = {
     fullHistory: GitLogObjectType[],
     branchesList: string[],
     hashList: string[],
-    mergeCommitList: MergeCommitType[]
+    treeOffset: number,
+    metadataList: GitTreeNodeMetadataType[]
 }
 
 export type MergeCommitType = {
     hash: string,
     parentHashes: string[]
+}
+
+export type DivergenceCommitType = {
+    hash: string,
+    childrenHashes: string[]
+}
+
+export type GitTreeNodeMetadataType = {
+    isInitial: boolean,
+    isDivergence: boolean,
+    isMerge: boolean,
+    isLeaf: boolean,
+    isPointer: boolean,
+    pointsTo: number,
+    childrenOf: number[],
+    parentOf: number[]
 }
 
 export type mergeJSONPropsType = {
@@ -243,9 +248,3 @@ export type commitJSONType = {
     children: childrenJSONType[],
     name?: string
 }
-
-// -------------------------------------------
-// --- Typed Redefinition of useSelector() ---
-// -------------------------------------------
-
-export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;

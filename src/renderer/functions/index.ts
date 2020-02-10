@@ -11,16 +11,7 @@ import promise from 'simple-git/promise';
 // --------------------
 
 import { 
-    ContentNameType,
-    GitLogObjectType,
-    ViewerComponentPropType,
-    colorTripletType,
-    branchDataType,
-    mergeJSONPropsType,
-    divergenceJSONPropsType,
-    commitJSONType,
-    childrenJSONType,
-    MergeCommitType
+    ContentNameType
 } from '../types';
 
 // ----------------------------
@@ -30,6 +21,12 @@ import {
 const lang = "en_US"
 
 const localization = require(`../lang/${lang}`)
+
+// ---------------------------
+// * --- Mock Data Imports ---
+// ---------------------------
+
+import {data} from "../data.mock"
 
 // -----------------------------
 // --- Git-related Functions ---
@@ -88,566 +85,6 @@ export const commit = (message: string, description?: string, workingDir?: strin
 export const push = (remote?: string, branch?: string, workingDir?: string) => {
     const git = promise(workingDir);
     git.push(remote ?? "origin", branch ?? 'master')
-}
-
-// ------------------------------------
-// --- Git-Viewer Related Functions ---
-// ------------------------------------
-
-
-
-export const parseLogTree = async (workingDir?: string) => {
-    const git = promise(workingDir);
-    
-    const parentHashList: string[] = [] 
-    const mergeCommitList: MergeCommitType[] = []
-    const hashList: string[] = []
-    const branchesList: string[] = []
-    const fullHistory: GitLogObjectType[] = []
-
-    const logList = (await Promise.resolve(git.log())).all
-    let parentHashListString = await Promise.resolve(git.raw([
-        "log",
-        "--format=%P%n"
-    ]))
-    while (parentHashListString.indexOf("\n") !== -1) {
-        const parentHash = parentHashListString.slice(0, parentHashListString.indexOf("\n"))
-        parentHashListString = parentHashListString.slice(
-            parentHashListString.indexOf("\n")+2,parentHashListString.length
-        )
-        parentHashList.push(parentHash)
-    }
-
-    parentHashList.pop() // * The last element is a blank string because of the initial commit has no parent hash
-
-    // If a commit has multiple parent hashes list them in an array
-    for (let i = 0; i < parentHashList.length ; i += 1) {
-        if (parentHashList[i].length > 40) {
-            const thisCommitParentHashes: string[] = []
-            let hashesString: string = parentHashList[i]
-
-            while (hashesString.indexOf(" ") !== -1) {
-                const parentHash: string = hashesString.slice(0, hashesString.indexOf(" "))
-                hashesString = hashesString.slice(
-                    hashesString.indexOf(" ")+1,hashesString.length
-                )
-                thisCommitParentHashes.push(parentHash)
-            }
-            thisCommitParentHashes.push(hashesString)
-            mergeCommitList.push({
-                hash: logList[i].hash,
-                parentHashes: thisCommitParentHashes
-            })
-        }
-    }
-
-    for (let i = 0; i < logList.length ; i += 1) {
-        const nameRev = String( await Promise.resolve(git.raw(["name-rev", "--name-only",logList[i].hash])))
-        let branchName
-
-        // Parses branch name
-        if (nameRev.indexOf("~") !== -1) {
-            branchName = nameRev.slice(0, nameRev.indexOf("~"))
-        } 
-        else {
-            branchName = nameRev.slice(0, nameRev.length-1)
-        }        
-
-        fullHistory.push({
-            author_email: logList[i].author_email,
-            author_name: logList[i].author_name,
-            date: logList[i].date,
-            hash: logList[i].hash,
-            parentHash: parentHashList[i],
-            message: logList[i].message,
-            branch: branchName
-        })
-
-        hashList.push(logList[i].hash) // Populates the hash list
-
-        // Perform check to list branches
-        if (branchesList.indexOf(branchName) !== -1) {
-            continue
-        }
-
-        else {
-            branchesList.push(branchName)
-        }
-    }
-    
-    return {
-        mergeCommitList,
-        fullHistory,
-        branchesList,
-        hashes: {
-            hashList,
-            parentHashList
-        }
-    }
-
-}
-
-const generateBranchesColors = (branchesList: string[]) => {
-        
-    const generateSeedTriplet = () => { 
-        return {
-            r: Math.round(Math.random() * 255),
-            g: Math.round(Math.random() * 255),
-            b: Math.round(Math.random() * 255)
-        }
-    }
-
-    const calculateColorDistance = (firstColor: colorTripletType, secondColor: colorTripletType) => {
-        // -- Color distance calculator according to the formula found at
-        // https://www.compuphase.com/cmetric.htm
-        const rMean = (firstColor.r + secondColor.r) / 2
-        const deltaR = Math.abs(firstColor.r - secondColor.r)
-        const deltaG = Math.abs(firstColor.g - secondColor.g)
-        const deltaB = Math.abs(firstColor.b - secondColor.b)
-        const colorDistance = Math.sqrt(
-            (2 + rMean / 256) * Math.pow(deltaR,2) +
-            4 * Math.pow(deltaG,2) + 
-            (2 + (( 255 - rMean )/ 256)) * Math.pow(deltaB,2)
-        )
-        return colorDistance
-    }
-
-    const generateDifferentColor = (currentColorTriplet: colorTripletType) =>  {
-        let randomColorTriplet = generateSeedTriplet()
-        
-        while (calculateColorDistance(currentColorTriplet,randomColorTriplet) < 20) {
-            randomColorTriplet = generateSeedTriplet()
-        }
-
-        return randomColorTriplet
-    }
-
-    const branches: branchDataType[] = [{
-        branchName: branchesList[0],
-        // Default branch color Royal Purple
-        branchColor: {
-            r: 120,
-            g: 81,
-            b: 169
-        }
-    }]
-
-    for (let i = 1; i < branchesList.length; i += 1) {
-        branches.push({
-            branchName: branchesList[i],
-            branchColor: generateDifferentColor(branches[i-1].branchColor)
-        })
-    }
-
-    return branches
-}
-
-let isElementSelected: boolean
-
-class TraverseJSON {
-    public injectGivenChild(
-        JSONTree: childrenJSONType, 
-        hashToFind: string, 
-        childrenToAdd: childrenJSONType[]
-    ) {
-        if( JSONTree !== null && typeof JSONTree === "object" ) { 
-            Object.entries(JSONTree).forEach(([key, value]) => {
-                if (key === "attributes") {
-                    this.injectGivenChild(value, hashToFind, childrenToAdd)
-                }
-                if (key === "hash" && value === hashToFind) {
-                    isElementSelected = true
-                }
-                if (isElementSelected && key === "children") {
-                    Object.assign(value,childrenToAdd)
-                    isElementSelected = false
-                    return JSONTree
-                }
-                if (key === "children" && value !== []) {
-                    for (let i = 0 ; i < value.length ; i += 1 ) {
-                        this.injectGivenChild(value[i],hashToFind, childrenToAdd)
-                    }
-                }
-            })    
-        }
-        return JSONTree
-    }
-
-    public injectParallelChild(
-        JSONTree: childrenJSONType, 
-        hashToFind: string, 
-        childrenToAdd: childrenJSONType[]
-    ) {
-        if( JSONTree !== null && typeof JSONTree === "object" ) { 
-            Object.entries(JSONTree).forEach(([key, value]) => {
-                if (key === "attributes") {
-                    this.injectGivenChild(value, hashToFind, childrenToAdd)
-                }
-                if (key === "hash" && value === hashToFind) {
-                    isElementSelected = true
-                }
-                if (isElementSelected && key === "children") {
-                    const newValue = value
-                    newValue.push(childrenToAdd)
-                    Object.assign(value,newValue)
-                    isElementSelected = false
-                    return JSONTree
-                }
-                if (key === "children" && value !== []) {
-                    for (let i = 0 ; i < value.length ; i += 1 ) {
-                        this.injectGivenChild(value[i],hashToFind, childrenToAdd)
-                    }
-                }
-            })   
-        }
-        return JSONTree
-    }
-}
-
-const buildCommitsJSON = (
-    fullHistory: GitLogObjectType[],
-    branchesList: string[],
-    branchesData: branchDataType[]
-) => {
-
-    const commitsJSON: commitJSONType[] = []
-
-    for (let i = 0; i < fullHistory.length; i += 1) {
-
-        const currentBranchIndex = branchesList.indexOf(fullHistory[i].branch)
-        const currentBranch = branchesData[currentBranchIndex]
-
-        const currentCommitJSON: commitJSONType = {
-            attributes: {
-                message: fullHistory[i].message,
-                author: fullHistory[i].author_name,
-                hash: fullHistory[i].hash
-            },
-            nodeSvgShape: {
-                shape: 'circle',
-                shapeProps: {
-                    r: "10",
-                    width: 20,
-                    height: 20,
-                    x: -10,
-                    y: -10,
-                    fill: `rgb(${
-                            String(currentBranch.branchColor.r)
-                        },${
-                            String(currentBranch.branchColor.g)
-                        },${
-                            String(currentBranch.branchColor.b)
-                    })`,
-                },
-            },
-            children: []
-        }
-
-        commitsJSON.push(currentCommitJSON)
-    }
-    return commitsJSON
-}
-
-const buildMergeJSON = ({
-    destinationBranch,
-    destinationHash,
-    destinationCommitMessage
-}: mergeJSONPropsType) => {
-    return {
-        name: destinationBranch.branchName,
-        attributes: {
-            message: destinationCommitMessage,
-            hash: destinationHash
-        },
-        nodeSvgShape: {
-            shape: 'polygon',
-            shapeProps: {
-                points: "0 5, 10 0, 0 -5",
-                width: 20,
-                height: 20,
-                x: -10,
-                y: -10,
-                fill: `rgb(${
-                        String(destinationBranch.branchColor.r)
-                    },${
-                        String(destinationBranch.branchColor.g)
-                    },${
-                        String(destinationBranch.branchColor.b)
-                })`,
-            },
-        },
-        children: []
-    }
-}
-
-const buildDivergenceJSON = ({
-    branch,
-    hash,
-    author,
-    message
-}: divergenceJSONPropsType) => {
-    return {
-        name: branch.branchName,
-        attributes: {
-            message,
-            author,
-            hash
-        },
-        children: [],
-        nodeSvgShape: {
-            shape: 'rect',
-            shapeProps: {
-                rx: 5,
-                width: 20,
-                height: 20,
-                x: -10,
-                y: -10,
-                fill: `rgb(${
-                        String(branch.branchColor.r)
-                    },${
-                        String(branch.branchColor.g)
-                    },${
-                        String(branch.branchColor.b)
-                })`,
-            },
-        }
-    }
-}
-
-export const generateJSONTree = ({
-    fullHistory,
-    branchesList,
-    hashList,
-    mergeCommitList
-}:ViewerComponentPropType) => {
-
-    const branchesData = generateBranchesColors(branchesList) 
-
-    const commitsJSON: commitJSONType[] = buildCommitsJSON(
-        fullHistory,
-        branchesList,
-        branchesData
-    )
-
-    const graphedBranches: string[] = []
-
-    const buildCausalityTree = () => {
-
-        // Start adding the initial commit and add the branch to the graphed branches list
-        const generateInitialCommit = () => {
-            const initialCommit = fullHistory[fullHistory.length-1]
-            const branch = {
-                branchName: initialCommit.branch,
-                branchColor: branchesData[branchesList.indexOf(initialCommit.branch)].branchColor
-            }
-            const hash = initialCommit.hash
-            const author = initialCommit.author_name
-            const message = initialCommit.message
-            return buildDivergenceJSON({
-                branch,
-                hash,
-                author,
-                message
-            })
-        }
-
-        // Avoid undefined errors until there's a commit present in the data
-        let treeStructure: childrenJSONType = {
-            name: "loading",
-            attributes: {
-                message: "loading",
-                author: "loading",
-                hash: "loading"
-            },
-            nodeSvgShape: {
-                shape: 'rect',
-                shapeProps: {
-                    rx: 5,
-                    width: 20,
-                    height: 20,
-                    x: -10,
-                    y: -10,
-                    fill: `rgb(0,0,0)`,
-                },
-            },
-            children: []
-        }
-
-        for (let i = fullHistory.length-1 ; i >= 0  ; i -= 1) {
-
-            // Forcefully do check once in the for loop to avoid "branch undefined" errors
-            if (i === fullHistory.length-1) {
-                treeStructure = generateInitialCommit()
-                graphedBranches.push(fullHistory[i].branch)
-                continue
-            }
-
-            // Check if last commit
-            let isLastCommit = false
-            if (i === 0) {
-                isLastCommit = true
-            }
-
-            // Then check if commit has more than one parent hash
-            if (fullHistory[i].parentHash.length > 40) {
-                // If it does then is a merge commit so let's build it as such
-
-                const mergeCommitsHashList = []
-                for (let j = 0 ; j < mergeCommitList.length ; j += 1) {
-                    mergeCommitsHashList.push(mergeCommitList[j].hash)
-                }
-
-                const currentHash = fullHistory[i].hash
-                const parentHashes = mergeCommitList[mergeCommitsHashList.indexOf(currentHash)].parentHashes
-                
-                const branchsNameList = []
-                for (let j = 0 ; j < parentHashes.length ; j += 1 ) {
-                    branchsNameList.push(fullHistory[hashList.indexOf(parentHashes[j])].branch)
-                }
-
-                let branchWhereBelongsTo
-                for (let j = 0 ; j < branchsNameList.length ; j += 1) {
-                    if (fullHistory[i].branch === branchsNameList[j]) {
-                        branchWhereBelongsTo = branchsNameList.splice(j,1)
-                        break
-                    }
-                }
-
-                const destinationBranch = {
-                    branchName: `(${String(branchsNameList)}) -> ${branchWhereBelongsTo}`,
-                    branchColor: branchesData[branchesList.indexOf(fullHistory[i].branch)].branchColor
-                }
-                const destinationCommitMessage = fullHistory[i].message
-                const destinationHash = fullHistory[i].hash
-                const currentNode: childrenJSONType = buildMergeJSON({
-                    destinationBranch,
-                    destinationHash,
-                    destinationCommitMessage
-                })
-
-                // Then add the node as the last children
-                treeStructure = TraverseJSON.prototype.injectGivenChild(
-                    treeStructure,
-                    fullHistory[i].parentHash,
-                    [currentNode]
-                )
-                continue
-            }
-
-            // Then check if commit is in the same branch as previous
-            const previousBranch = fullHistory[hashList.indexOf(fullHistory[i].parentHash)].branch
-            if (fullHistory[i].branch === previousBranch) {
-
-                // If it is then generate the current node
-                const currentNode: childrenJSONType = commitsJSON[i]
-
-                if (isLastCommit) {
-                    currentNode.name = fullHistory[i].branch 
-                     // Then add the node as the last children
-                    treeStructure = TraverseJSON.prototype.injectGivenChild(
-                        treeStructure,
-                        fullHistory[i].parentHash,
-                        [currentNode]
-                    )
-
-                    continue
-                }
-
-                // If next commit is a merge then add the merge children too
-                if (
-                    graphedBranches.indexOf(fullHistory[i-1].branch) !== -1 && 
-                    fullHistory[i-1].branch !== fullHistory[i].branch
-                ) {
-                    const destinationBranch = {
-                        branchName: fullHistory[i-1].branch,
-                        branchColor: branchesData[branchesList.indexOf(fullHistory[i-1].branch)].branchColor
-                    }
-                    const destinationCommitMessage = fullHistory[i-1].message
-                    const destinationHash = fullHistory[i-1].hash
-                    currentNode.children.push(
-                        buildMergeJSON({
-                            destinationBranch,
-                            destinationHash,
-                            destinationCommitMessage
-                        })
-                    )
-                }
-
-                // Then add the node as the last children
-                treeStructure = TraverseJSON.prototype.injectGivenChild(
-                    treeStructure,
-                    fullHistory[i].parentHash,
-                    [currentNode]
-                )
-
-                continue
-            }
-            
-
-            // If it's not on the same branch as the previous one check if it is a divergence
-            if (graphedBranches.indexOf(fullHistory[i].branch) === -1) {
-                const branch = {
-                    branchName: fullHistory[i].branch,
-                    branchColor: branchesData[branchesList.indexOf(fullHistory[i].branch)].branchColor
-                }
-                const hash = fullHistory[i].hash
-                const author = fullHistory[i].author_name
-                const message = fullHistory[i].message
-                const currentNode: childrenJSONType = buildDivergenceJSON({
-                    branch,
-                    hash,
-                    author,
-                    message
-                })
-
-                // Add the branch to the graphed list
-                graphedBranches.push(fullHistory[i].branch)
-
-
-                // Then add the node as children of its parent
-                treeStructure = TraverseJSON.prototype.injectParallelChild(
-                    treeStructure,
-                    fullHistory[i].parentHash,
-                    [currentNode]
-                )
-
-                continue
-            }
-
-            // If it is not then is a merge
-            if (previousBranch !== fullHistory[i].branch) {
-
-                // If it is a merge commit then generate the merge commit node
-                const destinationBranch = {
-                    branchName: previousBranch,
-                    branchColor: branchesData[branchesList.indexOf(previousBranch)].branchColor
-                }
-                const destinationCommitMessage = fullHistory[i].message
-                const destinationHash = fullHistory[i].hash
-
-                const currentNode = buildMergeJSON({
-                    destinationBranch,
-                    destinationHash,
-                    destinationCommitMessage
-                })
-
-
-                // Then add the node as children of its parent
-                treeStructure = TraverseJSON.prototype.injectGivenChild(
-                    treeStructure,
-                    fullHistory[i].parentHash,
-                    [currentNode]
-                )
-
-                continue
-            }
-        }
-
-        return treeStructure
-    }
-
-    return buildCausalityTree()
-
 }
 
 // ----------------------------------
@@ -723,7 +160,36 @@ export const removeQuotes = (string: string) => {
     }
     if (string.endsWith('"') || string.endsWith("'")) {
         const quotelessString = string.slice(1,string.length - 1)
-        return quotelessString
+        return quotelessString 
     }
     return string
+}
+
+export const splitString = (string:string, delimiter:string, offset?: number) => {
+    let workingString = string
+    let currentOffset
+    if (offset === undefined) {
+        currentOffset = 0
+    } else {
+        currentOffset = offset
+    }
+    const elementsArray: string[] = []
+    while (workingString.indexOf(delimiter) !== -1) {
+        const element = workingString.slice(0, workingString.indexOf(delimiter))
+        workingString = workingString.slice(
+            workingString.indexOf(delimiter) + 1 + currentOffset ,workingString.length
+        )
+        elementsArray.push(element)
+    }
+    return elementsArray
+}
+
+export const getAllIndexes = (array: string[], value: string) => {
+    const indexes = [];
+    for (let i = 0; i < array.length; i += 1) {
+        if (array[i] === value) {
+            indexes.push(i);
+        }
+    } 
+    return indexes;
 }

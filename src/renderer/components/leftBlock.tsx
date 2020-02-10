@@ -32,9 +32,7 @@ import {
 // --- Type Imports ---
 // --------------------
 
-import { 
-    useSelector
-} from '../types';
+import { useSelector } from "../types/redefinitions"
 
 // ----------------------
 // --- Static Imports ---

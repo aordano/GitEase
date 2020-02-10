@@ -18,14 +18,15 @@ import {
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
     UPDATE_VIEW_TREE
-} from '../types/constants';
+} from '../types/constants.d';
 
 import { 
     ModifiedFilesStructure, 
     ChangesTreeType,
     GitLogObjectType,
-    MergeCommitType
-} from "../types"
+    MergeCommitType,
+    GitTreeNodeMetadataType
+} from "../types/index"
 
 // ----------------------
 // --- Action Imports ---
@@ -35,7 +36,7 @@ import {
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
     UpdateViewTreeAction
-} from '../actions/commonActions';
+} from '../actions/commonActions.redux.action';
 
 // ------------------------
 // --- Function Imports ---
@@ -46,9 +47,12 @@ import {
     truncate, 
     stageFile,
     unstageFile,
-    removeQuotes,
-    parseLogTree
+    removeQuotes
 } from '../functions';
+
+import {
+    parseLogTree
+} from "../functions/gitTree"
 
 // -------------------------
 // --- Mock Data Imports ---
@@ -65,11 +69,12 @@ export interface UpdateViewTreeState {
         _v: {
             fullHistory: GitLogObjectType[],
             branchesList: string[],
+            metadataList: GitTreeNodeMetadataType[],
+            treeOffset: number,
             hashes: {
                 hashList: string[],
                 parentHashList: string[]
-            },
-            mergeCommitList: MergeCommitType[]
+            }
         }
     }
 }
@@ -92,14 +97,21 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
         _v: {
             fullHistory: [],
             branchesList: [],
+            metadataList: [{
+                isInitial: false,
+                isDivergence: false,
+                isLeaf: false,
+                isMerge: false,
+                isPointer: false,
+                pointsTo: 0,
+                childrenOf: [],
+                parentOf: []
+            }],
+            treeOffset: 0,
             hashes: {
                 hashList: [],
                 parentHashList: []
-            },
-            mergeCommitList: [{
-                hash: "",
-                parentHashes: [""]
-            }]
+            }
         }
     }
 }

@@ -20,7 +20,9 @@ import Tree from 'react-d3-tree';
 // --- Type Imports ---
 // --------------------
 
-import { useSelector } from "../../types"
+import { childrenJSONType } from "../../types"
+
+import { useSelector } from "../../types/redefinitions"
 
 // ----------------------
 // --- Static Imports ---
@@ -34,7 +36,7 @@ require('../../static/scss/viewer.scss');
 
 import {
     generateJSONTree
-} from "../../functions"
+} from "../../functions/gitTree"
 
 // -------------------------
 // --- Component Imports ---
@@ -59,6 +61,19 @@ const localization = require(`../../lang/${lang}`)
 type NodeLabelType = {
     nodeData?: any,      // * Don't know the nodeData type so hack with any
     className: string
+}
+
+const getDepth = function (tree: childrenJSONType) {
+    let depth = 0;
+    if (tree.children) {
+        tree.children.forEach((d) => {
+            const tmpDepth = getDepth(d)
+            if (tmpDepth > depth) {
+                depth = tmpDepth
+            }
+        })
+    }
+    return 1 + depth
 }
 
 const clickLastNode = (node:Element) => {
@@ -102,8 +117,8 @@ export const NodeLabel: React.FC<NodeLabelType> = ({
             }
             return
         }
+
         // -- Last node needs to be clicked so the whole tree "expands" and then the mouseover does not fail
-    
 
         const container = document.querySelector(".rd3t-tree-container")
         // React D3 Tree always contains an svg, which contains a group inside thus the two .children[0]
@@ -180,6 +195,13 @@ export const ViewerComponent: React.FC = () => {
             }
     )
 
+    const treeOffset = useSelector(state => 
+        state.updateViewTreeReducer.fullHistoryPromise?._v?.treeOffset ??
+            {
+                treeOffset: 0
+            }
+    )
+
     const branchesList = useSelector(state => 
         state.updateViewTreeReducer.fullHistoryPromise?._v?.branchesList ??
             {
@@ -189,17 +211,29 @@ export const ViewerComponent: React.FC = () => {
             }
     )  
 
-    const mergeCommitList = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.mergeCommitList ??
+    const metadataList = useSelector(state => 
+        state.updateViewTreeReducer.fullHistoryPromise?._v?.metadataList ??
             {
-                mergeCommitList: [{
-                    hash: "default",
-                    parentHashes: [""]
+                metadataList: [{
+                    isInitial: false,
+                    isDivergence: false,
+                    isMerge: false,
+                    isPointer: false,
+                    pointsTo: 0,
+                    isLeaf: false,
+                    childrenOf: [],
+                    parentOf: []
                 }]
             }
     )  
 
-    const gitTree = generateJSONTree({fullHistory,branchesList,hashList,mergeCommitList})
+    const gitTree = generateJSONTree({
+        fullHistory,
+        branchesList,
+        hashList,
+        treeOffset,
+        metadataList
+    })
 
     let shownElement: any
 
@@ -257,7 +291,7 @@ export const ViewerComponent: React.FC = () => {
                 collapsible: true,
                 zoom: 1,
                 translate: {
-                    x: -(137 * hashList.length), // * Magic number to show latest commit
+                    x: -(137 * getDepth(gitTree)), // * Magic number to show latest commit
                     y: 200
                 }
             }

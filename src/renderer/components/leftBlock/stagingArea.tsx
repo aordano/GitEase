@@ -13,7 +13,7 @@ import * as React from 'react';
 // --- Store Imports ---
 // ---------------------
 
-import { store } from '../../store';
+import { store } from '../../store/index.redux.store';
 
 // --------------------
 // --- Type Imports ---
@@ -31,7 +31,7 @@ import {
 import {
     SetStagingStatusAction,
     SetGlobalStagingStatusAction
-} from '../../actions/commonActions';
+} from '../../actions/commonActions.redux.action';
 
 // ----------------------------
 // --- Localization Imports ---

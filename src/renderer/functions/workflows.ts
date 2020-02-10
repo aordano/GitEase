@@ -12,12 +12,12 @@ import promise from 'simple-git/promise';
 
 import { gitBasicWorkflowDataType } from '../types';
 
-import {store} from "../store"
+import {store} from "../store/index.redux.store"
 
 import {
     CommitSuccessAlertAction,
     CommitErrorAlertAction
-} from "../actions/commonActions"
+} from "../actions/commonActions.redux.action"
 
 // -----------------------------
 // --- SimpleGit Definitions ---

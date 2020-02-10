@@ -16,7 +16,7 @@ import {
 // --- Store Imports ---
 // ---------------------
 
-import { store } from "../store"
+import { store } from "../store/index.redux.store"
 
 // ----------------------
 // --- Action Imports ---
@@ -26,7 +26,7 @@ import {
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
     SetStagingStatusAction
-} from '../actions/commonActions';
+} from '../actions/commonActions.redux.action';
 
 // --------------------
 // --- Effect Sagas ---

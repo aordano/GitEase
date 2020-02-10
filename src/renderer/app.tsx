@@ -3,15 +3,15 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 
-import { BasicWorkflowInitAction } from './actions/basicWorkflowActions';
+import { BasicWorkflowInitAction } from './actions/basicWorkflowActions.redux.action';
 
 import Application from './components/Application';
-import { store, sagaMiddleware } from './store';
+import { store, sagaMiddleware } from './store/index.redux.store';
 
 // Imports Sagas
-import { rootSaga } from './sagas';
-import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions';
-import { LaunchFirstTimeWizardAction } from './actions/wizardActions';
+import { rootSaga } from './sagas/index.redux.saga';
+import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions.redux.action';
+import { LaunchFirstTimeWizardAction } from './actions/wizardActions.redux.action';
 
 // Create main element
 const mainElement = document.createElement('div');

@@ -4,8 +4,8 @@
 // --- Sagas Imports ---
 // ---------------------
 
-import { commonSaga } from "./commonSagas"
-import { basicWorkflowSaga } from "./basicWorkflowSagas";
+import { commonSaga } from "./commonSagas.redux.saga"
+import { basicWorkflowSaga } from "./basicWorkflowSagas.redux.saga";
 
 // -----------------------
 // --- Effects Imports ---

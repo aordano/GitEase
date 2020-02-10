@@ -10,7 +10,7 @@ import {
     Store 
 } from 'redux';
 
-import { rootReducer } from '../reducers';
+import { rootReducer } from '../reducers/index.redux.reducer';
 
 // ------------------------
 // --- DevTools Imports ---
@@ -48,8 +48,8 @@ export const store = configureStore();
 // -----------------------------
 
 if (typeof module.hot !== 'undefined') {
-    module.hot.accept('../reducers', () =>
-        store.replaceReducer(require('../reducers').rootReducer)
+    module.hot.accept('../reducers/index.redux.reducer', () =>
+        store.replaceReducer(require('../reducers/index.redux.reducer').rootReducer)
     );
 }
 

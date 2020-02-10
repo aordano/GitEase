@@ -17,12 +17,12 @@ import {
     UpdateChangesAreaState,
     UpdateViewTreeState,
     updateViewTreeReducer
-} from "./commonReducers"
+} from "./commonReducers.redux.reducer"
 
 import { 
     BasicWorkflowState, 
     basicWorkflowReducer 
-} from './basicWorkflowReducer';
+} from './basicWorkflowReducer.redux.reducer';
 
 // ------------------------------------
 // --- Root Reducer Possible States ---

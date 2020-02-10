@@ -1,4 +1,4 @@
-const workingDir = "/home/agata/repos/GitEase"
+const workingDir = "/home/agata/repos/portal-jekyll"
 const branch = "experiments";
 const REPO = 'github.com:aordano/GitEase';
 const remote = `git@${REPO}`;

@@ -15,18 +15,19 @@ import { useState } from 'react';
 // --- Store Imports ---
 // ---------------------
 
-import { store } from '../store';
+import { store } from '../store/index.redux.store';
 
 // --------------------
 // --- Type Imports ---
 // --------------------
 
 import { 
-    useSelector,
     ChangesTreeType,
     StagingCheckboxIndexType,
     SpinnerType
 } from '../types';
+
+import { useSelector } from "../types/redefinitions"
 
 // ----------------------
 // --- Action Imports ---
@@ -35,12 +36,12 @@ import {
 import {
     BasicWorkflowCommitAndPushAction,
     BasicWorkflowUpdateCommitMessageAction
-} from '../actions/basicWorkflowActions';
+} from '../actions/basicWorkflowActions.redux.action';
 
 import {
     SetStagingStatusAction,
     SetGlobalStagingStatusAction
-} from '../actions/commonActions';
+} from '../actions/commonActions.redux.action';
 
 // ----------------------------
 // --- Localization Imports ---

@@ -16,7 +16,7 @@ import {
 // --- Store Imports ---
 // ---------------------
 
-import { store } from "../store"
+import { store } from "../store/index.redux.store"
 
 // ----------------------
 // --- Action Imports ---
@@ -24,7 +24,7 @@ import { store } from "../store"
 
 import { 
     BasicWorkflowUpdateCommitMessageAction, BasicWorkflowInitAction
-} from '../actions/basicWorkflowActions';
+} from '../actions/basicWorkflowActions.redux.action';
 
 // ---------------------------------
 // --- Workflow Function Imports ---
@@ -36,7 +36,7 @@ import {
     displayCommitInProcessAlert
 } from '../functions';
 
-import { UpdateViewTreeAction } from '../actions/commonActions';
+import { UpdateViewTreeAction } from '../actions/commonActions.redux.action';
 
 // --------------------
 // --- Effect Sagas ---

@@ -27,7 +27,7 @@ import {
     CommitErrorAlertType,
     UpdateCommitSuccessStatusType,
     UpdateViewTreeType
-} from '../types/constants';
+} from '../types/constants.d';
 
 // ---------------------------------------
 // --- Viable Action Types Definitions ---

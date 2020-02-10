@@ -13,11 +13,11 @@ import { Reducer } from 'redux';
 
 import {
     LAUNCH_REPO_CONFIGURATION_WIZARD
-} from '../types/constants';
+} from '../types/constants.d';
 
 import {
     RepoConfigDataType
-} from "../types"
+} from "../types/index"
 
 // ----------------------
 // --- Action Imports ---
@@ -25,7 +25,7 @@ import {
 
 import {
     LaunchRepoConfigurationWizardAction
-} from '../actions/wizardActions';
+} from '../actions/wizardActions.redux.action';
 
 // -----------------------------------------------
 // --- Storage and Git Config Function Imports ---

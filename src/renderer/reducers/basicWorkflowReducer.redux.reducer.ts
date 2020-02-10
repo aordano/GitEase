@@ -17,7 +17,7 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     COMMIT_SUCCESS_ALERT,
     COMMIT_ERROR_ALERT
-} from '../types/constants';
+} from '../types/constants.d';
 
 import {
     GitCommitType
@@ -30,7 +30,7 @@ import {
 
 import {
     BasicWorkflowAction
-} from '../actions/basicWorkflowActions';
+} from '../actions/basicWorkflowActions.redux.action';
 
 // ------------------------------
 // --- Alert Function Imports ---
