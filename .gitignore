@@ -103,3 +103,8 @@ out/
 # Secrets
 
 .secrets.ts
+
+# Config files for editors
+
+.vs/
+.vscode/
