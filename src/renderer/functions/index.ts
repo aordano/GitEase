@@ -10,131 +10,114 @@ import promise from 'simple-git/promise';
 // --- Type Imports ---
 // --------------------
 
-import { 
-    ContentNameType
-} from '../types';
+import { ContentNameType } from '../types';
 
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
 
-const lang = "en_US"
+const lang = 'en_US';
 
-const localization = require(`../lang/${lang}`)
+const localization = require(`../lang/${lang}`);
 
 // ---------------------------
 // * --- Mock Data Imports ---
 // ---------------------------
 
-import {data} from "../data.mock"
+import { data } from '../data.mock';
 
 // -----------------------------
 // --- Git-related Functions ---
 // -----------------------------
 
-
 export const parseStatus = (workingDir?: string) => {
     const git = promise(workingDir);
-    const parsedData = git.status()
-    return parsedData
-}
+    const parsedData = git.status();
+    return parsedData;
+};
 
 export const stageFile = (file: string | ContentNameType, workingDir?: string) => {
     const git = promise(workingDir);
-    if (typeof file === "string") {
-        git.add(file)  
+    if (typeof file === 'string') {
+        git.add(file);
+    } else if (typeof file === 'object') {
+        git.add(file.from);
+        git.add(file.to);
     }
-    else if (typeof file === "object") {
-        git.add(file.from)
-        git.add(file.to)
-    }
-}
+};
 
 export const unstageFile = (file: string | ContentNameType, workingDir?: string) => {
     const git = promise(workingDir);
-    if (typeof file === "string") {
-        git.reset(["--",file])
+    if (typeof file === 'string') {
+        git.reset(['--', file]);
+    } else if (typeof file === 'object') {
+        git.raw(['restore', '--staged', file.to]);
+        git.raw(['restore', '--staged', file.from]);
     }
-    else if (typeof file === "object") {
-        git.raw([
-            "restore",
-            "--staged",
-            file.to
-        ])
-        git.raw([
-            "restore",
-            "--staged",
-            file.from
-        ])
-    }
-}
+};
 
 export const pull = (remote?: string, branch?: string, workingDir?: string) => {
     const git = promise(workingDir);
-    git.pull(remote ?? 'origin', branch ?? "master")
-}
+    git.pull(remote ?? 'origin', branch ?? 'master');
+};
 
 export const commit = (message: string, description?: string, workingDir?: string) => {
     const git = promise(workingDir);
-    git.commit([
-        message, 
-        description ?? ""
-    ])
-}
+    git.commit([message, description ?? '']);
+};
 
 export const push = (remote?: string, branch?: string, workingDir?: string) => {
     const git = promise(workingDir);
-    git.push(remote ?? "origin", branch ?? 'master')
-}
+    git.push(remote ?? 'origin', branch ?? 'master');
+};
 
 // ----------------------------------
 // --- Alert Generating Functions ---
 // ----------------------------------
 
 export const displayCommitInProcessAlert = () => {
-    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
-    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
-    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
-    commitBox.style.zIndex = "-1"
-    commitOverlay.style.zIndex = "1"
-    commitSpinner.style.zIndex = "9"
-    commitSpinner.style.display = "block"
-}
+    const commitBox = document.querySelector('.commit-box') as HTMLDivElement;
+    const commitOverlay = document.querySelector('.commit-overlay') as HTMLDivElement;
+    const commitSpinner = document.querySelector('.spinner-commit-box') as HTMLDivElement;
+    commitBox.style.zIndex = '-1';
+    commitOverlay.style.zIndex = '1';
+    commitSpinner.style.zIndex = '9';
+    commitSpinner.style.display = 'block';
+};
 
 export const displayCommitSuccessAlert = () => {
-    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
-    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
-    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
-    const successText = document.querySelector(".commit-box p") as HTMLParagraphElement
-    commitBox.style.zIndex = "9"
-    commitOverlay.style.zIndex = "-1"
-    commitSpinner.style.zIndex = "-1"
-    commitSpinner.style.display = "none"
-    successText.textContent = localization.commitSuccessMessage
-    successText.style.fontWeight = "500"
+    const commitBox = document.querySelector('.commit-box') as HTMLDivElement;
+    const commitOverlay = document.querySelector('.commit-overlay') as HTMLDivElement;
+    const commitSpinner = document.querySelector('.spinner-commit-box') as HTMLDivElement;
+    const successText = document.querySelector('.commit-box p') as HTMLParagraphElement;
+    commitBox.style.zIndex = '9';
+    commitOverlay.style.zIndex = '-1';
+    commitSpinner.style.zIndex = '-1';
+    commitSpinner.style.display = 'none';
+    successText.textContent = localization.commitSuccessMessage;
+    successText.style.fontWeight = '500';
     setTimeout(() => {
-        successText.textContent = localization.commitBoxTitle
-        successText.style.fontWeight = "100"
-    }, 3000)
-
-}
+        successText.textContent = localization.commitBoxTitle;
+        successText.style.fontWeight = '100';
+    }, 3000);
+};
 
 export const displayCommitErrorAlert = (error: string) => {
-    const commitBox = document.querySelector(".commit-box") as HTMLDivElement
-    const commitOverlay = document.querySelector(".commit-overlay") as HTMLDivElement
-    const commitSpinner = document.querySelector(".spinner-commit-box") as HTMLDivElement
-    const failureText = document.querySelector(".commit-box p") as HTMLParagraphElement
-    commitBox.style.zIndex = "9"
-    commitOverlay.style.zIndex = "-1"
-    commitSpinner.style.zIndex = "-1"
-    commitSpinner.style.display = "none"
-    failureText.textContent = localization.commitFailureMessage
-    failureText.style.fontWeight = "500"
+    const commitBox = document.querySelector('.commit-box') as HTMLDivElement;
+    const commitOverlay = document.querySelector('.commit-overlay') as HTMLDivElement;
+    const commitSpinner = document.querySelector('.spinner-commit-box') as HTMLDivElement;
+    const failureText = document.querySelector('.commit-box p') as HTMLParagraphElement;
+    commitBox.style.zIndex = '9';
+    commitOverlay.style.zIndex = '-1';
+    commitSpinner.style.zIndex = '-1';
+    commitSpinner.style.display = 'none';
+    failureText.textContent = localization.commitFailureMessage;
+    failureText.style.fontWeight = '500';
     setTimeout(() => {
-        failureText.textContent = localization.commitBoxTitle
-        failureText.style.fontWeight = "100"
-    }, 3000)
-}
+        failureText.textContent = localization.commitBoxTitle;
+        failureText.style.fontWeight = '100';
+    }, 3000);
+};
 
 // -----------------------
 // --- Misc. Functions ---
@@ -143,46 +126,42 @@ export const displayCommitErrorAlert = (error: string) => {
 export const truncate = (path: string, num: number) => {
     // We truncate the filepath in a special way to display it properly in the staging area.
     if (path.length <= num) {
-        return path
+        return path;
     }
     const topFolders = path.slice(
         0,
-        path.slice(path.indexOf("/"),
-        path.lastIndexOf("/")).lastIndexOf("/") - 1
-    )
-    const fileName = path.slice(path.lastIndexOf("/"),path.length)
-    return  `${topFolders} ... ${fileName}`
-}
+        path.slice(path.indexOf('/'), path.lastIndexOf('/')).lastIndexOf('/') - 1
+    );
+    const fileName = path.slice(path.lastIndexOf('/'), path.length);
+    return `${topFolders} ... ${fileName}`;
+};
 
 export const removeQuotes = (string: string) => {
-    if (typeof string !== "string") {
-        return ""      
+    if (typeof string !== 'string') {
+        return string;
     }
-    if (string.endsWith('"') || string.endsWith("'")) {
-        const quotelessString = string.slice(1,string.length - 1)
-        return quotelessString 
-    }
-    return string
-}
 
-export const splitString = (string:string, delimiter:string, offset?: number) => {
-    let workingString = string
-    let currentOffset
-    if (offset === undefined) {
-        currentOffset = 0
-    } else {
-        currentOffset = offset
+    let workingString = string;
+
+    // Remove preceding and trailing quotes
+    if (string.charAt(0) === `'`) {
+        workingString = workingString.slice(1, workingString.length);
     }
-    const elementsArray: string[] = []
-    while (workingString.indexOf(delimiter) !== -1) {
-        const element = workingString.slice(0, workingString.indexOf(delimiter))
-        workingString = workingString.slice(
-            workingString.indexOf(delimiter) + 1 + currentOffset ,workingString.length
-        )
-        elementsArray.push(element)
+
+    if (string.charAt(string.length - 1) === `'`) {
+        workingString = workingString.slice(0, workingString.length - 1);
     }
-    return elementsArray
-}
+
+    if (workingString.indexOf(`"`) !== -1) {
+        while (workingString.indexOf(`"`) !== -1) {
+            workingString = workingString.replace(`"`, ``);
+        }
+
+        return workingString;
+    }
+
+    return workingString;
+};
 
 export const getAllIndexes = (array: string[], value: string) => {
     const indexes = [];
@@ -190,6 +169,6 @@ export const getAllIndexes = (array: string[], value: string) => {
         if (array[i] === value) {
             indexes.push(i);
         }
-    } 
+    }
     return indexes;
-}
+};
