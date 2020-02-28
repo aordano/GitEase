@@ -1,4 +1,4 @@
-// ! ###  - Git Tree related functions - ###
+// ! ###  - Git Graph related functions - ###
 
 // -------------------------
 // --- SimpleGit Imports ---
@@ -12,14 +12,11 @@ import promise from 'simple-git/promise';
 
 import {
     GitLogObjectType,
-    JSONTreeGeneratorPropType,
     colorTripletType,
     branchDataType,
-    mergeJSONPropsType,
-    divergenceJSONPropsType,
-    commitJSONType,
-    childrenJSONType,
-    GitTreeNodeMetadataType
+    GitGraphNodeMetadataType,
+    GitNodeType,
+    GitLinkType
 } from '../types';
 
 // ----------------------------
@@ -40,7 +37,7 @@ import { getAllIndexes } from './index';
 // * --- Mock Data Imports ---
 // ---------------------------
 
-import { data } from '../../../data.mock';
+import { data } from '../data.mock';
 
 // ------------------------------------
 // --- Git-Viewer Related Functions ---
@@ -70,18 +67,139 @@ export const parseBranchNamesBelow = async (hash: string, workingDir?: string) =
     }
     return ['default'];
 };
-/*
-export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList: string[]) => {
 
-    debugger
+const parseBranchName = (metadataList: GitGraphNodeMetadataType[], nodeIndex: number) => {
+    // TODO traverse the data and determine the correct branch of the node
 
-    const metadataList: GitTreeNodeMetadataType[] = [];
+    const branch = "branch" // * obvious placeholder
+
+    return branch
+}
+
+const buildCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
+    if (metadata.isInitial) {
+        return buildDivergenceCommit(metadata, hash)
+    }
+
+    if (metadata.isMerge) {
+        if (metadata.isDivergence) {
+            return buildMergeDivergenceCommit(metadata, hash)
+        }
+        return buildMergeCommit(metadata, hash)
+    }
+
+    if (metadata.isDivergence) {
+        return buildDivergenceCommit(metadata, hash)
+    }
+
+    const nodeData: GitNodeType = {
+        id: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`,
+        size: 200,
+        symbolType: "circle"
+    }
+
+    const linkData: GitLinkType = {
+        source: metadata.childrenOf[0],
+        target: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`
+    } 
+
+    return [nodeData, linkData]
+}
+
+const buildMergeCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
+
+    const nodeData: GitNodeType = {
+        id: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`,
+        size: 200,
+        symbolType: "cross"
+    }
+
+    const linkData: GitLinkType[] = []
+    
+    metadata.childrenOf.forEach((value) => {
+        const thisLinkData = {
+            source: value,
+            target: hash,
+            color: `rgb(${String(metadata.branch.branchColor.r)},
+            ${String(metadata.branch.branchColor.g)},
+            ${String(metadata.branch.branchColor.b)})`
+        } 
+        linkData.push(thisLinkData)
+    })
+
+    return [nodeData, linkData]
+}
+
+const buildDivergenceCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
+
+    const nodeData: GitNodeType = {
+        id: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`,
+        size: 200,
+        symbolType: "diamond"
+    }
+
+    const linkData: GitLinkType = {
+        source: metadata.childrenOf[0],
+        target: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`
+    } 
+
+    return [nodeData, linkData]
+}
+
+const buildMergeDivergenceCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
+
+    const nodeData: GitNodeType = {
+        id: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},
+        ${String(metadata.branch.branchColor.g)},
+        ${String(metadata.branch.branchColor.b)})`,
+        size: 200,
+        symbolType: "square"
+    }
+
+    const linkData: GitLinkType[] = []
+    
+    metadata.childrenOf.forEach((value) => {
+        const thisLinkData = {
+            source: value,
+            target: hash,
+            color: `rgb(${String(metadata.branch.branchColor.r)},
+            ${String(metadata.branch.branchColor.g)},
+            ${String(metadata.branch.branchColor.b)})`
+        } 
+        linkData.push(thisLinkData)
+    })
+
+    return [nodeData, linkData]
+}
+
+export const generateGraphMetadata = (hashList: string[], parentHashList: string[]) => {
+    
+    //
+    //   Metadata generation
+    //
+
+    const metadataList: GitGraphNodeMetadataType[] = [];
 
     for (let k = hashList.length - 1; k >= 0; k -= 1) {
         let isInitial: boolean = false;
         let isDivergence: boolean = false;
         let isMerge: boolean = false;
-        const isLeaf: boolean = false;
         let parentHashes: string[] = [];
         let childrenHashes: string[] = [];
 
@@ -89,18 +207,12 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
             isInitial = true;
         }
 
-        const parentIndexes: number[] = [];
-
         if (!isInitial) {
 
             // We assign them first so in case that there is only one parent it has it
             parentHashes = [parentHashList[k]];
 
             const thisCommitParentHashes: string[] = parentHashList[k].split(' ');
-
-            thisCommitParentHashes.forEach(value => {
-                parentIndexes.push(hashList.indexOf(value));
-            });
 
             parentHashes = thisCommitParentHashes;
 
@@ -120,86 +232,58 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
         // We assign them first so in case that there is only one children it has it
         childrenHashes = children;
 
-        const childrenIndexes: number[] = [];
-
-        for (let j = 0; j < childrenHashes.length; j += 1) {
-            childrenIndexes.push(hashList.indexOf(childrenHashes[j]));
-        }
-
         if (children.length > 1) {
             isDivergence = true;
         }
-
-        // * pointsTo only is used when talking about pointers to merges.
-        // * It should not be used for anything else or the tree will break.
-        const pointsTo = childrenIndexes[0];
 
         metadataList.unshift({
             isInitial,
             isDivergence,
             isMerge,
-            isLeaf,
-            pointsTo,
-            isPointer: false,
-            childrenOf: parentIndexes,
-            parentOf: childrenIndexes
+            childrenOf: parentHashes,
+            parentOf: childrenHashes,
+            branch: {
+                branchName: "placeholder",
+                branchColor: {
+                    r: 200,
+                    g: 200,
+                    b: 200
+                }
+            }
         });
     }
 
-    debugger
+    return metadataList
+}
 
-    const merges: number[] = [];
+export const generateGraphData = async (hashList: string[], metadataList: GitGraphNodeMetadataType[]) => {
 
-    // Checks for all merges found
+    const branchesList = await parseBranchNamesBelow(hashList[hashList.length -1])
 
-    metadataList.forEach(value => {
-        if (value.isMerge) {
-            merges.push(metadataList.indexOf(value));
-        }
-    });
+    const branchesData = generateBranchesColors(branchesList)
 
-    // TODO Document this moving pointers mess
+    const nodeList: GitNodeType[] = []
+    const linkList: GitLinkType[] = []
 
-    // TODO -- Also change them so they lie in the back of the array
-    // TODO where is easier and we don't have to update EVERY pointer
+    for (let j = metadataList.length - 1; j > 0; j -= 1) {
+        
+        const currentNodeMetadata = metadataList[j]
+        // Fixing branch data
+        const currentBranchName = await parseBranchName(metadataList, j)
+        currentNodeMetadata.branch = branchesData[branchesList.indexOf(currentBranchName)]
 
-    merges.forEach((value) => {
-        metadataList.push(metadataList[value])
-        const currentMetadataIndex = metadataList.length -1
-        metadataList[currentMetadataIndex].isPointer = true;
-        metadataList[currentMetadataIndex].pointsTo = currentPointer;
-        metadataList[currentMetadataIndex].childrenOf = [currentParent];
-        metadataList[currentMetadataIndex].parentOf = [];
-        metadataList[currentParent].parentOf = [merges.length - mergesIterator - 1];
-    })
+        const commitData = buildCommit(currentNodeMetadata, hashList[j])
 
-    for (let mergesIterator = 0; mergesIterator < merges.length; mergesIterator += 1) {
-        const currentPointer = merges[mergesIterator]
-        for (let l = 0; l < metadataList[currentPointer].childrenOf.length; l += 1) {
-            const currentParent = metadataList[currentPointer].childrenOf[l];
-            if (l === 0) {
-                metadataList[currentParent].parentOf = [currentPointer];
-                continue;
-            }
-            metadataList.push(metadataList[currentPointer]);
-            metadataList[0].isPointer = true;
-            metadataList[0].pointsTo = currentPointer;
-            metadataList[0].childrenOf = [currentParent];
-            metadataList[0].parentOf = [];
-            metadataList[currentParent].parentOf = [merges.length - mergesIterator - 1];
-        }
+        nodeList.unshift(commitData[0] as GitNodeType)
+        linkList.unshift(commitData[1] as any) // HACK check how to ensure type safety here
+        linkList.flat() // we flatten the multiple links included as arrays inside
     }
 
-    metadataList.forEach(value => {
-        if (value.parentOf.length === 0) {
-            value.isLeaf = true;
-        }
-    });
 
-    return [metadataList, merges.length];
+    return [nodeList, linkList];
 };
 
-*/
+
 
 export const parseLogTree = async (workingDir?: string) => {
     // TODO Fix branch names
@@ -244,9 +328,7 @@ export const parseLogTree = async (workingDir?: string) => {
 
     parentHashList.pop(); // * The last element is a blank string because of the initial commit has no parent hash
 
-    const metadataListAndTreeOffset = generateTreeMetadataHierarchy(hashList, parentHashList);
-    const metadataList = metadataListAndTreeOffset[0];
-    const treeOffset = metadataListAndTreeOffset[1];
+    const metadataList= generateGraphMetadata(hashList, parentHashList);
 
     const initialCommitBranchesBelow = await parseBranchNamesBelow(
         logList[logList.length - 1].hash,
@@ -281,26 +363,10 @@ export const parseLogTree = async (workingDir?: string) => {
         });
     }
 
-    // make sure to offset all the arrays so there's no errors
-
-    for (let p = 0; p < treeOffset; p += 1) {
-        parentHashList.unshift('pointer');
-        hashList.unshift('pointer');
-        fullHistory.unshift({
-            author_name: 'pointer',
-            date: 'pointer',
-            hash: 'pointer',
-            parentHash: 'pointer',
-            message: 'pointer',
-            branch: 'pointer'
-        });
-    }
-
     return {
         fullHistory,
         branchesList,
         metadataList,
-        treeOffset,
         hashes: {
             hashList,
             parentHashList

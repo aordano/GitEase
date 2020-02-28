@@ -156,16 +156,27 @@ export type DivergenceCommitType = {
     childrenHashes: string[];
 };
 
-export type GitTreeNodeMetadataType = {
+export type GitGraphNodeMetadataType = {
     isInitial: boolean;
     isDivergence: boolean;
     isMerge: boolean;
-    isLeaf: boolean;
-    isPointer: boolean;
-    pointsTo: number;
-    childrenOf: number[];
-    parentOf: number[];
+    childrenOf: string[];
+    parentOf: string[];
+    branch: branchDataType
 };
+
+export type GitNodeType = {
+    id: string,
+    color: string,
+    size: number,
+    symbolType: string
+}
+
+export type GitLinkType = {
+    source: string,
+    target: string,
+    color: string
+}
 
 export type mergeJSONPropsType = {
     destinationBranch: branchDataType;

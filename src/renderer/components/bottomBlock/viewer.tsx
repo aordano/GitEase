@@ -8,18 +8,15 @@
 
 import * as React from 'react';
 
-// -----------------------------
-// --- React D3 Tree Imports ---
-// -----------------------------
+// ------------------------------
+// --- React D3 Graph Imports ---
+// ------------------------------
 
-// tslint:disable-next-line: import-name
-import Tree from 'react-d3-tree';
+import { Graph } from "react-d3-graph";
 
 // --------------------
 // --- Type Imports ---
 // --------------------
-
-import { childrenJSONType } from '../../types';
 
 import { useSelector } from '../../types/redefinitions';
 
@@ -33,7 +30,7 @@ require('../../static/scss/viewer.scss');
 // --- Function Imports ---
 // ------------------------
 
-import { generateJSONTree } from '../../functions/gitTree';
+// * import { generateNetworkData} from '../../functions/gitGraph';
 
 // -------------------------
 // --- Component Imports ---
@@ -53,10 +50,12 @@ const localization = require(`../../lang/${lang}`);
 // --- Node-related Components ---
 // -------------------------------
 
+// TODO write functions and callbacks and configs to determine the network graph.
+
 /*
 
 type NodeLabelType = {
-    nodeData?: any,      // * Don't know the nodeData type so hack with any
+    nodeData?: any,      // Don't know the nodeData type so hack with any
     className: string
 }
 
