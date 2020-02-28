@@ -1,5 +1,5 @@
 // ! ###  - Common reducers main file - ###
-// ! ###  - (common to all workflows) - ### 
+// ! ###  - (common to all workflows) - ###
 
 // ---------------------
 // --- Redux Imports ---
@@ -7,7 +7,7 @@
 
 import { Reducer } from 'redux';
 
-import {ViewerComponent} from "../components/bottomBlock/viewer"
+import { ViewerComponent } from '../components/bottomBlock/viewer';
 
 // --------------------
 // --- Type Imports ---
@@ -20,13 +20,13 @@ import {
     UPDATE_VIEW_TREE
 } from '../types/constants.d';
 
-import { 
-    ModifiedFilesStructure, 
+import {
+    ModifiedFilesStructure,
     ChangesTreeType,
     GitLogObjectType,
     MergeCommitType,
     GitTreeNodeMetadataType
-} from "../types/index"
+} from '../types/index';
 
 // ----------------------
 // --- Action Imports ---
@@ -42,23 +42,15 @@ import {
 // --- Function Imports ---
 // ------------------------
 
-import { 
-    parseStatus, 
-    truncate, 
-    stageFile,
-    unstageFile,
-    removeQuotes
-} from '../functions';
+import { parseStatus, truncate, stageFile, unstageFile, removeQuotes } from '../functions';
 
-import {
-    parseLogTree
-} from "../functions/gitTree"
+import { parseLogTree } from '../functions/gitTree';
 
 // -------------------------
 // --- Mock Data Imports ---
 // -------------------------
 
-import {data} from "../data.mock"
+import { data } from '../../../data.mock';
 
 // ---------------------------------
 // --- Reducer State Definitions ---
@@ -67,25 +59,25 @@ import {data} from "../data.mock"
 export interface UpdateViewTreeState {
     fullHistoryPromise: {
         _v: {
-            fullHistory: GitLogObjectType[],
-            branchesList: string[],
-            metadataList: GitTreeNodeMetadataType[],
-            treeOffset: number,
+            fullHistory: GitLogObjectType[];
+            branchesList: string[];
+            metadataList: GitTreeNodeMetadataType[];
+            treeOffset: number;
             hashes: {
-                hashList: string[],
-                parentHashList: string[]
-            }
-        }
-    }
+                hashList: string[];
+                parentHashList: string[];
+            };
+        };
+    };
 }
 
 export interface UpdateChangesAreaState {
-    upToDate: boolean,
-    changesAreaTree: ChangesTreeType[]
+    upToDate: boolean;
+    changesAreaTree: ChangesTreeType[];
 }
 
-export interface ViewModifiedFilesState  {
-    parsedData: ModifiedFilesStructure
+export interface ViewModifiedFilesState {
+    parsedData: ModifiedFilesStructure;
 }
 
 // -----------------------------------------
@@ -97,16 +89,18 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
         _v: {
             fullHistory: [],
             branchesList: [],
-            metadataList: [{
-                isInitial: false,
-                isDivergence: false,
-                isLeaf: false,
-                isMerge: false,
-                isPointer: false,
-                pointsTo: 0,
-                childrenOf: [],
-                parentOf: []
-            }],
+            metadataList: [
+                {
+                    isInitial: false,
+                    isDivergence: false,
+                    isLeaf: false,
+                    isMerge: false,
+                    isPointer: false,
+                    pointsTo: 0,
+                    childrenOf: [],
+                    parentOf: []
+                }
+            ],
             treeOffset: 0,
             hashes: {
                 hashList: [],
@@ -114,12 +108,12 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
             }
         }
     }
-}
+};
 
 const updateChangesAreaDefaultState: UpdateChangesAreaState = {
     upToDate: false,
     changesAreaTree: []
-}
+};
 
 const viewModifiedFilesDefaultState: ViewModifiedFilesState = {
     parsedData: {
@@ -135,16 +129,18 @@ const viewModifiedFilesDefaultState: ViewModifiedFilesState = {
             deleted: [],
             modified: [],
             renamed: [],
-            files: [{
-                path: "",
-                index: " ",
-                working_dir: "M"
-            }],
+            files: [
+                {
+                    path: '',
+                    index: ' ',
+                    working_dir: 'M'
+                }
+            ],
             staged: [],
             ahead: 0,
             behind: 0,
-            current: "master",
-            tracking: "origin/master"
+            current: 'master',
+            tracking: 'origin/master'
         }
     }
 };
@@ -175,7 +171,7 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             // passed in the action, and changes the staging state on the tree and stages/unstages
             // the file as needed.
 
-            const currentChangesTree: ChangesTreeType[] = state.changesAreaTree
+            const currentChangesTree: ChangesTreeType[] = state.changesAreaTree;
             // * -- currentGlobalChangesTree is the same as currentChangesTree and changesTree
             // * -- This is this way because block-scoped const definitions can't be repeated
             // * outside their scope.
@@ -186,14 +182,16 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     content: state.changesAreaTree[action.index ?? 0].content,
                     displayContent: state.changesAreaTree[action.index ?? 0].displayContent,
                     staged: true
-                }
-                const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(action.index ?? 0,1,newChange)
-                
-                data.workingDir ? 
+                };
+                const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(
+                    action.index ?? 0,
+                    1,
+                    newChange
+                );
 
-                stageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir) :
-
-                stageFile(state.changesAreaTree[action.index ?? 0].content)
+                data.workingDir
+                    ? stageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir)
+                    : stageFile(state.changesAreaTree[action.index ?? 0].content);
 
                 return Object.assign({}, state, {
                     changesTree: newChangesTree
@@ -204,29 +202,31 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 content: state.changesAreaTree[action.index ?? 0].content,
                 displayContent: state.changesAreaTree[action.index ?? 0].displayContent,
                 staged: false
-            }
+            };
 
-            const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(action.index ?? 0,1,newChange)
+            const newChangesTree: ChangesTreeType[] = currentChangesTree.splice(
+                action.index ?? 0,
+                1,
+                newChange
+            );
             // * -- newGlobalChangesTree is the same as newChangesTree and changesTree
             // * -- This is this way because block-scoped const definitions can't be repeated
             // * outside their scope.
             // * -- In this case is not needed to fill the whole array and only is needed to replace one element.
 
-            data.workingDir ?
+            data.workingDir
+                ? unstageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir)
+                : unstageFile(state.changesAreaTree[action.index ?? 0].content);
 
-            unstageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir) :
-
-            unstageFile(state.changesAreaTree[action.index ?? 0].content)
-            
             return Object.assign({}, state, {
                 changesTree: newChangesTree
             });
 
         case UPDATE_CHANGES_AREA:
-            // -- This reducer grabs the current file as parsed by the status command on the 
+            // -- This reducer grabs the current file as parsed by the status command on the
             // viewModifiedFilesReducer, and creates a tree of file status based on the data.
 
-            const changesTree: ChangesTreeType[] = []
+            const changesTree: ChangesTreeType[] = [];
             // * -- currentGlobalChangesTree is the same as currentChangesTree and changesTree
             // * -- This is this way because block-scoped const definitions can't be repeated
             // * outside their scope.
@@ -239,23 +239,28 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 for (let i = 0; i < action.filesTree?._v.modified?.length; i += 1) {
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
-                            status: "modified",
+                            status: 'modified',
                             content: removeQuotes(action.filesTree._v.modified[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree?._v.modified[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree?._v.modified[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
-                        }
-                        changesTree.push(element)
-                    }
-                    else {
+                        };
+                        changesTree.push(element);
+                    } else {
                         const element: ChangesTreeType = {
-                            status: "modified",
+                            status: 'modified',
                             content: removeQuotes(action.filesTree._v.modified[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.modified[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.modified[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
-                        }
-                        changesTree.push(element)
+                        };
+                        changesTree.push(element);
                     }
                 }
             }
@@ -263,23 +268,28 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 for (let i = 0; i < action.filesTree?._v.created?.length; i += 1) {
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
-                            status: "created",
+                            status: 'created',
                             content: removeQuotes(action.filesTree._v.created[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.created[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.created[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
-                        }
-                        changesTree.push(element)
-                    }
-                    else {
+                        };
+                        changesTree.push(element);
+                    } else {
                         const element: ChangesTreeType = {
-                            status: "created",
+                            status: 'created',
                             content: removeQuotes(action.filesTree._v.created[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.created[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.created[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
-                        }
-                        changesTree.push(element)
+                        };
+                        changesTree.push(element);
                     }
                 }
             }
@@ -287,39 +297,47 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 for (let i = 0; i < action.filesTree?._v.renamed?.length; i += 1) {
                     // Renamed files by definition are staged so no need to check for it
                     const element: ChangesTreeType = {
-                        status: "renamed",
+                        status: 'renamed',
                         content: {
                             from: removeQuotes(action.filesTree._v.renamed[i].from),
                             to: removeQuotes(action.filesTree._v.renamed[i].to)
                         },
-                        displayContent: truncate(removeQuotes(action.filesTree._v.renamed[i].to),35),
+                        displayContent: truncate(
+                            removeQuotes(action.filesTree._v.renamed[i].to),
+                            35
+                        ),
                         // We truncate the filepath in a special way to display it properly
                         staged: true
-                    }
-                    changesTree.push(element)
+                    };
+                    changesTree.push(element);
                 }
             }
             if (action.filesTree?._v.not_added !== undefined) {
                 for (let i = 0; i < action.filesTree?._v.not_added?.length; i += 1) {
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
-                            status: "not_added",
+                            status: 'not_added',
                             content: removeQuotes(action.filesTree._v.not_added[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.not_added[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.not_added[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
-                        }
-                        changesTree.push(element)
-                    }
-                    else {
+                        };
+                        changesTree.push(element);
+                    } else {
                         const element: ChangesTreeType = {
-                            status: "not_added",
+                            status: 'not_added',
                             content: removeQuotes(action.filesTree._v.not_added[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.not_added[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.not_added[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
-                        }
-                        changesTree.push(element)
+                        };
+                        changesTree.push(element);
                     }
                 }
             }
@@ -327,23 +345,28 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                 for (let i = 0; i < action.filesTree?._v.deleted?.length; i += 1) {
                     if (state.changesAreaTree[i]?.staged) {
                         const element: ChangesTreeType = {
-                            status: "deleted",
+                            status: 'deleted',
                             content: removeQuotes(action.filesTree._v.deleted[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.deleted[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.deleted[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: state.changesAreaTree[i].staged
-                        }
-                        changesTree.push(element)
-                    }
-                    else {
+                        };
+                        changesTree.push(element);
+                    } else {
                         const element: ChangesTreeType = {
-                            status: "deleted",
+                            status: 'deleted',
                             content: removeQuotes(action.filesTree._v.deleted[i]),
-                            displayContent: truncate(removeQuotes(action.filesTree._v.deleted[i]),35),
+                            displayContent: truncate(
+                                removeQuotes(action.filesTree._v.deleted[i]),
+                                35
+                            ),
                             // We truncate the filepath in a special way to display it properly
                             staged: false
-                        }
-                        changesTree.push(element)
+                        };
+                        changesTree.push(element);
                     }
                 }
             }
@@ -351,9 +374,10 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             return Object.assign({}, state, {
                 changesAreaTree: changesTree
             });
-        default: return state
+        default:
+            return state;
     }
-}
+};
 
 export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
     // -- This reducer takes care of handling the changes area.
@@ -371,11 +395,12 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
     switch (action.type) {
         case VIEW_MODIFIED_FILES:
             return Object.assign({}, state, {
-                parsedData:  data.workingDir ? parseStatus(data.workingDir) : parseStatus()
+                parsedData: data.workingDir ? parseStatus(data.workingDir) : parseStatus()
             });
-        default: return state
+        default:
+            return state;
     }
-}
+};
 
 export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
     // -- This reducer takes care of handling the changes area.
@@ -392,13 +417,13 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
 ) => {
     switch (action.type) {
         case UPDATE_VIEW_TREE:
-            const history = 
-                data.workingDir ? 
-                Promise.resolve(parseLogTree(data.workingDir)) : 
-                Promise.resolve(parseLogTree())
+            const history = data.workingDir
+                ? Promise.resolve(parseLogTree(data.workingDir))
+                : Promise.resolve(parseLogTree());
             return Object.assign({}, state, {
                 fullHistoryPromise: history
             });
-        default: return state
+        default:
+            return state;
     }
-}
+};

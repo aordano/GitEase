@@ -61,6 +61,6 @@
   "include": [
     "./src",
     "./test",
-    "./mocks"
+    "./mocks", "data.mock.ts"
   ]
 }

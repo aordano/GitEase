@@ -17,20 +17,18 @@ const installExtensions = async () => {
 /// create a global var, wich will keep a reference to out loadingScreen window
 let loadingScreen: BrowserWindow | null;
 const createLoadingScreen = () => {
-  /// create a browser window
-    loadingScreen = new BrowserWindow(
-        {
+    /// create a browser window
+    loadingScreen = new BrowserWindow({
         /// define width and height for the window
-            width: 600,
-            height: 200,
-            backgroundColor: "#333",
+        width: 600,
+        height: 200,
+        backgroundColor: '#333',
         /// remove the window frame, so it will become a frameless window
-            frame: false,
-            center: true,
-            alwaysOnTop: true,
-            title: "GitEase"
-        }
-    );
+        frame: false,
+        center: true,
+        alwaysOnTop: true,
+        title: 'GitEase'
+    });
     loadingScreen.setResizable(false);
     if (process.env.NODE_ENV !== 'production') {
         process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
@@ -44,7 +42,7 @@ const createLoadingScreen = () => {
             })
         );
     }
-    
+
     loadingScreen.on('closed', () => (loadingScreen = null));
     loadingScreen.webContents.on('did-finish-load', () => {
         loadingScreen!.show();
@@ -56,11 +54,11 @@ const createWindow = async () => {
         await installExtensions();
     }
 
-    win = new BrowserWindow({ 
-        width: 800, 
-        height: 600, 
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
         show: false,
-        title: "GitEase"
+        title: 'GitEase'
     });
 
     if (process.env.NODE_ENV !== 'production') {
@@ -78,13 +76,12 @@ const createWindow = async () => {
 
     /// keep listening on the did-finish-load event, when the mainWindow content has loaded
     win.webContents.on('did-finish-load', () => {
-    /// then close the loading screen window and show the main window
+        /// then close the loading screen window and show the main window
         if (loadingScreen) {
             loadingScreen.close();
         }
         win!.show();
     });
-  
 
     if (process.env.NODE_ENV !== 'production') {
         // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
@@ -98,10 +95,9 @@ const createWindow = async () => {
     });
 };
 
-
-app.on('ready',() => {
-    createLoadingScreen()
-    createWindow()
+app.on('ready', () => {
+    createLoadingScreen();
+    createWindow();
 });
 
 app.on('window-all-closed', () => {
@@ -115,3 +111,21 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+/*
+
+Devtools Installation
+
+const os = require('os')
+
+setTimeout(() => {
+    BrowserWindow.addDevToolsExtension(
+        path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0')
+     )
+     
+     BrowserWindow.addDevToolsExtension(
+         path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0')
+      )
+}, 5000)
+
+*/

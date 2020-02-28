@@ -40,35 +40,41 @@ import { getAllIndexes } from './index';
 // * --- Mock Data Imports ---
 // ---------------------------
 
-import { data } from '../data.mock';
+import { data } from '../../../data.mock';
 
 // ------------------------------------
 // --- Git-Viewer Related Functions ---
 // ------------------------------------
 
 export const parseBranchNamesBelow = async (hash: string, workingDir?: string) => {
-    const git = promise(workingDir);
-    const branchesWithRefs = String(
-        await Promise.resolve(git.raw(['branch', '-a', '--contains', hash]))
-    );
+    if (hash.length === 40) {
+        const git = promise(workingDir);
+        const branchesWithRefs = String(
+            await Promise.resolve(git.raw(['branch', '-a', '--contains', hash]))
+        );
 
-    const branches: string[] = branchesWithRefs
-        .slice(0, branchesWithRefs.indexOf('remotes'))
-        .split('\n');
+        const branches: string[] = branchesWithRefs
+            .slice(0, branchesWithRefs.indexOf('remotes'))
+            .split('\n');
 
-    for (let i = 0; i < branches.length; i += 1) {
-        let thisBranchName = branches[i];
-        if (thisBranchName.indexOf('*') === -1) {
-            thisBranchName = thisBranchName.slice(thisBranchName.indexOf(' ') + 2);
-        } else {
-            thisBranchName = thisBranchName.slice(thisBranchName.indexOf(' ') + 1);
+        for (let i = 0; i < branches.length; i += 1) {
+            let thisBranchName = branches[i];
+            if (thisBranchName.indexOf('*') === -1) {
+                thisBranchName = thisBranchName.slice(thisBranchName.indexOf(' ') + 2);
+            } else {
+                thisBranchName = thisBranchName.slice(thisBranchName.indexOf(' ') + 1);
+            }
+            branches[i] = thisBranchName;
         }
-        branches[i] = thisBranchName;
+        return branches;
     }
-    return branches;
+    return ['default'];
 };
-
+/*
 export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList: string[]) => {
+
+    debugger
+
     const metadataList: GitTreeNodeMetadataType[] = [];
 
     for (let k = hashList.length - 1; k >= 0; k -= 1) {
@@ -86,13 +92,11 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
         const parentIndexes: number[] = [];
 
         if (!isInitial) {
+
             // We assign them first so in case that there is only one parent it has it
             parentHashes = [parentHashList[k]];
 
-            // Add whitespace so it slices the last hash too
-            const hashesString: string = `${parentHashList[k]} `;
-
-            const thisCommitParentHashes: string[] = hashesString.split(' ');
+            const thisCommitParentHashes: string[] = parentHashList[k].split(' ');
 
             thisCommitParentHashes.forEach(value => {
                 parentIndexes.push(hashList.indexOf(value));
@@ -142,6 +146,8 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
         });
     }
 
+    debugger
+
     const merges: number[] = [];
 
     // Checks for all merges found
@@ -157,15 +163,25 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
     // TODO -- Also change them so they lie in the back of the array
     // TODO where is easier and we don't have to update EVERY pointer
 
+    merges.forEach((value) => {
+        metadataList.push(metadataList[value])
+        const currentMetadataIndex = metadataList.length -1
+        metadataList[currentMetadataIndex].isPointer = true;
+        metadataList[currentMetadataIndex].pointsTo = currentPointer;
+        metadataList[currentMetadataIndex].childrenOf = [currentParent];
+        metadataList[currentMetadataIndex].parentOf = [];
+        metadataList[currentParent].parentOf = [merges.length - mergesIterator - 1];
+    })
+
     for (let mergesIterator = 0; mergesIterator < merges.length; mergesIterator += 1) {
-        const currentPointer = merges[mergesIterator] + mergesIterator;
+        const currentPointer = merges[mergesIterator]
         for (let l = 0; l < metadataList[currentPointer].childrenOf.length; l += 1) {
             const currentParent = metadataList[currentPointer].childrenOf[l];
             if (l === 0) {
                 metadataList[currentParent].parentOf = [currentPointer];
                 continue;
             }
-            metadataList.unshift(metadataList[currentPointer]);
+            metadataList.push(metadataList[currentPointer]);
             metadataList[0].isPointer = true;
             metadataList[0].pointsTo = currentPointer;
             metadataList[0].childrenOf = [currentParent];
@@ -183,8 +199,11 @@ export const generateTreeMetadataHierarchy = (hashList: string[], parentHashList
     return [metadataList, merges.length];
 };
 
+*/
+
 export const parseLogTree = async (workingDir?: string) => {
     // TODO Fix branch names
+
     const git = promise(workingDir);
 
     const fullHistory: GitLogObjectType[] = [];
@@ -193,6 +212,7 @@ export const parseLogTree = async (workingDir?: string) => {
     const logListString = await Promise.resolve(
         git.raw(['log', '--full-history', '--topo-order', '--format=%H%%%%%an%%%%%s%%%%%ad%%%%'])
     );
+
     const logListSplitted = logListString.split('\n');
     for (let i = 0; i < logListSplitted.length; i += 1) {
         const logListSplittedElement = logListSplitted[i].split('%%');
@@ -203,6 +223,7 @@ export const parseLogTree = async (workingDir?: string) => {
             date: logListSplittedElement[3]
         });
     }
+
     const parentHashListString = await Promise.resolve(
         git.raw(['log', '--full-history', '--topo-order', '--format=%P'])
     );
@@ -215,6 +236,12 @@ export const parseLogTree = async (workingDir?: string) => {
 
     const parentHashList: string[] = parentHashListString.split('\n');
 
+    parentHashList.pop();
+    hashList.pop();
+    logList.pop(); // It generates for some reason a empty element before the base commit (windows specific bug?)
+
+    // TODO check later the behaviour of this on different platforms
+
     parentHashList.pop(); // * The last element is a blank string because of the initial commit has no parent hash
 
     const metadataListAndTreeOffset = generateTreeMetadataHierarchy(hashList, parentHashList);
@@ -225,6 +252,10 @@ export const parseLogTree = async (workingDir?: string) => {
         logList[logList.length - 1].hash,
         data.workingDir
     );
+
+    if (initialCommitBranchesBelow.indexOf('') !== -1) {
+        initialCommitBranchesBelow.splice(initialCommitBranchesBelow.indexOf(''), 1);
+    }
 
     const branchesList: string[] = initialCommitBranchesBelow;
 
@@ -252,7 +283,7 @@ export const parseLogTree = async (workingDir?: string) => {
 
     // make sure to offset all the arrays so there's no errors
 
-    for (let p = 0; p <= treeOffset; p += 1) {
+    for (let p = 0; p < treeOffset; p += 1) {
         parentHashList.unshift('pointer');
         hashList.unshift('pointer');
         fullHistory.unshift({
@@ -336,6 +367,8 @@ const generateBranchesColors = (branchesList: string[]) => {
     return branches;
 };
 
+/*
+
 let isElementSelected: boolean;
 
 const injectGivenChild = (
@@ -395,6 +428,7 @@ const injectParallelChild = (
     }
     return JSONTree;
 };
+
 
 const buildCommitsJSON = (
     treeOffset: number,
@@ -543,12 +577,15 @@ const buildMergeAndDivergenceJSON = ({
     };
 };
 
+// TODO Fix why the damn tree is not drawing. The culprit is in the builder function, as the first commit builds correctly.
+
 export const generateJSONTree = ({
     fullHistory,
     branchesList,
     metadataList,
     treeOffset
 }: JSONTreeGeneratorPropType) => {
+    
     const branchesData = generateBranchesColors(branchesList);
 
     const commitsJSON: commitJSONType[] = buildCommitsJSON(
@@ -560,8 +597,8 @@ export const generateJSONTree = ({
 
     const buildCausalityTree = () => {
         // Start adding the initial commit and add the branch to the graphed branches list
-        const generateInitialCommit = () => {
-            const initialCommit = fullHistory[fullHistory.length - 1];
+        const generateInitialCommit = (treeOffset: number) => {
+            const initialCommit = fullHistory[fullHistory.length - 1 - treeOffset];
             const branch = {
                 branchName: initialCommit.branch,
                 branchColor: branchesData[branchesList.indexOf(initialCommit.branch)].branchColor
@@ -616,13 +653,14 @@ export const generateJSONTree = ({
             };
         };
 
-        const buildNode = (currentNodeNumber: number, isFirstChild?: boolean) => {
+        const buildNode = (currentNodeNumber: number, isFirstChild?: boolean, treeOffsetNumber?: number) => {
             // TODO Fix naming on divergences
             // TODO Fix merges with children  not working
             // TODO Fix merge/diverges not showing up
             // TODO Fix naming on divergence children
+            
 
-            debugger;
+            const treeOffset = (treeOffsetNumber ?? 0 )
 
             const currentNodeMetadata = metadataList[currentNodeNumber];
 
@@ -646,10 +684,10 @@ export const generateJSONTree = ({
                         // Then execute the function again for each children
                         for (let i = 0; i < currentNodeMetadata.parentOf.length; i += 1) {
                             if (i === 0) {
-                                buildNode(currentNodeMetadata.parentOf[i], true);
+                                buildNode(currentNodeMetadata.parentOf[i], true, treeOffset);
                                 continue;
                             }
-                            buildNode(currentNodeMetadata.parentOf[i], false);
+                            buildNode(currentNodeMetadata.parentOf[i], false, treeOffset);
                         }
                     }
 
@@ -682,11 +720,8 @@ export const generateJSONTree = ({
                             fullHistory[currentNodeNumber].parentHash,
                             [currentNode]
                         );
-                        if (currentNodeNumber === 223) {
-                            debugger;
-                        }
                         // And then build its children
-                        buildNode(currentNodeMetadata.parentOf[0], true);
+                        buildNode(currentNodeMetadata.parentOf[0], true, treeOffset);
                     }
 
                     if (currentNodeMetadata.isMerge && currentNodeMetadata.isDivergence) {
@@ -706,15 +741,15 @@ export const generateJSONTree = ({
                         // Then execute the function again for each children
                         for (let i = 0; i < currentNodeMetadata.parentOf.length; i += 1) {
                             if (i === 0) {
-                                buildNode(currentNodeMetadata.parentOf[i], true);
+                                buildNode(currentNodeMetadata.parentOf[i], true, treeOffset);
                                 continue;
                             }
-                            buildNode(currentNodeMetadata.parentOf[i], false);
+                            buildNode(currentNodeMetadata.parentOf[i], false, treeOffset);
                         }
                     }
 
                     if (!currentNodeMetadata.isDivergence && !currentNodeMetadata.isMerge) {
-                        const currentNode: childrenJSONType = commitsJSON[currentNodeNumber];
+                        const currentNode: childrenJSONType = commitsJSON[currentNodeNumber - treeOffset];
                         // Check if parent is divergence
                         if (
                             metadataList[currentNodeMetadata.childrenOf[0]].isDivergence &&
@@ -759,6 +794,7 @@ export const generateJSONTree = ({
                             !metadataList[currentNodeMetadata.childrenOf[0]].isDivergence &&
                             isFirstChild
                         ) {
+                            
                             // Then add the node as the last children
                             treeStructure = injectGivenChild(
                                 treeStructure,
@@ -767,14 +803,14 @@ export const generateJSONTree = ({
                             );
                         }
 
-                        buildNode(currentNodeMetadata.parentOf[0], true);
+                        buildNode(currentNodeMetadata.parentOf[0], true, treeOffset);
                     }
                 }
 
                 // TODO fix what the heck is going on with the leaves
 
                 if (currentNodeMetadata.isLeaf) {
-                    let currentNode: childrenJSONType = commitsJSON[currentNodeNumber];
+                    let currentNode: childrenJSONType = commitsJSON[currentNodeNumber - treeOffset];
                     if (isFirstChild) {
                         if (currentNodeMetadata.isMerge) {
                             // If it does then is a merge commit so let's build it as such
@@ -898,8 +934,10 @@ export const generateJSONTree = ({
         // TODO Document the offsets here
 
         if (fullHistory.length > 0) {
-            treeStructure = generateInitialCommit();
-            buildNode(metadataList.length - 2, true);
+            treeStructure = generateInitialCommit(treeOffset);
+            // TODO find where the hell is the off by one error in some repos
+            debugger
+            buildNode(metadataList.length - 2 - treeOffset, true);
         }
 
         return treeStructure;
@@ -907,3 +945,5 @@ export const generateJSONTree = ({
 
     return buildCausalityTree();
 };
+
+*/

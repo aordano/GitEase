@@ -6,245 +6,246 @@
 
 export type gitBasicWorkflowDataType = {
     message: string;
-    description?: string
+    description?: string;
     branch?: string;
     remote?: string;
     workingDir?: string;
 };
 
 export type workingDirDataType = {
-    workingDir: string
-}
+    workingDir: string;
+};
 
 export type RepoConfigDataType = {
-    repo: string,
-    workingDir: string,
-}
+    repo: string;
+    workingDir: string;
+};
 
 // --------------------------------------
 // --- Git Status Modified Files Type ---
 // --------------------------------------
 
 export interface ModifiedFilesStructure {
-    _c?: string[],
-    _s?: string[] | number
-    _d?: string[] | boolean
-    _h?: string[] | number
-    _n?: string[] | boolean
-    _v: ModifiedFilesDescriptor
+    _c?: string[];
+    _s?: string[] | number;
+    _d?: string[] | boolean;
+    _h?: string[] | number;
+    _n?: string[] | boolean;
+    _v: ModifiedFilesDescriptor;
 }
 
 interface ModifiedFilesDescriptor {
-    not_added?: string[],
-    conflicted?: string[],
-    created?: string[],
-    deleted?: string[],
-    modified?: string[],
-    renamed?: ContentNameType[],
-    files?: GitFilesDescriptor[],
-    staged?: string[],
-    ahead?: string[] | number,
-    behind?: string[] | number,
-    current?: string,
-    tracking?: string
+    not_added?: string[];
+    conflicted?: string[];
+    created?: string[];
+    deleted?: string[];
+    modified?: string[];
+    renamed?: ContentNameType[];
+    files?: GitFilesDescriptor[];
+    staged?: string[];
+    ahead?: string[] | number;
+    behind?: string[] | number;
+    current?: string;
+    tracking?: string;
 }
 
 interface GitFilesDescriptor {
-    path: string,
-    index: string,
-    working_dir: string
+    path: string;
+    index: string;
+    working_dir: string;
 }
 
 export type ContentNameType = {
-    from: string,
-    to: string
-}
+    from: string;
+    to: string;
+};
 
 // ----------------------------------
 // --- Staging Area-related Types ---
 // ----------------------------------
 
 export type ChangesTreeType = {
-    status: string,
-    content: string | ContentNameType,
-    displayContent: string,
-    staged: boolean,
-    index?: number
-}
+    status: string;
+    content: string | ContentNameType;
+    displayContent: string;
+    staged: boolean;
+    index?: number;
+};
 
 export type StagingCheckboxIndexType = {
-    index: number | undefined
-}
+    index: number | undefined;
+};
 
 // -------------------
 // --- Misc. Types ---
 // -------------------
 
 export type SpinnerType = {
-    name: string,
-    message?: string
-}
+    name: string;
+    message?: string;
+};
 
 // --------------------------------------
 // --- Git Status Modified Files Type ---
 // --------------------------------------
 
 export type GitCommitType = {
-    commitMessage: string,
-    commitDescription?: string,
-    branch?: string,
-    remote?: string,
-    successStatus?: GitCommitStatusType,
-    workingDir?: string
-}
+    commitMessage: string;
+    commitDescription?: string;
+    branch?: string;
+    remote?: string;
+    successStatus?: GitCommitStatusType;
+    workingDir?: string;
+};
 
 type GitCommitStatusType = {
     _v: {
-        error: string,
-        success: string
-    }
-}
+        error: string;
+        success: string;
+    };
+};
 
 // ---------------------------
 // --- Git Log Object Type ---
 // ---------------------------
 
 export type GitLogObjectType = {
-    author_name: string,
-    date: string,
-    hash: string,
-    parentHash: string,
-    message: string,
-    branch: string
-}
+    author_name: string;
+    date: string;
+    hash: string;
+    parentHash: string;
+    message: string;
+    branch: string;
+};
 
 // --------------------------------------
 // --- Branch Color Information Types ---
 // --------------------------------------
 
 export type colorTripletType = {
-    r: number,
-    g: number,
-    b: number
-}
+    r: number;
+    g: number;
+    b: number;
+};
 
 export type branchDataType = {
-    branchName: string,
-    branchColor: colorTripletType
-}
+    branchName: string;
+    branchColor: colorTripletType;
+};
 
 // --------------------------------------
 // --- JSON Commit Tree-related Types ---
 // --------------------------------------
 
 export type JSONTreeGeneratorPropType = {
-    fullHistory: GitLogObjectType[],
-    branchesList: string[],
-    hashList: string[],
-    treeOffset: number,
-    metadataList: GitTreeNodeMetadataType[]
-}
+    fullHistory: GitLogObjectType[];
+    branchesList: string[];
+    hashList: string[];
+    treeOffset: number;
+    metadataList: GitTreeNodeMetadataType[];
+    workingDir?: string;
+};
 
 export type MergeCommitType = {
-    hash: string,
-    parentHashes: string[]
-}
+    hash: string;
+    parentHashes: string[];
+};
 
 export type DivergenceCommitType = {
-    hash: string,
-    childrenHashes: string[]
-}
+    hash: string;
+    childrenHashes: string[];
+};
 
 export type GitTreeNodeMetadataType = {
-    isInitial: boolean,
-    isDivergence: boolean,
-    isMerge: boolean,
-    isLeaf: boolean,
-    isPointer: boolean,
-    pointsTo: number,
-    childrenOf: number[],
-    parentOf: number[]
-}
+    isInitial: boolean;
+    isDivergence: boolean;
+    isMerge: boolean;
+    isLeaf: boolean;
+    isPointer: boolean;
+    pointsTo: number;
+    childrenOf: number[];
+    parentOf: number[];
+};
 
 export type mergeJSONPropsType = {
-    destinationBranch: branchDataType,
-    destinationHash: string,
-    destinationCommitMessage: string
-}
+    destinationBranch: branchDataType;
+    destinationHash: string;
+    destinationCommitMessage: string;
+};
 
 export type divergenceJSONPropsType = {
-    branch: branchDataType,
-    hash: string,
-    author: string,
-    message: string
-}
+    branch: branchDataType;
+    hash: string;
+    author: string;
+    message: string;
+};
 
 export type commitJSONPropsType = {
-    branch: branchDataType,
-    hash: string,
-    author: string,
-    message: string
-}
+    branch: branchDataType;
+    hash: string;
+    author: string;
+    message: string;
+};
 
 export type divergenceJSONType = {
     attributes: {
-        message: string,
-        author: string,
-        hash: string
-    },
+        message: string;
+        author: string;
+        hash: string;
+    };
     nodeSvgShape: {
-        shape: string,
+        shape: string;
         shapeProps: {
-            rx: number,
-            width: number,
-            height: number,
-            x: number,
-            y: number,
-            fill: string,
-        },
-    },
-    children: childrenJSONType[]
-}
+            rx: number;
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+            fill: string;
+        };
+    };
+    children: childrenJSONType[];
+};
 
 export type mergeJSONType = {
-    name: string,
+    name: string;
     attributes: {
-        message: string,
-        hash: string
-    },
+        message: string;
+        hash: string;
+    };
     nodeSvgShape: {
-        shape: string,
+        shape: string;
         shapeProps: {
-            points: string,
-            width: number,
-            height: number,
-            x: number,
-            y: number,
-            fill: string,
-        },
-    },
-    children: childrenJSONType[]
-}
+            points: string;
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+            fill: string;
+        };
+    };
+    children: childrenJSONType[];
+};
 
-export type childrenJSONType = commitJSONType | mergeJSONType | divergenceJSONType
+export type childrenJSONType = commitJSONType | mergeJSONType | divergenceJSONType;
 
 export type commitJSONType = {
     attributes: {
-        message: string,
-        author: string,
-        hash: string
-    },
+        message: string;
+        author: string;
+        hash: string;
+    };
     nodeSvgShape: {
-        shape: string,
+        shape: string;
         shapeProps: {
-            r: string,
-            width: number,
-            height: number,
-            x: number,
-            y: number,
-            fill: string,
-        },
-    },
-    children: childrenJSONType[],
-    name?: string
-}
+            r: string;
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+            fill: string;
+        };
+    };
+    children: childrenJSONType[];
+    name?: string;
+};

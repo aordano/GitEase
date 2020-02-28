@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-
 // -----------------------------
 // --- React D3 Tree Imports ---
 // -----------------------------
@@ -20,9 +19,9 @@ import Tree from 'react-d3-tree';
 // --- Type Imports ---
 // --------------------
 
-import { childrenJSONType } from "../../types"
+import { childrenJSONType } from '../../types';
 
-import { useSelector } from "../../types/redefinitions"
+import { useSelector } from '../../types/redefinitions';
 
 // ----------------------
 // --- Static Imports ---
@@ -34,29 +33,27 @@ require('../../static/scss/viewer.scss');
 // --- Function Imports ---
 // ------------------------
 
-import {
-    generateJSONTree
-} from "../../functions/gitTree"
+import { generateJSONTree } from '../../functions/gitTree';
 
 // -------------------------
 // --- Component Imports ---
 // -------------------------
 
-import {
-    SpinnerComponent
-} from "../misc"
+import { SpinnerComponent } from '../misc';
 
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
 
-const lang = "en_US"
+const lang = 'en_US';
 
-const localization = require(`../../lang/${lang}`)
+const localization = require(`../../lang/${lang}`);
 
 // -------------------------------
 // --- Node-related Components ---
 // -------------------------------
+
+/*
 
 type NodeLabelType = {
     nodeData?: any,      // * Don't know the nodeData type so hack with any
@@ -66,8 +63,8 @@ type NodeLabelType = {
 const getDepth = function (tree: childrenJSONType) {
     let depth = 0;
     if (tree.children) {
-        tree.children.forEach((d) => {
-            const tmpDepth = getDepth(d)
+        tree.children.forEach((value) => {
+            const tmpDepth = getDepth(value)
             if (tmpDepth > depth) {
                 depth = tmpDepth
             }
@@ -305,3 +302,5 @@ export const ViewerComponent: React.FC = () => {
     
     return generateTree()
 };
+
+*/

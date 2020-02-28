@@ -5881,6 +5881,23 @@ electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('activate', () => {
     createWindow();
   }
 });
+/*
+
+Devtools Installation
+
+const os = require('os')
+
+setTimeout(() => {
+    BrowserWindow.addDevToolsExtension(
+        path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0')
+     )
+     
+     BrowserWindow.addDevToolsExtension(
+         path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0')
+      )
+}, 5000)
+
+*/
 
 /***/ }),
 
