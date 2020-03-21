@@ -30,7 +30,7 @@ require('../../static/scss/viewer.scss');
 // --- Function Imports ---
 // ------------------------
 
-// * import { generateNetworkData} from '../../functions/gitGraph';
+import { generateGraphData } from '../../functions/gitGraph';
 
 // -------------------------
 // --- Component Imports ---
@@ -46,36 +46,143 @@ const lang = 'en_US';
 
 const localization = require(`../../lang/${lang}`);
 
-// -------------------------------
-// --- Node-related Components ---
-// -------------------------------
+// ------------------------
+// --- Viewer Component ---
+// ------------------------
 
-// TODO write functions and callbacks and configs to determine the network graph.
+// TODO style the viewer
+// TODO Document it better
 
-/*
+export const ViewerComponent: React.FC = () => {
 
-type NodeLabelType = {
-    nodeData?: any,      // Don't know the nodeData type so hack with any
-    className: string
-}
+    // TODO Open diff and more info screen on double click
+    //const onClickNode = function(nodeId) {
+    //    window.alert('Clicked node ${nodeId}');
+    //};
 
-const getDepth = function (tree: childrenJSONType) {
-    let depth = 0;
-    if (tree.children) {
-        tree.children.forEach((value) => {
-            const tmpDepth = getDepth(value)
-            if (tmpDepth > depth) {
-                depth = tmpDepth
-            }
-        })
+    // TODO Generate a contextual menu for actions on the given commit
+    //const onRightClickNode = function(event, nodeId) {
+    //    window.alert('Right clicked node ${nodeId}');
+    //};
+    
+    // TODO Generate the alert for commit info on mouseover
+    //const onMouseOverNode = function(nodeId) {
+    //    window.alert(`Mouse over node ${nodeId}`);
+    //};
+    
+    // TODO Remove the commit info alert on mouseout    
+    //const onMouseOutNode = function(nodeId) {
+    //    window.alert(`Mouse out node ${nodeId}`);
+    //};
+
+    const graphConfig = {
+        nodeHighlightBehavior: true,
+        highlightOpacity: 0.2,
+        height: 550,
+        width: 650,
+        collapsible: false,
+        directed: true,
+        staticGraph: false,
+        d3: {
+            gravity: -570,
+            alphaTarget: 0.55,
+            linkLength: 50
+        },
+        node: {
+            strokeColor: "black",
+            renderLabel: false
+        },
+        link: {
+            highlightColor: "lightblue",
+            type: "STRAIGHT"
+        }
     }
-    return 1 + depth
-}
 
-const clickLastNode = (node:Element) => {
-    const eventObject = document.createEvent('Events');
-    eventObject.initEvent("click", true, false);
-    node.dispatchEvent(eventObject);
+    const graphData = useSelector(state =>
+        state.updateViewTreeReducer.dataPromise.graphData._v ??
+            {
+                nodes: [
+                    {
+                        id: "placeholder",
+                        color: "placeholder",
+                        size: 200,
+                        symbolType: "placeholder"
+                    }
+                ],
+                links: [
+                    {
+                        source: "placeholder",
+                        target: "placeholder",
+                        color: "rgb(200,200,200)"
+                    }
+                ]
+            }
+    )
+
+    let shownElement: any
+
+    const placeholderData = {
+        nodes: [
+            {
+                id: "placeholder",
+                color: "placeholder",
+                size: 200,
+                symbolType: "placeholder"
+            }
+        ],
+        links: [
+            {
+                source: "placeholder",
+                target: "placeholder",
+                color: "rgb(200,200,200)"
+            }
+        ]
+    }
+    
+    if (
+        graphData === undefined ||
+        graphData === null ||
+        JSON.stringify(graphData) === JSON.stringify(placeholderData) ||
+        JSON.stringify(graphData).indexOf("nodes") === -1
+    ) {
+        shownElement = React.createElement(
+            SpinnerComponent,
+            {
+                name: "graph",
+                message: localization.gitGraphLoadingMessage
+            }
+        )
+    }
+
+    else {
+        shownElement = React.createElement(
+            Graph,
+            {
+                data: graphData,
+                id: "graphViewer",
+                config: graphConfig,
+                // onClickNode: onClickNode,
+                // onRightClickNode: onRightClickNode,
+                // onMouseOverNode: onMouseOverNode,
+                // onMouseOutNode: onMouseOutNode 
+            }
+        )
+    }
+
+    const generateGraph = () => {
+        return shownElement
+    }
+
+    
+    return generateGraph()
+
+    
+};
+
+// HACK Don't know the nodeData type so hack with any
+type NodeLabelType = {
+    nodeData?: any,      
+    className: string
 }
 
 export const NodeLabel: React.FC<NodeLabelType> = ({
@@ -84,7 +191,7 @@ export const NodeLabel: React.FC<NodeLabelType> = ({
 }:NodeLabelType) => {
 
     const hashList = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.hashes?.hashList ??
+        state.updateViewTreeReducer.dataPromise.history?._v.hashes?.hashList ??
             {
                 hashList: [
                     "default"
@@ -98,8 +205,6 @@ export const NodeLabel: React.FC<NodeLabelType> = ({
     const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
     const nodeContainer = document.getElementById(`${nodeData.attributes.hash}-node-container`) as HTMLDivElement
 
-    let isGraphicDrawn = false
-
     const showNodeDetails = () => {
         if (nodeDetails && nodeContainer) {
             nodeContainer.style.backgroundColor = "rgba(255,255,255,0.5)"
@@ -112,16 +217,6 @@ export const NodeLabel: React.FC<NodeLabelType> = ({
                 nodeDetails.children[2].textContent = nodeHash
             }
             return
-        }
-
-        // -- Last node needs to be clicked so the whole tree "expands" and then the mouseover does not fail
-
-        const container = document.querySelector(".rd3t-tree-container")
-        // React D3 Tree always contains an svg, which contains a group inside thus the two .children[0]
-        const lastNode = container?.children[0].children[0].lastElementChild
-        if (lastNode && !isGraphicDrawn) {
-            clickLastNode(lastNode)
-            isGraphicDrawn = true
         }
     }
 
@@ -158,148 +253,12 @@ export const NodeLabel: React.FC<NodeLabelType> = ({
     
 }
 
-// ------------------------
-// --- Viewer Component ---
-// ------------------------
 
-// TODO style the viewer
-// TODO Document it better
+/*
 
-export const ViewerComponent: React.FC = () => {
 
-    const fullHistory = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.fullHistory ??
-            {
-                fullhistory: [{
-                    author_email: "default",
-                    author_name: "default",
-                    date: "default",
-                    hash: "default",
-                    parentHash: "default",
-                    message: "default",
-                    branch: "default"
-                }]
-            }
-    )
 
-    const hashList = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.hashes?.hashList ??
-            {
-                hashList: [
-                    "default"
-                ]
-            }
-    )
 
-    const treeOffset = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.treeOffset ??
-            {
-                treeOffset: 0
-            }
-    )
 
-    const branchesList = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.branchesList ??
-            {
-                branchesList: [
-                    "master"
-                ]
-            }
-    )  
-
-    const metadataList = useSelector(state => 
-        state.updateViewTreeReducer.fullHistoryPromise?._v?.metadataList ??
-            {
-                metadataList: [{
-                    isInitial: false,
-                    isDivergence: false,
-                    isMerge: false,
-                    isPointer: false,
-                    pointsTo: 0,
-                    isLeaf: false,
-                    childrenOf: [],
-                    parentOf: []
-                }]
-            }
-    )  
-
-    const gitTree = generateJSONTree({
-        fullHistory,
-        branchesList,
-        hashList,
-        treeOffset,
-        metadataList
-    })
-
-    let shownElement: any
-
-    // This dummy data is in place to avoid type errors if instead of it we'd return null or undefined
-    const loadingData = {
-        name: "loading",
-        attributes: {
-            message: "loading",
-            author: "loading",
-            hash: "loading"
-        },
-        nodeSvgShape: {
-            shape: 'rect',
-            shapeProps: {
-                rx: 5,
-                width: 20,
-                height: 20,
-                x: -10,
-                y: -10,
-                fill: `rgb(0,0,0)`,
-            },
-        },
-        children: []
-    }
-    
-    if (gitTree === null || gitTree === undefined || gitTree.attributes.hash === loadingData.attributes.hash) {
-        shownElement = React.createElement(
-            SpinnerComponent,
-            {
-                name: "tree",
-                message: localization.gitTreeLoadingMessage
-            }
-        )
-    }
-
-    else {
-        shownElement = React.createElement(
-            Tree,
-            {
-                data: gitTree,
-                styles: {
-                    links: {
-                        strokeWidth: 5
-                    }
-                },
-                allowForeignObjects: true,
-                nodeLabelComponent: {
-                    render: <NodeLabel className={'node-label'} />,
-                    foreignObjectWrapper: {
-                        y: -25,
-                        x: -25
-                    }
-                },
-                transitionDuration: 0,
-                collapsible: true,
-                zoom: 1,
-                translate: {
-                    x: -(137 * getDepth(gitTree)), // * Magic number to show latest commit
-                    y: 200
-                }
-            }
-        )
-    }
-
-    const generateTree = () => {
-        return shownElement
-    }
-
-    
-    return generateTree()
-};
 
 */

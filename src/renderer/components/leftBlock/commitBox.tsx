@@ -46,7 +46,7 @@ const localization = require(`../../lang/${lang}`);
 // * --- Temporary statements for testing ---
 // -------------------------------------------
 
-import { data } from '../../../../data.mock';
+import { data } from '../../data.mock';
 
 // -------------------------
 // --- Commit Components ---

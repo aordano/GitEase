@@ -36,13 +36,13 @@ export const firstTimeWizardTitle = "First Time Configuration Wizard"
 export const firstTimeWizardDescription = "Welcome to GitEase! First we need to configure some stuff, so please follow the wizard and fill out all the forms."
 
 // -------------------------
-// --- Git Tree Messages ---
+// --- Git Graph Messages ---
 // -------------------------
 
-export const gitTreeLoadingMessage = "Loading tree view..."
+export const gitGraphLoadingMessage = "Loading tree view..."
 
 // ----------------------
-// --- Git Tree Nodes ---
+// --- Git Graph Nodes ---
 // ----------------------
 
 export const nodeHash = "Id"

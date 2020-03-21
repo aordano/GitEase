@@ -24,8 +24,9 @@ import {
     ModifiedFilesStructure,
     ChangesTreeType,
     GitLogObjectType,
-    MergeCommitType,
-    GitTreeNodeMetadataType
+    GitGraphNodeMetadataType,
+    GitNodeType,
+    GitLinkType
 } from '../types/index';
 
 // ----------------------
@@ -44,30 +45,37 @@ import {
 
 import { parseStatus, truncate, stageFile, unstageFile, removeQuotes } from '../functions';
 
-import { parseLogTree } from '../functions/gitTree';
+import { parseLogTree, generateGraphData } from '../functions/gitGraph';
 
-// -------------------------
-// --- Mock Data Imports ---
-// -------------------------
+// --------------------------
+// * --- Mock Data Imports ---
+// --------------------------
 
-import { data } from '../../../data.mock';
+import { data } from "../data.mock"
 
 // ---------------------------------
 // --- Reducer State Definitions ---
 // ---------------------------------
 
 export interface UpdateViewTreeState {
-    fullHistoryPromise: {
-        _v: {
-            fullHistory: GitLogObjectType[];
-            branchesList: string[];
-            metadataList: GitTreeNodeMetadataType[];
-            treeOffset: number;
-            hashes: {
-                hashList: string[];
-                parentHashList: string[];
-            };
-        };
+    dataPromise: {
+        graphData: {
+            _v: {
+                nodes: GitNodeType[],
+                links: GitLinkType[]
+            }
+        },
+        history: {
+            _v: {
+                fullHistory: GitLogObjectType[];
+                branchesList: string[];
+                metadataList: GitGraphNodeMetadataType[];
+                hashes: {
+                    hashList: string[];
+                    parentHashList: string[];
+                };
+            }
+        }
     };
 }
 
@@ -85,30 +93,57 @@ export interface ViewModifiedFilesState {
 // -----------------------------------------
 
 export const updateViewTreeDefaultState: UpdateViewTreeState = {
-    fullHistoryPromise: {
-        _v: {
-            fullHistory: [],
-            branchesList: [],
-            metadataList: [
-                {
-                    isInitial: false,
-                    isDivergence: false,
-                    isLeaf: false,
-                    isMerge: false,
-                    isPointer: false,
-                    pointsTo: 0,
-                    childrenOf: [],
-                    parentOf: []
+    dataPromise: {
+        graphData: {
+            _v: {
+                nodes: [
+                    {
+                        id: "placeholder",
+                        color: "placeholder",
+                        size: 200,
+                        symbolType: "placeholder"
+                    }
+                ],
+                links: [
+                    {
+                        source: "placeholder",
+                        target: "placeholder",
+                        color: "rgb(200,200,200)"
+                    }
+                ]
+            }
+        },
+        history: {
+            _v: {
+                fullHistory: [],
+                branchesList: [],
+                metadataList: [
+                    {
+                        isInitial: false,
+                        isDivergence: false,
+                        isMerge: false,
+                        childrenOf: ["placeholder"],
+                        parentOf: ["placeholder"],
+                        branch: {
+                            branchName: "placeholder",
+                            branchColor: {
+                                r: 200,
+                                g: 200,
+                                b: 200
+                            }
+                        }
+                    }
+                ],
+                hashes: {
+                    hashList: [],
+                    parentHashList: []
                 }
-            ],
-            treeOffset: 0,
-            hashes: {
-                hashList: [],
-                parentHashList: []
             }
         }
     }
 };
+
+
 
 const updateChangesAreaDefaultState: UpdateChangesAreaState = {
     upToDate: false,
@@ -420,8 +455,14 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
             const history = data.workingDir
                 ? Promise.resolve(parseLogTree(data.workingDir))
                 : Promise.resolve(parseLogTree());
+            const graphData = data.workingDir
+                ? Promise.resolve(generateGraphData(data.workingDir))
+                : Promise.resolve(generateGraphData());
             return Object.assign({}, state, {
-                fullHistoryPromise: history
+                dataPromise: {
+                    graphData,
+                    history
+                }
             });
         default:
             return state;

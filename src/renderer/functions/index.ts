@@ -24,7 +24,7 @@ const localization = require(`../lang/${lang}`);
 // * --- Mock Data Imports ---
 // ---------------------------
 
-import { data } from '../../../data.mock';
+import { data } from '../data.mock';
 
 // -----------------------------
 // --- Git-related Functions ---

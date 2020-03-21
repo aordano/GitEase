@@ -112,20 +112,15 @@ app.on('activate', () => {
     }
 });
 
-/*
 
-Devtools Installation
+/*
 
 const os = require('os')
 
 setTimeout(() => {
-    BrowserWindow.addDevToolsExtension(
-        path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0')
-     )
-     
-     BrowserWindow.addDevToolsExtension(
-         path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0')
-      )
-}, 5000)
+
+    console.log(BrowserWindow.getDevToolsExtensions())
+    
+},500)
 
 */

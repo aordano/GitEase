@@ -142,7 +142,7 @@ export type JSONTreeGeneratorPropType = {
     branchesList: string[];
     hashList: string[];
     treeOffset: number;
-    metadataList: GitTreeNodeMetadataType[];
+    metadataList: GitGraphNodeMetadataType[];
     workingDir?: string;
 };
 

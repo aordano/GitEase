@@ -117,7 +117,7 @@ function map_obj(obj, fn){
 /*! exports provided: _args, _development, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, bin, bugs, description, homepage, keywords, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_args\":[[\"7zip@0.0.6\",\"/home/agata/repos/GitEase\"]],\"_development\":true,\"_from\":\"7zip@0.0.6\",\"_id\":\"7zip@0.0.6\",\"_inBundle\":false,\"_integrity\":\"sha1-nK+xca+CMpSQNTtIFvAzR6oVCjA=\",\"_location\":\"/7zip\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"7zip@0.0.6\",\"name\":\"7zip\",\"escapedName\":\"7zip\",\"rawSpec\":\"0.0.6\",\"saveSpec\":null,\"fetchSpec\":\"0.0.6\"},\"_requiredBy\":[\"/electron-devtools-installer\"],\"_resolved\":\"https://registry.npmjs.org/7zip/-/7zip-0.0.6.tgz\",\"_spec\":\"0.0.6\",\"_where\":\"/home/agata/repos/GitEase\",\"bin\":{\"7z\":\"7zip-lite/7z.exe\"},\"bugs\":{\"url\":\"https://github.com/fritx/win-7zip/issues\"},\"description\":\"7zip Windows Package via Node.js\",\"homepage\":\"https://github.com/fritx/win-7zip#readme\",\"keywords\":[\"7z\",\"7zip\",\"7-zip\",\"windows\",\"install\"],\"license\":\"GNU LGPL\",\"main\":\"index.js\",\"name\":\"7zip\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/fritx/win-7zip.git\"},\"scripts\":{\"test\":\"mocha\"},\"version\":\"0.0.6\"}");
+module.exports = JSON.parse("{\"_args\":[[\"7zip@0.0.6\",\"E:\\\\Agata\\\\TRABAJO\\\\repos\\\\GitEase\"]],\"_development\":true,\"_from\":\"7zip@0.0.6\",\"_id\":\"7zip@0.0.6\",\"_inBundle\":false,\"_integrity\":\"sha1-nK+xca+CMpSQNTtIFvAzR6oVCjA=\",\"_location\":\"/7zip\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"7zip@0.0.6\",\"name\":\"7zip\",\"escapedName\":\"7zip\",\"rawSpec\":\"0.0.6\",\"saveSpec\":null,\"fetchSpec\":\"0.0.6\"},\"_requiredBy\":[\"/electron-devtools-installer\"],\"_resolved\":\"https://registry.npmjs.org/7zip/-/7zip-0.0.6.tgz\",\"_spec\":\"0.0.6\",\"_where\":\"E:\\\\Agata\\\\TRABAJO\\\\repos\\\\GitEase\",\"bin\":{\"7z\":\"7zip-lite/7z.exe\"},\"bugs\":{\"url\":\"https://github.com/fritx/win-7zip/issues\"},\"description\":\"7zip Windows Package via Node.js\",\"homepage\":\"https://github.com/fritx/win-7zip#readme\",\"keywords\":[\"7z\",\"7zip\",\"7-zip\",\"windows\",\"install\"],\"license\":\"GNU LGPL\",\"main\":\"index.js\",\"name\":\"7zip\",\"repository\":{\"type\":\"git\",\"url\":\"git+ssh://git@github.com/fritx/win-7zip.git\"},\"scripts\":{\"test\":\"mocha\"},\"version\":\"0.0.6\"}");
 
 /***/ }),
 
@@ -5808,12 +5808,12 @@ const createLoadingScreen = () => {
     /// define width and height for the window
     width: 600,
     height: 200,
-    backgroundColor: "#333",
+    backgroundColor: '#333',
     /// remove the window frame, so it will become a frameless window
     frame: false,
     center: true,
     alwaysOnTop: true,
-    title: "GitEase"
+    title: 'GitEase'
   });
   loadingScreen.setResizable(false);
 
@@ -5837,7 +5837,7 @@ const createWindow = async () => {
     width: 800,
     height: 600,
     show: false,
-    title: "GitEase"
+    title: 'GitEase'
   });
 
   if (true) {
@@ -5883,19 +5883,13 @@ electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('activate', () => {
 });
 /*
 
-Devtools Installation
-
 const os = require('os')
 
 setTimeout(() => {
-    BrowserWindow.addDevToolsExtension(
-        path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.4.0_0')
-     )
-     
-     BrowserWindow.addDevToolsExtension(
-         path.join(os.homedir(), '/AppData/Local/Google/Chrome/User Data/Default/Extensions/lmhkpmbekcpmknklioeibfkpmmfibljd/2.17.0_0')
-      )
-}, 5000)
+
+    console.log(BrowserWindow.getDevToolsExtensions())
+    
+},500)
 
 */
 
