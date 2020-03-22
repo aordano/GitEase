@@ -158,6 +158,7 @@ export type DivergenceCommitType = {
 
 export type GitGraphNodeMetadataType = {
     isInitial: boolean;
+    isLast: boolean;
     isDivergence: boolean;
     isMerge: boolean;
     childrenOf: string[];
@@ -170,6 +171,16 @@ export type GitNodeType = {
     color: string,
     size: number,
     symbolType: string
+}
+
+export type ReactD3GraphNodeType = {
+    color: string,
+    highlighted: boolean,
+    id: string,
+    size: number,
+    symbolType: string,
+    x: number,
+    y: number
 }
 
 export type GitLinkType = {

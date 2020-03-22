@@ -39,12 +39,18 @@ export const firstTimeWizardDescription = "Welcome to GitEase! First we need to 
 // --- Git Graph Messages ---
 // -------------------------
 
-export const gitGraphLoadingMessage = "Loading tree view..."
+export const gitGraphLoadingMessage = "Loading graph view..."
 
-// ----------------------
+// -----------------------
 // --- Git Graph Nodes ---
-// ----------------------
+// -----------------------
 
 export const nodeHash = "Id"
 export const nodeAuthor = "By"
 export const nodeSubject = "Message" 
+
+// ------------------------
+// --- Git Graph Labels ---
+// ------------------------
+
+export const labelInitialCommit = "Initial commit"

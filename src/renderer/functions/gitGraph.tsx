@@ -231,11 +231,15 @@ const buildCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
         return buildDivergenceCommit(metadata, hash)
     }
 
-    const nodeData: GitNodeType = {
+    let nodeData: GitNodeType = {
         id: hash,
         color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
-        size: 200,
+        size: 250,
         symbolType: "circle"
+    }
+
+    if (metadata.isLast) {
+        nodeData = buildLastCommit(metadata, hash)[0]
     }
 
     const linkData: GitLinkType = {
@@ -252,7 +256,7 @@ const buildMergeCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
     const nodeData: GitNodeType = {
         id: hash,
         color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
-        size: 200,
+        size: 550,
         symbolType: "cross"
     }
 
@@ -275,7 +279,7 @@ const buildDivergenceCommit = (metadata: GitGraphNodeMetadataType, hash: string)
     const nodeData: GitNodeType = {
         id: hash,
         color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
-        size: 200,
+        size: 500,
         symbolType: "diamond"
     }
 
@@ -293,8 +297,20 @@ const buildInitialCommit = (metadata: GitGraphNodeMetadataType, hash: string) =>
     const nodeData: GitNodeType = {
         id: hash,
         color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
-        size: 200,
-        symbolType: "diamond"
+        size: 800,
+        symbolType: "circle"
+    }
+
+    return [nodeData]
+}
+
+const buildLastCommit = (metadata: GitGraphNodeMetadataType, hash: string) => {
+
+    const nodeData: GitNodeType = {
+        id: hash,
+        color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
+        size: 800,
+        symbolType: "square"
     }
 
     return [nodeData]
@@ -336,6 +352,7 @@ const generateGraphMetadata = (
 
     for (let k = hashList.length - 1; k >= 0; k -= 1) {
         let isInitial: boolean = false;
+        let isLast: boolean = false
         let isDivergence: boolean = false;
         let isMerge: boolean = false;
         let parentHashes: string[] = [];
@@ -343,6 +360,10 @@ const generateGraphMetadata = (
 
         if (k === hashList.length - 1) {
             isInitial = true;
+        }
+
+        if (k === 0) {
+            isLast = true
         }
 
         if (!isInitial) {
@@ -378,6 +399,7 @@ const generateGraphMetadata = (
             isInitial,
             isDivergence,
             isMerge,
+            isLast,
             childrenOf: parentHashes,
             parentOf: childrenHashes,
             branch: {

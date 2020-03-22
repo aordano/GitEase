@@ -122,6 +122,7 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
                         isInitial: false,
                         isDivergence: false,
                         isMerge: false,
+                        isLast: false,
                         childrenOf: ["placeholder"],
                         parentOf: ["placeholder"],
                         branch: {

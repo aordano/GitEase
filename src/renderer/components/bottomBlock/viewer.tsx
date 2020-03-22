@@ -38,6 +38,19 @@ import { generateGraphData } from '../../functions/gitGraph';
 
 import { SpinnerComponent } from '../misc';
 
+// --------------------
+// --- StoreImports ---
+// --------------------
+
+// tslint:disable-next-line: import-name
+import store from '../../store/index.redux.store';
+
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType } from '../../types';
+
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
@@ -53,6 +66,53 @@ const localization = require(`../../lang/${lang}`);
 // TODO style the viewer
 // TODO Document it better
 
+const generateLabelProperty = (node: ReactD3GraphNodeType) => {
+
+    // FIXME this can't load children data sometimes, saying "undefined" on the target branch
+
+    const historyData = store.getState()?.updateViewTreeReducer.dataPromise.history._v
+
+    const currentNodeIndex = historyData?.hashes.hashList.indexOf(node.id) ?? 0
+
+    const currentNodeMetadata = historyData?.metadataList[currentNodeIndex]
+
+    if (currentNodeMetadata?.isInitial) {
+        return `${localization.labelInitialCommit} - ${currentNodeMetadata.branch.branchName}`
+    }
+
+    if (currentNodeMetadata?.isMerge && !currentNodeMetadata.isDivergence) {
+        const parentHashes = currentNodeMetadata.childrenOf
+        const parentBranches = parentHashes.map((value) => {
+            const currentIndex = historyData?.hashes.hashList.indexOf(value) ?? 0
+            const currentMetadata = historyData?.metadataList[currentIndex]
+            return currentMetadata?.branch.branchName
+        })
+        const childrenHash = currentNodeMetadata.parentOf[0]
+        const childrenIndex = historyData?.hashes.hashList.indexOf(childrenHash) ?? 0
+        const childrenMetadata = historyData?.metadataList[childrenIndex]
+        const childrenBranch = childrenMetadata?.branch.branchName
+        
+        const receiverBranchIndex = parentBranches.indexOf(childrenBranch)
+
+        const parentBranchesLocalIndexes = parentBranches.map((value, index) => {
+            return index
+        })
+        
+        parentBranchesLocalIndexes.splice(receiverBranchIndex,1)
+
+        let branchesString = ""
+        parentBranchesLocalIndexes.forEach((branchIndex, loopIndex) => {
+            if (loopIndex === 0) {
+                branchesString = `${parentBranches[branchIndex]}`
+            } else {
+                branchesString = `${branchesString}, ${parentBranches[branchIndex]}`                
+            }
+        })
+
+        return `${branchesString} -> ${childrenBranch}`
+    }
+}
+
 export const ViewerComponent: React.FC = () => {
 
     // TODO Open diff and more info screen on double click
@@ -66,14 +126,47 @@ export const ViewerComponent: React.FC = () => {
     //};
     
     // TODO Generate the alert for commit info on mouseover
-    //const onMouseOverNode = function(nodeId) {
-    //    window.alert(`Mouse over node ${nodeId}`);
-    //};
+    const onMouseOverNode = (nodeId: string) => {
+        const history = store.getState()?.updateViewTreeReducer.dataPromise.history._v
+        const hashes = history?.hashes.hashList
+        const nodeIndex = hashes!.indexOf(nodeId) // ? If this gets called the data should be present
+        const nodeData = history!.fullHistory[nodeIndex]
+        const nodeSubject = `${localization.nodeSubject}: ${nodeData.message}`
+        const nodeAuthor =`${localization.nodeAuthor}: ${nodeData.author_name}`
+        const nodeHash = `${localization.nodeHash}: ${nodeData.hash}` 
+        const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
+        const nodeSVG = document.getElementById(`${nodeData.hash}`)?.children[0] as SVGElement
+
+        if (nodeDetails && nodeSVG) {
+            nodeSVG.setAttribute("transform", "scale(5)")
+            nodeSVG.setAttribute("opacity", "0.9")
+            nodeSVG.setAttribute("stroke-width", "1")
+            nodeSVG.setAttribute("stroke-dasharray","2 1")
+            nodeDetails.style.opacity = "1"
+            nodeDetails.style.zIndex = "9999"
+            if (nodeDetails.children) {
+                nodeDetails.children[0].textContent = nodeSubject
+                nodeDetails.children[1].textContent = nodeAuthor
+                nodeDetails.children[2].textContent = nodeHash
+            }
+            return
+        }
+    };
     
     // TODO Remove the commit info alert on mouseout    
-    //const onMouseOutNode = function(nodeId) {
-    //    window.alert(`Mouse out node ${nodeId}`);
-    //};
+    const onMouseOutNode = (nodeId: string) => {
+        const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
+        const nodeSVG = document.getElementById(`${nodeId}`)?.children[0] as SVGElement
+        if (nodeDetails && nodeSVG) {
+            nodeSVG.setAttribute("transform", "scale(1)")
+            nodeSVG.setAttribute("opacity", "1")
+            nodeSVG.setAttribute("stroke-width", "3")
+            nodeSVG.setAttribute("stroke-dasharray","")
+            nodeDetails.style.opacity = "0"
+            nodeDetails.style.zIndex = "-9999"
+        }
+        return
+    };
 
     const graphConfig = {
         nodeHighlightBehavior: true,
@@ -83,18 +176,26 @@ export const ViewerComponent: React.FC = () => {
         collapsible: false,
         directed: true,
         staticGraph: false,
+        highlightDegree: 2,
         d3: {
             gravity: -570,
             alphaTarget: 0.55,
-            linkLength: 50
+            linkLength: 40
         },
         node: {
-            strokeColor: "black",
-            renderLabel: false
+            strokeColor: "#333333",
+            renderLabel: true,
+            size: 550,
+            strokeWidth: 3,
+            labelProperty: generateLabelProperty
         },
         link: {
-            highlightColor: "lightblue",
-            type: "STRAIGHT"
+            highlightColor: "#333333",
+            type: "STRAIGHT",
+            strokeWidth: 5,
+            color: "#333333",
+            markerWidth: 3,
+            markerHeight: 9
         }
     }
 
@@ -158,13 +259,13 @@ export const ViewerComponent: React.FC = () => {
         shownElement = React.createElement(
             Graph,
             {
+                onMouseOverNode,
+                onMouseOutNode,
                 data: graphData,
                 id: "graphViewer",
                 config: graphConfig,
                 // onClickNode: onClickNode,
                 // onRightClickNode: onRightClickNode,
-                // onMouseOverNode: onMouseOverNode,
-                // onMouseOutNode: onMouseOutNode 
             }
         )
     }
@@ -178,87 +279,3 @@ export const ViewerComponent: React.FC = () => {
 
     
 };
-
-// HACK Don't know the nodeData type so hack with any
-type NodeLabelType = {
-    nodeData?: any,      
-    className: string
-}
-
-export const NodeLabel: React.FC<NodeLabelType> = ({
-    className, 
-    nodeData
-}:NodeLabelType) => {
-
-    const hashList = useSelector(state => 
-        state.updateViewTreeReducer.dataPromise.history?._v.hashes?.hashList ??
-            {
-                hashList: [
-                    "default"
-                ]
-            }
-    )
-
-    const nodeSubject = `${localization.nodeSubject}: ${nodeData.attributes.message}`
-    const nodeAuthor =`${localization.nodeAuthor}: ${nodeData.attributes.author}`
-    const nodeHash = `${localization.nodeHash}: ${nodeData.attributes.hash}` 
-    const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
-    const nodeContainer = document.getElementById(`${nodeData.attributes.hash}-node-container`) as HTMLDivElement
-
-    const showNodeDetails = () => {
-        if (nodeDetails && nodeContainer) {
-            nodeContainer.style.backgroundColor = "rgba(255,255,255,0.5)"
-            nodeContainer.style.borderRadius = "5px"
-            nodeDetails.style.opacity = "1"
-            nodeDetails.style.zIndex = "9999"
-            if (nodeDetails.children) {
-                nodeDetails.children[0].textContent = nodeSubject
-                nodeDetails.children[1].textContent = nodeAuthor
-                nodeDetails.children[2].textContent = nodeHash
-            }
-            return
-        }
-    }
-
-    const hideNodeDetails = () => {
-        nodeContainer.style.backgroundColor = "rgba(0,0,0,0.2)"
-        nodeContainer.style.borderRadius = "50%"
-        nodeDetails.style.opacity = "0"
-        nodeDetails.style.zIndex = "-9999"
-    }
-
-    if (nodeData.name) {
-        return (
-            <div 
-                onMouseEnter={showNodeDetails} 
-                onMouseLeave={hideNodeDetails} 
-                className={`${className}-named`}
-            >
-                <div className={"node-details-container"} id={`${nodeData.attributes.hash}-node-container`}/>
-                <h2>{nodeData.name}</h2>
-            </div>
-        )
-    }
-
-    return (
-        <div 
-            onMouseEnter={showNodeDetails} 
-            onMouseLeave={hideNodeDetails} 
-            className={className}
-        >
-            <div className={"node-details-container"} id={`${nodeData.attributes.hash}-node-container`}/>
-        </div>
-    )
-
-    
-}
-
-
-/*
-
-
-
-
-
-
-*/
