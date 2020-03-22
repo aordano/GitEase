@@ -29,6 +29,7 @@ export const COMMIT_ERROR_ALERT = "COMMIT_ERROR_ALERT"
 export const UPDATE_COMMIT_SUCCESS_STATUS = "UPDATE_COMMIT_SUCCESS_STATUS"
 export const LAUNCH_REPO_CONFIGURATION_WIZARD = "LAUNCH_REPO_CONFIGURATION_WIZARD"
 export const LAUNCH_FIRST_TIME_WIZARD = "LAUNCH_FIRST_TIME_WIZARD"
+export const SET_CONTEXT_MENU_ID = "SET_CONTEXT_MENU_ID"
 
 // --------------------------
 // --- Action Definitions ---
@@ -95,6 +96,11 @@ export interface LaunchFirstTimeWizardType extends Action {
 
 export interface UpdateViewTreeType extends Action {
     type: 'UPDATE_VIEW_TREE'
+}
+
+export interface SetContextMenuIdType extends Action {
+    newId: string;
+    type: 'SET_CONTEXT_MENU_ID';
 }
 
 

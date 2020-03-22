@@ -321,7 +321,7 @@ const buildMergeDivergenceCommit = (metadata: GitGraphNodeMetadataType, hash: st
     const nodeData: GitNodeType = {
         id: hash,
         color: `rgb(${String(metadata.branch.branchColor.r)},${String(metadata.branch.branchColor.g)},${String(metadata.branch.branchColor.b)})`,
-        size: 200,
+        size: 500,
         symbolType: "square"
     }
 
@@ -414,6 +414,9 @@ const generateGraphMetadata = (
 
 const generateBranchesColors = (branchesList: string[]) => {
 
+    // TODO FIx colors; the pallette must be further restricted so to avoid poorly 
+    // contrasting colors with the background or the stroke color
+
     const generateSeedTriplet = () => {
         return {
             r: Math.round(Math.random() * 255),
@@ -421,6 +424,18 @@ const generateBranchesColors = (branchesList: string[]) => {
             b: Math.round(Math.random() * 255)
         };
     };
+
+    const foregroundColorTriplet: colorTripletType = {
+        r: 204,
+        g: 204,
+        b: 204
+    }
+
+    const backgroundColorTriplet: colorTripletType = {
+        r: 51,
+        g: 51,
+        b: 51
+    }
 
     const calculateColorDistance = (
         firstColor: colorTripletType,
@@ -443,7 +458,13 @@ const generateBranchesColors = (branchesList: string[]) => {
     const generateDifferentColor = (currentColorTriplet: colorTripletType) => {
         let randomColorTriplet = generateSeedTriplet();
 
-        while (calculateColorDistance(currentColorTriplet, randomColorTriplet) < 20) {
+        
+
+        while (
+            calculateColorDistance(currentColorTriplet, randomColorTriplet) < 40 ||
+            calculateColorDistance(backgroundColorTriplet, randomColorTriplet) < 40 ||
+            calculateColorDistance(foregroundColorTriplet, randomColorTriplet) < 40
+        ) {
             randomColorTriplet = generateSeedTriplet();
         }
 

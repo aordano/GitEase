@@ -14,6 +14,13 @@ import * as React from 'react';
 
 import { Graph } from "react-d3-graph";
 
+// ----------------------------------
+// --- React Context Menu Imports ---
+// ----------------------------------
+
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+
+
 // --------------------
 // --- Type Imports ---
 // --------------------
@@ -50,6 +57,7 @@ import store from '../../store/index.redux.store';
 // --------------------
 
 import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType } from '../../types';
+import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
 // ----------------------------
 // --- Localization Imports ---
@@ -121,11 +129,7 @@ export const ViewerComponent: React.FC = () => {
     //};
 
     // TODO Generate a contextual menu for actions on the given commit
-    //const onRightClickNode = function(event, nodeId) {
-    //    window.alert('Right clicked node ${nodeId}');
-    //};
     
-    // TODO Generate the alert for commit info on mouseover
     const onMouseOverNode = (nodeId: string) => {
         const history = store.getState()?.updateViewTreeReducer.dataPromise.history._v
         const hashes = history?.hashes.hashList
@@ -137,6 +141,33 @@ export const ViewerComponent: React.FC = () => {
         const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
         const nodeSVG = document.getElementById(`${nodeData.hash}`)?.children[0] as SVGElement
 
+        // -------------------------------------------------------------------
+
+        // Mantaining popup visibility when leaving the node selection
+        const mantainPopupOnTop = () => {
+            nodeDetailsElement.style.opacity = "1"
+            nodeDetailsElement.style.zIndex = "9999"
+        }
+        const clearPopup = () => {
+            nodeDetailsElement.style.opacity = "0"
+            nodeDetailsElement.style.zIndex = "-9999"
+        }
+        const nodeDetailsElement = document.querySelector(".node-details-popup") as HTMLElement
+        if (nodeDetailsElement) {
+            nodeDetailsElement.addEventListener("mouseover", mantainPopupOnTop)
+            
+            nodeDetailsElement.addEventListener("mouseout", clearPopup)
+        }
+
+        // --------------------------------------------------------------------
+
+        // change contextMenu component on mouseover
+
+        store.dispatch(SetContextMenuIdAction("nodeGraphContextMenu"))
+
+        // --------------------------------------------------------------------
+
+        // Open popup and highlight the node
         if (nodeDetails && nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(5)")
             nodeSVG.setAttribute("opacity", "0.9")
@@ -153,8 +184,12 @@ export const ViewerComponent: React.FC = () => {
         }
     };
     
-    // TODO Remove the commit info alert on mouseout    
     const onMouseOutNode = (nodeId: string) => {
+
+        // Clears the contextMenu change
+        store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
+
+        // Clears the popup on node mouseout, given there's no mouseover on the popup
         const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
         const nodeSVG = document.getElementById(`${nodeId}`)?.children[0] as SVGElement
         if (nodeDetails && nodeSVG) {
@@ -169,7 +204,7 @@ export const ViewerComponent: React.FC = () => {
     };
 
     const graphConfig = {
-        nodeHighlightBehavior: true,
+        nodeHighlightBehavior: false,
         highlightOpacity: 0.2,
         height: 550,
         width: 650,
@@ -177,10 +212,12 @@ export const ViewerComponent: React.FC = () => {
         directed: true,
         staticGraph: false,
         highlightDegree: 2,
+        automaticRearrangeAfterDropNode: true,
         d3: {
-            gravity: -570,
-            alphaTarget: 0.55,
-            linkLength: 40
+            gravity: -1000,
+            alphaTarget: 0.05,
+            linkLength: 5,
+            linkStrength: 2
         },
         node: {
             strokeColor: "#333333",
@@ -265,7 +302,6 @@ export const ViewerComponent: React.FC = () => {
                 id: "graphViewer",
                 config: graphConfig,
                 // onClickNode: onClickNode,
-                // onRightClickNode: onRightClickNode,
             }
         )
     }

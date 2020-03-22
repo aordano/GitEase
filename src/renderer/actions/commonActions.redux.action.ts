@@ -19,6 +19,7 @@ import {
     COMMIT_ERROR_ALERT,
     UPDATE_COMMIT_SUCCESS_STATUS,
     UPDATE_VIEW_TREE,
+    SET_CONTEXT_MENU_ID,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
@@ -26,7 +27,8 @@ import {
     CommitSuccessAlertType,
     CommitErrorAlertType,
     UpdateCommitSuccessStatusType,
-    UpdateViewTreeType
+    UpdateViewTreeType,
+    SetContextMenuIdType
 } from '../types/constants.d';
 
 // ---------------------------------------
@@ -45,6 +47,8 @@ export type CommitSuccessAlertAction = CommitSuccessAlertType
 export type CommitErrorAlertAction = CommitErrorAlertType
 
 export type UpdateViewTreeAction = UpdateViewTreeType
+
+export type SetContextMenuIdAction = SetContextMenuIdType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -133,3 +137,15 @@ export const UpdateViewTreeAction: ActionCreator<UpdateViewTreeType> = () => {
         type: UPDATE_VIEW_TREE
     }
 }
+
+// -----------------------------
+// --- Context Menu Creators ---
+// -----------------------------
+
+export const SetContextMenuIdAction: ActionCreator<SetContextMenuIdType> = (newId: string) => {
+    return {
+        newId,
+        type: SET_CONTEXT_MENU_ID,
+
+    };
+};

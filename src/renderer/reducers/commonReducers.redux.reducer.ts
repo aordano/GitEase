@@ -17,7 +17,8 @@ import {
     VIEW_MODIFIED_FILES,
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
-    UPDATE_VIEW_TREE
+    UPDATE_VIEW_TREE,
+    SET_CONTEXT_MENU_ID
 } from '../types/constants.d';
 
 import {
@@ -36,7 +37,8 @@ import {
 import {
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
-    UpdateViewTreeAction
+    UpdateViewTreeAction,
+    SetContextMenuIdAction
 } from '../actions/commonActions.redux.action';
 
 // ------------------------
@@ -86,6 +88,10 @@ export interface UpdateChangesAreaState {
 
 export interface ViewModifiedFilesState {
     parsedData: ModifiedFilesStructure;
+}
+
+export interface SetContextMenuIdState {
+    id: string
 }
 
 // -----------------------------------------
@@ -180,6 +186,10 @@ const viewModifiedFilesDefaultState: ViewModifiedFilesState = {
         }
     }
 };
+
+const SetContextMenuIdDefaultState: SetContextMenuIdState = {
+    id: "defaultContextMenu"
+}
 
 // ----------------
 // --- Reducers ---
@@ -469,3 +479,19 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
             return state;
     }
 };
+
+export const setContextMenuIdReducer: Reducer<SetContextMenuIdState, SetContextMenuIdAction> = (
+    // -- 
+    state = SetContextMenuIdDefaultState,
+    action: SetContextMenuIdAction
+) => {
+    switch (action.type) {
+        case SET_CONTEXT_MENU_ID:
+            return Object.assign({}, state, {
+                id: action.newId
+            });
+        default:
+            return state;
+    }
+};
+

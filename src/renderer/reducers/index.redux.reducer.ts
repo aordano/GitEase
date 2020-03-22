@@ -16,7 +16,9 @@ import {
     updateChangesAreaReducer,
     UpdateChangesAreaState,
     UpdateViewTreeState,
-    updateViewTreeReducer
+    updateViewTreeReducer,
+    SetContextMenuIdState,
+    setContextMenuIdReducer
 } from "./commonReducers.redux.reducer"
 
 import { 
@@ -33,6 +35,7 @@ export interface RootState {
     viewModifiedFilesReducer: ViewModifiedFilesState
     updateChangesAreaReducer: UpdateChangesAreaState
     updateViewTreeReducer: UpdateViewTreeState
+    setContextMenuIdReducer: SetContextMenuIdState
 }
 
 // --------------------
@@ -43,5 +46,6 @@ export const rootReducer = combineReducers<RootState | undefined>({
     basicWorkflowReducer,
     viewModifiedFilesReducer,
     updateChangesAreaReducer,
-    updateViewTreeReducer
+    updateViewTreeReducer,
+    setContextMenuIdReducer
 });
