@@ -30,9 +30,9 @@ import {
 // --- Localization Imports ---
 // ----------------------------
 
-const lang = 'en_US';
+const mockData = require("../data.mock")
 
-const localization = require(`../lang/${lang}`);
+const localization = require(`../lang/${mockData.lang}`);
 
 // ------------------------
 // --- Function Imports ---

@@ -15,16 +15,9 @@ import { ContentNameType } from '../types';
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
+const mockData = require("../data.mock")
 
-const lang = 'en_US';
-
-const localization = require(`../lang/${lang}`);
-
-// ---------------------------
-// * --- Mock Data Imports ---
-// ---------------------------
-
-import { data } from '../data.mock';
+const localization = require(`../lang/${mockData.lang}`);
 
 // -----------------------------
 // --- Git-related Functions ---

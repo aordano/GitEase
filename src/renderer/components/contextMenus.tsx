@@ -28,9 +28,9 @@ import * as Icon from 'react-feather';
 // --- Localization Imports ---
 // ----------------------------
 
-const lang = "en_US"
+const mockData = require("../data.mock")
 
-const localization = require(`../lang/${lang}`)
+const localization = require(`../lang/${mockData.lang}`)
 
 // ------------------------------
 // --- Action Creator Imports ---
