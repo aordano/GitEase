@@ -30,7 +30,8 @@ import {
 
 import {
     SetStagingStatusAction,
-    SetGlobalStagingStatusAction
+    SetGlobalStagingStatusAction,
+    SetContextMenuIdAction
 } from '../../actions/commonActions.redux.action';
 
 // ----------------------------
@@ -70,8 +71,26 @@ export const ChangesListElement: React.FC<ChangesTreeType> = (
     // -- Component that creates the list element based on the different status.
     {status, displayContent, index}: ChangesTreeType
 ) => {
+    
+    
+    const changeContextMenuStagingAreaItem = () => {
+        store.dispatch(SetContextMenuIdAction("stagingAreaItemContextMenu"))
+    }
+    
+    const changeContextMenuStagingArea = () => {
+        store.dispatch(SetContextMenuIdAction("stagingAreaContextMenu"))
+    }
+
+    const restoreContextMenu = () => {
+        store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
+    }
+
     return (
-        <li className={`files-${status}`}>
+        <li
+            className={`files-${status}`}
+            onMouseEnter={changeContextMenuStagingAreaItem}
+            onMouseLeave={changeContextMenuStagingArea}
+        >
             <StagingCheckboxElement index={index}/>
             {displayContent.slice(0,displayContent.lastIndexOf("/")+1)}
             <b className={"filename"}>{

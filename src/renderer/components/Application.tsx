@@ -1,7 +1,5 @@
 // ! ###  - Main App Component - ###
 
-// TODO Refactor context menus components in a separate file
-
 // ---------------------
 // --- React Imports ---
 // ---------------------
@@ -13,7 +11,7 @@ import * as React from 'react';
 // --- React Context Menu Imports ---
 // ----------------------------------
 
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenuTrigger } from "react-contextmenu";
 
 // ----------------------
 // --- Static Imports ---
@@ -36,6 +34,10 @@ import {
 import {
     BottomBlock
 } from "./bottomBlock"
+
+import {
+    contextMenus
+} from "./contextMenus"
 
 import {
     FirstTimeWizard
@@ -73,36 +75,7 @@ const Application = () => {
         [
             leftBlock,
             mainBlock,
-            <ContextMenu
-                id="defaultContextMenu"
-                key={"IDDEFAULT_CONTEXT_MENU"}
-            >
-                <MenuItem data={{foo: 'bar'}}>
-                default - ContextMenu Item 1
-                </MenuItem>
-                <MenuItem data={{foo: 'bar'}}>
-                default - ContextMenu Item 2
-                </MenuItem>
-                <MenuItem divider />
-                <MenuItem data={{foo: 'bar'}} >
-                default - ContextMenu Item 3
-                </MenuItem>
-            </ContextMenu>,
-            <ContextMenu
-                id="nodeGraphContextMenu"
-                key={"IDNODE_CONTEXT_MENU"}
-            >
-                <MenuItem data={{foo: 'bar'}}>
-                node - ContextMenu Item 1
-                </MenuItem>
-                <MenuItem data={{foo: 'bar'}}>
-                node - ContextMenu Item 2
-                </MenuItem>
-                <MenuItem divider />
-                <MenuItem data={{foo: 'bar'}} >
-                node - ContextMenu Item 3
-                </MenuItem>
-            </ContextMenu>
+            contextMenus
         ]
     )
 

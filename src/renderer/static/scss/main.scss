@@ -17,6 +17,7 @@ div.main-block {
     height: 97vh;
     width: 72vw;
     margin-left: 300px;
+    z-index: -2;
 
     & div.upper-block {
         height: 30%;
@@ -30,6 +31,7 @@ div.main-block {
 div.left-block {
     width: 250px;
     position: absolute;
+    z-index: 0;
 }
 
 br.separator {

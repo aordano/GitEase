@@ -49,25 +49,27 @@ import { SetContextMenuIdAction } from '../actions/commonActions.redux.action';
 
 export const BottomBlock: React.FC = () => {
     // -- Simple container that holds the viewer components.
-    const viewerElement = document.getElementById("graphViewer-graph-wrapper") as HTMLElement
-
-    const setBottomBlockContextMenu = () => {
-        store.dispatch(SetContextMenuIdAction("backgroundGraphContextMenu"))
-
-        const rightClick = new MouseEvent("oncontextmenu")
-
-        viewerElement.dispatchEvent(rightClick)
-
+    
+    const changeContextMenu = () => {
+        store.dispatch(SetContextMenuIdAction("graphBackgroundContextMenu"))
     }
 
-    if (viewerElement) {
-        viewerElement.addEventListener("oncontextmenu", setBottomBlockContextMenu) 
+    const restoreContextMenu = () => {
+        store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
     }
 
     return (
-        <div className={'bottom-block'}>
-            <ViewerComponent />
-            <div className={"node-details-popup"}>
+        <div
+            className={'bottom-block'}
+            onMouseEnter={changeContextMenu}
+            onMouseLeave={restoreContextMenu}
+        >
+            <ViewerComponent/>
+            <div
+                className={"node-details-popup"}
+                onMouseEnter={changeContextMenu}
+                onMouseLeave={changeContextMenu}
+            >
                 <p></p>
                 <p></p>
                 <p></p>

@@ -47,6 +47,7 @@ const localization = require(`../../lang/${lang}`);
 // -------------------------------------------
 
 import { data } from '../../data.mock';
+import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
 // -------------------------
 // --- Commit Components ---
@@ -97,12 +98,22 @@ export const CommitButton: React.FC = () => {
         );
     };
 
+    const changeContextMenu = () => {
+        store.dispatch(SetContextMenuIdAction("commitButtonContextMenu"))
+    }
+
+    const restoreContextMenu = () => {
+        store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
+    }
+
     return (
         <input
             title={localization.commitButtonTooltip}
             type={'button'}
             className={'commit-button'}
             onClick={handleCommitButtonPress}
+            onMouseEnter={changeContextMenu}
+            onMouseLeave={restoreContextMenu}
             value={localization.commitButtonText}
         />
     );

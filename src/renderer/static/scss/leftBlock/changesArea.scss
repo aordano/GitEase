@@ -47,6 +47,10 @@ div.changes-area {
             font-weight: 500;
         }
 
+        & li {
+            z-index: 9;
+        }
+
         & li.files-modified {
             border: 1px solid #ccc;
             border-radius: 3px;

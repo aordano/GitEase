@@ -174,7 +174,7 @@ export const ViewerComponent: React.FC = () => {
             nodeSVG.setAttribute("stroke-width", "1")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
             nodeDetails.style.opacity = "1"
-            nodeDetails.style.zIndex = "9999"
+            nodeDetails.style.zIndex = "9"
             if (nodeDetails.children) {
                 nodeDetails.children[0].textContent = nodeSubject
                 nodeDetails.children[1].textContent = nodeAuthor
