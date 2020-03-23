@@ -54,3 +54,45 @@ export const nodeSubject = "Message"
 // ------------------------
 
 export const labelInitialCommit = "Initial commit"
+
+// ---------------------
+// --- Context Menus ---
+// ---------------------
+    
+export const defaultContextMenuLaunchWizard = "Launch wizard"
+export const defaultContextMenuNewProject = "New project"
+export const defaultContextMenuOpenProject = "Open project"
+export const defaultContextMenuChangeProject = "Change project"
+export const defaultContextMenuProjectSettings = "Project settings"
+export const defaultContextMenuChangeRepository = "Change repository"
+export const defaultContextMenuRepositorySettings = "Repository settings"
+export const defaultContextMenuGeneralSettings = "General Settings"
+    
+export const nodeGraphContextMenuRevertCommit = "Revert to this commit"
+export const nodeGraphContextMenuChangeBranch = "Change to this branch"
+export const nodeGraphContextMenuViewCommit = "View commit information"
+export const nodeGraphContextMenuCreateBranch = "Branch from here"
+export const nodeGraphContextMenuMergeBranch = "Merge into this branch"
+export const nodeGraphContextMenuRebase = "Rebase"
+export const nodeGraphContextMenuViewDiff = "View diff"
+    
+export const graphBackgroundContextMenuRedraw = "Redraw graph"
+export const graphBackgroundContextMenuChangeRepository = "Change repository"
+export const graphBackgroundContextMenuRepositorySettings = "Repository settings"
+export const graphBackgroundContextMenuProjectSettings = "Project settings"
+export const graphBackgroundContextMenuProjectInformation = "View project information"
+
+export const commitButtonContextMenuCommitOnly = "Commit only"
+export const commitButtonContextMenuCommitAndPush = "Commit and push"
+export const commitButtonContextMenuPushOnly = "Push only"
+export const commitButtonContextMenuRevertLast = "Revert last commit"
+
+export const stagingAreaContextMenuStageAll = "Stage all files"
+export const stagingAreaContextMenuDiscardAll = "Discard all changes"
+export const stagingAreaContextMenuStash = "Stash changes"
+export const stagingAreaContextMenuOpen = "Open project in file explorer"
+
+export const stagingAreaItemContextMenuStage = "Stage file"
+export const stagingAreaItemContextMenuDiscard = "Discard changes"
+export const stagingAreaItemContextMenuShow = "Show file in file explorer"
+export const stagingAreaItemContextMenuOpen = "Open file"
