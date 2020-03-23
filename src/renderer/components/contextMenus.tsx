@@ -12,9 +12,31 @@ import * as React from 'react';
 
 import { ContextMenu, MenuItem } from "react-contextmenu";
 
+// ---------------------
+// --- Store Imports ---
+// ---------------------
+
+import { store } from '../store/index.redux.store';
+
+// ---------------------
+// --- Icons Imports ---
+// ---------------------
+
+import * as Icon from 'react-feather';
+
+// ------------------------------
+// --- Action Creator Imports ---
+// ------------------------------
+
+import { UpdateViewTreeAction } from '../actions/commonActions.redux.action';
+
 // ------------------
 // --- Components ---
 // ------------------
+
+const redrawGraph = () => {
+    store.dispatch(UpdateViewTreeAction())
+}
 
 
 export const contextMenus: React.ReactNode = 
@@ -24,14 +46,37 @@ export const contextMenus: React.ReactNode =
                 key={"IDDEFAULT_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                default - ContextMenu Item 1
+                    <Icon.Loader color={"black"} size={16}/> Launch wizard (wip)
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem data={{foo: 'bar'}}>
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Plus color={"black"} size={16} /> New project (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}}>
-                default - ContextMenu Item 2
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Folder color={"black"} size={16} /> Open project (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Repeat color={"black"} size={16} /> Change project (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Settings color={"black"} size={16} />Project settings (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                default - ContextMenu Item 3
+                    <Icon.Box color={"black"} size={16} />
+                    <Icon.Repeat color={"black"} size={16} /> Change repository (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Box color={"black"} size={16} />
+                    <Icon.Settings color={"black"} size={16} /> Repository settings (wip)
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Settings color={"black"} size={16}/> General settings (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
@@ -39,29 +84,52 @@ export const contextMenus: React.ReactNode =
                 key={"IDNODE_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                node - ContextMenu Item 1
+                    <Icon.RotateCcw color={"black"} size={16}/> Revert to this commit (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}}>
-                node - ContextMenu Item 2
+                    <Icon.LogIn color={"black"} size={16}/> Change to this branch (wip)
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem data={{foo: 'bar'}}>
+                    <Icon.GitCommit color={"black"} size={16}/> View Commit information (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.GitBranch color={"black"} size={16}/> Branch from here (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.GitMerge color={"black"} size={16}/> Merge into this branch (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.AlertOctagon color={"black"} size={16}/> Rebase (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                node - ContextMenu Item 3
+                    <Icon.Columns color={"black"} size={16}/> View Diff (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
                 id="graphBackgroundContextMenu"
                 key={"IDGRAPH_BACKGROUND_CONTEXT_MENU"}
             >
-                <MenuItem data={{foo: 'bar'}}>
-                graph background - ContextMenu Item 1
+                <MenuItem
+                    data={{ foo: 'bar' }}
+                    onClick={redrawGraph}
+                >
+                    <Icon.RefreshCw color={"black"} size={16}/> Redraw Graph
                 </MenuItem>
+                <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}}>
-                graph background - ContextMenu Item 2
+                    <Icon.Box color={"black"} size={16}/> Change repository (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Settings color={"black"} size={16}/> Configure repository (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                graph background - ContextMenu Item 3
+                    <Icon.Hexagon color={"black"} size={16}/> Configure project (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Info color={"black"} size={16}/> View project information (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
@@ -69,14 +137,17 @@ export const contextMenus: React.ReactNode =
                 key={"IDCOMMIT_BUTTON_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                commit button - ContextMenu Item 1
+                    <Icon.Check color={"black"} size={16}/> Commit only (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}}>
-                commit button - ContextMenu Item 2
+                    <Icon.CheckCircle color={"black"} size={16}/> Commit and push (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}}>
+                    <Icon.UploadCloud color={"black"} size={16}/> Push only (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                commit button - ContextMenu Item 3
+                    <Icon.RotateCcw color={"black"} size={16}/> Revert last commit (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
@@ -84,14 +155,18 @@ export const contextMenus: React.ReactNode =
                 key={"IDSTAGING_AREA_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                staging area - ContextMenu Item 1
+                    <Icon.PlusCircle color={"black"} size={16}/> Stage all files (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}}>
-                staging area - ContextMenu Item 2
+                    <Icon.Trash2 color={"black"} size={16}/> Discard all changes (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                staging area - ContextMenu Item 3
+                    <Icon.Archive color={"black"} size={16}/> Stash changes (wip)
+                </MenuItem>
+                <MenuItem divider />
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.Folder color={"black"} size={16}/> Open project in file explorer (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
@@ -99,14 +174,17 @@ export const contextMenus: React.ReactNode =
                 key={"IDSTAGING_AREA_ITEM_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                staging area item - ContextMenu Item 1
+                    <Icon.FilePlus color={"black"} size={16}/> Stage file (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}}>
-                staging area item - ContextMenu Item 2
+                    <Icon.FileMinus color={"black"} size={16}/> Discard changes (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                staging area item - ContextMenu Item 3
+                    <Icon.Folder color={"black"} size={16}/> Show file in file explorer  (wip)
+                </MenuItem>
+                <MenuItem data={{foo: 'bar'}} >
+                    <Icon.File color={"black"} size={16}/> Open file (wip)
                 </MenuItem>
             </ContextMenu>
         </div>
