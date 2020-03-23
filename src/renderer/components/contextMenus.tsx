@@ -63,7 +63,7 @@ export const contextMenus: React.ReactNode =
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}} >
                     <Icon.Hexagon color={"black"} size={16} />
-                    <Icon.Settings color={"black"} size={16} />Project settings (wip)
+                    <Icon.Settings color={"black"} size={16} /> Project settings (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
@@ -119,17 +119,21 @@ export const contextMenus: React.ReactNode =
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}}>
-                    <Icon.Box color={"black"} size={16}/> Change repository (wip)
+                    <Icon.Box color={"black"} size={16} />
+                    <Icon.Repeat color={"black"} size={16} /> Change repository (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}} >
-                    <Icon.Settings color={"black"} size={16}/> Configure repository (wip)
+                    <Icon.Box color={"black"} size={16} />
+                    <Icon.Settings color={"black"} size={16} />  Repository settings (wip)
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}} >
-                    <Icon.Hexagon color={"black"} size={16}/> Configure project (wip)
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Settings color={"black"} size={16} /> Project settings (wip)
                 </MenuItem>
                 <MenuItem data={{foo: 'bar'}} >
-                    <Icon.Info color={"black"} size={16}/> View project information (wip)
+                    <Icon.Hexagon color={"black"} size={16} />
+                    <Icon.Info color={"black"} size={16} /> View project information (wip)
                 </MenuItem>
             </ContextMenu>,
             <ContextMenu
