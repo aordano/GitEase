@@ -96,3 +96,14 @@ export const stagingAreaItemContextMenuStage = "Stage file"
 export const stagingAreaItemContextMenuDiscard = "Discard changes"
 export const stagingAreaItemContextMenuShow = "Show file in file explorer"
 export const stagingAreaItemContextMenuOpen = "Open file"
+
+// -------------------------
+// --- Application Menus ---
+// -------------------------
+
+export const applicationMenuOptions = "Options"
+export const applicationMenuOptionsGeneralSettings = "General settings"
+export const applicationMenuOptionsProjectSettings = "Project settings"
+export const applicationMenuOptionsRepositorySettings = "Repository settings"
+export const applicationMenuOptionsAdvancedSettings = "Advanced settings"
+

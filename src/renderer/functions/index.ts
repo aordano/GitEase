@@ -15,6 +15,7 @@ import { ContentNameType } from '../types';
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
+
 const mockData = require("../data.mock")
 
 const localization = require(`../lang/${mockData.lang}`);

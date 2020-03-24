@@ -28,16 +28,14 @@ import {
 } from "./leftBlock"
 
 import {
-    TopBlock
-} from "./topBlock"
-
-import {
     BottomBlock
 } from "./bottomBlock"
 
 import {
     contextMenus
 } from "./contextMenus"
+
+import "./menuBar"
 
 import {
     FirstTimeWizard
@@ -62,7 +60,6 @@ const Application = () => {
         "div", 
         { className: "main-block"}, 
         [
-            <TopBlock  key={"IDTOP"}/>,
             <BottomBlock key={"IDBOTTOM"}/>,
         ]
     )

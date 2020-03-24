@@ -6,10 +6,10 @@
 
 div.changes-area {
     width: 250px;
-    margin: 5px;
-    margin-bottom: 10px;
-    height: 57vh;
-    background-color: #ccc;
+    margin: 1px;
+    margin-left: 1px;
+    height: calc(100vh - 250px);
+    background-color: #fff;
     padding: 20px;
     padding-bottom: 5px;
     padding-top: 10px;
@@ -24,27 +24,30 @@ div.changes-area {
         margin: auto;
         margin-top: 5px;
         margin-bottom: 5px;
-        font-weight: 100;
+        font-weight: 400;
         text-align: center;
         height: 1em;
     }
 
     & ul.changes-list {
-        font-weight: 100;
+        font-weight: 400;
         width: 100%;
         position: relative;
         list-style: none;
-        background-color: #333;
+        background-color: rgba(0, 0, 0, 0.25);
         border-radius: 5px;
-        padding: 10px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        margin: 10px;
         right: 10px;
-        height: 84%;
-        bottom: 5px;
+        height: calc(100% - 50px);
         overflow-y: auto;
+        overflow-x: hidden;
         font-size: 0.95em;
+        padding: 0;
 
         & b.filename {
-            font-weight: 500;
+            font-weight: 400;
+            font-style: italic;
         }
 
         & li {
@@ -52,122 +55,139 @@ div.changes-area {
         }
 
         & li.files-modified {
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: 1px solid #fff;
             background-color: rgb(255, 240, 223);
 
-
-            &:hover:after {
-                content:"Modified";
-                color: black;
-                width: 50px;
-                padding-left: 5px;
-                padding-right: 5px;
+            &:hover {
+                padding-left: 4px;
+                &:before {
+                    content:"Modified";
+                    position: absolute;
+                    pointer-events: none;
+                    color: black;
+                    width: 50px;
+                    border-radius: 3px;
+                    height: 1em;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
             }
 
-            &:after {
+            &:before {
                 content: "";
                 color: rgba(0,0,0,0);
                 background-color: rgb(253, 182, 76);
-                border-radius: 3px;
+                border-radius: 0%;
                 margin: auto;
                 padding: 2px;
-                height: 1em;
-                width: 1em;
-                position: absolute;
-                right: 11px;
-                transition-duration: 400ms;
+                height: 100%;
+                width: 5px;
+                position: static;
+                right: 2px;
             }
         }
 
         & li.files-deleted {
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: 1px solid #fff;
             background-color: rgb(255, 224, 224);
 
-            &:hover:after {
-                content:"Deleted";
-                color: black;
-                width: 50px;
-                padding-left: 5px;
-                padding-right: 5px;
+            &:hover {
+                padding-left: 4px;
+                &:before {
+                    content:"Deleted";
+                    position: absolute;
+                    pointer-events: none;
+                    color: black;
+                    width: 50px;
+                    border-radius: 3px;
+                    height: 1em;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
             }
 
-            &:after {
+            &:before {
                 content: "";
-                color: rgba(0,0,0,0);
                 background-color: rgb(255, 66, 66);
-                border-radius: 3px;
+                color: rgba(0,0,0,0);
+                border-radius: 0%;
                 margin: auto;
                 padding: 2px;
-                height: 1em;
-                width: 1em;
-                position: absolute;
-                right: 11px;
-                transition-duration: 400ms;
+                height: 100%;
+                width: 5px;
+                position: static;
+                right: 2px;
             }
         }
 
         & li.files-renamed {
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: 1px solid #fff;
             background-color: rgb(224, 241, 255);
 
-            &:hover:after {
-                content:"Renamed";
-                color: black;
-                width: 55px;
-                padding-left: 5px;
-                padding-right: 5px;
+            &:hover {
+                padding-left: 4px;
+                &:before {
+                    content:"Renamed";
+                    position: absolute;
+                    pointer-events: none;
+                    color: black;
+                    width: 50px;
+                    border-radius: 3px;
+                    height: 1em;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
             }
 
-            &:after {
+            &:before {
                 content: "";
                 color: rgba(0,0,0,0);
                 background-color: rgb(66, 142, 255);
-                border-radius: 3px;
+                border-radius: 0%;
                 margin: auto;
                 padding: 2px;
-                height: 1em;
-                width: 1em;
-                position: absolute;
-                right: 11px;
-                transition-duration: 400ms;
+                height: 100%;
+                width: 5px;
+                position: static;
+                right: 2px;
             }
         }
 
         & li.files-not_added {
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: 1px solid #fff;
             background-color: rgb(224, 255, 231);
 
-            &:hover:after {
-                content:"New File";
-                color: black;
-                width: 50px;
-                padding-left: 5px;
-                padding-right: 5px;
+            &:hover {
+                padding-left: 4px;
+                &:before {
+                    content:"New File";
+                    position: absolute;
+                    pointer-events: none;
+                    color: black;
+                    width: 55px;
+                    border-radius: 3px;
+                    height: 1em;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
             }
 
-            &:after {
+            &:before {
                 content: "";
                 color: rgba(0,0,0,0);
                 background-color: rgb(79, 255, 108);
-                border-radius: 3px;
+                border-radius: 0%;
                 margin: auto;
                 padding: 2px;
-                height: 1em;
-                width: 1em;
-                position: absolute;
-                right: 11px;
-                white-space: nowrap;
-                transition-duration: 400ms;
+                height: 100%;
+                width: 5px;
+                position: static;
+                right: 2px;
             }
         }
 
         & li.files-created {
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            border: 1px solid #fff;
             background-color: rgb(224, 255, 231);
 
             &:hover:after {

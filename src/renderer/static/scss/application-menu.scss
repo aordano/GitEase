@@ -1,0 +1,139 @@
+.titlebar {
+    background-color: #fff;
+    background-clip: padding-box;
+    color: #333;
+    font-size: 16px;
+    min-width: 160px;
+    position: relative;
+    outline: none;
+    text-align: left;
+    transition: opacity 400ms ease !important;
+}
+
+.window-appicon {
+    
+}
+
+.window-title {
+    
+}
+
+.window-controls-container {
+    
+}
+	
+.resizer-top {
+    
+}
+
+.resizer-left {
+    
+}
+ 
+.menubar {
+    background: 0 0;
+    border: 0;
+    color: black;
+	cursor: pointer;
+    font-weight: 400;
+    height: 100%;
+    text-align: inherit;
+    white-space: nowrap; 
+    transition-duration: 400ms;
+    
+    &:hover {
+        border-radius: 3px;
+    }
+    
+}
+ 	
+.menubar-menu-button {
+    background: 0 0;
+    border: 0;
+    color: black;
+	cursor: pointer;
+    font-weight: 400;
+    height: 100%;
+    text-align: inherit;
+    white-space: nowrap; 
+    transition-duration: 400ms;
+    
+    &:hover {
+        border-radius: 3px;
+    }
+    
+}
+ 	
+.menubar-menu-button open {
+    background: 0 0;
+    border: 0;
+    color: black;
+	cursor: pointer;
+    font-weight: 400;
+    height: 100%;
+    text-align: inherit;
+    white-space: nowrap; 
+    transition-duration: 400ms;
+    
+    &:hover {
+        border-radius: 3px;
+    }
+    
+}
+ 
+.menubar-menu-container {
+    background-color: #fff!important;
+    background-clip: padding-box;
+    color: #333;
+    font-size: 16px;
+    min-width: 160px;
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin: 0;
+    outline: none;
+    text-align: left;
+    transition: opacity 400ms ease !important;
+    border-radius: 3px;
+}
+ 
+.menubar-menu-title {
+    
+}
+ 
+.action-item {
+    background-color: #fff!important;
+    & .action-label {
+        font-size: 16px;
+    }
+    
+    & a {
+        background-color: #fff;
+    }
+
+    & focused {
+ 
+        .action-menu-item {
+            & span.action-label { 
+                color: black!important;
+            }       
+        }
+    }
+ 
+    .action-menu-item {
+        background-color: #fff!important;
+    
+        &:hover {
+            background-color: #333!important;
+        }
+        
+    }
+
+    & .action-label separator {  
+        border-bottom: 1px solid rgba(0,0,0,.15)!important;
+        margin-bottom: 3px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 2px 0;
+    }
+}

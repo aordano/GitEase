@@ -203,11 +203,13 @@ export const ViewerComponent: React.FC = () => {
         return
     };
 
+    const mainBlockRect = document.querySelector("div.main-block")?.getBoundingClientRect()
+
     const graphConfig = {
         nodeHighlightBehavior: false,
         highlightOpacity: 0.2,
-        height: 550,
-        width: 650,
+        height: mainBlockRect?.height ?? 200,
+        width: mainBlockRect?.width ?? 200,
         collapsible: false,
         directed: true,
         staticGraph: false,

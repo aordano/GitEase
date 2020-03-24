@@ -7,17 +7,20 @@
 @import "./fonts.scss";
 @import "./open-iconic.scss";
 @import "./misc/context-menu.scss";
+@import "./application-menu.scss";
 
 body {
-    background-color: #333;
+    background-color: rgba(0,0,0,0.25);
     font-family: "Roboto Condensed";
+    font-weight: 400;
 }
 
 div.main-block {
-    height: 97vh;
-    width: 72vw;
-    margin-left: 300px;
-    z-index: -2;
+    top: -4px;
+    position: relative;
+    height: calc( 100vh - 42px );
+    width: calc( 100vw - 303px );
+    margin-left: 287px;
 
     & div.upper-block {
         height: 30%;
@@ -30,6 +33,7 @@ div.main-block {
 
 div.left-block {
     width: 250px;
+    height: 100%;
     position: absolute;
     z-index: 0;
 }

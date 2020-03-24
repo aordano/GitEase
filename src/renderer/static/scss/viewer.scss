@@ -5,16 +5,22 @@
 */
 
 div.bottom-block {
-    background-color: #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 5px;
-    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 3px;
+    margin-top: 5px;
     position: relative;
     display: inline-block;
-    width: 700px;
-    height: 600px;
-    margin-left: 20px;
+    margin-left: 5px;
+    z-index: 9;
+}
+
+.spinner-graph {
+    top: -4px;
+    position: relative;
+    height: calc( 100vh - 42px );
+    width: calc( 100vw - 303px );
+    margin-left: 287px;
+    z-index: -2;
 }
 
 .node-details-container {
@@ -36,7 +42,8 @@ div.bottom-block {
     min-height: 100px;
     transition-duration: 400ms;
     border-radius: 5px;
-    background-color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(0,0,0,0.15);
+    background-color: white;
     padding: 20px;
     text-align: center;
 }

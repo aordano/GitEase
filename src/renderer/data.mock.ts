@@ -3,7 +3,7 @@ const branch = 'experiments';
 const REPO = 'github.com:aordano/GitEase';
 const remote = `git@${REPO}`;
 
-export const lang = "es_AR";
+export const lang = "en_US";
 export const data = {
     workingDir,
     branch,
