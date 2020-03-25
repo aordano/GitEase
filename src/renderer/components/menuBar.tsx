@@ -170,7 +170,7 @@ menu.append(new remote.MenuItem({
         },
         {
             label: localization.applicationMenuChangesCommit,
-            icon: encodeAsImage("layers"),
+            icon: encodeAsImage("git-commit"),
             submenu: [
                 {
                     label: localization.applicationMenuChangesCommitCommitOnly,
