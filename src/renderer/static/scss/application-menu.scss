@@ -15,7 +15,7 @@
 }
 
 .window-title {
-    
+    font-size: 16px!important;
 }
 
 .window-controls-container {
@@ -95,6 +95,12 @@
     text-align: left;
     transition: opacity 400ms ease !important;
     border-radius: 3px;
+
+    & .menu-item-icon {
+        width: 16px!important;
+        height: 16px!important;
+        margin-left: 10px!important;
+    }
 }
  
 .menubar-menu-title {
@@ -105,6 +111,10 @@
     background-color: #fff!important;
     & .action-label {
         font-size: 16px;
+
+        &:not(.separator) {
+            padding-left: 5px!important;
+        }
     }
     
     & a {
@@ -122,6 +132,7 @@
  
     .action-menu-item {
         background-color: #fff!important;
+        height: 2em!important;
     
         &:hover {
             background-color: #333!important;

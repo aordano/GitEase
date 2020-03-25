@@ -57,6 +57,7 @@ const createWindow = async () => {
     win = new BrowserWindow({
         width: 800,
         height: 600,
+        frame: false,
         show: false,
         title: 'GitEase'
     });
@@ -73,6 +74,8 @@ const createWindow = async () => {
             })
         );
     }
+
+    win.maximize()
 
     /// keep listening on the did-finish-load event, when the mainWindow content has loaded
     win.webContents.on('did-finish-load', () => {
