@@ -15,11 +15,9 @@ div.bottom-block {
 }
 
 .spinner-graph {
-    top: -4px;
-    position: relative;
-    height: calc( 100vh - 42px );
-    width: calc( 100vw - 303px );
-    margin-left: 287px;
+    top: calc(50vh - 100px);
+    left: calc((100vw - 100px - 287px) / 2);
+    position: absolute;
     z-index: -2;
 }
 
