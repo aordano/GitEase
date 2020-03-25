@@ -171,7 +171,7 @@ export const ViewerComponent: React.FC = () => {
         if (nodeDetails && nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(5)")
             nodeSVG.setAttribute("opacity", "0.9")
-            nodeSVG.setAttribute("stroke-width", "1")
+            nodeSVG.setAttribute("stroke-width", "0.5")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
             nodeDetails.style.opacity = "1"
             nodeDetails.style.zIndex = "9"
@@ -195,7 +195,7 @@ export const ViewerComponent: React.FC = () => {
         if (nodeDetails && nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(1)")
             nodeSVG.setAttribute("opacity", "1")
-            nodeSVG.setAttribute("stroke-width", "3")
+            nodeSVG.setAttribute("stroke-width", "2")
             nodeSVG.setAttribute("stroke-dasharray","")
             nodeDetails.style.opacity = "0"
             nodeDetails.style.zIndex = "-9999"
@@ -207,32 +207,34 @@ export const ViewerComponent: React.FC = () => {
 
     const graphConfig = {
         nodeHighlightBehavior: false,
-        highlightOpacity: 0.2,
+        // highlightOpacity: 0.2,
         height: mainBlockRect?.height ?? 200,
         width: mainBlockRect?.width ?? 200,
         collapsible: false,
         directed: true,
         staticGraph: false,
-        highlightDegree: 2,
+        // highlightDegree: 2,
         automaticRearrangeAfterDropNode: true,
+        minZoom: 0.01,
+        panAndZoom: true,
         d3: {
             gravity: -1000,
-            alphaTarget: 0.05,
+            alphaTarget: 1,
             linkLength: 5,
             linkStrength: 2
         },
         node: {
-            strokeColor: "#333333",
+            strokeColor: "rgba(0,0,0,0.75)",
             renderLabel: true,
             size: 550,
-            strokeWidth: 3,
+            strokeWidth: 2,
             labelProperty: generateLabelProperty
         },
         link: {
-            highlightColor: "#333333",
+            highlightColor: "rgba(0,0,0,0.25)",
             type: "STRAIGHT",
-            strokeWidth: 5,
-            color: "#333333",
+            strokeWidth: 2,
+            color: "rgba(0,0,0,0.35)",
             markerWidth: 3,
             markerHeight: 9
         }
@@ -255,7 +257,8 @@ export const ViewerComponent: React.FC = () => {
                         target: "placeholder",
                         color: "rgb(200,200,200)"
                     }
-                ]
+                ],
+                focusedNodeId: "placeholder"
             }
     )
 
@@ -276,7 +279,8 @@ export const ViewerComponent: React.FC = () => {
                 target: "placeholder",
                 color: "rgb(200,200,200)"
             }
-        ]
+        ],
+        focusedNodeId: "placeholder"
     }
     
     if (

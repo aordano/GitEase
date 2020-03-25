@@ -64,7 +64,8 @@ export interface UpdateViewTreeState {
         graphData: {
             _v: {
                 nodes: GitNodeType[],
-                links: GitLinkType[]
+                links: GitLinkType[],
+                focusedNodeId: string
             }
         },
         history: {
@@ -116,7 +117,8 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
                         target: "placeholder",
                         color: "rgb(200,200,200)"
                     }
-                ]
+                ],
+                focusedNodeId: "placeholder"
             }
         },
         history: {

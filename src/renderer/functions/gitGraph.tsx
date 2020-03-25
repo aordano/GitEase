@@ -155,7 +155,8 @@ export const generateGraphData = async (
 
     return {
         nodes: nodeList,
-        links: linkList.flat(200)
+        links: linkList.flat(200),
+        focusedNodeId: "" // ? It works really buggy so better leave it empty for now, it should be nodeList[0].id
     };
 };
 
@@ -461,9 +462,9 @@ const generateBranchesColors = (branchesList: string[]) => {
         
 
         while (
-            calculateColorDistance(currentColorTriplet, randomColorTriplet) < 40 ||
-            calculateColorDistance(backgroundColorTriplet, randomColorTriplet) < 40 ||
-            calculateColorDistance(foregroundColorTriplet, randomColorTriplet) < 40
+            calculateColorDistance(currentColorTriplet, randomColorTriplet) < 70 ||
+            calculateColorDistance(backgroundColorTriplet, randomColorTriplet) < 70 ||
+            calculateColorDistance(foregroundColorTriplet, randomColorTriplet) < 70
         ) {
             randomColorTriplet = generateSeedTriplet();
         }
