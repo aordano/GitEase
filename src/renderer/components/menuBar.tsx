@@ -61,17 +61,13 @@ updateIcon() {
 */
 
 
-    
-    
-export const graphBackgroundContextMenuRedraw = "Redraw graph"
-
 const menu = new remote.Menu();
  
 menu.append(new remote.MenuItem({
-    label: 'View',
+    label: localization.applicationMenuView,
     submenu: [
         {
-            label: 'Launch wizard',
+            label: localization.applicationMenuViewLaunchWizard,
             click: () => console.log('wizard'),
             icon: encodeAsImage("tool")
         },
@@ -79,22 +75,22 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Project information',
+            label: localization.applicationMenuViewProjectInfo,
             click: () => console.log('project info'),
             icon: encodeAsImage("hexagon")
         },
         {
-            label: 'Repository information',
+            label: localization.applicationMenuViewRepoInfo,
             click: () => console.log('repo info'),
             icon: encodeAsImage("box")
         },
         {
-            label: 'Branch information',
+            label: localization.applicationMenuViewBranchInfo,
             click: () => console.log('branch info'),
             icon: encodeAsImage("git-branch")
         },
         {
-            label: 'Commit information',
+            label: localization.applicationMenuViewCommitInfo,
             click: () => console.log('commit info'),
             icon: encodeAsImage("git-commit")
         },
@@ -102,12 +98,12 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Compare branches...',
+            label: localization.applicationMenuViewCompareBranches,
             click: () => console.log('compare branches'),
             icon: encodeAsImage("info")
         },
         {
-            label: 'Compare commits...',
+            label: localization.applicationMenuViewCompareCommits,
             click: () => console.log('compare commits'),
             icon: encodeAsImage("info")
         },
@@ -115,12 +111,12 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Last diff',
+            label: localization.applicationMenuViewLastDiff,
             click: () => console.log('last diff'),
             icon: encodeAsImage("columns")
         },
         {
-            label: 'Diff from...',
+            label: localization.applicationMenuViewDiffFrom,
             click: () => console.log('diff from'),
             icon: encodeAsImage("columns")
         },
@@ -128,12 +124,12 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Graph view',
+            label: localization.applicationMenuViewGraphView,
             click: () => console.log('view graph'),
             icon: encodeAsImage("eye")
         },
         {
-            label: 'Diff view',
+            label: localization.applicationMenuViewDiffView,
             click: () => console.log('view diff'),
             icon: encodeAsImage("list")
         },
@@ -141,53 +137,53 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Open working folder in file explorer',
+            label: localization.applicationMenuViewOpenFolder,
             click: () => console.log('Open'),
             icon: encodeAsImage("folder")
         },
     ]
 }));
- 
+
 menu.append(new remote.MenuItem({
-    label: 'Changes',
+    label: localization.applicationMenuChanges,
     submenu: [
         {
-            label: 'Files',
+            label: localization.applicationMenuChangesFiles,
             icon: encodeAsImage("folder"),
             submenu: [
                 {
-                    label: 'Stage all files',
+                    label: localization.applicationMenuChangesFilesStageAll,
                     click: () => console.log('Stage all'),
                     icon: encodeAsImage("plus-circle")
                 },
                 {
-                    label: 'Discard all changes',
+                    label: localization.applicationMenuChangesFilesDiscardAll,
                     click: () => console.log('Discard all'),
                     icon: encodeAsImage("trash-2")
                 },
                 {
-                    label: 'Stash changes',
+                    label: localization.applicationMenuChangesFilesStash,
                     click: () => console.log('Stash'),
                     icon: encodeAsImage("archive")
                 },
             ]
         },
         {
-            label: 'Commit',
+            label: localization.applicationMenuChangesCommit,
             icon: encodeAsImage("layers"),
             submenu: [
                 {
-                    label: 'Commit only',
+                    label: localization.applicationMenuChangesCommitCommitOnly,
                     click: () => console.log('commit'),
                     icon: encodeAsImage("check")
                 },
                 {
-                    label: 'Commit and push',
+                    label: localization.applicationMenuChangesCommitCommitAndPush ,
                     click: () => console.log('commit and push'),
                     icon: encodeAsImage("check-circle")
                 },
                 {
-                    label: 'Push only',
+                    label: localization.applicationMenuChangesCommitPushOnly,
                     click: () => console.log('Push'),
                     icon: encodeAsImage("upload-cloud")
                 },
@@ -195,38 +191,38 @@ menu.append(new remote.MenuItem({
                     type: 'separator'
                 },
                 {
-                    label: 'Revert last commit',
+                    label: localization.applicationMenuChangesCommitRevertLast,
                     click: () => console.log('revert'),
                     icon: encodeAsImage("rotate-ccw")
                 },
                 {
-                    label: 'Revert to commit...',
+                    label: localization.applicationMenuChangesCommitRevertTo,
                     click: () => console.log('revert to'),
                     icon: encodeAsImage("git-commit")
                 },
             ]
         },
         {
-            label: 'Branch',
+            label: localization.applicationMenuChangesBranch,
             icon: encodeAsImage("git-branch"),
             submenu: [
                 {
-                    label: 'New branch from last commit',
+                    label: localization.applicationMenuChangesBranchNewBranch,
                     click: () => console.log('commit'),
                     icon: encodeAsImage("plus")
                 },
                 {
-                    label: 'Branch from commit...',
+                    label: localization.applicationMenuChangesBranchBranchFrom,
                     click: () => console.log('commit and push'),
                     icon: encodeAsImage("git-branch")
                 },
                 {
-                    label: 'Change active branch',
+                    label: localization.applicationMenuChangesBranchChange,
                     click: () => console.log('change branch'),
                     icon: encodeAsImage("repeat")
                 },
                 {
-                    label: 'Merge current branch into...',
+                    label: localization.applicationMenuChangesBranchMerge,
                     click: () => console.log('merge into'),
                     icon: encodeAsImage("git-merge")
                 },
@@ -234,17 +230,17 @@ menu.append(new remote.MenuItem({
                     type: 'separator'
                 },
                 {
-                    label: 'Rename current branch',
+                    label: localization.applicationMenuChangesBranchRename,
                     click: () => console.log('rename branch'),
                     icon: encodeAsImage("edit-3")
                 },
                 {
-                    label: 'Delete branch',
+                    label: localization.applicationMenuChangesBranchDelete,
                     click: () => console.log('delete branch'),
                     icon: encodeAsImage("alert-triangle")
                 },
                 {
-                    label: 'Rebase',
+                    label: localization.applicationMenuChangesBranchRebase,
                     click: () => console.log('rebase'),
                     icon: encodeAsImage("alert-octagon")
                 },
@@ -253,53 +249,52 @@ menu.append(new remote.MenuItem({
     ]
 }));
 
-export const defaultContextMenuLaunchWizard = "Launch wizard"
  
 menu.append(new remote.MenuItem({
-    label: 'Manage',
+    label: localization.applicationMenuManage,
     submenu: [
         {
-            label: 'Repository',
+            label: localization.applicationMenuManageRepository,
             icon: encodeAsImage("box"),
             submenu: [
                 {
-                    label: 'Change repository',
+                    label: localization.applicationMenuManageRepositoryChange,
                     click: () => console.log('change repo'),
                     icon: encodeAsImage("repeat")
                 },
                 {
-                    label: 'Repository settings',
+                    label: localization.applicationMenuManageRepositorySettings,
                     click: () => console.log('repo settings'),
                     icon: encodeAsImage("settings")
                 },
                 {
-                    label: 'View repository information',
+                    label: localization.applicationMenuManageRepositoryInfo,
                     click: () => console.log('view repo info'),
                     icon: encodeAsImage("info")
                 },
             ]
         },
         {
-            label: 'Project',
+            label: localization.applicationMenuManageProject,
             icon: encodeAsImage("hexagon"),
             submenu: [
                 {
-                    label: 'New project',
+                    label: localization.applicationMenuManageProjectNew,
                     click: () => console.log('new project'),
                     icon: encodeAsImage("plus")
                 },
                 {
-                    label: 'Open project',
+                    label: localization.applicationMenuManageProjectOpen,
                     click: () => console.log('open proiject'),
                     icon: encodeAsImage("folder")
                 },
                 {
-                    label: 'Change project',
+                    label: localization.applicationMenuManageProjectChange,
                     click: () => console.log('change project'),
                     icon: encodeAsImage("repeat")
                 },
                 {
-                    label: 'Project settings',
+                    label: localization.applicationMenuManageProjectSettings,
                     click: () => console.log('project settings'),
                     icon: encodeAsImage("settings")
                 },
@@ -309,25 +304,25 @@ menu.append(new remote.MenuItem({
 }));
  
 menu.append(new remote.MenuItem({
-    label: 'Settings',
+    label: localization.applicationMenuSettings,
     submenu: [
         {
-            label: 'Account settings',
+            label: localization.applicationMenuSettingsAccounts,
             click: () => console.log('general settings'),
             icon: encodeAsImage("user")
         },
         {
-            label: 'Github integration',
+            label: localization.applicationMenuSettingsGithub,
             click: () => console.log('github settings'),
             icon: encodeAsImage("github")
         },
         {
-            label: 'Gitlab integration',
+            label: localization.applicationMenuSettingsGitlab,
             click: () => console.log('gitlab settings'),
             icon: encodeAsImage("gitlab")
         },
         {
-            label: 'Keys',
+            label: localization.applicationMenuSettingsKeys,
             click: () => console.log('keys'),
             icon: encodeAsImage("key")
         },
@@ -335,17 +330,17 @@ menu.append(new remote.MenuItem({
             type: 'separator'
         },
         {
-            label: 'Project settings',
+            label: localization.applicationMenuSettingsProject,
             click: () => console.log('project settings'),
             icon: encodeAsImage("hexagon")
         },
         {
-            label: 'Repository settings',
+            label: localization.applicationMenuSettingsRepo,
             click: () => console.log('repo settings'),
             icon: encodeAsImage("box")
         },
         {
-            label: 'General settings',
+            label: localization.applicationMenuSettingsGeneral,
             click: () => console.log('general settings'),
             icon: encodeAsImage("settings")
         },
