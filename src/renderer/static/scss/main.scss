@@ -19,8 +19,9 @@ div.main-block {
     top: -4px;
     position: relative;
     height: calc( 100vh - 42px );
-    width: calc( 100vw - 303px );
-    margin-left: 287px;
+    width: calc( 100vw - 303px - 240px );
+    left: 287px;
+    margin-right: 0px;
 
     & div.upper-block {
         height: 30%;
@@ -35,6 +36,15 @@ div.left-block {
     width: 250px;
     height: 100%;
     position: absolute;
+    z-index: 0;
+}
+
+div.right-block {
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    right: 1px;
+    top: 30px;
     z-index: 0;
 }
 
