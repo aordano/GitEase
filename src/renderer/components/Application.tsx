@@ -32,6 +32,10 @@ import {
 } from "./bottomBlock"
 
 import {
+    RightBlock
+} from "./rightBlock"
+
+import {
     contextMenus
 } from "./contextMenus"
 
@@ -64,6 +68,12 @@ const Application = () => {
         ]
     )
 
+    const rightBlock = React.createElement(
+        "div", 
+        { className: "right-block"}, 
+        <RightBlock key={"IDRIGHT"}/>
+    )
+
     const currentContextMenu = useSelector(state => state.setContextMenuIdReducer.id)
 
     const contextMenuTrigger = React.createElement(
@@ -72,6 +82,7 @@ const Application = () => {
         [
             leftBlock,
             mainBlock,
+            rightBlock,
             contextMenus
         ]
     )
