@@ -65,15 +65,21 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
     }
 
     const elapsedTime = (date: string) => {
-        const hoursElapsed = Math.round(
-            (Date.now() - Date.parse(date)) / 3600000
+        const minutesElapsed =  Math.round(
+            (Date.now() - Date.parse(date)) / 60000
         )
+
+        if (minutesElapsed < 60) {
+            return `${minutesElapsed} minutes ago`
+        }
+
+        const hoursElapsed = Math.round(minutesElapsed / 60 )
 
         if (hoursElapsed < 24) {
             return `${hoursElapsed} hours ago`
         }
 
-        const daysElapsed = Math.round(hoursElapsed / 24)
+        const daysElapsed = Math.round( hoursElapsed / 24)
         const leftoverHours = hoursElapsed % 24
 
         if (daysElapsed < 7) {
