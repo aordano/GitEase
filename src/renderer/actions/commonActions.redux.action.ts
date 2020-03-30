@@ -20,6 +20,7 @@ import {
     UPDATE_COMMIT_SUCCESS_STATUS,
     UPDATE_VIEW_TREE,
     SET_CONTEXT_MENU_ID,
+    STORE_COMMIT_LABEL,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
@@ -28,7 +29,8 @@ import {
     CommitErrorAlertType,
     UpdateCommitSuccessStatusType,
     UpdateViewTreeType,
-    SetContextMenuIdType
+    SetContextMenuIdType,
+    StoreCommitLabelType
 } from '../types/constants.d';
 
 // ---------------------------------------
@@ -49,6 +51,8 @@ export type CommitErrorAlertAction = CommitErrorAlertType
 export type UpdateViewTreeAction = UpdateViewTreeType
 
 export type SetContextMenuIdAction = SetContextMenuIdType
+
+export type StoreCommitLabelAction = StoreCommitLabelType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -149,3 +153,14 @@ export const SetContextMenuIdAction: ActionCreator<SetContextMenuIdType> = (newI
 
     };
 };
+
+// ---------------------
+// --- Misc Creators ---
+// ---------------------
+
+export const StoreCommitLabelAction: ActionCreator<StoreCommitLabelType> = (label: string) => {
+    return {
+        label,
+        type: STORE_COMMIT_LABEL
+    }
+}

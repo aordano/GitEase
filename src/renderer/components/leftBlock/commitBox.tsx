@@ -13,6 +13,9 @@ import * as React from 'react';
 // tslint:disable-next-line: no-duplicate-imports
 import { useState } from 'react';
 
+// tslint:disable-next-line: import-name
+import ReactTags from 'react-tag-autocomplete'
+
 // ---------------------
 // --- Store Imports ---
 // ---------------------
@@ -47,7 +50,10 @@ const localization = require(`../../lang/${mockData.lang}`)
 // -------------------------------------------
 
 import { data } from '../../data.mock';
-import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
+import { SetContextMenuIdAction, StoreCommitLabelAction } from '../../actions/commonActions.redux.action';
+import { labelType } from '../../types';
+
+import { HistoryLabel } from "../rightBlock/history"
 
 // -------------------------
 // --- Commit Components ---
@@ -55,7 +61,22 @@ import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action
 
 export const CommitMessageInput: React.FC = () => {
     // -- Component that contains the commit box message description
+    const labelsDictionary = mockData.labelsDictionary
+    const labelNames = labelsDictionary.map((value: labelType) => { return value.label })
+    
+    const suggestions: any = []
+
+    type tagType = {
+        id: number,
+        name: string
+    }
+
+    const tagsData: tagType[] = []
+
+    labelNames.forEach((value: string, index: number) => {suggestions.push({id: index, name: value})})
+
     const [input, setInput] = useState('');
+    const [tags, setTags] = useState({suggestions, tagsData})
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
@@ -69,13 +90,48 @@ export const CommitMessageInput: React.FC = () => {
         );
     };
 
+    const handleDelete = (index: number) => {
+        tags.tagsData.splice(index, 1)
+        setTags(tags)
+    }
+     
+    const handleAddition = (tag: any) => { // HACK TS complains about types but won't let me import the Tag type here
+        tags.tagsData.push(tag)
+        setTags(tags)
+    }
+
+    if (tags.tagsData.length > 0) {
+
+        const tagNames = tags.tagsData.map((value) => { return value.name })
+        
+        const tagsPayload = `${tagNames[0]}:`
+
+
+        store.dispatch(StoreCommitLabelAction(tagsPayload))
+
+        const availableLabels = mockData.labelsDictionary.map((value: labelType) => {return value.label })
+        
+        return <div className={"commit-message-subwrapper"}>
+                    <HistoryLabel
+                        label={tagsPayload}
+                        labelColor={mockData.labelsDictionary[availableLabels.indexOf(tagNames[0])].labelColor}
+                    />
+                    <input
+                        title={localization.commitMessageTooltip}
+                        className={'commit-message'}
+                        placeholder={localization.commitMessagePlaceholder}
+                        value={input}
+                        onChange={handleCommitTextChange}
+                    />
+                </div>
+    }
+
     return (
-        <input
-            title={localization.commitMessageTooltip}
-            className={'commit-message'}
-            placeholder={localization.commitMessagePlaceholder}
-            value={input}
-            onChange={handleCommitTextChange}
+        <ReactTags
+            tags={tags.tagsData}
+            suggestions={tags.suggestions}
+            handleDelete={handleDelete}
+            handleAddition={handleAddition}
         />
     );
 };
@@ -87,9 +143,10 @@ export const CommitButton: React.FC = () => {
 
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitButtonPress = () => {
+        const commitLabel = store.getState()?.storeCommitLabelReducer.label
         store.dispatch(
             BasicWorkflowCommitAndPushAction(
-                currentState.commitMessage,
+                `${commitLabel}${currentState.commitMessage}`,
                 currentState.commitDescription,
                 data.branch, // TODO Populate with values from config
                 data.remote,
@@ -104,6 +161,12 @@ export const CommitButton: React.FC = () => {
 
     const restoreContextMenu = () => {
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
+    }
+
+    const reactTags = document.querySelector(".react-tags")
+
+    if (reactTags) {
+        return null
     }
 
     return (

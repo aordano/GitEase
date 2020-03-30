@@ -18,7 +18,8 @@ import {
     UPDATE_CHANGES_AREA,
     SET_STAGING_STATUS,
     UPDATE_VIEW_TREE,
-    SET_CONTEXT_MENU_ID
+    SET_CONTEXT_MENU_ID,
+    STORE_COMMIT_LABEL
 } from '../types/constants.d';
 
 import {
@@ -38,7 +39,8 @@ import {
     ViewModifiedFilesAction,
     UpdateChangesAreaAction,
     UpdateViewTreeAction,
-    SetContextMenuIdAction
+    SetContextMenuIdAction,
+    StoreCommitLabelAction
 } from '../actions/commonActions.redux.action';
 
 // ------------------------
@@ -93,6 +95,10 @@ export interface ViewModifiedFilesState {
 
 export interface SetContextMenuIdState {
     id: string
+}
+
+export interface StoreCommitLabelState {
+    label: string
 }
 
 // -----------------------------------------
@@ -191,6 +197,10 @@ const viewModifiedFilesDefaultState: ViewModifiedFilesState = {
 
 const SetContextMenuIdDefaultState: SetContextMenuIdState = {
     id: "defaultContextMenu"
+}
+
+const StoreCommitLabelDefaultState: StoreCommitLabelState = {
+    label: ""
 }
 
 // ----------------
@@ -491,6 +501,21 @@ export const setContextMenuIdReducer: Reducer<SetContextMenuIdState, SetContextM
         case SET_CONTEXT_MENU_ID:
             return Object.assign({}, state, {
                 id: action.newId
+            });
+        default:
+            return state;
+    }
+};
+
+export const storeCommitLabelReducer: Reducer<StoreCommitLabelState, StoreCommitLabelAction> = (
+    // -- 
+    state = StoreCommitLabelDefaultState,
+    action: StoreCommitLabelAction
+) => {
+    switch (action.type) {
+        case STORE_COMMIT_LABEL:
+            return Object.assign({}, state, {
+                label: action.label
             });
         default:
             return state;

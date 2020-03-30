@@ -271,3 +271,12 @@ export type commitJSONType = {
     children: childrenJSONType[];
     name?: string;
 };
+
+// --------------------------
+// --- Commit Label Types ---
+// --------------------------
+
+export type labelType = {
+    label: string,
+    labelColor: colorTripletType
+}

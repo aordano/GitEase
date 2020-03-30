@@ -166,3 +166,14 @@ export const getAllIndexes = (array: string[], value: string) => {
     }
     return indexes;
 };
+
+export const parseLabel = (message: string) => {
+    const label = new RegExp(/^(\b\S*:)/)
+    const messageArray = message.split(label)
+    if (messageArray.length !== 1) {
+        messageArray.shift()
+        return messageArray
+    }
+    return null
+}
+

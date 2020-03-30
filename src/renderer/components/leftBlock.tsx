@@ -90,8 +90,10 @@ export const CommitBox: React.FC = () => {
             <SpinnerComponent name={"commit-box"} message={localization.commitProcessMessage}/>
             <div className={'commit-box'}>
                 <p>{localization.commitBoxTitle}</p>
-                <CommitMessageInput />
-                <CommitButton />
+                <div className={"commit-message-wrapper"}>
+                    <CommitMessageInput />
+                    <CommitButton />
+                </div>
                 <CommmitDescription />
             </div>
         </div>

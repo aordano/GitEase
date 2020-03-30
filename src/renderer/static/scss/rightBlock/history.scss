@@ -1,6 +1,6 @@
 /*
 *
-*   Changes Area Style File
+*   History Sidebar Style File
 *
 */
 
@@ -78,4 +78,12 @@ div.history {
             }
         }
     }
+}
+
+.commit-label {
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 1em;
+    border-radius: 3px;
 }

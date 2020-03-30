@@ -20,8 +20,15 @@ import { store } from '../../store/index.redux.store';
 // --------------------
 
 import { 
-    GitLogObjectType
+    GitLogObjectType,
+    labelType
 } from '../../types';
+
+// ------------------------
+// --- Function Imports ---
+// ------------------------
+
+import { parseLabel } from "../../functions"
 
 // ----------------------
 // --- Action Imports ---
@@ -90,16 +97,50 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
         
     }
 
+    const generateLabel = (message: string) => {
+        const messageParsed = parseLabel(message)
+
+        const availableLabels = mockData.labelsDictionary.map((value: labelType) => {return value.label })
+        
+        if (messageParsed) {
+            const labelName = messageParsed[0].slice(0, messageParsed[0].length - 1)
+            
+            if (availableLabels.indexOf(labelName) !== -1) {
+                const labelData = mockData.labelsDictionary[availableLabels.indexOf(labelName)]
+                return <p className={"message"}>
+                    <HistoryLabel
+                        label={labelData.label}
+                        labelColor={labelData.labelColor} 
+                    /> {messageParsed[1]} </p>
+            }
+
+        }
+
+        return <p className={"message"}>{message}</p>
+    }
+
     return (
         <li
             className={`history-element`}
             onMouseEnter={changeContextMenuStagingAreaItem}
             onMouseLeave={changeContextMenuStagingArea}
         >
-            <p className={"message"}>{message}</p>
+            {generateLabel(message)}
             <hr/>
             <p className={"author"}>{author_name} commited {elapsedTime(date)}</p>
             
         </li>
     )
+}
+
+export const HistoryLabel: React.FC<labelType> = ({ label, labelColor }: labelType) => {
+    const style = {
+        backgroundColor: `rgb(
+            ${ labelColor.r },
+            ${ labelColor.g },
+            ${ labelColor.b }
+        )`,
+        color: "white"
+    }
+    return <a style={style} className={"commit-label"}>{label}</a>
 }

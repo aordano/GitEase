@@ -30,6 +30,7 @@ export const UPDATE_COMMIT_SUCCESS_STATUS = "UPDATE_COMMIT_SUCCESS_STATUS"
 export const LAUNCH_REPO_CONFIGURATION_WIZARD = "LAUNCH_REPO_CONFIGURATION_WIZARD"
 export const LAUNCH_FIRST_TIME_WIZARD = "LAUNCH_FIRST_TIME_WIZARD"
 export const SET_CONTEXT_MENU_ID = "SET_CONTEXT_MENU_ID"
+export const STORE_COMMIT_LABEL = "STORE_COMMIT_LABEL"
 
 // --------------------------
 // --- Action Definitions ---
@@ -102,5 +103,11 @@ export interface SetContextMenuIdType extends Action {
     newId: string;
     type: 'SET_CONTEXT_MENU_ID';
 }
+
+export interface StoreCommitLabelType extends Action {
+    label: string,
+    type: 'STORE_COMMIT_LABEL'
+}
+
 
 
