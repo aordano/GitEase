@@ -21,6 +21,7 @@ import {
     UPDATE_VIEW_TREE,
     SET_CONTEXT_MENU_ID,
     STORE_COMMIT_LABEL,
+    SET_REACT_TAG_DATA,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
@@ -30,8 +31,11 @@ import {
     UpdateCommitSuccessStatusType,
     UpdateViewTreeType,
     SetContextMenuIdType,
-    StoreCommitLabelType
+    StoreCommitLabelType,
+    SetReactTagDataType
 } from '../types/constants.d';
+
+import { ReactTagTagType } from "../types"
 
 // ---------------------------------------
 // --- Viable Action Types Definitions ---
@@ -52,7 +56,7 @@ export type UpdateViewTreeAction = UpdateViewTreeType
 
 export type SetContextMenuIdAction = SetContextMenuIdType
 
-export type StoreCommitLabelAction = StoreCommitLabelType
+export type ReactTagDataAction = StoreCommitLabelType | SetReactTagDataType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -162,5 +166,17 @@ export const StoreCommitLabelAction: ActionCreator<StoreCommitLabelType> = (labe
     return {
         label,
         type: STORE_COMMIT_LABEL
+    }
+}
+
+export const SetReactTagDataAction: ActionCreator<SetReactTagDataType> = (
+    tags: {
+        tagData: ReactTagTagType[],
+        suggestions: ReactTagTagType[]
+    }
+) => {
+    return {
+        tags,
+        type:  SET_REACT_TAG_DATA
     }
 }

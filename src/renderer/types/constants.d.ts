@@ -10,7 +10,10 @@ import { Action } from 'redux';
 // --- Type Imports ---
 // --------------------
 
-import {ModifiedFilesStructure} from "./index"
+import {
+    ModifiedFilesStructure,
+    ReactTagTagType
+} from "./index"
 
 // -----------------------------
 // --- Action Type Constants ---
@@ -31,6 +34,7 @@ export const LAUNCH_REPO_CONFIGURATION_WIZARD = "LAUNCH_REPO_CONFIGURATION_WIZAR
 export const LAUNCH_FIRST_TIME_WIZARD = "LAUNCH_FIRST_TIME_WIZARD"
 export const SET_CONTEXT_MENU_ID = "SET_CONTEXT_MENU_ID"
 export const STORE_COMMIT_LABEL = "STORE_COMMIT_LABEL"
+export const SET_REACT_TAG_DATA = "SET_REACT_TAG_DATA"
 
 // --------------------------
 // --- Action Definitions ---
@@ -107,6 +111,14 @@ export interface SetContextMenuIdType extends Action {
 export interface StoreCommitLabelType extends Action {
     label: string,
     type: 'STORE_COMMIT_LABEL'
+}
+
+export interface SetReactTagDataType extends Action {
+    tags: {
+        suggestions: ReactTagTagType[],
+        tagData: ReactTagTagType[]
+    },
+    type: 'SET_REACT_TAG_DATA'
 }
 
 

@@ -19,8 +19,8 @@ import {
     updateViewTreeReducer,
     SetContextMenuIdState,
     setContextMenuIdReducer,
-    StoreCommitLabelState,
-    storeCommitLabelReducer
+    ReactTagDataState,
+    reactTagDataReducer
 } from "./commonReducers.redux.reducer"
 
 import { 
@@ -38,7 +38,7 @@ export interface RootState {
     updateChangesAreaReducer: UpdateChangesAreaState
     updateViewTreeReducer: UpdateViewTreeState
     setContextMenuIdReducer: SetContextMenuIdState
-    storeCommitLabelReducer: StoreCommitLabelState
+    reactTagDataReducer: ReactTagDataState
 }
 
 // --------------------
@@ -51,5 +51,5 @@ export const rootReducer = combineReducers<RootState | undefined>({
     updateChangesAreaReducer,
     updateViewTreeReducer,
     setContextMenuIdReducer,
-    storeCommitLabelReducer
+    reactTagDataReducer
 });

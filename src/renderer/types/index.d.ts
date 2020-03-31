@@ -280,3 +280,8 @@ export type labelType = {
     label: string,
     labelColor: colorTripletType
 }
+
+export type ReactTagTagType = {
+    id: number,
+    name: string,
+}

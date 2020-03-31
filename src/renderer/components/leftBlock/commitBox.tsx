@@ -50,7 +50,13 @@ const localization = require(`../../lang/${mockData.lang}`)
 // -------------------------------------------
 
 import { data } from '../../data.mock';
-import { SetContextMenuIdAction, StoreCommitLabelAction } from '../../actions/commonActions.redux.action';
+
+import {
+    SetContextMenuIdAction,
+    StoreCommitLabelAction,
+    SetReactTagDataAction
+} from '../../actions/commonActions.redux.action';
+
 import { labelType } from '../../types';
 
 import { HistoryLabel } from "../rightBlock/history"
@@ -61,22 +67,11 @@ import { HistoryLabel } from "../rightBlock/history"
 
 export const CommitMessageInput: React.FC = () => {
     // -- Component that contains the commit box message description
-    const labelsDictionary = mockData.labelsDictionary
-    const labelNames = labelsDictionary.map((value: labelType) => { return value.label })
     
-    const suggestions: any = []
-
-    type tagType = {
-        id: number,
-        name: string
-    }
-
-    const tagsData: tagType[] = []
-
-    labelNames.forEach((value: string, index: number) => {suggestions.push({id: index, name: value})})
+    // TODO replace por useSelector and redux state
 
     const [input, setInput] = useState('');
-    const [tags, setTags] = useState({suggestions, tagsData})
+    
     const currentState = useSelector(state => state.basicWorkflowReducer);
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
@@ -90,32 +85,46 @@ export const CommitMessageInput: React.FC = () => {
         );
     };
 
-    const handleDelete = (index: number) => {
-        tags.tagsData.splice(index, 1)
-        setTags(tags)
+    const tags = useSelector(state => state.reactTagDataReducer.tags)
+
+    const handleDelete = () => {
+        // dummy function.
+        return
     }
      
     const handleAddition = (tag: any) => { // HACK TS complains about types but won't let me import the Tag type here
-        tags.tagsData.push(tag)
-        setTags(tags)
+        store.dispatch(SetReactTagDataAction({ tagData: [tag], suggestions: tags.suggestions }))
+    }
+        
+    const removeTag = () => {
+        if (tags.tagData) {
+            const workingTags = tags.tagData
+            workingTags.forEach(() => { workingTags.shift() })
+            store.dispatch(SetReactTagDataAction({ tagData: workingTags, suggestions: tags.suggestions }))
+            store.dispatch(StoreCommitLabelAction(""))
+        }
     }
 
-    if (tags.tagsData.length > 0) {
+    if (tags.tagData && tags.tagData.length > 0) {
 
-        const tagNames = tags.tagsData.map((value) => { return value.name })
+        const tagNames = tags.tagData.map((value) => { return value.name })
         
         const tagsPayload = `${tagNames[0]}:`
 
-
         store.dispatch(StoreCommitLabelAction(tagsPayload))
 
-        const availableLabels = mockData.labelsDictionary.map((value: labelType) => {return value.label })
+        const availableLabels = mockData.labelsDictionary.map((value: labelType) => { return value.label })
         
         return <div className={"commit-message-subwrapper"}>
-                    <HistoryLabel
-                        label={tagsPayload}
-                        labelColor={mockData.labelsDictionary[availableLabels.indexOf(tagNames[0])].labelColor}
-                    />
+                    <div
+                        style={{display: "inherit"}}
+                        onClick={removeTag}
+                    >
+                        <HistoryLabel
+                            label={tagsPayload}
+                            labelColor={mockData.labelsDictionary[availableLabels.indexOf(tagNames[0])].labelColor}
+                        />
+                    </div>
                     <input
                         title={localization.commitMessageTooltip}
                         className={'commit-message'}
@@ -128,8 +137,7 @@ export const CommitMessageInput: React.FC = () => {
 
     return (
         <ReactTags
-            tags={tags.tagsData}
-            suggestions={tags.suggestions}
+            suggestions={tags.suggestions as any}
             handleDelete={handleDelete}
             handleAddition={handleAddition}
         />
@@ -142,8 +150,9 @@ export const CommitButton: React.FC = () => {
     // TODO Change the button logic to dispatch the correct action given the workflow
 
     const currentState = useSelector(state => state.basicWorkflowReducer);
+    const commitLabel = useSelector(state => state.reactTagDataReducer.label)
     const handleCommitButtonPress = () => {
-        const commitLabel = store.getState()?.storeCommitLabelReducer.label
+        const commitLabel = store.getState()?.reactTagDataReducer.label
         store.dispatch(
             BasicWorkflowCommitAndPushAction(
                 `${commitLabel}${currentState.commitMessage}`,
@@ -163,9 +172,7 @@ export const CommitButton: React.FC = () => {
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
     }
 
-    const reactTags = document.querySelector(".react-tags")
-
-    if (reactTags) {
+    if (commitLabel === "") {
         return null
     }
 

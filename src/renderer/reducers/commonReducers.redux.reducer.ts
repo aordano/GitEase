@@ -19,7 +19,8 @@ import {
     SET_STAGING_STATUS,
     UPDATE_VIEW_TREE,
     SET_CONTEXT_MENU_ID,
-    STORE_COMMIT_LABEL
+    STORE_COMMIT_LABEL,
+    SET_REACT_TAG_DATA
 } from '../types/constants.d';
 
 import {
@@ -28,7 +29,9 @@ import {
     GitLogObjectType,
     GitGraphNodeMetadataType,
     GitNodeType,
-    GitLinkType
+    GitLinkType,
+    ReactTagTagType,
+    labelType
 } from '../types/index';
 
 // ----------------------
@@ -40,7 +43,7 @@ import {
     UpdateChangesAreaAction,
     UpdateViewTreeAction,
     SetContextMenuIdAction,
-    StoreCommitLabelAction
+    ReactTagDataAction
 } from '../actions/commonActions.redux.action';
 
 // ------------------------
@@ -55,7 +58,10 @@ import { parseLogTree, generateGraphData } from '../functions/gitGraph';
 // * --- Mock Data Imports ---
 // --------------------------
 
-import { data } from "../data.mock"
+import {
+    data,
+    labelsDictionary
+} from "../data.mock"
 
 // ---------------------------------
 // --- Reducer State Definitions ---
@@ -97,7 +103,11 @@ export interface SetContextMenuIdState {
     id: string
 }
 
-export interface StoreCommitLabelState {
+export interface ReactTagDataState {
+    tags: {
+        tagData: ReactTagTagType[] | null,
+        suggestions: ReactTagTagType[]
+    },
     label: string
 }
 
@@ -199,7 +209,18 @@ const SetContextMenuIdDefaultState: SetContextMenuIdState = {
     id: "defaultContextMenu"
 }
 
-const StoreCommitLabelDefaultState: StoreCommitLabelState = {
+
+const labelNames = labelsDictionary.map((value: labelType) => { return value.label })
+
+const suggestions: any = []
+
+labelNames.forEach((value: string, index: number) => { suggestions.push({ id: index, name: value }) })
+
+const ReactTagDataDefaultState: ReactTagDataState = {
+    tags: {
+        suggestions,
+        tagData: null
+    },
     label: ""
 }
 
@@ -507,16 +528,22 @@ export const setContextMenuIdReducer: Reducer<SetContextMenuIdState, SetContextM
     }
 };
 
-export const storeCommitLabelReducer: Reducer<StoreCommitLabelState, StoreCommitLabelAction> = (
+export const reactTagDataReducer: Reducer<ReactTagDataState, ReactTagDataAction> = (
     // -- 
-    state = StoreCommitLabelDefaultState,
-    action: StoreCommitLabelAction
+    state = ReactTagDataDefaultState,
+    action: ReactTagDataAction
 ) => {
     switch (action.type) {
         case STORE_COMMIT_LABEL:
             return Object.assign({}, state, {
                 label: action.label
             });
+        
+        case SET_REACT_TAG_DATA: 
+            return Object.assign({}, state, {
+                tags: action.tags
+            });
+        
         default:
             return state;
     }

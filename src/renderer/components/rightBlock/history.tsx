@@ -110,7 +110,7 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
                 return <p className={"message"}>
                     <HistoryLabel
                         label={labelData.label}
-                        labelColor={labelData.labelColor} 
+                        labelColor={labelData.labelColor}
                     /> {messageParsed[1]} </p>
             }
 
