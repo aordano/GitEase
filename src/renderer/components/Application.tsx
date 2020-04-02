@@ -7,6 +7,12 @@
 import { hot } from 'react-hot-loader/root';
 import * as React from 'react';
 
+
+import {
+    MemoryRouter as Router,
+    Route,
+} from "react-router-dom";
+
 // ----------------------------------
 // --- React Context Menu Imports ---
 // ----------------------------------
@@ -87,29 +93,20 @@ const Application = () => {
         ]
     )
 
-    let app
-
-    if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
-        app = React.createElement (
-            "div",
-            { className: "main-app"},
-            [
-                <FirstTimeWizard key={"IDFIRSTWIZARD"}/>
-            ]
-        )
-    }
-
-    else {
-        app = React.createElement (
-            "div",
-            { className: "main-app"},
-            [
-                contextMenuTrigger
-            ]
-        )  
-    }
-
-     
+    const app = React.createElement (
+        "div",
+        { className: "main-app"},
+        [
+            <Router key={"IDROUTER"}>
+                <Route exact={true} path="/">
+                    {contextMenuTrigger}
+                </Route>
+                <Route key={"IDROUTERFIRSTWIZARD"} path={"/firstwizard"}>
+                    <FirstTimeWizard key={"IDFIRSTWIZARD"}/>
+                </Route>
+            </Router>
+        ]
+    )     
 
     return app
 };

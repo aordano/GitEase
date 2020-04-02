@@ -6,6 +6,10 @@
 
 import * as React from 'react';
 
+import {
+    Link
+} from "react-router-dom";
+
 // ----------------------------------
 // --- React Context Menu Imports ---
 // ----------------------------------
@@ -54,7 +58,9 @@ export const contextMenus: React.ReactNode =
             >
                 <MenuItem data={{foo: 'bar'}}>
                     <Icon.Loader color={"black"} size={16} />
-                    {localization.defaultContextMenuLaunchWizard} (wip)
+                    <Link to={"/firstwizard"}>
+                        {localization.defaultContextMenuLaunchWizard} (wip)
+                    </Link>
                 </MenuItem>
                 <MenuItem divider />
                 <MenuItem data={{foo: 'bar'}}>
