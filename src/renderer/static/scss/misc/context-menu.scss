@@ -66,6 +66,11 @@
         position: absolute;
         right: 7px;
     }
+
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 }
 
 .react-contextmenu-item--divider {
