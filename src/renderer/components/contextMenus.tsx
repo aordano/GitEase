@@ -58,7 +58,7 @@ export const contextMenus: React.ReactNode =
             >
                 <MenuItem data={{foo: 'bar'}}>
                     <Icon.Loader color={"black"} size={16} />
-                    <Link to={"/firstwizard"}>
+                    <Link to={"/firstwizardgreeting"}>
                         {localization.defaultContextMenuLaunchWizard} (wip)
                     </Link>
                 </MenuItem>

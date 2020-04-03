@@ -51,3 +51,13 @@ div.right-block {
 br.separator {
     height: 30px;
 }
+
+.fade-enter {
+    transition:400ms ease-in;
+    opacity: 1;
+}
+
+.fade-exit {
+    transition:400ms ease-out;
+    opacity: 0;
+}

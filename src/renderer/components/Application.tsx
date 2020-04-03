@@ -11,7 +11,10 @@ import * as React from 'react';
 import {
     MemoryRouter as Router,
     Route,
+    Switch
 } from "react-router-dom";
+
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 // ----------------------------------
 // --- React Context Menu Imports ---
@@ -48,7 +51,8 @@ import {
 import "./menuBar"
 
 import {
-    FirstTimeWizard
+    FirstTimeWizardGreeter,
+    FirstTimeWizardP2
 } from "./wizards/firstTime"
 
 import { useSelector } from '../types/redefinitions';
@@ -91,24 +95,37 @@ const Application = () => {
             rightBlock,
             contextMenus
         ]
-    )
+    )                   
 
-    const app = React.createElement (
-        "div",
-        { className: "main-app"},
-        [
-            <Router key={"IDROUTER"}>
-                <Route exact={true} path="/">
-                    {contextMenuTrigger}
-                </Route>
-                <Route key={"IDROUTERFIRSTWIZARD"} path={"/firstwizard"}>
-                    <FirstTimeWizard key={"IDFIRSTWIZARD"}/>
-                </Route>
-            </Router>
-        ]
-    )     
+    // TODO finish fixing the router for transitions between routes
 
-    return app
+    return <div className={"main-app"}>
+                <Router>
+                    <Route
+                        // tslint:disable-next-line: jsx-no-lambda
+                        render={({ location }) => (
+                        <TransitionGroup>
+                            <CSSTransition
+                                timeout={400}
+                                classNames={'fade'}
+                                key={location.key}
+                            >
+                                <Switch  location={location}>
+                                    <Route exact={true} path="/">
+                                        {contextMenuTrigger}
+                                    </Route>
+                                    <Route path={"/firstwizardgreeting"}>
+                                        <FirstTimeWizardGreeter/>
+                                    </Route>
+                                    <Route path={"/firstwizardp2"}>
+                                        <FirstTimeWizardP2/>
+                                    </Route>
+                                </Switch>
+                            </CSSTransition>
+                        </TransitionGroup>
+                    )}/>
+                </Router>
+           </div>
 };
 
 export default hot(Application);
