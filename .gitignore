@@ -109,3 +109,15 @@ dist/
 
 .vs/
 .vscode/
+
+# Git Binaries
+
+bin/
+
+# Release
+
+release/
+
+# Build files
+
+dist/

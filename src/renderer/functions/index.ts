@@ -12,6 +12,14 @@ import promise from 'simple-git/promise';
 
 import { ContentNameType } from '../types';
 
+import * as SSH from "./ssh"
+
+Promise.resolve(SSH.checkKeysIntegrity()).then((areKeysOk) => {
+    if (!areKeysOk) {
+        SSH.keygen("blebli")
+    }
+})
+
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------

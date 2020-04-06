@@ -5844,9 +5844,8 @@ const createWindow = async () => {
   if (true) {
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
     win.loadURL(`http://localhost:2003`);
-  } else {}
+  } else {} /// keep listening on the did-finish-load event, when the mainWindow content has loaded
 
-  win.maximize(); /// keep listening on the did-finish-load event, when the mainWindow content has loaded
 
   win.webContents.on('did-finish-load', () => {
     /// then close the loading screen window and show the main window
@@ -5854,16 +5853,21 @@ const createWindow = async () => {
       loadingScreen.close();
     }
 
+    win.maximize();
     win.show();
   });
-
-  if (true) {
-    // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
-    win.webContents.once('dom-ready', () => {
-      win.webContents.openDevTools();
-    });
+  /*
+  if (process.env.NODE_ENV !== 'production') {
+      // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
+      win.webContents.once('dom-ready', () => {
+          win!.webContents.openDevTools();
+      });
   }
+  */
 
+  win.webContents.once('dom-ready', () => {
+    win.webContents.openDevTools();
+  });
   win.on('closed', () => {
     win = null;
   });
