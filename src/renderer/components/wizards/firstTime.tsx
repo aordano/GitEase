@@ -114,28 +114,31 @@ export const FirstTimeWizardP2: React.FC = () => {
 
     return (
         <div className={'first-time-wizard'}>
-            <h2>{localization.firstTimeWizardTitle}</h2>
+            <h2>Paso uno.</h2>
             <hr/>
             <div className={"greeting-container"}>
                 <h3>
-                    Bienvenido. Esta es tu primera vez utilizando GitEase.
+                    En este paso el sistema buscara archivos de configuracion preexistentes, <a className={"information-link"}>claves SSH</a> e instalaciones previas.
                 </h3>
                 <p className={"center"}>
-                    Este es un software de control de versiones que utiliza como motor el popular sistema Git.
+                    [mostrar cargador]
                 </p>
                 <p className={"center"}>
-                    Este asistente realizara algunas preguntas y en base a ellas determinaremos tu configuracion inicial.
+                    [resultado si hay claves SSH]
+                     Se encontraron claves SSH presentes en el sistema. Vamos a cargarlas a GitEase.
+                    [mostrar siguiente parte]
                 </p>
                 <p className={"center"}>
-                    Ante cualquier duda, terminos o conceptos que puedan no ser familiares seran resaltados,
-                    <a>de esta manera</a> para que puedas acceder a mas informacion al respecto.
+                    [Resultado si hay archivos de configuracion de GitEase presentes en el sistema]
+                     Parece que provienes de una instalacion anterior. Podemos intentar cargar la configuracion previa o intentarlo de cero.
+                    [ir a pagina de carga de configuracion previa]
+                    [ir a pagina de creacion de configuracion de gitease]
                 </p>
                 <p className={"center"}>
-                    No te preocupes, no es necesario que sepas nada de antemano para poder utilizar este software.
+                    [resultado si no hay claves SSH]
+                     No se encontraron claves SSH en el sistema. Vamos a crear unas! 
+                    [ir a pagina de creacion de claves]
                 </p>
-                <h3>
-                    Buena suerte!
-                </h3>
             </div>
             <Link className={"navigator-left"} to={"/firstwizardgreeting"}>
                 <Icon.ChevronLeft/>

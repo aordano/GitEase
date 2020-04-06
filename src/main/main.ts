@@ -75,23 +75,27 @@ const createWindow = async () => {
         );
     }
 
-    win.maximize()
-
     /// keep listening on the did-finish-load event, when the mainWindow content has loaded
     win.webContents.on('did-finish-load', () => {
         /// then close the loading screen window and show the main window
         if (loadingScreen) {
             loadingScreen.close();
         }
+        win!.maximize();
         win!.show();
     });
-
+    /*
     if (process.env.NODE_ENV !== 'production') {
         // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
         win.webContents.once('dom-ready', () => {
             win!.webContents.openDevTools();
         });
     }
+    */
+    win.webContents.once('dom-ready', () => {
+        win!.webContents.openDevTools();
+    });
+
 
     win.on('closed', () => {
         win = null;

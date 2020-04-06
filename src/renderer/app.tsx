@@ -13,11 +13,13 @@ import { rootSaga } from './sagas/index.redux.saga';
 import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions.redux.action';
 import { LaunchFirstTimeWizardAction } from './actions/wizardActions.redux.action';
 
+import { createMenu } from "./components/menuBar"
+
 // Create main element
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);
 
-// Render components
+// Create render components
 const render = (Component: () => JSX.Element) => {
     ReactDOM.render(
         <AppContainer>
@@ -29,8 +31,11 @@ const render = (Component: () => JSX.Element) => {
     );
 };
 
-render(Application);
+// Generates menu bar
+createMenu();
 
+// Render components
+render(Application);
 
 if (
     localStorage.getItem("firstTimeWizardCompleted") === undefined || 
