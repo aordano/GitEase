@@ -12,8 +12,6 @@ import path from "path"
 
 import * as Child from "child_process"
 
-import os from "os"
-
 // --------------------
 // --- Type Imports ---
 // --------------------
@@ -37,7 +35,7 @@ const localization = require(`../lang/${mockData.lang}`);
 // Code adapted from node ssh-keygen
 // Found at https://github.com/ericvicenti/ssh-keygen
 
-export const binPath = () => {
+export const SSHKeygenPath = () => {
 
     if(process.platform !== 'win32') return 'ssh-keygen';
 
@@ -68,7 +66,7 @@ export const checkIfKeysExist = async () => {
 }
 
 export const keygen = (comment: string) => { 
-    Child.execSync(`${binPath()} -t rsa -b 4096 -C ${comment} -f ${path.join(homePath, ".ssh", "id_rsa")} -N ""`)
+    Child.execSync(`${SSHKeygenPath()} -t rsa -b 4096 -C ${comment} -f ${path.join(homePath, ".ssh", "id_rsa")} -N ""`)
 }
 
 export const checkKeysIntegrity = async () => {
@@ -86,7 +84,7 @@ export const checkKeysIntegrity = async () => {
 
     if (await checkIfKeysExist()) {
     
-        const keycheck = Child.execSync(`${binPath()} -l -f ${path.join(homePath, ".ssh", "id_rsa.pub")}`)
+        const keycheck = Child.execSync(`${SSHKeygenPath()} -l -f ${path.join(homePath, ".ssh", "id_rsa.pub")}`)
 
         return parseSHA(keycheck.toString())
     }

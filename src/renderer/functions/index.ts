@@ -4,7 +4,8 @@
 // --- SimpleGit Imports ---
 // -------------------------
 
-import promise from 'simple-git/promise';
+// tslint:disable-next-line: import-name
+import gitP, {SimpleGit} from 'simple-git/promise';
 
 // --------------------
 // --- Type Imports ---
@@ -12,13 +13,11 @@ import promise from 'simple-git/promise';
 
 import { ContentNameType } from '../types';
 
-import * as SSH from "./ssh"
+import * as path from "path"
 
-Promise.resolve(SSH.checkKeysIntegrity()).then((areKeysOk) => {
-    if (!areKeysOk) {
-        SSH.keygen("blebli")
-    }
-})
+import {remote} from "electron"
+
+import * as SSH from "./ssh"
 
 // ----------------------------
 // --- Localization Imports ---
@@ -32,14 +31,28 @@ const localization = require(`../lang/${mockData.lang}`);
 // --- Git-related Functions ---
 // -----------------------------
 
+export const gitPath = () => {
+
+    if(process.platform !== 'win32') return 'git';
+
+    switch(process.arch) {
+        case 'ia32': return path.join(remote.app.getAppPath(), "..", 'bin', "32", "bin", "git.exe");
+        case 'x64': return path.join(remote.app.getAppPath(), "..", 'bin', "64", "bin", "git.exe");
+    }
+
+    throw new Error('Unsupported platform');
+}
+
 export const parseStatus = (workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     const parsedData = git.status();
     return parsedData;
 };
 
 export const stageFile = (file: string | ContentNameType, workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     if (typeof file === 'string') {
         git.add(file);
     } else if (typeof file === 'object') {
@@ -49,7 +62,8 @@ export const stageFile = (file: string | ContentNameType, workingDir?: string) =
 };
 
 export const unstageFile = (file: string | ContentNameType, workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     if (typeof file === 'string') {
         git.reset(['--', file]);
     } else if (typeof file === 'object') {
@@ -59,17 +73,20 @@ export const unstageFile = (file: string | ContentNameType, workingDir?: string)
 };
 
 export const pull = (remote?: string, branch?: string, workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     git.pull(remote ?? 'origin', branch ?? 'master');
 };
 
 export const commit = (message: string, description?: string, workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     git.commit([message, description ?? '']);
 };
 
 export const push = (remote?: string, branch?: string, workingDir?: string) => {
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
     git.push(remote ?? 'origin', branch ?? 'master');
 };
 

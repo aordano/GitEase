@@ -55,6 +55,11 @@
         border: none;
     }
 
+    & .action-buttons-centering {
+        text-align: center;
+        margin-top: 10vh;
+    }
+
     & p.center {
         text-align: center;
         margin-top: 30px;
@@ -74,6 +79,24 @@
         &:hover {
             background-color: rgba(245, 58, 0, 0.75);;
             padding: 5px;
+            color: white;
+        }
+    }
+
+    & a.wizard-action-button {
+        color: rgb(59, 20, 110);
+        background-color: rgba(0,0,0,0.25);
+        padding: 10px;
+        margin-left: 2px;
+        margin-right: 2px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition-duration: 400ms;
+        text-decoration: none;
+
+        &:hover {
+            background-color: rgba(120, 81, 169, 0.75);
+            padding: 25px;
             color: white;
         }
     }

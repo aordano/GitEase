@@ -1,5 +1,8 @@
 // ! ###  - Workflows Classes and given functions - ###
 
+
+// TODO Update workflow with new typings, gitP and git.custombinary()
+
 // -------------------------
 // --- SimpleGit Imports ---
 // -------------------------

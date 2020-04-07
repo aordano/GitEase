@@ -66,6 +66,17 @@ const localization = require(`../../lang/${mockData.lang}`)
 
 require('../../static/scss/wizards/firstTime.scss');
 
+
+import {
+    SpinnerComponent
+} from "../misc"
+
+// ------------------------
+// --- SSH Keys Imports ---
+// ------------------------
+
+import * as SSH from "../../functions/ssh"
+
 // --------------------------------
 // --- Actions Space Components ---
 // --------------------------------
@@ -108,44 +119,92 @@ export const FirstTimeWizardGreeter: React.FC = () => {
 };
 
 export const FirstTimeWizardP2: React.FC = () => {
-    // -- Simple dummy test component.
-
-    // TODO Create the buttons to perform the functions for every workflow
-
-    return (
-        <div className={'first-time-wizard'}>
-            <h2>Paso uno.</h2>
-            <hr/>
-            <div className={"greeting-container"}>
-                <h3>
-                    En este paso el sistema buscara archivos de configuracion preexistentes, <a className={"information-link"}>claves SSH</a> e instalaciones previas.
-                </h3>
-                <p className={"center"}>
-                    [mostrar cargador]
-                </p>
-                <p className={"center"}>
-                    [resultado si hay claves SSH]
-                     Se encontraron claves SSH presentes en el sistema. Vamos a cargarlas a GitEase.
-                    [mostrar siguiente parte]
-                </p>
-                <p className={"center"}>
-                    [Resultado si hay archivos de configuracion de GitEase presentes en el sistema]
-                     Parece que provienes de una instalacion anterior. Podemos intentar cargar la configuracion previa o intentarlo de cero.
-                    [ir a pagina de carga de configuracion previa]
-                    [ir a pagina de creacion de configuracion de gitease]
-                </p>
-                <p className={"center"}>
-                    [resultado si no hay claves SSH]
-                     No se encontraron claves SSH en el sistema. Vamos a crear unas! 
-                    [ir a pagina de creacion de claves]
-                </p>
-            </div>
-            <Link className={"navigator-left"} to={"/firstwizardgreeting"}>
-                <Icon.ChevronLeft/>
-            </Link>
-            <Link className={"navigator-right"} to={"/firstwizardp3"}>
-                <Icon.ChevronRight/>
-            </Link>
-        </div>
+    
+    const title = <h2>Paso uno</h2>
+    const loaderContents = <div className={"greeting-container"}>
+                            <h3>
+                                En este paso el sistema busca <a className={"information-link"}>claves SSH</a> preexistentes.
+                            </h3>
+                            <SpinnerComponent name={"SSHComprobation"} message={"Buscando claves SSH en el sistema..."}/>
+                        </div>
+    const existentKeysContents = <div className={"greeting-container"}>
+                                    <h3>
+                                        En este paso el sistema busca <a className={"information-link"}>claves SSH</a> preexistentes.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema encontro claves previas. Vamos a usar esas.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button"} to={"/firstwizardp3"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const generateKeysContents = <div className={"greeting-container"}>
+                                    <h3>
+                                        En este paso el sistema busca <a className={"information-link"}>claves SSH</a> preexistentes.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema no encontro claves previas o estaban corruptas, y un juego nuevo fue creado automaticamente.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button"} to={"/firstwizardp3"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const navigation = <Link className={"navigator-left"} to={"/firstwizardgreeting"}>
+                            <Icon.ChevronLeft/>
+                        </Link>
+    
+    const wrappingComponent = React.createElement(
+        "div",
+        {className: "first-time-wizard"},
+        [
+            title,
+            "hr",
+            loaderContents,
+            navigation
+        ]
     )
+
+    const [contents, setContents] = React.useState(wrappingComponent)
+    const [hasKeysBeenChecked, setKeysCheckStatus] = React.useState(false)
+    
+    if (!hasKeysBeenChecked) {
+            
+        setKeysCheckStatus(true)
+
+        Promise.resolve(SSH.checkKeysIntegrity()).then((doKeysExistAndAreOK) => {            
+            if (doKeysExistAndAreOK) {  
+                setContents(React.createElement(
+                    "div",
+                    {className: "first-time-wizard"},
+                    [
+                        title,
+                        "hr",
+                        existentKeysContents,
+                        navigation
+                    ]
+                ))
+            } else {
+                Promise.resolve(SSH.keygen("bla")).then(
+                    () => {
+                        setContents(React.createElement(
+                            "div",
+                            {className: "first-time-wizard"},
+                            [
+                                title,
+                                "hr",
+                                generateKeysContents,
+                                navigation
+                            ]
+                        ))
+                    }
+                )
+            }
+        })
+    }
+    
+    return contents
 };
