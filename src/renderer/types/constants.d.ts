@@ -12,8 +12,18 @@ import { Action } from 'redux';
 
 import {
     ModifiedFilesStructure,
-    ReactTagTagType
+    ReactTagTagType,
+    UIConfigType,
+    SSHConfigType,
+    ReposConfigType,
+    GitConfigType,
+    ProjectConfigType,
+    UserDataConfigType
 } from "./index"
+
+import {
+    ConfigInformationState
+} from "../reducers/configReducers.redux.reducer"
 
 // -----------------------------
 // --- Action Type Constants ---
@@ -35,6 +45,13 @@ export const LAUNCH_FIRST_TIME_WIZARD = "LAUNCH_FIRST_TIME_WIZARD"
 export const SET_CONTEXT_MENU_ID = "SET_CONTEXT_MENU_ID"
 export const STORE_COMMIT_LABEL = "STORE_COMMIT_LABEL"
 export const SET_REACT_TAG_DATA = "SET_REACT_TAG_DATA"
+export const SET_UI_CONFIG_INFORMATION = "SET_UI_CONFIG_INFORMATION"
+export const SET_SSH_CONFIG_INFORMATION = "SET_SSH_CONFIG_INFORMATION"
+export const SET_REPOS_CONFIG_INFORMATION = "SET_REPOS_CONFIG_INFORMATION"
+export const SET_CURRENT_GIT_CONFIG_INFORMATION = "SET_CURRENT_GIT_CONFIG_INFORMATION"
+export const SET_CURRENT_PROJECT_CONFIG_INFORMATION = "SET_CURRENT_PROJECT_CONFIG_INFORMATION"
+export const SET_CURRENT_USER_DATA_CONFIG_INFORMATION = "SET_CURRENT_USER_DATA_CONFIG_INFORMATION"
+export const SAVE_CONFIG_TO_FILE = "SAVE_CONFIG_TO_FILE"
 
 // --------------------------
 // --- Action Definitions ---
@@ -121,5 +138,37 @@ export interface SetReactTagDataType extends Action {
     type: 'SET_REACT_TAG_DATA'
 }
 
+export interface SetUIConfigInformationType extends Action {
+    UIConfig: UIConfigType,
+    type: 'SET_UI_CONFIG_INFORMATION'
+}
 
+export interface SetSSHConfigInformationType extends Action {
+    SSHConfig: SSHConfigType,
+    type: 'SET_SSH_CONFIG_INFORMATION'
+}
 
+export interface SetReposConfigInformationType extends Action {
+    ReposConfig: ReposConfigType,
+    type: 'SET_REPOS_CONFIG_INFORMATION'
+}
+
+export interface SetCurrentGitConfigInformationType extends Action {
+    GitConfig: GitConfigType,
+    type: 'SET_CURRENT_GIT_CONFIG_INFORMATION'
+}
+
+export interface SetCurrentProjectConfigInformationType extends Action {
+    ProjectConfig: ProjectConfigType,
+    type: 'SET_CURRENT_PROJECT_CONFIG_INFORMATION'
+}
+
+export interface SetUserDataConfigInformationType extends Action {
+    UserDataConfig: UserDataConfigType,
+    type: 'SET_CURRENT_USER_DATA_CONFIG_INFORMATION'
+}
+
+export interface SaveConfigToFileType extends Action {
+    config: ConfigInformationState,
+    type: 'SAVE_CONFIG_TO_FILE'
+}

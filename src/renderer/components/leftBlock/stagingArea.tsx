@@ -38,9 +38,9 @@ import {
 // --- Localization Imports ---
 // ----------------------------
 
-const mockData = require("../../data.mock")
+import * as mockData from "../../data.mock"
 
-const localization = require(`../../lang/${mockData.lang}`)
+const localization = await import(`../../lang/${mockData.lang}`)
 
 // -------------------------------
 // --- Staging Area Components ---

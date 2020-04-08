@@ -285,3 +285,63 @@ export type ReactTagTagType = {
     id: number,
     name: string,
 }
+
+// --------------------
+// --- Config Types ---
+// --------------------
+
+export type UIConfigType = {
+    language: string,
+    theme: string,
+    mainView: string,
+    showSidePanelsByDefault: boolean
+    showAdditionalInformation: boolean
+}
+
+export type SSHConfigType = {
+    currentKeysLocation: string,
+    keysDefaultLocation: string,
+    keysLocations: string[]
+}
+
+export type ReposConfigType = {
+    reposDefaultLocation: string,
+    reposLocations: string[],
+    activeRepo: string,
+}
+
+export type GitConfigType = {
+    excludedPaths: string[],
+    submodules: boolean,
+    submodulesPaths: string[],
+    enforcePreCommitHooks: boolean,
+    enforcePrePushHooks: boolean,
+    enforcePostCommitHooks: boolean,
+    enforcePostMergeHooks: boolean,
+    enforceAllHooks: boolean,
+    currentBranch: string,
+    currentRemote: string,    
+}
+
+export type ProjectConfigType = {
+    currentWorkflow: string,
+    handholding: boolean,
+    autoSaveChanges: boolean,
+    autoSaveTimeoutMinutes: number
+    opinionatedWorkflow: boolean,
+    resolveSubmodulesAsIndependentRepos: boolean,
+    integration: string,
+    
+}
+
+type UserDataType = {
+    userName: string,
+    userEmail: string,
+    userProfilePic: string,
+    userFetchedFrom: string
+}
+
+export type UserDataConfigType = {
+    currentUser: UserDataType,
+    usersList: UserDataType[]
+}
