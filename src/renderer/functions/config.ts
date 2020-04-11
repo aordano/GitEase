@@ -6,11 +6,12 @@
 
 import { remote } from "electron"
 
-import fs from "fs"
+import * as FileSystem from "fs"
 
-import path from "path"
+import * as Path from "path"
 
 import * as Child from "child_process"
+import { ConfigInformationState } from "../reducers/configReducers.redux.reducer"
 
 // --------------------
 // --- Type Imports ---
@@ -37,8 +38,7 @@ const homePath = remote.app.getPath("home")
 export const checkIfConfigExist = async () => {
 
     try {
-        await fs.promises.access(path.join(homePath, ".gitease", "preferences.json"))
-        await fs.promises.access(path.join(homePath, ".gitease", "config.json"))
+        await FileSystem.promises.access(Path.join(homePath, ".gitease", "config.json"))
     }
 
     catch (error) {
@@ -50,8 +50,86 @@ export const checkIfConfigExist = async () => {
     return true
 }
 
-export const configGenerator = (comment: string) => { 
-    // TODO Generate config reading from state
+export const checkIfConfigExistSync = () => {
+
+    try {
+        FileSystem.accessSync(Path.join(homePath, ".gitease", "config.json"))
+    }
+
+    catch (error) {
+        if (error && error.code === 'ENOENT') {
+            return false
+        } 
+    }
+
+    return true
+}
+
+export const checkIfConfigDirExist = async () => {
+
+    try {
+        await FileSystem.promises.access(Path.join(homePath, ".gitease"))
+    }
+
+    catch (error) {
+        if (error && error.code === 'ENOENT') {
+            return false
+        } 
+    }
+
+    return true
+}
+
+export const writeConfigToFile = async (config: ConfigInformationState) => { 
+
+    try {
+        if (await checkIfConfigDirExist()) {
+            await FileSystem.promises.writeFile(
+                Path.join(homePath, ".gitease", "config.json"), JSON.stringify(config), 'utf8'
+            )
+        } else {
+            await FileSystem.promises.mkdir(Path.join(homePath, ".gitease"))
+            await FileSystem.promises.writeFile(
+                Path.join(homePath, ".gitease", "config.json"), JSON.stringify(config), 'utf8'
+            )
+        }
+    }
+    
+    catch (error) {
+        return false
+    }
+
+    return true
+}
+
+export const readConfig = async () => { 
+
+    try {
+        if (await checkIfConfigDirExist()) {
+            return await FileSystem.promises.readFile(
+                Path.join(homePath, ".gitease", "config.json"), 'utf8'
+            )
+        }
+    }
+    
+    catch (error) {
+        return false
+    }
+}
+
+export const readConfigSync = () => { 
+
+    try {
+        if (checkIfConfigExistSync()) {
+            return FileSystem.readFileSync(
+                Path.join(homePath, ".gitease", "config.json"), 'utf8'
+            )
+        }
+    }
+    
+    catch (error) {
+        return false
+    }
 }
 
 // TODO Check config files integrity

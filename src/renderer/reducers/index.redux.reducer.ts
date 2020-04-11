@@ -28,6 +28,11 @@ import {
     basicWorkflowReducer 
 } from './basicWorkflowReducer.redux.reducer';
 
+import { 
+    ConfigInformationState,
+    configInformationReducer
+} from './configReducers.redux.reducer';
+
 // ------------------------------------
 // --- Root Reducer Possible States ---
 // ------------------------------------
@@ -39,6 +44,7 @@ export interface RootState {
     updateViewTreeReducer: UpdateViewTreeState
     setContextMenuIdReducer: SetContextMenuIdState
     reactTagDataReducer: ReactTagDataState
+    configInformationReducer: ConfigInformationState
 }
 
 // --------------------
@@ -51,5 +57,6 @@ export const rootReducer = combineReducers<RootState | undefined>({
     updateChangesAreaReducer,
     updateViewTreeReducer,
     setContextMenuIdReducer,
-    reactTagDataReducer
+    reactTagDataReducer,
+    configInformationReducer
 });

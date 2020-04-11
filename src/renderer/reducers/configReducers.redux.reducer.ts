@@ -1,13 +1,10 @@
-// ! ###  - Common reducers main file - ###
-// ! ###  - (common to all workflows) - ###
+// ! ###  - Config reducers main file - ###
 
 // ---------------------
 // --- Redux Imports ---
 // ---------------------
 
 import { Reducer } from 'redux';
-
-import { ViewerComponent } from '../components/bottomBlock/viewer';
 
 // --------------------
 // --- Type Imports ---
@@ -20,8 +17,8 @@ import {
     SET_REPOS_CONFIG_INFORMATION,
     SET_CURRENT_PROJECT_CONFIG_INFORMATION,
     SET_CURRENT_USER_DATA_CONFIG_INFORMATION,
-    SAVE_CONFIG_TO_FILE
-} from '../types/constants';
+    SAVE_CONFIG_TO_FILE,
+} from "../types/constants.d"
 
 import {
     UIConfigType,
@@ -44,9 +41,11 @@ import {
 // --- Function Imports ---
 // ------------------------
 
-import { parseStatus, truncate, stageFile, unstageFile, removeQuotes } from '../functions';
+import { writeConfigToFile, checkIfConfigExist, readConfig, readConfigSync } from "../functions/config" 
 
-import { parseLogTree, generateGraphData } from '../functions/gitGraph';
+import * as Path from "path"
+
+import * as Electron from "electron"
 
 // --------------------------
 // * --- Mock Data Imports ---
@@ -76,16 +75,127 @@ export interface ConfigInformationState {
 // --- Reducer Default State Definitions ---
 // -----------------------------------------
 
-export const configInformationDefaultState: ConfigInformationState = {
+
+const generateConfigInformationDefaultState = () => {
     // TODO Make the default state is set by reading the config file, if it exists.
+    if (checkIfConfigExist()) {
+        const config = readConfigSync()
+        if (config) {
+            const parsedConfig = JSON.parse(config)
+            return {
+                UIConfig: parsedConfig.config.UIConfig,
+                SSHConfig: parsedConfig.configSSHConfig,
+                ReposConfig: parsedConfig.configReposConfig,
+                CurrentGitConfig: parsedConfig.configGitConfig,
+                GitConfigs: parsedConfig.config.GitConfig,
+                UserDataConfig: parsedConfig.config.UserDataConfig,
+                CurrentProjectConfig: parsedConfig.config.ProjectConfig,
+                ProjectConfigs: parsedConfig.config.ProjectConfig
+            }
+        }
+    }
+    return {
+        UIConfig: {
+            language: "en_US",
+            theme: "light",
+            mainView: "graph",
+            showSidePanelsbyDefault: true,
+            showAdditionalInformation: true
+        },
+        SSHConfig: {
+            currentKeysLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
+            keysDefaultLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
+            keysLocation: [
+                Path.join(Electron.remote.app.getPath("home"), ".ssh")
+            ]
+        },
+        ReposConfig: {
+            reposDefaultLocation: Path.join(Electron.remote.app.getPath("home"), "repositories"),
+            reposLocation: Path.join(Electron.remote.app.getPath("home"), "repositories"),
+            activeRepo: Path.join(Electron.remote.app.getPath("home"))
+        },
+        CurrentGitConfig: {
+            excludedPaths: [
+                ""
+            ],
+            submodules: false,
+            submodulesPaths: [
+                ""
+            ],
+            enforcePreCommitHooks: false,
+            enforcePrePushHooks: false,
+            enforcePostCommitHooks: false,
+            enforcePostMergeHooks: false,
+            enforceAllHooks: false,
+            currentBranch: "master",
+            currentRemote: "origin"
+        },
+        GitConfigs: [
+            {
+                excludedPaths: [
+                    ""
+                ],
+                submodules: false,
+                submodulesPaths: [
+                    ""
+                ],
+                enforcePreCommitHooks: false,
+                enforcePrePushHooks: false,
+                enforcePostCommitHooks: false,
+                enforcePostMergeHooks: false,
+                enforceAllHooks: false,
+                currentBranch: "master",
+                currentRemote: "origin"
+            }
+        ],
+        UserDataConfig: {
+            currentUser: {
+                userName: "Default",
+                userEmail: "default@example.com",
+                userProfilePic: "",
+                userFetchedFrom: "local"
+            },
+            usersList: [
+                {
+                    userName: "Default",
+                    userEmail: "default@example.com",
+                    userProfilePic: "",
+                    userFetchedFrom: "local"
+                }
+            ]
+        },
+        CurrentProjectConfig: {
+            currentWorkflow: "basic",
+            handholding: true,
+            autoSaveChanges: true,
+            autoSaveTimeoutMinutes: 5,
+            opinionatedWorkflow: true,
+            resolveSubmodulesAsIndependentRepos: true,
+            integration: "local"
+        },
+        ProjectConfigs: [
+            {
+                currentWorkflow: "basic",
+                handholding: true,
+                autoSaveChanges: true,
+                autoSaveTimeoutMinutes: 5,
+                opinionatedWorkflow: true,
+                resolveSubmodulesAsIndependentRepos: true,
+                integration: "local"
+            }
+        ]
+    }
     
 };
+
+export const configInformationDefaultState: ConfigInformationState = generateConfigInformationDefaultState()
+
 
 // ----------------
 // --- Reducers ---
 // ----------------
 
-export const configInformationReducer: Reducer<ConfigInformationState> = (
+export const configInformationReducer: Reducer<ConfigInformationState, ConfigInformationAction> = (
     // -- This reducer takes care of handling the changes area.
     // -- Does it by having a state that involves every status change on the files,
     // and evaluationg the staging status of every file aswell as declaring the status as read
@@ -146,7 +256,7 @@ export const configInformationReducer: Reducer<ConfigInformationState> = (
         
         case SAVE_CONFIG_TO_FILE:
             // -- 
-            // TODO  save the config to file. Config is in action.config
+            writeConfigToFile(action.config)
             return state;
         
         default:
