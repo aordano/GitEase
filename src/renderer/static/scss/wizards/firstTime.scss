@@ -17,6 +17,24 @@
 
 }
 
+%wizard-action-button {
+    color: rgb(59, 20, 110);
+    background-color: rgba(0,0,0,0.25);
+    padding: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition-duration: 400ms;
+    text-decoration: none;
+
+    &:hover {
+        background-color: rgba(120, 81, 169, 0.75);
+        padding: 25px;
+        color: white;
+    }
+}
+
 .first-time-wizard {
 
     width: calc(100vw - 2px);
@@ -83,21 +101,16 @@
         }
     }
 
-    & a.wizard-action-button {
-        color: rgb(59, 20, 110);
-        background-color: rgba(0,0,0,0.25);
-        padding: 10px;
-        margin-left: 2px;
-        margin-right: 2px;
-        border-radius: 3px;
-        cursor: pointer;
-        transition-duration: 400ms;
-        text-decoration: none;
+    & a.wizard-action-button.normal {
+        @extend %wizard-action-button;
+    }
+
+    & a.wizard-action-button.danger {
+        @extend %wizard-action-button;
+        color: rgb(199, 20, 20);
 
         &:hover {
-            background-color: rgba(120, 81, 169, 0.75);
-            padding: 25px;
-            color: white;
+            background-color: rgba(255, 43, 43, 0.75);
         }
     }
 

@@ -77,20 +77,19 @@ export interface ConfigInformationState {
 
 
 const generateConfigInformationDefaultState = () => {
-    // TODO Make the default state is set by reading the config file, if it exists.
     if (checkIfConfigExist()) {
         const config = readConfigSync()
         if (config) {
             const parsedConfig = JSON.parse(config)
             return {
-                UIConfig: parsedConfig.config.UIConfig,
-                SSHConfig: parsedConfig.configSSHConfig,
-                ReposConfig: parsedConfig.configReposConfig,
-                CurrentGitConfig: parsedConfig.configGitConfig,
-                GitConfigs: parsedConfig.config.GitConfig,
-                UserDataConfig: parsedConfig.config.UserDataConfig,
-                CurrentProjectConfig: parsedConfig.config.ProjectConfig,
-                ProjectConfigs: parsedConfig.config.ProjectConfig
+                UIConfig: parsedConfig.UIConfig,
+                SSHConfig: parsedConfig.SSHConfig,
+                ReposConfig: parsedConfig.ReposConfig,
+                CurrentGitConfig: parsedConfig.CurrentGitConfig,
+                GitConfigs: parsedConfig.GitConfigs,
+                UserDataConfig: parsedConfig.UserDataConfig,
+                CurrentProjectConfig: parsedConfig.CurrentProjectConfig,
+                ProjectConfigs: parsedConfig.ProjectConfigs
             }
         }
     }
@@ -99,19 +98,21 @@ const generateConfigInformationDefaultState = () => {
             language: "en_US",
             theme: "light",
             mainView: "graph",
-            showSidePanelsbyDefault: true,
+            showSidePanelsByDefault: true,
             showAdditionalInformation: true
         },
         SSHConfig: {
             currentKeysLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
             keysDefaultLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
-            keysLocation: [
+            keysLocations: [
                 Path.join(Electron.remote.app.getPath("home"), ".ssh")
             ]
         },
         ReposConfig: {
             reposDefaultLocation: Path.join(Electron.remote.app.getPath("home"), "repositories"),
-            reposLocation: Path.join(Electron.remote.app.getPath("home"), "repositories"),
+            reposLocations: [
+                Path.join(Electron.remote.app.getPath("home"), "repositories"),
+            ],
             activeRepo: Path.join(Electron.remote.app.getPath("home"))
         },
         CurrentGitConfig: {
@@ -256,7 +257,7 @@ export const configInformationReducer: Reducer<ConfigInformationState, ConfigInf
         
         case SAVE_CONFIG_TO_FILE:
             // -- 
-            writeConfigToFile(action.config)
+            writeConfigToFile(state)
             return state;
         
         default:

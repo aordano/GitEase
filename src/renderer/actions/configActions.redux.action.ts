@@ -119,7 +119,6 @@ export const SaveConfigToFileAction: ActionCreator<
     SaveConfigToFileType
 > = (config: ConfigInformationState) => {
     return {
-        config,
         type: SAVE_CONFIG_TO_FILE
     };
 };

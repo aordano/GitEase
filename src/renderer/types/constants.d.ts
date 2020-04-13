@@ -21,10 +21,6 @@ import {
     UserDataConfigType
 } from "./index"
 
-import {
-    ConfigInformationState
-} from "../reducers/configReducers.redux.reducer"
-
 // -----------------------------
 // --- Action Type Constants ---
 // -----------------------------
@@ -169,6 +165,5 @@ export interface SetUserDataConfigInformationType extends Action {
 }
 
 export interface SaveConfigToFileType extends Action {
-    config: ConfigInformationState,
     type: 'SAVE_CONFIG_TO_FILE'
 }

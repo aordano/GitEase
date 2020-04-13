@@ -132,4 +132,17 @@ export const readConfigSync = () => {
     }
 }
 
+export const deleteConfigWithBackup = () => {
+    try {
+        if (checkIfConfigExistSync()) {
+            FileSystem.renameSync(Path.join(homePath, ".gitease", "config.json"),Path.join(homePath, ".gitease", "config.old.json"))
+        }
+        return true
+    }
+
+    catch (error) {
+        return false
+    }
+}
+
 // TODO Check config files integrity

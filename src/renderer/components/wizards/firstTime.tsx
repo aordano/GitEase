@@ -77,6 +77,15 @@ import {
 
 import * as SSH from "../../functions/ssh"
 
+// ----------------------
+// --- Config Imports ---
+// ----------------------
+
+import * as Configurator from "../../functions/config"
+
+import * as Path from "path"
+import * as Electron from "electron"
+
 // --------------------------------
 // --- Actions Space Components ---
 // --------------------------------
@@ -135,7 +144,7 @@ export const FirstTimeWizardP2: React.FC = () => {
                                         El sistema encontro claves previas. Vamos a usar esas.
                                     </p>
                                     <div className={"action-buttons-centering"}>
-                                        <Link className={"wizard-action-button"} to={"/firstwizardp3"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp3"}>
                                             Continuar
                                         </Link>
                                     </div>
@@ -148,7 +157,7 @@ export const FirstTimeWizardP2: React.FC = () => {
                                         El sistema no encontro claves previas o estaban corruptas, y un juego nuevo fue creado automaticamente.
                                     </p>
                                     <div className={"action-buttons-centering"}>
-                                        <Link className={"wizard-action-button"} to={"/firstwizardp3"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp3"}>
                                             Continuar
                                         </Link>
                                     </div>
@@ -162,7 +171,7 @@ export const FirstTimeWizardP2: React.FC = () => {
         {className: "first-time-wizard"},
         [
             title,
-            "hr",
+            <hr key={"IDSEPARATOR"}/>,
             loaderContents,
             navigation
         ]
@@ -182,13 +191,13 @@ export const FirstTimeWizardP2: React.FC = () => {
                     {className: "first-time-wizard"},
                     [
                         title,
-                        "hr",
+                        <hr key={"IDSEPARATOR"}/>,
                         existentKeysContents,
                         navigation
                     ]
                 ))
             } else {
-                Promise.resolve(SSH.keygen("bla")).then(
+                Promise.resolve(SSH.keygen("bla")).then( // TODO include comment in key
                     () => {
                         setContents(React.createElement(
                             "div",
@@ -202,6 +211,206 @@ export const FirstTimeWizardP2: React.FC = () => {
                         ))
                     }
                 )
+            }
+        })
+    }
+    
+    return contents
+};
+
+export const FirstTimeWizardP3: React.FC = () => {
+
+    const generateDefaultConfig = () => {
+
+        const defaultConfig = {
+            UIConfig: {
+                language: "en_US",
+                theme: "light",
+                mainView: "graph",
+                showSidePanelsByDefault: true,
+                showAdditionalInformation: true
+            },
+            SSHConfig: {
+                currentKeysLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
+                keysDefaultLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),
+                keysLocations: [
+                    Path.join(Electron.remote.app.getPath("home"), ".ssh")
+                ]
+            },
+            ReposConfig: {
+                reposDefaultLocation: Path.join(Electron.remote.app.getPath("home"), "repositories"),
+                reposLocations: [
+                    Path.join(Electron.remote.app.getPath("home"), "repositories"),
+                ],
+                activeRepo: Path.join(Electron.remote.app.getPath("home"))
+            },
+            CurrentGitConfig: {
+                excludedPaths: [
+                    ""
+                ],
+                submodules: false,
+                submodulesPaths: [
+                    ""
+                ],
+                enforcePreCommitHooks: false,
+                enforcePrePushHooks: false,
+                enforcePostCommitHooks: false,
+                enforcePostMergeHooks: false,
+                enforceAllHooks: false,
+                currentBranch: "master",
+                currentRemote: "origin"
+            },
+            GitConfigs: [
+                {
+                    excludedPaths: [
+                        ""
+                    ],
+                    submodules: false,
+                    submodulesPaths: [
+                        ""
+                    ],
+                    enforcePreCommitHooks: false,
+                    enforcePrePushHooks: false,
+                    enforcePostCommitHooks: false,
+                    enforcePostMergeHooks: false,
+                    enforceAllHooks: false,
+                    currentBranch: "master",
+                    currentRemote: "origin"
+                }
+            ],
+            UserDataConfig: {
+                currentUser: {
+                    userName: "Default",
+                    userEmail: "default@example.com",
+                    userProfilePic: "",
+                    userFetchedFrom: "local"
+                },
+                usersList: [
+                    {
+                        userName: "Default",
+                        userEmail: "default@example.com",
+                        userProfilePic: "",
+                        userFetchedFrom: "local"
+                    }
+                ]
+            },
+            CurrentProjectConfig: {
+                currentWorkflow: "basic",
+                handholding: true,
+                autoSaveChanges: true,
+                autoSaveTimeoutMinutes: 5,
+                opinionatedWorkflow: true,
+                resolveSubmodulesAsIndependentRepos: true,
+                integration: "local"
+            },
+            ProjectConfigs: [
+                {
+                    currentWorkflow: "basic",
+                    handholding: true,
+                    autoSaveChanges: true,
+                    autoSaveTimeoutMinutes: 5,
+                    opinionatedWorkflow: true,
+                    resolveSubmodulesAsIndependentRepos: true,
+                    integration: "local"
+                }
+            ]
+        }
+
+        Configurator.deleteConfigWithBackup()
+        Configurator.writeConfigToFile(defaultConfig)
+
+        setContents(React.createElement(
+            "div",
+            {className: "first-time-wizard"},
+            [
+                title,
+                <hr key={"IDSEPARATOR"}/>,
+                generateConfigContents,
+                navigation
+            ]
+        ))
+
+    }
+    
+    const title = <h2>Paso dos</h2>
+    const loaderContents = <div className={"greeting-container"}>
+                            <h3>
+                                En este paso el sistema busca archivos de configuracion preexistentes y datos de instalaciones previas.
+                            </h3>
+                            <SpinnerComponent name={"ConfigComprobation"} message={"Buscando archivos de configuracion en el sistema..."}/>
+                        </div>
+    const existentConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                        En este paso el sistema busca archivos de configuracion preexistentes y datos de instalaciones previas.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema encontro configuracion previa, por defecto esta configuracion va a ser utilizada y puede cambiarse 
+                                        desde dentro de la aplicacion. De lo contrario se puede optar por resetear la configuracion a sus valores por defecto.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp4"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                    <div className={"action-buttons-centering"}>
+                                        <a
+                                            className={"wizard-action-button danger"}
+                                            onClick={generateDefaultConfig}
+                                        >
+                                            Comenzar de cero
+                                        </a>
+                                    </div>
+                                </div>
+    const generateConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                        En este paso el sistema busca archivos de configuracion preexistentes y datos de instalaciones previas.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema genero automaticamente un archivo de configuracion con los valores por defecto. Estos valores pueden
+                                        ser cambiados en cualquier momento desde dentro de la aplicacion.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp4"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const navigation = <Link className={"navigator-left"} to={"/firstwizardp2"}>
+                            <Icon.ChevronLeft/>
+                        </Link>
+    
+    const wrappingComponent = React.createElement(
+        "div",
+        {className: "first-time-wizard"},
+        [
+            title,
+            <hr key={"IDSEPARATOR"}/>,
+            loaderContents,
+            navigation
+        ]
+    )
+
+    const [contents, setContents] = React.useState(wrappingComponent)
+    const [hasConfigBeenChecked, setConfigCheckStatus] = React.useState(false)
+    
+    if (!hasConfigBeenChecked) {
+            
+        setConfigCheckStatus(true)
+
+        Promise.resolve(Configurator.checkIfConfigExist()).then((doConfigExistAndIsOK) => {            
+            if (doConfigExistAndIsOK) {  
+                setContents(React.createElement(
+                    "div",
+                    {className: "first-time-wizard"},
+                    [
+                        title,
+                        <hr key={"IDSEPARATOR"}/>,
+                        existentConfigContents,
+                        navigation
+                    ]
+                ))
+            } else {
+                generateDefaultConfig()
             }
         })
     }
