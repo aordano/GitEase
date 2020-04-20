@@ -90,6 +90,16 @@ export const push = (remote?: string, branch?: string, workingDir?: string) => {
     git.push(remote ?? 'origin', branch ?? 'master');
 };
 
+export const writeIdentityName = (name: string) => {
+    const git: SimpleGit = gitP()
+    git.raw(["config", "--global", "user.name",`"${name}"`])
+}
+
+export const writeIdentityEmail = (email: string) => {
+    const git: SimpleGit = gitP()
+    git.raw(["config", "--global", "user.email",`"${email}"`])
+}
+
 // ----------------------------------
 // --- Alert Generating Functions ---
 // ----------------------------------

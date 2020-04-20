@@ -84,6 +84,32 @@
         margin-bottom: 30px;
     }
 
+    & .form-center {
+        margin: auto;
+        margin-top: 10vh;
+
+        & input {
+            margin: auto;
+            display: block;
+            padding: 10px;
+            border-radius: 3px;
+            border: none;
+            background-color: rgba(0,0,0,0.15);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            transition-duration: 400ms;
+
+            &:hover {
+                padding: 15px;
+            }
+
+            &:focus {
+                background-color: rgba(120, 81, 169, 0.5);
+                padding: 15px;
+            }
+        }
+    }
+
     & a.information-link {
         color: rgb(245, 58, 0);
         background-color: rgba(0,0,0,0.25);

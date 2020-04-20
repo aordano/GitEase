@@ -81,6 +81,8 @@ import * as SSH from "../../functions/ssh"
 // --- Config Imports ---
 // ----------------------
 
+import * as GeneralFunctions from "../../functions"
+
 import * as Configurator from "../../functions/config"
 
 import * as Path from "path"
@@ -197,6 +199,7 @@ export const FirstTimeWizardP2: React.FC = () => {
                     ]
                 ))
             } else {
+                // TODO include small form to include comment in key
                 Promise.resolve(SSH.keygen("bla")).then( // TODO include comment in key
                     () => {
                         setContents(React.createElement(
@@ -325,7 +328,7 @@ export const FirstTimeWizardP3: React.FC = () => {
             [
                 title,
                 <hr key={"IDSEPARATOR"}/>,
-                generateConfigContents,
+                overrideConfigContents,
                 navigation
             ]
         ))
@@ -375,6 +378,21 @@ export const FirstTimeWizardP3: React.FC = () => {
                                         </Link>
                                     </div>
                                 </div>
+    const overrideConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                        En este paso el sistema busca archivos de configuracion preexistentes y datos de instalaciones previas.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema genero automaticamente un archivo de configuracion con los valores por defecto y 
+                                        guardo una copia de seguridad de la configuracion anterior, que puede ser restaurada en cualquier momento. Estos valores pueden
+                                        ser cambiados en cualquier momento desde dentro de la aplicacion.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp4"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
     const navigation = <Link className={"navigator-left"} to={"/firstwizardp2"}>
                             <Icon.ChevronLeft/>
                         </Link>
@@ -416,4 +434,158 @@ export const FirstTimeWizardP3: React.FC = () => {
     }
     
     return contents
+};
+
+export const FirstTimeWizardP4: React.FC = () => {
+    
+    const title = <h2>Paso tres</h2>
+    const loaderContents = <div className={"greeting-container"}>
+                            <h3>
+                                En este paso el sistema busca informacion de <a className={"information-link"}>identidad de Git</a> preexistente.
+                            </h3>
+                            <SpinnerComponent name={"IdentityComprobation"} message={"Buscando informacion de identidad..."}/>
+                        </div>
+    const existentGitConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                    En este paso el sistema busca informacion de <a className={"information-link"}>identidad de Git</a> preexistente.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema encontro un archivo de identidad previo. Vamos a usar ese.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp5"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const generateGitConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                    En este paso el sistema busca informacion de <a className={"information-link"}>identidad de Git</a> preexistente.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema no encontro configuracion previa. Vamos a crearla.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp4b"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const navigation = <Link className={"navigator-left"} to={"/firstwizardp3"}>
+                            <Icon.ChevronLeft/>
+                        </Link>
+    
+    const wrappingComponent = React.createElement(
+        "div",
+        {className: "first-time-wizard"},
+        [
+            title,
+            <hr key={"IDSEPARATOR"}/>,
+            loaderContents,
+            navigation
+        ]
+    )
+
+    const [contents, setContents] = React.useState(wrappingComponent)
+    const [hasIdentityBeenChecked, setIdentityCheckStatus] = React.useState(false)
+    
+    if (!hasIdentityBeenChecked) {
+            
+        setIdentityCheckStatus(true)
+
+        Promise.resolve(Configurator.checkIfGitConfigExist()).then((doConfigExist) => {    
+            Promise.resolve(Configurator.readGitIdentity()).then((configData) => {
+                if (doConfigExist && configData) {  
+                    setContents(React.createElement(
+                        "div",
+                        {className: "first-time-wizard"},
+                        [
+                            title,
+                            <hr key={"IDSEPARATOR"}/>,
+                            existentGitConfigContents,
+                            navigation
+                        ]
+                    ))
+                } else {
+                    setContents(React.createElement(
+                        "div",
+                        {className: "first-time-wizard"},
+                        [
+                            title,
+                            "hr",
+                            generateGitConfigContents,
+                            navigation
+                        ]
+                    ))
+                }
+            })
+        })
+    }
+    
+    return contents
+};
+
+
+
+export const FirstTimeWizardP4b: React.FC = () => {
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+
+    const handleNameFormTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setName(event.currentTarget.value);
+    };
+
+    const handleEmailFormTextChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setEmail(event.currentTarget.value);
+    };
+
+    const generateGitIdentityConfig = () => {
+        GeneralFunctions.writeIdentityName(name)
+        GeneralFunctions.writeIdentityEmail(email)
+    }
+    
+    const title = <h2>Paso tres</h2>
+    const pageContents = <div className={"greeting-container"}>
+                            <h3>
+                                En este paso vamos a crear la <a className={"information-link"}>identidad de Git</a>.
+                            </h3>
+                            <div className={"form-center"}>
+                                <input
+                                    title={"TODO"}
+                                    className={"wizard-form-input"}
+                                    placeholder={"Escribe tu nombre"}
+                                    value={name}
+                                    onChange={handleNameFormTextChange}
+                                />
+                                <input
+                                    title={"TODO"}
+                                    className={"wizard-form-input"}
+                                    placeholder={"Escribe tu email"}
+                                    value={email}
+                                    onChange={handleEmailFormTextChange}
+                                />
+                            </div>
+                            <div className={"action-buttons-centering"}>
+                                <Link onClick={generateGitIdentityConfig} className={"wizard-action-button normal"} to={"/firstwizardp5"}>
+                                    Continuar
+                                </Link>
+                            </div>
+                        </div>
+    const navigation = <Link className={"navigator-left"} to={"/firstwizardp3"}>
+                            <Icon.ChevronLeft/>
+                        </Link>
+    
+    const wrappingComponent = React.createElement(
+        "div",
+        {className: "first-time-wizard"},
+        [
+            title,
+            <hr key={"IDSEPARATOR"}/>,
+            pageContents,
+            navigation
+        ]
+    )
+    
+    return wrappingComponent
 };

@@ -29,9 +29,9 @@ const mockData = require("../data.mock")
 
 const localization = require(`../lang/${mockData.lang}`);
 
-// --------------------------------------
-// --- Config presence verification ---
-// --------------------------------------
+// --------------------------------------------
+// --- GitEase Config presence verification ---
+// --------------------------------------------
 
 const homePath = remote.app.getPath("home")
 
@@ -80,6 +80,11 @@ export const checkIfConfigDirExist = async () => {
     return true
 }
 
+
+// ---------------------------------
+// --- GitEase Config generation ---
+// ---------------------------------
+
 export const writeConfigToFile = async (config: ConfigInformationState) => { 
 
     try {
@@ -101,6 +106,10 @@ export const writeConfigToFile = async (config: ConfigInformationState) => {
 
     return true
 }
+
+// -------------------------------
+// --- GitEase Config handling ---
+// -------------------------------
 
 export const readConfig = async () => { 
 
@@ -146,3 +155,115 @@ export const deleteConfigWithBackup = () => {
 }
 
 // TODO Check config files integrity
+
+// ----------------------------------------
+// --- Git Config presence verification ---
+// ----------------------------------------
+
+export const checkIfGitConfigExist = async () => {
+
+    try {
+        await FileSystem.promises.access(Path.join(homePath, ".gitconfig"))
+    }
+
+    catch (error) {
+        if (error && error.code === 'ENOENT') {
+            return false
+        } 
+    }
+
+    return true
+}
+
+export const checkIfGitConfigExistSync = () => {
+
+    try {
+        FileSystem.accessSync(Path.join(homePath, ".gitconfig"))
+    }
+
+    catch (error) {
+        if (error && error.code === 'ENOENT') {
+            return false
+        } 
+    }
+
+    return true
+}
+
+// ------------------------------------
+// --- Git Config identity handling ---
+// ------------------------------------
+
+export const readGitIdentity = async () => { 
+
+    try {
+        if (await checkIfGitConfigExist()) {
+            const contents =  await FileSystem.promises.readFile(
+                Path.join(homePath, ".gitconfig"), 'utf8'
+            )
+            const nameIndex = contents.indexOf("name = ") + 7 // Length of the "name = " string 
+            const emailIndex = contents.indexOf("email = ") + 8 // Likewise
+            const name = contents.slice(nameIndex, emailIndex - 1)
+            const isThereSomethingBeyondEmail = () => {
+                if (contents.indexOf(" ", emailIndex) !== -1) {
+                    return true
+                }
+                return false
+            }
+            let email 
+            if (isThereSomethingBeyondEmail()) {
+                email = contents.slice(emailIndex, contents.indexOf(" ", emailIndex) - 1)
+            } else {
+                email = contents.slice(emailIndex, contents.length)
+            }
+
+            return {
+                name,
+                email
+            }
+            
+        }
+        return false
+    }
+    
+    catch (error) {
+        return false
+    }
+}
+
+export const readGitIdentitySync = () => { 
+
+    try {
+        if (checkIfGitConfigExistSync()) {
+            const contents = FileSystem.readFileSync(
+                Path.join(homePath, ".gitconfig"), 'utf8'
+            )
+            const nameIndex = contents.indexOf("name = ") + 7 // Length of the "name = " string 
+            const emailIndex = contents.indexOf("email = ") + 8 // Likewise
+            const name = contents.slice(nameIndex, emailIndex - 1)
+            const isThereSomethingBeyondEmail = () => {
+                if (contents.indexOf(" ", emailIndex) !== -1) {
+                    return true
+                }
+                return false
+            }
+            let email 
+            if (isThereSomethingBeyondEmail()) {
+                email = contents.slice(emailIndex, contents.indexOf(" ", emailIndex) - 1)
+            } else {
+                email = contents.slice(emailIndex, contents.length)
+            }
+
+            return {
+                name,
+                email
+            }
+        }
+        return false
+        
+    }
+    
+    catch (error) {
+        return false
+    }
+}

@@ -53,7 +53,9 @@ import "./menuBar"
 import {
     FirstTimeWizardGreeter,
     FirstTimeWizardP2,
-    FirstTimeWizardP3
+    FirstTimeWizardP3,
+    FirstTimeWizardP4,
+    FirstTimeWizardP4b
 } from "./wizards/firstTime"
 
 import { useSelector } from '../types/redefinitions';
@@ -123,6 +125,12 @@ const Application = () => {
                                     </Route>
                                     <Route path={"/firstwizardp3"}>
                                         <FirstTimeWizardP3/>
+                                    </Route>
+                                    <Route path={"/firstwizardp4"}>
+                                        <FirstTimeWizardP4/>
+                                    </Route>
+                                    <Route path={"/firstwizardp4b"}>
+                                        <FirstTimeWizardP4b/>
                                     </Route>
                                 </Switch>
                             </CSSTransition>
