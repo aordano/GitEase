@@ -267,3 +267,22 @@ export const readGitIdentitySync = () => {
         return false
     }
 }
+
+// -----------------------------
+// --- Git Repo manipulation ---
+// -----------------------------
+
+export const isThisAValidRepo = (workingDir: string) => { 
+
+    try {
+        FileSystem.accessSync(Path.join(workingDir, ".git","config"))
+        FileSystem.accessSync(Path.join(workingDir, ".git","HEAD"))
+        FileSystem.accessSync(Path.join(workingDir, ".git","index"))
+        
+        return true
+    }
+    
+    catch (error) {
+        return false
+    }
+}

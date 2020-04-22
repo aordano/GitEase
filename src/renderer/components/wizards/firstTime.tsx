@@ -603,7 +603,10 @@ export const FirstTimeWizardP5: React.FC = () => {
         store.getState()!.configInformationReducer.ReposConfig.reposDefaultLocation
     )
 
-    // TODO add visual indication of success on selecting the directory; make it change some icon or something besides the button
+    const [activeRepoLocation, setActiveRepoLocation] = React.useState(
+        store.getState()!.configInformationReducer.ReposConfig.activeRepo
+    )
+
     const selectReposDefaultLocation = () => {
         setReposDefaultLocation(Electron.remote.dialog.showOpenDialog({
             properties: ['openDirectory']
@@ -613,7 +616,20 @@ export const FirstTimeWizardP5: React.FC = () => {
         selectReposDefaultLocationButton!.textContent = "Listo!"
         setTimeout(() => {
             selectReposDefaultLocationButton!.className = "wizard-action-button done"
-            selectReposDefaultLocationButton!.textContent = "Seleccionar ubicacion por defecto de los proyectos/repositorios (realizado)"
+            selectReposDefaultLocationButton!.textContent = "Seleccionar ubicacion por defecto de los proyectos/repositorios"
+        }, 2000)
+    }
+
+    const selectActiveRepoLocation= () => {
+        setActiveRepoLocation(Electron.remote.dialog.showOpenDialog({
+            properties: ['openDirectory']
+        })[0])
+        const selectActiveRepoLocationButton = document.getElementById("active-repo-location-button")
+        selectActiveRepoLocationButton!.className = "wizard-action-button done fanfare"
+        selectActiveRepoLocationButton!.textContent = "Listo!"
+        setTimeout(() => {
+            selectActiveRepoLocationButton!.className = "wizard-action-button done"
+            selectActiveRepoLocationButton!.textContent = "Selecciona un repositorio"
         }, 2000)
     }
 
@@ -627,6 +643,8 @@ export const FirstTimeWizardP5: React.FC = () => {
 
         const wholeConfig = store.getState()!.configInformationReducer
         Configurator.writeConfigToFile(wholeConfig)
+
+        window.localStorage.setItem("firstTimeWizardCompleted", "1")
     }
     
     const title = <h2>Paso cuatro</h2>
@@ -649,6 +667,13 @@ export const FirstTimeWizardP5: React.FC = () => {
                                         >
                                             Seleccionar ubicacion por defecto de los proyectos/repositorios
                                         </a>
+                                        <a 
+                                            id={"active-repo-location-button"}
+                                            className={"wizard-action-button normal"}
+                                            onClick={selectActiveRepoLocation}
+                                        >
+                                            Selecciona un repositorio
+                                        </a>
                                     </div>
                                     
                                     <div className={"action-buttons-centering"}>
@@ -656,7 +681,8 @@ export const FirstTimeWizardP5: React.FC = () => {
                                         // make it so it's disabled until all the options are selected
                                             className={"wizard-action-button normal"} 
                                             onClick={storeConfigChanges}
-                                            to={"/firstwizardp6"}
+                                            // It should go to /firstimewizardp6 but we leave it there as to be able to start using the soft
+                                            to={"/"}
                                         >
                                             Continuar
                                         </Link>
@@ -689,7 +715,14 @@ export const FirstTimeWizardP5: React.FC = () => {
                                         El sistema usara la configuracion general encontrada previamente.
                                     </p>
                                     <div className={"action-buttons-centering"}>
-                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp6"}>
+                                        <Link 
+                                            className={"wizard-action-button normal"} 
+                                            onClick={()=> {
+                                                window.localStorage.setItem("firstTimeWizardCompleted", "1")
+                                            }}
+                                            // It should go to /firstimewizardp6 but we leave it there as to be able to start using the soft
+                                            to={"/"}
+                                        > 
                                             Continuar
                                         </Link>
                                     </div>

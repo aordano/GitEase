@@ -11,7 +11,6 @@ import { store, sagaMiddleware } from './store/index.redux.store';
 // Imports Sagas
 import { rootSaga } from './sagas/index.redux.saga';
 import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions.redux.action';
-import { LaunchFirstTimeWizardAction } from './actions/wizardActions.redux.action';
 
 import { createMenu } from "./components/menuBar"
 
@@ -41,11 +40,7 @@ if (
     localStorage.getItem("firstTimeWizardCompleted") === undefined || 
     localStorage.getItem("firstTimeWizardCompleted") === null
 ) {
-    localStorage.setItem("firstTimeWizardCompleted","1") // ! Change this to "0" to avoid wizard skip
-}
-
-if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
-    store.dispatch(LaunchFirstTimeWizardAction())
+    localStorage.setItem("firstTimeWizardCompleted","0") // ! Change this to "0" to avoid wizard skip
 }
 
 // Inits the workflow given by the config file on the working dir

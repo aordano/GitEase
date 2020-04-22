@@ -11,7 +11,8 @@ import * as React from 'react';
 import {
     MemoryRouter as Router,
     Route,
-    Switch
+    Switch,
+    useHistory
 } from "react-router-dom";
 
 import { TransitionGroup, CSSTransition } from "react-transition-group";
@@ -99,12 +100,21 @@ const Application = () => {
             rightBlock,
             contextMenus
         ]
-    )                   
+    )            
+    
+    if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
+        setTimeout(() => {
+            const routerHistory = useHistory()
+            routerHistory.push("/firstwizardgreeting")
+        },50)
+    }
 
     // TODO finish fixing the router for transitions between routes
 
     return <div className={"main-app"}>
-                <Router>
+                <Router
+                    initialEntries={["/firstwizardgreeting","/"]}
+                >
                     <Route
                         // tslint:disable-next-line: jsx-no-lambda
                         render={({ location }) => (
