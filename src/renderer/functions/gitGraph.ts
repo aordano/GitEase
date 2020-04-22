@@ -134,7 +134,7 @@ export const generateGraphData = async (
     const nodeList: GitNodeType[] = []
     const linkList: GitLinkType[] = []
 
-    for (let j = logTree.metadataList.length - 1; j > 0; j -= 1) {
+    for (let j = logTree.metadataList.length - 1; j >= 0; j -= 1) {
 
         const currentNodeMetadata = logTree.metadataList[j]
         
