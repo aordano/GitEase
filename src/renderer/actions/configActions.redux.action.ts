@@ -25,7 +25,7 @@ import {
     SetCurrentProjectConfigInformationType,
     SetUserDataConfigInformationType,
     SaveConfigToFileType
-} from '../types/constants';
+} from '../types/constants.d';
 
 // --------------------
 // --- Type Imports ---

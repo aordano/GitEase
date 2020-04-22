@@ -52,6 +52,10 @@ import {
     SetGlobalStagingStatusAction
 } from '../../actions/commonActions.redux.action';
 
+import {
+    SetReposConfigInformationAction
+} from '../../actions/configActions.redux.action';
+
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
@@ -322,6 +326,8 @@ export const FirstTimeWizardP3: React.FC = () => {
         Configurator.deleteConfigWithBackup()
         Configurator.writeConfigToFile(defaultConfig)
 
+        window.localStorage.setItem("doesPreexistentConfigExists", "false")
+
         setContents(React.createElement(
             "div",
             {className: "first-time-wizard"},
@@ -417,6 +423,7 @@ export const FirstTimeWizardP3: React.FC = () => {
 
         Promise.resolve(Configurator.checkIfConfigExist()).then((doConfigExistAndIsOK) => {            
             if (doConfigExistAndIsOK) {  
+                window.localStorage.setItem("doesPreexistentConfigExists", "true")
                 setContents(React.createElement(
                     "div",
                     {className: "first-time-wizard"},
@@ -588,4 +595,159 @@ export const FirstTimeWizardP4b: React.FC = () => {
     )
     
     return wrappingComponent
+};
+
+export const FirstTimeWizardP5: React.FC = () => {
+
+    const [reposDefaultLocation, setReposDefaultLocation] = React.useState(
+        store.getState()!.configInformationReducer.ReposConfig.reposDefaultLocation
+    )
+
+    // TODO add visual indication of success on selecting the directory; make it change some icon or something besides the button
+    const selectReposDefaultLocation = () => {
+        setReposDefaultLocation(Electron.remote.dialog.showOpenDialog({
+            properties: ['openDirectory']
+        })[0])
+        const selectReposDefaultLocationButton = document.getElementById("repos-default-location-button")
+        selectReposDefaultLocationButton!.className = "wizard-action-button done fanfare"
+        selectReposDefaultLocationButton!.textContent = "Listo!"
+        setTimeout(() => {
+            selectReposDefaultLocationButton!.className = "wizard-action-button done"
+            selectReposDefaultLocationButton!.textContent = "Seleccionar ubicacion por defecto de los proyectos/repositorios (realizado)"
+        }, 2000)
+    }
+
+    const storeConfigChanges = () => {
+        const currentReposConfig = store.getState()!.configInformationReducer.ReposConfig
+        store.dispatch(SetReposConfigInformationAction({
+            reposDefaultLocation,
+            activeRepo: currentReposConfig.activeRepo,
+            reposLocations: currentReposConfig.reposLocations
+        }))
+
+        const wholeConfig = store.getState()!.configInformationReducer
+        Configurator.writeConfigToFile(wholeConfig)
+    }
+    
+    const title = <h2>Paso cuatro</h2>
+    const loaderContents = <div className={"greeting-container"}>
+                            <h3>
+                                En este paso definimos algunas opciones generales.
+                            </h3>
+                            <SpinnerComponent name={"IdentityComprobation"} message={"Buscando informacion de identidad..."}/>
+                        </div>
+    
+    const generateGeneralConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                    En este paso definimos algunas opciones generales.
+                                    </h3>
+                                    <div className={"action-buttons-centering"}>
+                                        <a 
+                                            id={"repos-default-location-button"}
+                                            className={"wizard-action-button normal"}
+                                            onClick={selectReposDefaultLocation}
+                                        >
+                                            Seleccionar ubicacion por defecto de los proyectos/repositorios
+                                        </a>
+                                    </div>
+                                    
+                                    <div className={"action-buttons-centering"}>
+                                        <Link
+                                        // make it so it's disabled until all the options are selected
+                                            className={"wizard-action-button normal"} 
+                                            onClick={storeConfigChanges}
+                                            to={"/firstwizardp6"}
+                                        >
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                </div>
+    const navigation = <Link className={"navigator-left"} to={"/firstwizardp4"}>
+                            <Icon.ChevronLeft/>
+                        </Link>
+
+    
+    // Had to put it in here instead of below because of function assigment orders
+    const overrideDefaultConfig = () => {
+        setContents(React.createElement(
+            "div",
+            {className: "first-time-wizard"},
+            [
+                title,
+                "hr",
+                generateGeneralConfigContents,
+                navigation
+            ]
+        ))
+    }
+
+    const existentGeneralConfigContents = <div className={"greeting-container"}>
+                                    <h3>
+                                    En este paso definimos algunas opciones generales.
+                                    </h3>
+                                    <p className={"center"}>
+                                        El sistema usara la configuracion general encontrada previamente.
+                                    </p>
+                                    <div className={"action-buttons-centering"}>
+                                        <Link className={"wizard-action-button normal"} to={"/firstwizardp6"}>
+                                            Continuar
+                                        </Link>
+                                    </div>
+                                    <div className={"action-buttons-centering"}>
+                                        <a
+                                            className={"wizard-action-button danger"}
+                                            onClick={overrideDefaultConfig}
+                                        >
+                                            Ignorar configuracion guardada
+                                        </a>
+                                    </div>
+                                </div>
+    
+    
+    const wrappingComponent = React.createElement(
+        "div",
+        {className: "first-time-wizard"},
+        [
+            title,
+            <hr key={"IDSEPARATOR"}/>,
+            loaderContents,
+            navigation
+        ]
+    )
+
+    const [contents, setContents] = React.useState(wrappingComponent)
+    const [hasConfigBeenChecked, setConfigCheckStatus] = React.useState(false)
+    
+    if (!hasConfigBeenChecked) {
+            
+        setConfigCheckStatus(true)
+
+        Promise.resolve(Configurator.checkIfConfigExist()).then((doConfigExistAndIsOK) => {            
+            if (doConfigExistAndIsOK) { 
+                setContents(React.createElement(
+                    "div",
+                    {className: "first-time-wizard"},
+                    [
+                        title,
+                        <hr key={"IDSEPARATOR"}/>,
+                        existentGeneralConfigContents,
+                        navigation
+                    ]
+                ))
+            } else {
+                setContents(React.createElement(
+                    "div",
+                    {className: "first-time-wizard"},
+                    [
+                        title,
+                        "hr",
+                        generateGeneralConfigContents,
+                        navigation
+                    ]
+                ))
+            }
+        })
+    }
+    
+    return contents
 };

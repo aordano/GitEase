@@ -55,7 +55,8 @@ import {
     FirstTimeWizardP2,
     FirstTimeWizardP3,
     FirstTimeWizardP4,
-    FirstTimeWizardP4b
+    FirstTimeWizardP4b,
+    FirstTimeWizardP5,
 } from "./wizards/firstTime"
 
 import { useSelector } from '../types/redefinitions';
@@ -131,6 +132,9 @@ const Application = () => {
                                     </Route>
                                     <Route path={"/firstwizardp4b"}>
                                         <FirstTimeWizardP4b/>
+                                    </Route>
+                                    <Route path={"/firstwizardp5"}>
+                                        <FirstTimeWizardP5/>
                                     </Route>
                                 </Switch>
                             </CSSTransition>

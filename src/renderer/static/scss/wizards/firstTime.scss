@@ -131,6 +131,16 @@
         @extend %wizard-action-button;
     }
 
+    & a.wizard-action-button.done {
+        @extend %wizard-action-button;
+        background-color: rgb(20, 199, 109);
+        color: black;
+        &.fanfare {
+            transition-duration: 2000ms;
+            border: 15px solid rgba(20, 199, 109,0);
+        }
+    }
+
     & a.wizard-action-button.danger {
         @extend %wizard-action-button;
         color: rgb(199, 20, 20);
