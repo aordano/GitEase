@@ -11,7 +11,8 @@ div.history {
     background-color: #fff;
     padding-top: 2px;
     border-radius: 3px;
-    height: calc(100vh - 35px);
+    // ? height is set by viewport - titlebar - mysterious offset
+    height: calc(100vh - 30px - 4px);
 
     & .stage-checkbox-global {
         position: absolute;
@@ -33,6 +34,7 @@ div.history {
         position: relative;
         list-style: none;
         border: 1px solid rgba(0, 0, 0, 0);
+        // ? height is set by container height - title height
         height: calc(100% - 40px);
         overflow-y: scroll;
         overflow-x: hidden;

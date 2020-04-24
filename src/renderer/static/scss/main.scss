@@ -15,11 +15,19 @@ body {
     font-weight: 400;
 }
 
+div.container-after-titlebar {
+    // ? This rule is here because there are some weird commas that appear at bottom and trigger the overflow
+    overflow: hidden!important;
+}
+
 div.main-block {
     top: -4px;
     position: relative;
-    height: calc( 100vh - 42px );
-    width: calc( 100vw - 303px - 240px );
+    // ? height is set by viewport - title bar - mysterious offset 
+    height: calc( 100vh - 30px - 6px );
+    // ?  width is set by viewport - changes sidebar - history sidebar
+    width: calc( 100vw - 293px - 250px );
+    // ? yes the previous offset is 5px wider than the width of the changes area
     left: 287px;
     margin-right: 0px;
 
@@ -44,7 +52,7 @@ div.right-block {
     height: 100%;
     position: absolute;
     right: 1px;
-    top: 30px;
+    top: 0px;
     z-index: 0;
 }
 
@@ -60,4 +68,57 @@ br.separator {
 .fade-exit {
     transition:400ms ease-out;
     opacity: 0;
+}
+
+@media screen and (min-width: 770px) {
+    div.main-block {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    div.main-block {
+        display: none;
+    }
+
+    div.left-block {
+        width: calc(50vw - 1px);
+
+        & .changes-area {
+            width: 100%;
+        }
+
+        & .commit-overlay {
+            width: 100%;
+
+            & .commit-box {
+                width: 100%;
+
+                & .react-tags {
+                    width: 100%;
+                }
+
+                & textarea {
+                    width: calc(100% - 10px);
+                }
+
+                & .commit-message-subwrapper {
+                    width: calc(100% - 40px);
+
+                    & .commit-message {
+                        width: 83%;
+                    }
+                }
+            }
+        }
+    }
+
+    div.right-block {
+        width: calc(50vw - 2px);
+        left: calc(50vw + 2px + 38px);
+
+        & ul.history-list {
+            width: calc(100% - 62px);
+        }
+    }
 }
