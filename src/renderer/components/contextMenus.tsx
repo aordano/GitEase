@@ -32,9 +32,23 @@ import * as Icon from 'react-feather';
 // --- Localization Imports ---
 // ----------------------------
 
-const mockData = require("../data.mock")
+import { readConfigSync } from "../functions/config"
 
-const localization = require(`../lang/${mockData.lang}`)
+const getLanguage = () => { 
+
+    // ? We do this instead of reading from state because a 
+    // ? timeoput or async function would get race conditions and break the components
+    const configData = readConfigSync()
+
+    let configObject
+
+    if (configData) {
+        configObject = JSON.parse(configData)
+    }
+    return configObject.UIConfig.language
+}
+
+const localization = require(`../lang/${getLanguage()}`)
 
 // ------------------------------
 // --- Action Creator Imports ---
@@ -57,7 +71,7 @@ export const contextMenus: React.ReactNode =
                 key={"IDDEFAULT_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
-                    <Icon.Loader color={"black"} size={16} />
+                    <Icon.Coffee color={"black"} size={16} />
                     <Link to={"/firstwizardgreeting"}>
                         {localization.defaultContextMenuLaunchWizard} (wip)
                     </Link>

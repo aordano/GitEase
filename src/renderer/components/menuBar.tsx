@@ -4,11 +4,23 @@
 // --- Localization Imports ---
 // ----------------------------
 
-const mockData = require("../data.mock")
+import { readConfigSync } from "../functions/config"
 
-const localization = require(`../lang/${mockData.lang}`)
+const getLanguage = () => { 
 
-import * as path from "path"
+    // ? We do this instead of reading from state because a 
+    // ? timeout or async function would get race conditions and break the components
+    const configData = readConfigSync()
+
+    let configObject
+
+    if (configData) {
+        configObject = JSON.parse(configData)
+    }
+    return configObject.UIConfig.language
+}
+
+const localization = require(`../lang/${getLanguage()}`)
 
 // -------------------------------
 // --- Custom titlebar imports ---

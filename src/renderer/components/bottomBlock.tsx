@@ -6,14 +6,6 @@
 
 import * as React from 'react';
 
-// ----------------------------
-// --- Localization Imports ---
-// ----------------------------
-
-const mockData = require("../data.mock")
-
-const localization = require(`../lang/${mockData.lang}`)
-
 // --------------------------
 // --- Components Imports ---
 // --------------------------
