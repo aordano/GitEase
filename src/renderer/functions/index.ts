@@ -1,5 +1,7 @@
 // ! ###  - Common Functions - ###
 
+import { store } from "../store/index.redux.store"
+
 // -------------------------
 // --- SimpleGit Imports ---
 // -------------------------
@@ -17,8 +19,6 @@ import * as path from "path"
 
 import {remote} from "electron"
 
-import * as SSH from "./ssh"
-
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
@@ -30,6 +30,15 @@ const localization = require(`../lang/${mockData.lang}`);
 // -----------------------------
 // --- Git-related Functions ---
 // -----------------------------
+
+
+// ? Global variables suck but otherwise we need to completely overhaul the action/reducers to be able to access this info
+let activeRepo: string
+
+// ? Timeout to ensure the store is not undefined by the moment of loading the stuff
+setTimeout(() => {
+    activeRepo = store.getState()!.configInformationReducer.ReposConfig.activeRepo
+}, 50)
 
 export const gitPath = () => {
 
@@ -43,15 +52,15 @@ export const gitPath = () => {
     throw new Error('Unsupported platform');
 }
 
-export const parseStatus = (workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const parseStatus = () => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     const parsedData = git.status();
     return parsedData;
 };
 
-export const stageFile = (file: string | ContentNameType, workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const stageFile = (file: string | ContentNameType) => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     if (typeof file === 'string') {
         git.add(file);
@@ -61,8 +70,8 @@ export const stageFile = (file: string | ContentNameType, workingDir?: string) =
     }
 };
 
-export const unstageFile = (file: string | ContentNameType, workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const unstageFile = (file: string | ContentNameType) => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     if (typeof file === 'string') {
         git.reset(['--', file]);
@@ -72,20 +81,20 @@ export const unstageFile = (file: string | ContentNameType, workingDir?: string)
     }
 };
 
-export const pull = (remote?: string, branch?: string, workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const pull = (remote?: string, branch?: string) => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     git.pull(remote ?? 'origin', branch ?? 'master');
 };
 
-export const commit = (message: string, description?: string, workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const commit = (message: string, description?: string) => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     git.commit([message, description ?? '']);
 };
 
-export const push = (remote?: string, branch?: string, workingDir?: string) => {
-    const git: SimpleGit = gitP(workingDir);
+export const push = (remote?: string, branch?: string) => {
+    const git: SimpleGit = gitP(activeRepo);
     git.customBinary(gitPath())
     git.push(remote ?? 'origin', branch ?? 'master');
 };

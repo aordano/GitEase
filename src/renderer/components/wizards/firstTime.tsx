@@ -637,7 +637,7 @@ export const FirstTimeWizardP5: React.FC = () => {
         const currentReposConfig = store.getState()!.configInformationReducer.ReposConfig
         store.dispatch(SetReposConfigInformationAction({
             reposDefaultLocation,
-            activeRepo: currentReposConfig.activeRepo,
+            activeRepo: activeRepoLocation,
             reposLocations: currentReposConfig.reposLocations
         }))
 

@@ -67,8 +67,6 @@ import { HistoryLabel } from "../rightBlock/history"
 
 export const CommitMessageInput: React.FC = () => {
     // -- Component that contains the commit box message description
-    
-    // TODO replace por useSelector and redux state
 
     const [input, setInput] = useState('');
     
@@ -159,7 +157,7 @@ export const CommitButton: React.FC = () => {
                 currentState.commitDescription,
                 data.branch, // TODO Populate with values from config
                 data.remote,
-                data.workingDir
+                store.getState()?.configInformationReducer.ReposConfig.activeRepo
             )
         );
     };

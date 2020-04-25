@@ -9,6 +9,8 @@ import { Reducer } from 'redux';
 
 import { ViewerComponent } from '../components/bottomBlock/viewer';
 
+import { store } from "../store/index.redux.store"
+
 // --------------------
 // --- Type Imports ---
 // --------------------
@@ -268,9 +270,7 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
                     newChange
                 );
 
-                data.workingDir
-                    ? stageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir)
-                    : stageFile(state.changesAreaTree[action.index ?? 0].content);
+                stageFile(state.changesAreaTree[action.index ?? 0].content);
 
                 return Object.assign({}, state, {
                     changesTree: newChangesTree
@@ -293,9 +293,7 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             // * outside their scope.
             // * -- In this case is not needed to fill the whole array and only is needed to replace one element.
 
-            data.workingDir
-                ? unstageFile(state.changesAreaTree[action.index ?? 0].content, data.workingDir)
-                : unstageFile(state.changesAreaTree[action.index ?? 0].content);
+            unstageFile(state.changesAreaTree[action.index ?? 0].content);
 
             return Object.assign({}, state, {
                 changesTree: newChangesTree
@@ -474,7 +472,7 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
     switch (action.type) {
         case VIEW_MODIFIED_FILES:
             return Object.assign({}, state, {
-                parsedData: data.workingDir ? parseStatus(data.workingDir) : parseStatus()
+                parsedData: parseStatus()
             });
         default:
             return state;
@@ -492,16 +490,12 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
     // -- VIEW_MODIFIED_FILES
     // This action invokes the parsed git.status() data.
     state = updateViewTreeDefaultState,
-    action: UpdateViewTreeAction
+    action: UpdateViewTreeAction,
 ) => {
     switch (action.type) {
         case UPDATE_VIEW_TREE:
-            const history = data.workingDir
-                ? Promise.resolve(parseLogTree(data.workingDir))
-                : Promise.resolve(parseLogTree());
-            const graphData = data.workingDir
-                ? Promise.resolve(generateGraphData(data.workingDir))
-                : Promise.resolve(generateGraphData());
+            const history = Promise.resolve(parseLogTree())
+            const graphData = Promise.resolve(generateGraphData())
             return Object.assign({}, state, {
                 dataPromise: {
                     graphData,
