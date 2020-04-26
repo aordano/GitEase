@@ -144,9 +144,11 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
 
     return (
         <li
+            tabIndex={-1}
             className={`history-element`}
             onMouseEnter={changeContextMenuStagingAreaItem}
             onMouseLeave={changeContextMenuStagingArea}
+            id={`ID_HISTORY_ELEMENT_${hash}`}
         >
             {generateLabel(message)}
             <hr/>

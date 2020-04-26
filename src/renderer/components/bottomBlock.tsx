@@ -49,15 +49,6 @@ export const BottomBlock: React.FC = () => {
             onMouseLeave={restoreContextMenu}
         >
             <ViewerComponent/>
-            <div
-                className={"node-details-popup"}
-                onMouseEnter={changeContextMenu}
-                onMouseLeave={changeContextMenu}
-            >
-                <p></p>
-                <p></p>
-                <p></p>
-            </div>
         </div>
     );
 };

@@ -149,29 +149,11 @@ export const ViewerComponent: React.FC = () => {
         const hashes = history?.hashes.hashList
         const nodeIndex = hashes!.indexOf(nodeId) // ? If this gets called the data should be present
         const nodeData = history!.fullHistory[nodeIndex]
-        const nodeSubject = `${localization.nodeSubject}: ${nodeData.message}`
-        const nodeAuthor =`${localization.nodeAuthor}: ${nodeData.author_name}`
-        const nodeHash = `${localization.nodeHash}: ${nodeData.hash}` 
-        const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
         const nodeSVG = document.getElementById(`${nodeData.hash}`)?.children[0] as SVGElement
 
-        // -------------------------------------------------------------------
+        const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeData.hash}`) as HTMLLIElement
 
-        // Mantaining popup visibility when leaving the node selection
-        const mantainPopupOnTop = () => {
-            nodeDetailsElement.style.opacity = "1"
-            nodeDetailsElement.style.zIndex = "9999"
-        }
-        const clearPopup = () => {
-            nodeDetailsElement.style.opacity = "0"
-            nodeDetailsElement.style.zIndex = "-9999"
-        }
-        const nodeDetailsElement = document.querySelector(".node-details-popup") as HTMLElement
-        if (nodeDetailsElement) {
-            nodeDetailsElement.addEventListener("mouseover", mantainPopupOnTop)
-            
-            nodeDetailsElement.addEventListener("mouseout", clearPopup)
-        }
+        historyListElement.focus()
 
         // --------------------------------------------------------------------
 
@@ -182,18 +164,11 @@ export const ViewerComponent: React.FC = () => {
         // --------------------------------------------------------------------
 
         // Open popup and highlight the node
-        if (nodeDetails && nodeSVG) {
+        if (nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(5)")
             nodeSVG.setAttribute("opacity", "0.9")
             nodeSVG.setAttribute("stroke-width", "0.5")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
-            nodeDetails.style.opacity = "1"
-            nodeDetails.style.zIndex = "9"
-            if (nodeDetails.children) {
-                nodeDetails.children[0].textContent = nodeSubject
-                nodeDetails.children[1].textContent = nodeAuthor
-                nodeDetails.children[2].textContent = nodeHash
-            }
             return
         }
     };
@@ -203,16 +178,12 @@ export const ViewerComponent: React.FC = () => {
         // Clears the contextMenu change
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
 
-        // Clears the popup on node mouseout, given there's no mouseover on the popup
-        const nodeDetails = document.querySelector(".node-details-popup") as HTMLDivElement
         const nodeSVG = document.getElementById(`${nodeId}`)?.children[0] as SVGElement
-        if (nodeDetails && nodeSVG) {
+        if (nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(1)")
             nodeSVG.setAttribute("opacity", "1")
             nodeSVG.setAttribute("stroke-width", "2")
             nodeSVG.setAttribute("stroke-dasharray","")
-            nodeDetails.style.opacity = "0"
-            nodeDetails.style.zIndex = "-9999"
         }
         return
     };
