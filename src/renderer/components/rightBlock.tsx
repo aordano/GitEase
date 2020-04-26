@@ -103,11 +103,12 @@ const History: React.FC = () => {
         history === null      ||
         JSON.stringify(history) === "[]"
     ) {
+        // TODO maybe we should kill the spinner as it shows for the graph already
         shownElement = React.createElement(
             SpinnerComponent,
             {
                 name: "history",
-                message: localization.gitGraphLoadingMessage
+                message: localization.gitGraphLoadingMessage 
             }
         )
     } else {
@@ -120,7 +121,7 @@ const History: React.FC = () => {
             store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
         }
         
-        const title = React.createElement('p', { className: "changes-list-title" }, "History")
+        const title = React.createElement('p', { className: "changes-list-title" }, localization.gitHistoryTitle)
 
         const elements = []
         for (let i = 0; i < history.length ; i += 1) {
@@ -133,7 +134,7 @@ const History: React.FC = () => {
                     message: history[i].message,
                     branch: history[i].branch,
                     parentHash: history[i].parentHash,
-                    key: `IDHISTORY${i}`
+                    key: `ID_HISTORY${i}`
                 })
             )
         }

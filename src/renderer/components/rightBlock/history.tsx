@@ -30,6 +30,8 @@ import {
 
 import { parseLabel } from "../../functions"
 
+import { readLabelsSync } from "../../functions/config"
+
 // ----------------------
 // --- Action Imports ---
 // ----------------------
@@ -43,8 +45,6 @@ import {
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
-
-const mockData = require("../../data.mock")
 
 import { readConfigSync } from "../../functions/config"
 
@@ -93,20 +93,20 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
         )
 
         if (minutesElapsed < 60) {
-            return `${minutesElapsed} minutes ago`
+            return `${minutesElapsed} ${localization.gitHistoryElementMinutesAgo}`
         }
 
         const hoursElapsed = Math.round(minutesElapsed / 60 )
 
         if (hoursElapsed < 24) {
-            return `${hoursElapsed} hours ago`
+            return `${hoursElapsed} ${localization.gitHistoryElementHoursAgo}`
         }
 
         const daysElapsed = Math.round( hoursElapsed / 24)
         const leftoverHours = hoursElapsed % 24
 
         if (daysElapsed < 7) {
-            return `${daysElapsed} days, ${leftoverHours} hours ago`
+            return `${daysElapsed} ${localization.gitHistoryElementDaysAgo}, ${leftoverHours} ${localization.gitHistoryElementHoursAgo}`
         }
 
         return date
@@ -116,13 +116,20 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
     const generateLabel = (message: string) => {
         const messageParsed = parseLabel(message)
 
-        const availableLabels = mockData.labelsDictionary.map((value: labelType) => {return value.label })
+        const labelRawData = readLabelsSync()
+        let labelParsedData
+
+        if (labelRawData) {
+            labelParsedData = JSON.parse(labelRawData)
+        }
+
+        const availableLabels = labelParsedData.map((value: labelType) => {return value.label })
         
         if (messageParsed) {
             const labelName = messageParsed[0].slice(0, messageParsed[0].length - 1)
             
             if (availableLabels.indexOf(labelName) !== -1) {
-                const labelData = mockData.labelsDictionary[availableLabels.indexOf(labelName)]
+                const labelData = labelParsedData[availableLabels.indexOf(labelName)]
                 return <p className={"message"}>
                     <HistoryLabel
                         label={labelData.label}
@@ -143,7 +150,7 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
         >
             {generateLabel(message)}
             <hr/>
-            <p className={"author"}>{author_name} commited {elapsedTime(date)}</p>
+            <p className={"author"}>{author_name} {localization.gitHistoryCommitedName} {elapsedTime(date)}</p>
             
         </li>
     )

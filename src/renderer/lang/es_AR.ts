@@ -1,5 +1,9 @@
 // ! ###  - Argentine Spanish Localization - ###
 
+import {
+    labelType
+}  from "../types"
+
 // ------------------
 // --- Commit Box ---
 // ------------------
@@ -154,4 +158,174 @@ export const applicationMenuSettingsKeys = "Claves"
 export const applicationMenuSettingsProject = "Configuración del proyecto"
 export const applicationMenuSettingsRepo = "Configuración del repositorio"
 export const applicationMenuSettingsGeneral = "Configuración general"
+
+// -------------------
+// --- Git History ---
+// -------------------
+ 
+export const gitHistoryTitle = "Historial"
+export const gitHistoryCommitedName = "confirmó"
+export const gitHistoryElementMinutesAgo = "minutos atrás"
+export const gitHistoryElementHoursAgo = "horas atrás"
+export const gitHistoryElementDaysAgo = "días"
+
+// -------------------
+// --- Git labels ---
+// -------------------
+
+export const labelsDictionary: labelType[] = [
+    {
+        label: "caract.",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "característica",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "arreglo",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "arreglos",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "estructura",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "documentación",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "docs",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "reorganización",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "prueba",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "pruebas",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "andamiaje",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "experimentos",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "experimento",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "leng",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "lenguage",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "limpieza",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "estilo",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "estilizado",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    {
+        label: "caract. menor",
+        labelColor: {
+            r: 140,
+            g: 70, 
+            b: 90
+        }
+    },
+    
+]
  

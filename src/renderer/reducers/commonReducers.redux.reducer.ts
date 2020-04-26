@@ -56,14 +56,27 @@ import { parseStatus, truncate, stageFile, unstageFile, removeQuotes } from '../
 
 import { parseLogTree, generateGraphData } from '../functions/gitGraph';
 
-// --------------------------
-// * --- Mock Data Imports ---
-// --------------------------
+// ----''----------------------
+// --- Localization Imports ---
+// ---------------------''-----
 
-import {
-    data,
-    labelsDictionary
-} from "../data.mock"
+import { readConfigSync } from "../functions/config"
+
+const getLanguage = () => { 
+
+    // ? We do this instead of reading from state because a 
+    // ? timeout or async function would get race conditions and break the components
+    const configData = readConfigSync()
+
+    let configObject
+
+    if (configData) {
+        configObject = JSON.parse(configData)
+    }
+    return configObject.UIConfig.language
+}
+
+const localization = require(`../lang/${getLanguage()}`)
 
 // ---------------------------------
 // --- Reducer State Definitions ---
@@ -211,8 +224,7 @@ const SetContextMenuIdDefaultState: SetContextMenuIdState = {
     id: "defaultContextMenu"
 }
 
-
-const labelNames = labelsDictionary.map((value: labelType) => { return value.label })
+const labelNames = localization.labelsDictionary.map((value: labelType) => { return value.label })
 
 const suggestions: any = []
 

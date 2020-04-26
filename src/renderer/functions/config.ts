@@ -17,9 +17,9 @@ import { ConfigInformationState } from "../reducers/configReducers.redux.reducer
 // --- Type Imports ---
 // --------------------
 
-// import {
-    
-// } from '../types';
+import {
+    labelType
+} from '../types';
 
 // ----------------------------
 // --- Localization Imports ---
@@ -39,6 +39,7 @@ export const checkIfConfigExist = async () => {
 
     try {
         await FileSystem.promises.access(Path.join(homePath, ".gitease", "config.json"))
+        await FileSystem.promises.access(Path.join(homePath, ".gitease", "labels.json"))
     }
 
     catch (error) {
@@ -54,6 +55,7 @@ export const checkIfConfigExistSync = () => {
 
     try {
         FileSystem.accessSync(Path.join(homePath, ".gitease", "config.json"))
+        FileSystem.accessSync(Path.join(homePath, ".gitease", "labels.json"))
     }
 
     catch (error) {
@@ -107,6 +109,33 @@ export const writeConfigToFile = async (config: ConfigInformationState) => {
     return true
 }
 
+
+// ---------------------------------
+// --- GitEase Labels generation ---
+// ---------------------------------
+
+export const writeLabelsConfigToFile = async (labels: labelType[]) => { 
+
+    try {
+        if (await checkIfConfigDirExist()) {
+            await FileSystem.promises.writeFile(
+                Path.join(homePath, ".gitease", "labels.json"), JSON.stringify(labels), 'utf8'
+            )
+        } else {
+            await FileSystem.promises.mkdir(Path.join(homePath, ".gitease"))
+            await FileSystem.promises.writeFile(
+                Path.join(homePath, ".gitease", "labels.json"), JSON.stringify(labels), 'utf8'
+            )
+        }
+    }
+    
+    catch (error) {
+        return false
+    }
+
+    return true
+}
+
 // -------------------------------
 // --- GitEase Config handling ---
 // -------------------------------
@@ -132,6 +161,21 @@ export const readConfigSync = () => {
         if (checkIfConfigExistSync()) {
             return FileSystem.readFileSync(
                 Path.join(homePath, ".gitease", "config.json"), 'utf8'
+            )
+        }
+    }
+    
+    catch (error) {
+        return false
+    }
+}
+
+export const readLabelsSync = () => { 
+
+    try {
+        if (checkIfConfigExistSync()) {
+            return FileSystem.readFileSync(
+                Path.join(homePath, ".gitease", "labels.json"), 'utf8'
             )
         }
     }
