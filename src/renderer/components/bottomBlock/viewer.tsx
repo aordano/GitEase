@@ -56,7 +56,7 @@ import store from '../../store/index.redux.store';
 // --- Type Imports ---
 // --------------------
 
-import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType } from '../../types';
+import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType, colorTripletType } from '../../types';
 import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
 // ----------------------------
@@ -153,27 +153,48 @@ export const ViewerComponent: React.FC = () => {
 
         const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeData.hash}`) as HTMLLIElement
 
+        const mouseOverBranchInfoElement = document.querySelector(".mouse-over-branch-info-tag") as HTMLHeadingElement
+        const branchColor = store.getState()!.updateViewTreeReducer
+            .dataPromise.graphData._v.nodes[nodeIndex].color
+        
+        const parsedBranchColor = (color: string) => {
+            const firstIndex = color.indexOf("(")
+            const lastIndex = color.indexOf(")")
+            return color.slice(firstIndex + 1, lastIndex)
+        }
+
         historyListElement.focus()
 
         // --------------------------------------------------------------------
 
-        // change contextMenu component on mouseover
+        // Change contextMenu component on mouseover
 
         store.dispatch(SetContextMenuIdAction("nodeGraphContextMenu"))
 
         // --------------------------------------------------------------------
 
-        // Open popup and highlight the node
+        // Highlight the node
+
         if (nodeSVG) {
             nodeSVG.setAttribute("transform", "scale(5)")
             nodeSVG.setAttribute("opacity", "0.9")
             nodeSVG.setAttribute("stroke-width", "0.5")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
-            return
         }
+
+        // --------------------------------------------------------------------
+
+        // Show branch info popup
+
+        mouseOverBranchInfoElement.style.opacity = "1"
+        mouseOverBranchInfoElement.textContent = nodeData.branch
+        mouseOverBranchInfoElement.style.backgroundColor = `rgba(${parsedBranchColor(branchColor)}, 0.5)`
+
     };
     
     const onMouseOutNode = (nodeId: string) => {
+
+        const mouseOverBranchInfoElement = document.querySelector(".mouse-over-branch-info-tag") as HTMLHeadingElement
 
         // Clears the contextMenu change
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
@@ -185,7 +206,12 @@ export const ViewerComponent: React.FC = () => {
             nodeSVG.setAttribute("stroke-width", "2")
             nodeSVG.setAttribute("stroke-dasharray","")
         }
-        return
+
+        // --------------------------------------------------------------------
+
+        // Show branch info popup
+
+        mouseOverBranchInfoElement.style.opacity = "0"
     };
 
     const mainBlockRect = document.querySelector("div.main-block")?.getBoundingClientRect()
@@ -306,3 +332,12 @@ export const ViewerComponent: React.FC = () => {
 
     
 };
+
+export const MouseOverBranchInfo: React.FC= () => {
+
+    return (
+        <h2
+            className={"mouse-over-branch-info-tag"}
+        />
+    )
+}

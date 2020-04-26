@@ -11,7 +11,8 @@ import * as React from 'react';
 // --------------------------
 
 import {
-    ViewerComponent
+    ViewerComponent,
+    MouseOverBranchInfo
 } from "./bottomBlock/viewer"
 
 // ---------------------
@@ -48,7 +49,8 @@ export const BottomBlock: React.FC = () => {
             onMouseEnter={changeContextMenu}
             onMouseLeave={restoreContextMenu}
         >
-            <ViewerComponent/>
+            <ViewerComponent />
+            <MouseOverBranchInfo />
         </div>
     );
 };
