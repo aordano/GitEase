@@ -455,9 +455,9 @@ const generateBranchesColors = (branchesList: string[]) => {
         
 
         while (
-            calculateColorDistance(currentColorTriplet, randomColorTriplet) < 70 ||
-            calculateColorDistance(backgroundColorTriplet, randomColorTriplet) < 70 ||
-            calculateColorDistance(foregroundColorTriplet, randomColorTriplet) < 70
+            calculateColorDistance(currentColorTriplet, randomColorTriplet) < 90 ||
+            calculateColorDistance(backgroundColorTriplet, randomColorTriplet) < 90 ||
+            calculateColorDistance(foregroundColorTriplet, randomColorTriplet) < 90
         ) {
             randomColorTriplet = generateSeedTriplet();
         }

@@ -43,7 +43,7 @@ export const firstTimeWizardDescription = "Bienvenido a GitEase! Primero necesit
 // --- Git Graph Messages ---
 // --------------------------
 
-export const gitGraphLoadingMessage = "Cargando diagrama..."
+export const gitGraphLoadingMessage = "Cargando información del repositorio..."
 
 // ----------------------
 // --- Git Graph Nodes ---

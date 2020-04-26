@@ -104,13 +104,7 @@ const History: React.FC = () => {
         JSON.stringify(history) === "[]"
     ) {
         // TODO maybe we should kill the spinner as it shows for the graph already
-        shownElement = React.createElement(
-            SpinnerComponent,
-            {
-                name: "history",
-                message: localization.gitGraphLoadingMessage 
-            }
-        )
+        shownElement = null
     } else {
     
         const changeContextMenuStagingArea = () => {
