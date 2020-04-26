@@ -142,8 +142,16 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
         return <p className={"message"}>{message}</p>
     }
 
+    const hashesList = store.getState()!.updateViewTreeReducer.dataPromise.history._v.hashes.hashList
+    
+    const branchColor = store.getState()!.updateViewTreeReducer
+        .dataPromise.graphData._v.nodes[hashesList.indexOf(hash)].color
+
     return (
         <li
+            style={{
+                borderLeft: `3px solid ${branchColor}`
+            }}
             tabIndex={-1}
             className={`history-element`}
             onMouseEnter={changeContextMenuStagingAreaItem}
