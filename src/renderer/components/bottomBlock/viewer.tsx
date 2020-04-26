@@ -176,7 +176,7 @@ export const ViewerComponent: React.FC = () => {
         // Highlight the node
 
         if (nodeSVG) {
-            nodeSVG.setAttribute("transform", "scale(5)")
+            nodeSVG.setAttribute("transform", "scale(3)")
             nodeSVG.setAttribute("opacity", "0.9")
             nodeSVG.setAttribute("stroke-width", "0.5")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
