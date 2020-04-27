@@ -12,6 +12,12 @@ import * as React from 'react';
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
+// ---------------------
+// --- Icons Imports ---
+// ---------------------
+
+import * as Icon from 'react-feather';
+
 
 // --------------------
 // --- Type Imports ---
@@ -48,6 +54,10 @@ import {
 
 import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
+import {
+    SetUIConfigInformationAction
+} from "../../actions/configActions.redux.action"
+
 import { parseLabel } from "../../functions"
 
 import { readLabelsSync } from "../../functions/config"
@@ -69,10 +79,12 @@ const getLanguage = () => {
     if (configData) {
         configObject = JSON.parse(configData)
     }
-    return configObject.UIConfig.language
+    return configObject.UIConfig.language as string
 }
 
-const localization = require(`../../lang/${getLanguage()}`)
+const locale = getLanguage()
+
+const localization = require(`../../lang/${locale}`)
 
 type nodeIndexType = {
     nodeIndex: number
@@ -164,21 +176,108 @@ const CommitInfoHeader: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType)
 }
 
 const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
+
+    // TODO parse metadata from commit message and display it here as a list separated by element and its what and why descriptions
+
     return (
         <div
             className={"commit-info-diff-message"}
         >
-
+            <p>Here goes the metadata of the commit including what was changed and why.</p>
         </div>
     )
 }
 
 const CommitInfoExtendedInformation: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
+
+    const commitData = store.getState()!.updateViewTreeReducer.dataPromise.history._v.fullHistory[nodeIndex]
+
     return (
         <div
             className={"commit-info-extended-information"}
         >
+            <p>
+                Commit made on {Intl.DateTimeFormat(locale.replace("_", "-")).format(Date.parse(commitData.date))} by {commitData.author_name}.
+                This commit was published on the {commitData.branch} branch, and it has unique identifier <a className={"commit-info-hash"}>{commitData.hash}</a>.
+            </p>
+        </div>
+    )
+}
 
+const CommitInfoActions: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
+    return (
+        <div
+            className={"commit-info-actions"}
+        >
+            <ul>
+                <li className={"commit-info-action-element"}>
+                    <Icon.RotateCcw color={"black"} size={16} /> 
+                    { localization.nodeGraphContextMenuRevertCommit } (wip)
+                </li>
+                <li className={"commit-info-action-element"}>
+                    <Icon.LogIn color={"black"} size={16} /> 
+                    { localization.nodeGraphContextMenuChangeBranch } (wip)
+                </li>
+                <hr />
+                <li className={"commit-info-action-element"}>
+                    <Icon.GitBranch color={"black"} size={16} />
+                    {localization.nodeGraphContextMenuCreateBranch} (wip)
+                </li>
+                <li className={"commit-info-action-element"}>
+                    <Icon.GitMerge color={"black"} size={16} />
+                    {localization.nodeGraphContextMenuMergeBranch} (wip)
+                </li>
+                <li className={"commit-info-action-element"}>
+                    <Icon.AlertOctagon color={"black"} size={16} />
+                    {localization.nodeGraphContextMenuRebase} (wip)
+                </li>
+            </ul>
+        </div>
+    )
+}
+
+const CommitInfoNavigator: React.FC = () => {
+
+    const backToGraphView = () => {
+        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
+
+        store.dispatch(SetUIConfigInformationAction({
+            language: currentUIConfig.language,
+            mainView: "graph",
+            selectedCommit: currentUIConfig.selectedCommit,
+            showAdditionalInformation: currentUIConfig.showAdditionalInformation,
+            showSidePanelsByDefault: currentUIConfig.showSidePanelsByDefault,
+            theme: currentUIConfig.theme
+        }))
+    }
+
+    const backToDiffView = () => {
+        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
+
+        store.dispatch(SetUIConfigInformationAction({
+            language: currentUIConfig.language,
+            mainView: "diff",
+            selectedCommit: currentUIConfig.selectedCommit,
+            showAdditionalInformation: currentUIConfig.showAdditionalInformation,
+            showSidePanelsByDefault: currentUIConfig.showSidePanelsByDefault,
+            theme: currentUIConfig.theme
+        }))
+    }
+
+    return (
+        <div
+            className={"commit-info-navigator"}
+        >
+            <a
+                onClick={backToGraphView}
+                className={"commit-info-navigator-button"}
+            ><Icon.GitCommit color={"black"} size={50} /> <p>Back to graph view</p>
+            </a>
+            <a
+                onClick={backToDiffView}
+                className={"commit-info-navigator-button"}
+            ><Icon.Columns color={"black"} size={50} /> <p>Back to diff view</p>
+            </a>
         </div>
     )
 }
@@ -195,6 +294,8 @@ export const CommitInfoPane: React.FC<hashType> = ({ hash }: hashType) => {
             <CommitInfoHeader nodeIndex={nodeIndex}/>
             <CommitInfoDiffMessage nodeIndex={nodeIndex} />
             <CommitInfoExtendedInformation nodeIndex={nodeIndex} />
+            <CommitInfoActions nodeIndex={nodeIndex} />
+            <CommitInfoNavigator />
         </div>
     )
 }

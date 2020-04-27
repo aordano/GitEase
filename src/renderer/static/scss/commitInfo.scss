@@ -49,4 +49,107 @@
             display: inline-block;
         }
     }
+
+    & .commit-info-diff-message {
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+    }
+
+    & .commit-info-extended-information {
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+
+        & .commit-info-hash {
+            background-color: rgba(255, 72, 0, 0.25);
+            border-radius: 3px;
+            padding: 3px;
+        }
+    }
+
+    & .commit-info-actions {
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+
+        & ul {
+            color: black;
+            font-size: 16px;
+            outline: none;
+            text-align: left;
+            transition: opacity 400ms ease !important;
+            list-style: none;
+            padding-left: 0px;
+
+            & li {
+                padding: 10px;
+                transition-duration: 400ms;
+                text-align: left;
+                width: 80%;
+                margin: auto;
+                cursor: pointer;
+
+                & svg {
+                    padding-right: 10px;
+                }
+
+                &:hover {
+                    transform: scale(1.05, 1.05);
+                    background-color: rgba(0,0,0,0.25);
+                    border-radius: 3px;
+                }
+            }
+        }
+        
+        & hr {
+            margin: auto;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            background-color: rgba(0,0,0,0.25);
+            border: none;
+            border-width: 1px;
+            height: 1px;
+            width: 60%;
+        }
+    }
+
+    & .commit-info-navigator {
+        width: 100%;
+        padding-top: 20px;
+
+        & .commit-info-navigator-button {
+            padding: 10px;
+            transition-duration: 400ms;
+            display: inline-block;
+            width: 150px;
+            margin: auto;
+            cursor: pointer;
+
+            & p {
+                text-align: center;
+            }
+
+            & svg {
+                margin: auto; 
+                position: relative;
+                left: 50px;
+                transition-duration: 400ms;
+
+                &:hover {
+                    transform: scale(1.1,1.1);
+                }
+            }
+
+            &:hover {
+                transform: scale(1.05, 1.05);
+                background-color: rgba(0,0,0,0.25);
+                border-radius: 3px;
+            }
+
+            &:first-child {
+                position: absolute;
+                left: 20px;    
+            }
+
+            &:last-child {
+                position: absolute;
+                right: 20px;  
+            }
+        }
+    }
 }
