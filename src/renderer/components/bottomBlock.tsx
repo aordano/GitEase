@@ -15,6 +15,8 @@ import {
     MouseOverBranchInfo
 } from "./bottomBlock/viewer"
 
+import { CommitInfoPane } from "./bottomBlock/commitInfo"
+
 // ---------------------
 // --- Store Imports ---
 // ---------------------
@@ -35,7 +37,15 @@ import { SetContextMenuIdAction } from '../actions/commonActions.redux.action';
 export const BottomBlock: React.FC = () => {
     // -- Simple container that holds the viewer components.
     
-    const changeContextMenu = () => {
+    const changeContextMenuGraph = () => {
+        store.dispatch(SetContextMenuIdAction("graphBackgroundContextMenu"))
+    }
+    
+    const changeContextMenuCommitInfo = () => {
+        store.dispatch(SetContextMenuIdAction("graphBackgroundContextMenu"))
+    }
+    
+    const changeContextMenuDiffViewer = () => {
         store.dispatch(SetContextMenuIdAction("graphBackgroundContextMenu"))
     }
 
@@ -43,16 +53,35 @@ export const BottomBlock: React.FC = () => {
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
     }
 
-    return (
-        <div
-            className={'bottom-block'}
-            onMouseEnter={changeContextMenu}
-            onMouseLeave={restoreContextMenu}
-        >
-            <ViewerComponent />
-            <MouseOverBranchInfo />
-        </div>
-    );
+    const currentView = store.getState()!.configInformationReducer.UIConfig.mainView
+    const selectedCommit = store.getState()!.configInformationReducer.UIConfig.selectedCommit
+
+    switch (currentView) {
+        case "graph":
+            return (
+                <div
+                    className={'bottom-block'}
+                    onMouseEnter={changeContextMenuGraph}
+                    onMouseLeave={restoreContextMenu}
+                >
+                    <ViewerComponent />
+                    <MouseOverBranchInfo />
+                </div>
+            )
+        case "commitInfo":
+            return (
+                <div
+                    className={'bottom-block'}
+                    onMouseEnter={changeContextMenuCommitInfo}
+                    onMouseLeave={restoreContextMenu}
+                >
+                    <CommitInfoPane hash={selectedCommit}/>
+                </div>
+            )
+        
+    }
+
+    return null
 };
 
 

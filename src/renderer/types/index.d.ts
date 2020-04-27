@@ -296,6 +296,7 @@ export type UIConfigType = {
     mainView: string,
     showSidePanelsByDefault: boolean
     showAdditionalInformation: boolean
+    selectedCommit: string
 }
 
 export type SSHConfigType = {

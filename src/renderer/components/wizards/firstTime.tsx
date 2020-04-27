@@ -235,7 +235,8 @@ export const FirstTimeWizardP3: React.FC = () => {
                 theme: "light",
                 mainView: "graph",
                 showSidePanelsByDefault: true,
-                showAdditionalInformation: true
+                showAdditionalInformation: true,
+                selectedCommit: "null"
             },
             SSHConfig: {
                 currentKeysLocation: Path.join(Electron.remote.app.getPath("home"), ".ssh"),

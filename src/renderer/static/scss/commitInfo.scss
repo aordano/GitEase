@@ -1,0 +1,52 @@
+.commit-info-pane {
+    height: calc(100vh - 32px);
+    width: calc( 100vw - 293px - 250px - 40px);
+    padding: 20px;
+    padding-top: 10px;
+
+    & .commit-info-header {
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+
+        & hr {
+            margin-top: 3px;
+            margin-bottom: 3px;
+            background-color: rgba(0,0,0,0.25);
+            border: none;
+            border-width: 1px;
+            height: 1px;
+        }
+
+        & .separator {
+            margin-left: 3px;
+            margin-right: 3px;
+            background-color: rgba(0,0,0,0.25);
+            border: none;
+            border-width: 1px;
+            width: 1px;
+            height: 40px;
+            display: inline-block;
+            position: relative;
+            top: 15px;
+        }
+
+        & .commit-info-label {
+            width: fit-content;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        & .commit-info-branch {
+            width: fit-content;
+            padding: 10px;
+            border-radius: 5px;
+            color: black;
+            margin-right: 10px;
+            margin-left: 10px;
+            display: inline-block;
+        }
+    }
+}

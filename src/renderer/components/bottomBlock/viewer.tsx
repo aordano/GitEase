@@ -56,6 +56,8 @@ import store from '../../store/index.redux.store';
 // --- Type Imports ---
 // --------------------
 
+import { SetUIConfigInformationAction } from "../../actions/configActions.redux.action"
+
 import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType, colorTripletType } from '../../types';
 import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
@@ -137,12 +139,18 @@ const generateLabelProperty = (node: ReactD3GraphNodeType) => {
 
 export const ViewerComponent: React.FC = () => {
 
-    // TODO Open diff and more info screen on double click
-    //const onClickNode = function(nodeId) {
-    //    window.alert('Clicked node ${nodeId}');
-    //};
+    const onClickNode= (nodeId: string) => {
+        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
 
-    // TODO Generate a contextual menu for actions on the given commit
+        store.dispatch(SetUIConfigInformationAction({
+            language: currentUIConfig.language,
+            mainView: "commitInfo",
+            selectedCommit: nodeId,
+            showAdditionalInformation: currentUIConfig.showAdditionalInformation,
+            showSidePanelsByDefault: currentUIConfig.showSidePanelsByDefault,
+            theme: currentUIConfig.theme
+        }))
+    }    
     
     const onMouseOverNode = (nodeId: string) => {
         const history = store.getState()?.updateViewTreeReducer.dataPromise.history._v
@@ -315,6 +323,7 @@ export const ViewerComponent: React.FC = () => {
             {
                 onMouseOverNode,
                 onMouseOutNode,
+                onClickNode,
                 data: graphData,
                 id: "graphViewer",
                 config: graphConfig,

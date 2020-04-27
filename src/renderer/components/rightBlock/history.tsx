@@ -42,6 +42,10 @@ import {
     SetContextMenuIdAction
 } from '../../actions/commonActions.redux.action';
 
+import {
+    SetUIConfigInformationAction
+} from "../../actions/configActions.redux.action"
+
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
@@ -75,7 +79,19 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
     // -- Component that creates the list element based on the different status.
     { author_name, date, hash, message, branch }: GitLogObjectType
 ) => {
-    
+
+    const openCommitInfoPane = () => {
+        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
+
+        store.dispatch(SetUIConfigInformationAction({
+            language: currentUIConfig.language,
+            mainView: "commitInfo",
+            selectedCommit: hash,
+            showAdditionalInformation: currentUIConfig.showAdditionalInformation,
+            showSidePanelsByDefault: currentUIConfig.showSidePanelsByDefault,
+            theme: currentUIConfig.theme
+        }))
+    }    
     
     const changeContextMenuStagingAreaItem = () => {
         store.dispatch(SetContextMenuIdAction("stagingAreaItemContextMenu"))
@@ -159,6 +175,7 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
             onMouseEnter={changeContextMenuStagingAreaItem}
             onMouseLeave={changeContextMenuStagingArea}
             id={`ID_HISTORY_ELEMENT_${hash}`}
+            onClick={openCommitInfoPane}
         >
             {generateLabel(message)}
             <hr/>
