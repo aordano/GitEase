@@ -168,6 +168,7 @@ export const gitHistoryCommitedName = "commited"
 export const gitHistoryElementMinutesAgo = "minutes ago"
 export const gitHistoryElementHoursAgo = "hours ago"
 export const gitHistoryElementDaysAgo = "days"
+export const gitHistoryElementArticle = "on"
 
 // -------------------
 // --- Git labels ---

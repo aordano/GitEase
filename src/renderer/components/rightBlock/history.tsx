@@ -59,10 +59,12 @@ const getLanguage = () => {
     if (configData) {
         configObject = JSON.parse(configData)
     }
-    return configObject.UIConfig.language
+    return configObject.UIConfig.language as string
 }
 
-const localization = require(`../../lang/${getLanguage()}`)
+const locale = getLanguage()
+
+const localization = require(`../../lang/${locale}`)
 
 // --------------------------
 // --- History Components ---
@@ -109,7 +111,7 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
             return `${daysElapsed} ${localization.gitHistoryElementDaysAgo}, ${leftoverHours} ${localization.gitHistoryElementHoursAgo}`
         }
 
-        return date
+        return `${localization.gitHistoryElementArticle} ${Intl.DateTimeFormat(locale.replace("_", "-")).format(Date.parse(date))}`
         
     }
 
