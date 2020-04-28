@@ -139,8 +139,10 @@ const generateLabelProperty = (node: ReactD3GraphNodeType) => {
 
 export const ViewerComponent: React.FC = () => {
 
-    const onClickNode= (nodeId: string) => {
-        const currentUIConfig = useSelector(state => state.configInformationReducer.UIConfig)
+    const onClickNode = (nodeId: string) => {
+        // ? We call store.getState() even tho we are in the body of a react component because the 
+        // ? function is called outside the component. Yes, weird but is handled by Graph.js library
+        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
 
         store.dispatch(SetUIConfigInformationAction({
             language: currentUIConfig.language,
@@ -153,7 +155,8 @@ export const ViewerComponent: React.FC = () => {
     }    
     
     const onMouseOverNode = (nodeId: string) => {
-        const history =  useSelector(state => state.updateViewTreeReducer.dataPromise.history._v)
+        // ? Likewise onClickNode()
+        const history =  store.getState()!.updateViewTreeReducer.dataPromise.history._v
         const hashes = history?.hashes.hashList
         const nodeIndex = hashes!.indexOf(nodeId) // ? If this gets called the data should be present
         const nodeData = history!.fullHistory[nodeIndex]
@@ -162,9 +165,7 @@ export const ViewerComponent: React.FC = () => {
         const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeData.hash}`) as HTMLLIElement
 
         const mouseOverBranchInfoElement = document.querySelector(".mouse-over-branch-info-tag") as HTMLHeadingElement
-        const branchColor = useSelector(state =>
-            state.updateViewTreeReducer.dataPromise.graphData._v.nodes
-        )[nodeIndex].color
+        const branchColor = store.getState()!.updateViewTreeReducer.dataPromise.graphData._v.nodes[nodeIndex].color
         
         const parsedBranchColor = (color: string) => {
             const firstIndex = color.indexOf("(")
