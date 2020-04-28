@@ -94,7 +94,7 @@ const generateLabelProperty = (node: ReactD3GraphNodeType) => {
 
     // FIXME this can't load children data sometimes, saying "undefined" on the target branch
 
-    const historyData = store.getState()?.updateViewTreeReducer.dataPromise.history._v
+    const historyData = store.getState()!.updateViewTreeReducer.dataPromise.history._v
 
     const currentNodeIndex = historyData?.hashes.hashList.indexOf(node.id) ?? 0
 
@@ -140,7 +140,7 @@ const generateLabelProperty = (node: ReactD3GraphNodeType) => {
 export const ViewerComponent: React.FC = () => {
 
     const onClickNode= (nodeId: string) => {
-        const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
+        const currentUIConfig = useSelector(state => state.configInformationReducer.UIConfig)
 
         store.dispatch(SetUIConfigInformationAction({
             language: currentUIConfig.language,
@@ -153,7 +153,7 @@ export const ViewerComponent: React.FC = () => {
     }    
     
     const onMouseOverNode = (nodeId: string) => {
-        const history = store.getState()?.updateViewTreeReducer.dataPromise.history._v
+        const history =  useSelector(state => state.updateViewTreeReducer.dataPromise.history._v)
         const hashes = history?.hashes.hashList
         const nodeIndex = hashes!.indexOf(nodeId) // ? If this gets called the data should be present
         const nodeData = history!.fullHistory[nodeIndex]
@@ -162,8 +162,9 @@ export const ViewerComponent: React.FC = () => {
         const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeData.hash}`) as HTMLLIElement
 
         const mouseOverBranchInfoElement = document.querySelector(".mouse-over-branch-info-tag") as HTMLHeadingElement
-        const branchColor = store.getState()!.updateViewTreeReducer
-            .dataPromise.graphData._v.nodes[nodeIndex].color
+        const branchColor = useSelector(state =>
+            state.updateViewTreeReducer.dataPromise.graphData._v.nodes
+        )[nodeIndex].color
         
         const parsedBranchColor = (color: string) => {
             const firstIndex = color.indexOf("(")

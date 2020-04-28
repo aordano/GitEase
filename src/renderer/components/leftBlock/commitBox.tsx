@@ -22,6 +22,12 @@ import ReactTags from 'react-tag-autocomplete'
 
 import { store } from '../../store/index.redux.store';
 
+// ---------------------
+// --- Icons Imports ---
+// ---------------------
+
+import * as Icon from 'react-feather';
+
 // --------------------
 // --- Type Imports ---
 // --------------------
@@ -73,7 +79,7 @@ import {
     SetReactTagDataAction
 } from '../../actions/commonActions.redux.action';
 
-import { labelType } from '../../types';
+import { labelType, ContentNameType } from '../../types';
 
 import { HistoryLabel } from "../rightBlock/history"
 
@@ -127,6 +133,7 @@ export const CommitMessageInput: React.FC = () => {
 
         store.dispatch(StoreCommitLabelAction(tagsPayload))
 
+        // FIXME replace this for the labels config
         const availableLabels = mockData.labelsDictionary.map((value: labelType) => { return value.label })
         
         return <div className={"commit-message-subwrapper"}>
@@ -160,6 +167,8 @@ export const CommitMessageInput: React.FC = () => {
 
 export const CommitButton: React.FC = () => {
     // -- Button that handles the commit/push on the basic workflow.
+
+    // TODO Read from state the data of what/why on the changes made and add to the commit message
 
     // TODO Change the button logic to dispatch the correct action given the workflow
 
@@ -203,29 +212,116 @@ export const CommitButton: React.FC = () => {
     );
 };
 
+type CommitDescriptionElementType = {
+    name: string,
+    fullName: string,
+    status: string
+}
+
+type CommitMetadataButtonType = {
+    id: string
+}
+
+const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = ({ id }: CommitMetadataButtonType) => {
+    
+    // TODO Add prompt to write out what has been changed on the file
+
+    // TODO Store in state the message
+
+    // TODO Change the icon to circle-check once the prompt has ben filled
+
+    return (
+        <a
+            className={"commit-description-metadata-button"}
+            id={id}
+        >
+            <Icon.Circle color={"black"} size={18} />
+        </a>
+    )
+}
+
+const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = ({id}: CommitMetadataButtonType) => {
+    
+    // TODO Add prompt to write out why the file has been changed
+
+    // TODO Store in state the message
+
+    // TODO Change the icon to circle-check once the prompt has ben filled
+
+    return (
+        <a
+            className={"commit-description-metadata-button"}
+            id={id}
+        >
+            <Icon.Circle color={"black"} size={18} />
+        </a>
+    )
+}
+
+const CommitDescriptionElement: React.FC<CommitDescriptionElementType> = (
+    { name, fullName, status }: CommitDescriptionElementType
+) => {
+
+    return (
+        <li
+            className={`files-${status}`}
+        >
+            <p>{name}</p>
+            <CommitMetadataInputButtonWhat
+                id={`commit-metadata-button-${fullName.replace(" ","")}-what`}
+            />
+            <CommitMetadataInputButtonWhy
+                id={`commit-metadata-button-${fullName.replace(" ","")}-why`}
+            />
+        </li>
+    )
+}
+
 export const CommmitDescription: React.FC = () => {
     // -- Component that contains the commit box message description
     const [input, setInput] = useState('');
     const currentState = useSelector(state => state.basicWorkflowReducer);
 
-    const handleCommitDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setInput(event.currentTarget.value);
-        store.dispatch(
-            BasicWorkflowUpdateCommitMessageAction(
-                // -- Requires to pass both the message and description to the state so they
-                // mantain synchronization.
-                currentState.commitMessage,
-                event.currentTarget.value
+    const changesTree = useSelector(state => state.updateChangesAreaReducer.changesAreaTree)
+
+    const stagingStatus = changesTree.map((value) => { return value.staged })
+
+    const stagedElementsList: React.FunctionComponentElement<CommitDescriptionElementType>[] = []
+
+    const parseName = (element: string | ContentNameType) => {
+        if (typeof element === "string") {
+            return element.slice(element.lastIndexOf("/") + 1, element.length)
+        }
+
+        return element.to.slice(element.to.lastIndexOf("/") + 1, element.to.length)
+    }
+
+    const parseFullName = (element: string | ContentNameType) => {
+        if (typeof element === "string") {
+            return element
+        }
+
+        return element.to
+    }
+    
+    for (let i = 0; i < stagingStatus.length; i += 1) {
+        if (stagingStatus[i]) {
+            stagedElementsList.push(
+                React.createElement(CommitDescriptionElement,{
+                    name: parseName(changesTree[i].content),
+                    fullName: parseFullName(changesTree[i].content),
+                    status: changesTree[i].status,
+                    key: `ID_COMMIT_DESCRIPTION_ELEMENT_${i}`
+                })
             )
-        );
-    };
+        }
+    }
 
     return (
-        <textarea
-            placeholder={localization.commitDescriptionPlaceholder}
-            className={'commit-description'}
-            value={input}
-            onChange={handleCommitDescriptionChange}
-        />
+        <ul
+            className={"commit-description-list"}
+        >
+            {stagedElementsList}
+        </ul>
     );
 };

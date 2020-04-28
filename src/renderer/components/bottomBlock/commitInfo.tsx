@@ -96,9 +96,9 @@ type hashType = {
 
 const CommitInfoHeader: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
 
-    const commitData = store.getState()!.updateViewTreeReducer.dataPromise.history._v.fullHistory[nodeIndex]
+    const commitData = useSelector(state => state.updateViewTreeReducer.dataPromise.history._v.fullHistory)[nodeIndex]
 
-    const nodeData = store.getState()!.updateViewTreeReducer.dataPromise.graphData._v.nodes[nodeIndex]
+    const nodeData = useSelector(state => state.updateViewTreeReducer.dataPromise.graphData._v.nodes)[nodeIndex]
 
     const parsedMessage = parseLabel(commitData.message)
 
@@ -190,7 +190,7 @@ const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndex
 
 const CommitInfoExtendedInformation: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
 
-    const commitData = store.getState()!.updateViewTreeReducer.dataPromise.history._v.fullHistory[nodeIndex]
+    const commitData = useSelector(state => state.updateViewTreeReducer.dataPromise.history._v.fullHistory)[nodeIndex]
 
     return (
         <div

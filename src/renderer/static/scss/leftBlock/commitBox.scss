@@ -97,19 +97,81 @@ div.commit-box {
         }
     }
 
-    & textarea {
-        width: 240px;
-        margin-top: 5px;
-        background-color: rgba(0,0,0,0.25);
-        border: none;
+    & .commit-description-list {
+        font-weight: 400;
+        width: 100%;
+        list-style: none;
+        background-color: rgba(0, 0, 0, 0.25);
         border-radius: 5px;
-        height: calc(40% - 20px);
-        color: black;
-        padding: 5px;
-        font-size: 1em;
-        font-weight: 100;
-        font-family: "Roboto Condensed";
-        height: 100px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        right: 10px;
+        height: 200px;
+        min-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        font-size: 16px;
+        padding: 0;
+
+        & li {
+
+            text-align: right;
+            padding: 5px;
+
+            & p {
+                display: inline-block;
+                border-right: 2px solid rgba(0,0,0,0.25);
+                padding-right: 10px;
+            }
+
+            & .commit-description-metadata-button {
+                display: inline-block;
+                cursor: pointer;
+                transition-duration: 400ms;
+                padding: 5px;
+
+                &:nth-child(2) {
+                    margin-left: 10px;
+                }
+
+                & svg {
+                    position: relative;
+                    top: 3px;
+                    transition-duration: 400ms;
+                    stroke: rgba(0,0,0,0.65);
+
+                    &:hover {
+                        transform: scale(1.1, 1.1);
+                        stroke: black;
+                    }
+                }
+            }
+            
+        }
+
+        & li.files-modified {
+            border: 1px solid #fff;
+            background-color: rgb(255, 240, 223);
+        }
+
+        & li.files-deleted {
+            border: 1px solid #fff;
+            background-color: rgb(255, 224, 224);
+        }
+
+        & li.files-renamed {
+            border: 1px solid #fff;
+            background-color: rgb(224, 241, 255);
+        }
+
+        & li.files-not_added {
+            border: 1px solid #fff;
+            background-color: rgb(224, 255, 231);
+        }
+
+        & li.files-created {
+            border: 1px solid #fff;
+            background-color: rgb(224, 255, 231);
+        }
     }
 
     & .commit-label {

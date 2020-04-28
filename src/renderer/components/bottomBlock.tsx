@@ -28,6 +28,12 @@ import store from '../store/index.redux.store';
 // --- Type Imports ---
 // --------------------
 
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { useSelector } from "../types/redefinitions"
+
 import { SetContextMenuIdAction } from '../actions/commonActions.redux.action';
 
 // -------------------------------
@@ -53,8 +59,8 @@ export const BottomBlock: React.FC = () => {
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
     }
 
-    const currentView = store.getState()!.configInformationReducer.UIConfig.mainView
-    const selectedCommit = store.getState()!.configInformationReducer.UIConfig.selectedCommit
+    const currentView = useSelector(state => state.configInformationReducer.UIConfig.mainView)
+    const selectedCommit = useSelector(state => state.configInformationReducer.UIConfig.selectedCommit)
 
     switch (currentView) {
         case "graph":
