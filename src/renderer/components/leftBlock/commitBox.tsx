@@ -43,6 +43,14 @@ import {
     BasicWorkflowUpdateCommitMessageAction
 } from '../../actions/basicWorkflowActions.redux.action';
 
+import {
+    UpdateCommitDescriptionViewAction,
+    UpdateCommitDescriptionElementNameAction,
+    UpdateCommitDescriptionElementWhatAction,
+    UpdateCommitDescriptionElementWhyAction,
+    UpdateCommitDescriptionElementCompletionStatusAction
+} from "../../actions/commonActions.redux.action"
+
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
@@ -219,21 +227,26 @@ export const CommitButton: React.FC = () => {
 type CommitDescriptionElementType = {
     name: string,
     fullName: string,
-    status: string
+    status: string,
+    index: number
 }
 
 type CommitMetadataButtonType = {
-    id: string
+    id: string,
+    index: number,
+    name: string
 }
 
-const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = ({ id }: CommitMetadataButtonType) => {
+const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = (
+    { id, index, name}: CommitMetadataButtonType
+) => {
+
+    const completionStatus = useSelector(state => state.gitCommitDescriptionReducer.completionStatus)[index]
     
     const handleWhatMetadataPopup = () => {
-        // TODO Add prompt to write out what has been changed
-
-        // TODO Store in state the message
-
-        // TODO Change the icon to circle-check once the prompt has ben filled
+        
+        store.dispatch(UpdateCommitDescriptionViewAction("what"))
+        store.dispatch(UpdateCommitDescriptionElementNameAction(index, name))
     }
 
     return (
@@ -242,19 +255,24 @@ const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = ({ id 
             className={"commit-description-metadata-button"}
             id={id}
         >
-            <Icon.Circle color={"black"} size={18} />
+            {
+                completionStatus.isWhatCompleted
+                ? <Icon.CheckCircle color={"black"} size={18} />
+                : <Icon.Circle color={"black"} size={18} />
+            }
         </a>
     )
 }
 
-const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = ({id}: CommitMetadataButtonType) => {
+const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = (
+    { id, index, name}: CommitMetadataButtonType
+) => {
+
+    const completionStatus = useSelector(state => state.gitCommitDescriptionReducer.completionStatus)[index]
     
     const handleWhyMetadataPopup = () => {
-        // TODO Add prompt to write out why the file has been changed
-
-        // TODO Store in state the message
-
-        // TODO Change the icon to circle-check once the prompt has ben filled
+        store.dispatch(UpdateCommitDescriptionViewAction("why"))
+        store.dispatch(UpdateCommitDescriptionElementNameAction(index, name))
     }
 
     return (
@@ -263,13 +281,17 @@ const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = ({id}: 
             className={"commit-description-metadata-button"}
             id={id}
         >
-            <Icon.Circle color={"black"} size={18} />
+            {
+                completionStatus.isWhyCompleted
+                ? <Icon.CheckCircle color={"black"} size={18} />
+                : <Icon.Circle color={"black"} size={18} />
+            }
         </a>
     )
 }
 
 const CommitDescriptionElement: React.FC<CommitDescriptionElementType> = (
-    { name, fullName, status }: CommitDescriptionElementType
+    { name, fullName, status, index}: CommitDescriptionElementType
 ) => {
 
     return (
@@ -278,19 +300,79 @@ const CommitDescriptionElement: React.FC<CommitDescriptionElementType> = (
         >
             <p>{name}</p>
             <CommitMetadataInputButtonWhat
+                index={index}
+                name={name}
                 id={`commit-metadata-button-${fullName.replace(" ","")}-what`}
             />
             <CommitMetadataInputButtonWhy
+                name={name}
+                index={index}
                 id={`commit-metadata-button-${fullName.replace(" ","")}-why`}
             />
         </li>
     )
 }
 
+
+type CommitDescriptionElement = {
+    isWhat: boolean
+}
+
+const CommitDescriptionTextArea: React.FC<CommitDescriptionElement> = (
+    { isWhat }: CommitDescriptionElement
+) => {
+    const [input, setInput] = useState('');
+
+    const index = useSelector(state => state.gitCommitDescriptionReducer.currentIndex)
+
+    const handleDescriptionTextChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
+        setInput(event.currentTarget.value)
+    };
+
+    const handleTextApproval = () => {
+
+        const currentCompletionStatus = store.getState()!.gitCommitDescriptionReducer.completionStatus[index]
+
+        if (isWhat) {
+
+            store.dispatch(UpdateCommitDescriptionElementWhatAction(index, input))
+            store.dispatch(UpdateCommitDescriptionElementCompletionStatusAction(index, {
+                isWhatCompleted: true,
+                isWhyCompleted: currentCompletionStatus.isWhyCompleted
+            }))
+
+        } else {
+
+            store.dispatch(UpdateCommitDescriptionElementWhyAction(index, input))
+            store.dispatch(UpdateCommitDescriptionElementCompletionStatusAction(index, {
+                isWhatCompleted: currentCompletionStatus.isWhatCompleted,
+                isWhyCompleted: true
+            }))
+        }
+        
+        store.dispatch(UpdateCommitDescriptionViewAction("list"))
+    }
+
+    return (
+        <div className={"commit-description-textarea-wrapper"}>
+            <textarea
+                className={"commit-description-textarea"}
+                value={input}
+                onChange={handleDescriptionTextChange}
+            />
+            <a
+                onClick={handleTextApproval}
+                className={"commit-description-textarea-confirmation-button"}
+            >OK
+            </a>
+        </div>
+    )
+}
+
 export const CommmitDescription: React.FC = () => {
     // -- Component that contains the commit box message description
-    const [input, setInput] = useState('');
-    const currentState = useSelector(state => state.basicWorkflowReducer);
+    
+    const currentView = useSelector(state => state.gitCommitDescriptionReducer.currentView)
 
     const changesTree = useSelector(state => state.updateChangesAreaReducer.changesAreaTree)
 
@@ -313,18 +395,64 @@ export const CommmitDescription: React.FC = () => {
 
         return element.to
     }
+
+    // TODO kill the child index system and instantiate the array with the amount of elements in the changes space
     
     for (let i = 0; i < stagingStatus.length; i += 1) {
+
+        const elementName = store.getState()?.gitCommitDescriptionReducer.changedElements[i]
+        const completionStatus = store.getState()?.gitCommitDescriptionReducer.completionStatus[i]
+        const elementDescriptionWhat = store.getState()?.gitCommitDescriptionReducer.descriptionWhat[i]
+        const elementDescriptionWhy = store.getState()?.gitCommitDescriptionReducer.descriptionWhy[i]
+
+        if (!elementName) {
+            store.dispatch(UpdateCommitDescriptionElementNameAction(i, parseName(changesTree[i].content)))
+        }
+
+        if (!completionStatus) {
+            store.dispatch(UpdateCommitDescriptionElementCompletionStatusAction(i, {
+                isWhatCompleted: false,
+                isWhyCompleted: false
+            }))
+        }
+
+        if (!elementDescriptionWhat) {
+            store.dispatch(UpdateCommitDescriptionElementWhatAction(i,""))
+        }
+
+        if (!elementDescriptionWhy) {
+            store.dispatch(UpdateCommitDescriptionElementWhyAction(i,""))
+        }
+        
         if (stagingStatus[i]) {
             stagedElementsList.push(
                 React.createElement(CommitDescriptionElement,{
                     name: parseName(changesTree[i].content),
                     fullName: parseFullName(changesTree[i].content),
                     status: changesTree[i].status,
-                    key: `ID_COMMIT_DESCRIPTION_ELEMENT_${i}`
+                    key: `ID_COMMIT_DESCRIPTION_ELEMENT_${i}`,
+                    index: i
                 })
             )
         }
+    }
+
+    if (currentView === "what") {
+        return (
+            <CommitDescriptionTextArea
+                isWhat={true}
+            />
+        )
+        
+    }
+
+    if (currentView === "why") {
+        return (
+            <CommitDescriptionTextArea
+                isWhat={false}
+            />
+        )
+        
     }
 
     return (

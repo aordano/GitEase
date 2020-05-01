@@ -18,7 +18,8 @@ import {
     ReposConfigType,
     GitConfigType,
     ProjectConfigType,
-    UserDataConfigType
+    UserDataConfigType,
+    CompletionStatusType
 } from "./index"
 
 // -----------------------------
@@ -48,6 +49,11 @@ export const SET_CURRENT_GIT_CONFIG_INFORMATION = "SET_CURRENT_GIT_CONFIG_INFORM
 export const SET_CURRENT_PROJECT_CONFIG_INFORMATION = "SET_CURRENT_PROJECT_CONFIG_INFORMATION"
 export const SET_CURRENT_USER_DATA_CONFIG_INFORMATION = "SET_CURRENT_USER_DATA_CONFIG_INFORMATION"
 export const SAVE_CONFIG_TO_FILE = "SAVE_CONFIG_TO_FILE"
+export const UPDATE_COMMIT_DESCRIPTION_VIEW = "UPDATE_COMMIT_DESCRIPTION_VIEW"
+export const UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT = "UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT"
+export const UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY = "UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY"
+export const UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME = "UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME"
+export const UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS = "UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS"
 
 // --------------------------
 // --- Action Definitions ---
@@ -168,4 +174,33 @@ export interface SetUserDataConfigInformationType extends Action {
 
 export interface SaveConfigToFileType extends Action {
     type: 'SAVE_CONFIG_TO_FILE'
+}
+
+export interface UpdateCommitDescriptionViewType extends Action {
+    view: string,
+    type: 'UPDATE_COMMIT_DESCRIPTION_VIEW'
+}
+
+export interface UpdateCommitDescriptionElementNameType extends Action {
+    index: number,
+    name: string,
+    type: 'UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME'
+}
+
+export interface UpdateCommitDescriptionElementWhatType extends Action {
+    index: number,
+    what: string,
+    type: 'UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT'
+}
+
+export interface UpdateCommitDescriptionElementWhyType extends Action {
+    index: number,
+    why: string,
+    type: 'UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY'
+}
+
+export interface UpdateCommitDescriptionElementCompletionStatusType extends Action {
+    index: number,
+    completionStatus: CompletionStatusType
+    type: 'UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS'
 }

@@ -27,6 +27,19 @@ export type RepoConfigDataType = {
     workingDir: string;
 };
 
+export type GitCommitDescriptionType = {
+    currentView: string;
+    completionStatus: CompletionStatusType[];
+    descriptionWhat: string[];
+    descriptionWhy: string[];
+    changedElements: string[];
+}
+
+export type CompletionStatusType = {
+    isWhatCompleted: boolean,
+    isWhyCompleted: boolean
+}
+
 // --------------------------------------
 // --- Git Status Modified Files Type ---
 // --------------------------------------

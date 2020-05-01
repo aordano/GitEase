@@ -22,6 +22,11 @@ import {
     SET_CONTEXT_MENU_ID,
     STORE_COMMIT_LABEL,
     SET_REACT_TAG_DATA,
+    UPDATE_COMMIT_DESCRIPTION_VIEW,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS,
     ViewModifiedFilesType,
     UpdateChangesAreaType,
     SetStagingStatusType,
@@ -32,10 +37,15 @@ import {
     UpdateViewTreeType,
     SetContextMenuIdType,
     StoreCommitLabelType,
-    SetReactTagDataType
+    SetReactTagDataType,
+    UpdateCommitDescriptionViewType,
+    UpdateCommitDescriptionElementNameType,
+    UpdateCommitDescriptionElementWhatType,
+    UpdateCommitDescriptionElementWhyType,
+    UpdateCommitDescriptionElementCompletionStatusType
 } from '../types/constants.d';
 
-import { ReactTagTagType } from "../types"
+import { ReactTagTagType, CompletionStatusType } from "../types"
 
 // ---------------------------------------
 // --- Viable Action Types Definitions ---
@@ -57,6 +67,13 @@ export type UpdateViewTreeAction = UpdateViewTreeType
 export type SetContextMenuIdAction = SetContextMenuIdType
 
 export type ReactTagDataAction = StoreCommitLabelType | SetReactTagDataType
+
+export type UpdateCommitDescriptionAction =
+      UpdateCommitDescriptionViewType
+    | UpdateCommitDescriptionElementNameType
+    | UpdateCommitDescriptionElementWhatType
+    | UpdateCommitDescriptionElementWhyType
+    | UpdateCommitDescriptionElementCompletionStatusType
 
 // ------------------------------
 // --- Update Action Creators ---
@@ -180,3 +197,57 @@ export const SetReactTagDataAction: ActionCreator<SetReactTagDataType> = (
         type:  SET_REACT_TAG_DATA
     }
 }
+
+// -----------------------------------
+// --- Commit Description Creators ---
+// -----------------------------------
+
+export const UpdateCommitDescriptionViewAction: ActionCreator<UpdateCommitDescriptionViewType> = (view: string) => {
+    return {
+        view,
+        type: UPDATE_COMMIT_DESCRIPTION_VIEW,
+
+    };
+};
+
+export const UpdateCommitDescriptionElementNameAction:
+    ActionCreator<UpdateCommitDescriptionElementNameType> = (index: number, name: string) => {
+        return {
+            index,
+            name,
+            type: UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME,
+
+        };
+    };
+
+export const UpdateCommitDescriptionElementWhatAction:
+    ActionCreator<UpdateCommitDescriptionElementWhatType> = (index: number, what: string) => {
+        return {
+            index,
+            what,
+            type: UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT,
+
+        };
+    };
+
+export const UpdateCommitDescriptionElementWhyAction:
+    ActionCreator<UpdateCommitDescriptionElementWhyType> = (index: number, why: string) => {
+        return {
+            index,
+            why,
+            type: UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY,
+
+        };
+    };
+
+export const UpdateCommitDescriptionElementCompletionStatusAction:
+    ActionCreator<UpdateCommitDescriptionElementCompletionStatusType> = (
+        index: number, completionStatus: CompletionStatusType
+    ) => {
+        return {
+            index,
+            completionStatus,
+            type: UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS,
+
+        };
+    };

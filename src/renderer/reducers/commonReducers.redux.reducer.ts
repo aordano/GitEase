@@ -22,7 +22,12 @@ import {
     UPDATE_VIEW_TREE,
     SET_CONTEXT_MENU_ID,
     STORE_COMMIT_LABEL,
-    SET_REACT_TAG_DATA
+    SET_REACT_TAG_DATA,
+    UPDATE_COMMIT_DESCRIPTION_VIEW,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY,
+    UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS
 } from '../types/constants.d';
 
 import {
@@ -33,7 +38,9 @@ import {
     GitNodeType,
     GitLinkType,
     ReactTagTagType,
-    labelType
+    labelType,
+    GitCommitDescriptionType,
+    CompletionStatusType
 } from '../types/index';
 
 // ----------------------
@@ -45,7 +52,12 @@ import {
     UpdateChangesAreaAction,
     UpdateViewTreeAction,
     SetContextMenuIdAction,
-    ReactTagDataAction
+    ReactTagDataAction,
+    UpdateCommitDescriptionViewAction,
+    UpdateCommitDescriptionElementNameAction,
+    UpdateCommitDescriptionElementWhatAction,
+    UpdateCommitDescriptionElementWhyAction,
+    UpdateCommitDescriptionAction
 } from '../actions/commonActions.redux.action';
 
 // ------------------------
@@ -56,9 +68,9 @@ import { parseStatus, truncate, stageFile, unstageFile, removeQuotes } from '../
 
 import { parseLogTree, generateGraphData } from '../functions/gitGraph';
 
-// ----''----------------------
+// ----------------------------
 // --- Localization Imports ---
-// ---------------------''-----
+// ----------------------------
 
 import { readConfigSync } from "../functions/config"
 
@@ -124,6 +136,15 @@ export interface ReactTagDataState {
         suggestions: ReactTagTagType[]
     },
     label: string
+}
+
+export interface GitCommitDescriptionState {
+    currentView: string;
+    currentIndex: number;
+    completionStatus: CompletionStatusType[];
+    descriptionWhat: string[],
+    descriptionWhy: string[],
+    changedElements: string[],
 }
 
 // -----------------------------------------
@@ -236,6 +257,18 @@ const ReactTagDataDefaultState: ReactTagDataState = {
         tagData: null
     },
     label: ""
+}
+
+const gitCommitDescriptionDefaultState: GitCommitDescriptionState = {
+    currentView: "list",
+    currentIndex: 0,
+    completionStatus: [{
+        isWhatCompleted: false,
+        isWhyCompleted: false
+    }],
+    descriptionWhat: [""],
+    descriptionWhy: [""],
+    changedElements: [""],
 }
 
 // ----------------
@@ -548,6 +581,112 @@ export const reactTagDataReducer: Reducer<ReactTagDataState, ReactTagDataAction>
         case SET_REACT_TAG_DATA: 
             return Object.assign({}, state, {
                 tags: action.tags
+            });
+        
+        default:
+            return state;
+    }
+};
+
+
+export interface GitCommitDescriptionState {
+    currentView: string;
+    currentIndex: number;
+    descriptionWhat: string[],
+    descriptionWhy: string[],
+    changedElements: string[],
+}
+
+
+export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, UpdateCommitDescriptionAction> = (
+    // -- 
+    state = gitCommitDescriptionDefaultState,
+    action: UpdateCommitDescriptionAction
+) => {
+    switch (action.type) {
+        case UPDATE_COMMIT_DESCRIPTION_VIEW:
+            return Object.assign({}, state, {
+                currentView: action.view
+            });
+        
+        case UPDATE_COMMIT_DESCRIPTION_ELEMENT_NAME:
+
+            const currentChangedElements = state.changedElements
+            
+            if (currentChangedElements.length > action.index) {
+                currentChangedElements[action.index] = action.name
+                
+                return Object.assign({}, state, {
+                    changedElements: currentChangedElements
+                });
+
+            } 
+
+            currentChangedElements.push(action.name)
+
+            return Object.assign({}, state, {
+                changedElements: currentChangedElements,
+                currentIndex: currentChangedElements.length - 1
+            });
+        
+        case UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT:
+
+            const currentDescriptionWhat = state.descriptionWhat
+            
+            if (currentDescriptionWhat.length > action.index) {
+                currentDescriptionWhat[action.index] = action.what
+                
+                return Object.assign({}, state, {
+                    descriptionWhat: currentDescriptionWhat
+                });
+
+            } 
+
+            currentDescriptionWhat.push(action.what)
+
+            return Object.assign({}, state, {
+                descriptionWhat: currentDescriptionWhat,
+                currentIndex: currentDescriptionWhat.length - 1
+            });
+        
+        case UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY:
+
+            const currentDescriptionWhy = state.descriptionWhy
+            
+            if (currentDescriptionWhy.length > action.index) {
+                currentDescriptionWhy[action.index] = action.why
+                
+                return Object.assign({}, state, {
+                    descriptionWhy: currentDescriptionWhy
+                });
+
+            } 
+
+            currentDescriptionWhy.push(action.why)
+
+            return Object.assign({}, state, {
+                descriptionWhat: currentDescriptionWhy,
+                currentIndex: currentDescriptionWhy.length - 1
+            });
+        
+        case UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS:
+
+            const currentCompletionStatus = state.completionStatus
+            
+            if (currentCompletionStatus.length > action.index) {
+                currentCompletionStatus[action.index] = action.completionStatus
+                
+                return Object.assign({}, state, {
+                    completionStatus: currentCompletionStatus
+                });
+
+            } 
+
+            currentCompletionStatus.push(action.completionStatus)
+
+            return Object.assign({}, state, {
+                completionStatus: currentCompletionStatus,
+                currentIndex: currentCompletionStatus.length - 1
             });
         
         default:

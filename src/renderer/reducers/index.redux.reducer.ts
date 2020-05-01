@@ -20,7 +20,9 @@ import {
     SetContextMenuIdState,
     setContextMenuIdReducer,
     ReactTagDataState,
-    reactTagDataReducer
+    reactTagDataReducer,
+    gitCommitDescriptionReducer,
+    GitCommitDescriptionState
 } from "./commonReducers.redux.reducer"
 
 import { 
@@ -44,7 +46,8 @@ export interface RootState {
     updateViewTreeReducer: UpdateViewTreeState
     setContextMenuIdReducer: SetContextMenuIdState
     reactTagDataReducer: ReactTagDataState
-    configInformationReducer: ConfigInformationState
+    configInformationReducer: ConfigInformationState,
+    gitCommitDescriptionReducer: GitCommitDescriptionState
 }
 
 // --------------------
@@ -58,5 +61,6 @@ export const rootReducer = combineReducers<RootState | undefined>({
     updateViewTreeReducer,
     setContextMenuIdReducer,
     reactTagDataReducer,
-    configInformationReducer
+    configInformationReducer,
+    gitCommitDescriptionReducer
 });

@@ -160,10 +160,14 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
         return <p className={"message"}>{message}</p>
     }
 
-    const hashesList = store.getState()!.updateViewTreeReducer.dataPromise.history._v.hashes.hashList
+    const hashesList = store.getState()?.updateViewTreeReducer.dataPromise.history._v.hashes.hashList
+
+    let branchColor
     
-    const branchColor = store.getState()!.updateViewTreeReducer
+    if (hashesList) {
+        branchColor = store.getState()?.updateViewTreeReducer
         .dataPromise.graphData._v.nodes[hashesList.indexOf(hash)].color
+    }
 
     return (
         <li
