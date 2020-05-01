@@ -112,7 +112,7 @@ export const CommitMessageInput: React.FC = () => {
     const tags = useSelector(state => state.reactTagDataReducer.tags)
 
     const handleDelete = () => {
-        // dummy function.
+        // ? Dummy function. Needed because is required by the ReactTags component
         return
     }
      
@@ -137,7 +137,6 @@ export const CommitMessageInput: React.FC = () => {
 
         store.dispatch(StoreCommitLabelAction(tagsPayload))
 
-        // FIXME replace this for the labels config
         const availableLabels = store.getState()!.reactTagDataReducer.tags.suggestions.map(
             (value) => { return value.name }
         )
@@ -395,8 +394,6 @@ export const CommmitDescription: React.FC = () => {
 
         return element.to
     }
-
-    // TODO kill the child index system and instantiate the array with the amount of elements in the changes space
     
     for (let i = 0; i < stagingStatus.length; i += 1) {
 

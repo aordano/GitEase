@@ -83,18 +83,17 @@ div.commit-box {
         color: black;
         margin-left: 5px;
         position: relative;
-        top: 2px;
-        font-weight: 100;
+        font-weight: 400;
         font-family: "Roboto Condensed";
-        font-size: 1.3em;
+        font-size: 16px;
         transition-duration: 400ms;
+        cursor: pointer;
 
         &:hover {
-            background-color: #fff;
-            color: black;
-            font-weight: 700;
-            box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.25);
-            cursor: pointer;
+            background-color: rgba(120, 81, 169, 0.75);
+            padding: 0px;
+            border: 5px solid rgba(255,255,255,0.25);
+            color: white;
         }
     }
 
@@ -194,6 +193,63 @@ div.commit-box {
             border: 1px solid #fff;
             background-color: rgb(224, 255, 231);
         }
+    }
+
+    
+
+    & .commit-description-textarea-wrapper {
+        width: 100%;
+        right: 10px;
+        height: 219px;
+        min-height: 219px;
+        font-size: 16px;
+        padding: 0;
+        margin-top: 30px;
+
+        & .commit-description-textarea {
+            font-weight: 400;
+            font-family: "Roboto Condensed";
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0);
+            right: 10px;
+            height: 180px;
+            min-height: 180px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-size: 16px;
+            padding: 0;
+            margin-top: 0px;
+            margin-bottom: 20px;
+        }
+
+        & .commit-description-textarea-confirmation-button {
+            width: 230px;
+            position: relative;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.25);
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            color: black;
+            padding: 10px;
+            margin: auto;
+            margin-top: -15px;
+            font-size: 1em;
+            font-weight: 400;
+            font-family: "Roboto Condensed";
+            cursor: pointer;
+            transition-duration: 400ms;
+
+            &:hover {
+                background-color: rgba(120, 81, 169, 0.75);
+                padding: 5px;
+                border: 5px solid rgba(255,255,255,0.25);
+                color: white;
+            }
+        }
+
     }
 
     & .commit-label {
