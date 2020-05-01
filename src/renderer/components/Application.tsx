@@ -34,7 +34,8 @@ require('../static/scss/main.scss');
 // -------------------------
 
 import {
-    LeftBlock
+    LeftBlock,
+    HideButtonLeft
 } from "./leftBlock"
 
 import {
@@ -70,8 +71,10 @@ const Application = () => {
 
     const leftBlock = React.createElement(
         "div", 
-        { className: "left-block"}, 
-        <LeftBlock key={"IDLEFT"}/>
+        { className: "left-block" }, 
+        [
+            <LeftBlock key={"IDLEFT"}/>
+        ]
     )
         
 
@@ -96,24 +99,29 @@ const Application = () => {
         { id: currentContextMenu },
         [
             leftBlock,
+            <HideButtonLeft key={"ID_HIDE_LEFT_SIDEBAR"}/>,
             mainBlock,
             rightBlock,
             contextMenus
         ]
-    )            
+    )           
     
+    /*
+    
+    // TODO Fix why the hook throws an error
     if (localStorage.getItem("firstTimeWizardCompleted") === "0") {
         setTimeout(() => {
             const routerHistory = useHistory()
             routerHistory.push("/firstwizardgreeting")
         },50)
-    }
+    } 
+    */
 
     // TODO finish fixing the router for transitions between routes
 
     return <div className={"main-app"}>
                 <Router
-                    initialEntries={["/firstwizardgreeting","/"]}
+                    initialEntries={["/","/firstwizardgreeting"]}
                 >
                     <Route
                         // tslint:disable-next-line: jsx-no-lambda

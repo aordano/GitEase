@@ -6,11 +6,17 @@
 
 export type gitBasicWorkflowDataType = {
     message: string;
-    description?: string;
-    branch?: string;
-    remote?: string;
-    workingDir?: string;
+    descriptionWhat?: string[];
+    descriptionWhy?: string[];
 };
+
+export type gitComposedBasicWorkflowDataType = {
+    message: string;
+    description: string;
+    branch: string;
+    remote: string;
+    workingDir: string;
+}
 
 export type workingDirDataType = {
     workingDir: string;
@@ -91,11 +97,10 @@ export type SpinnerType = {
 
 export type GitCommitType = {
     commitMessage: string;
-    commitDescription?: string;
-    branch?: string;
-    remote?: string;
+    commitDescriptionWhat?: string[];
+    commitDescriptionWhy?: string[];
+    changedElements?: string[];
     successStatus?: GitCommitStatusType;
-    workingDir?: string;
 };
 
 type GitCommitStatusType = {

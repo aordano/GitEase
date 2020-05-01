@@ -13,7 +13,7 @@ import promise from 'simple-git/promise';
 // --- Type Imports ---
 // --------------------
 
-import { gitBasicWorkflowDataType } from '../types';
+import { gitComposedBasicWorkflowDataType } from '../types';
 
 import {store} from "../store/index.redux.store"
 
@@ -34,14 +34,14 @@ export class BasicWorkflow {
     // -- This class's methods are to be called ONLY from a Saga, as it's not idiomatic Redux
     // to dispatch actions from within a reducer.
 
-    gitBasicWorkflowData: gitBasicWorkflowDataType;
+    gitBasicWorkflowData: gitComposedBasicWorkflowDataType;
 
     constructor(
-        message: gitBasicWorkflowDataType['message'],
-        description?: gitBasicWorkflowDataType['description'],
-        branch?: gitBasicWorkflowDataType['branch'],
-        remote?: gitBasicWorkflowDataType['remote'],
-        workingDir?: gitBasicWorkflowDataType['workingDir']
+        message: gitComposedBasicWorkflowDataType['message'],
+        description: gitComposedBasicWorkflowDataType['description'],
+        branch: gitComposedBasicWorkflowDataType['branch'],
+        remote: gitComposedBasicWorkflowDataType['remote'],
+        workingDir: gitComposedBasicWorkflowDataType['workingDir']
     ) {
         this.gitBasicWorkflowData = { branch, description, message, remote, workingDir };
     }

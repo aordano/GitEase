@@ -44,9 +44,23 @@ require('../static/scss/leftBlock.scss');
 // --- Localization Imports ---
 // ----------------------------
 
-const mockData = require("../data.mock")
+import { readConfigSync } from "../functions/config"
 
-const localization = require(`../lang/${mockData.lang}`)
+const getLanguage = () => { 
+
+    // ? We do this instead of reading from state because a 
+    // ? timeout or async function would get race conditions and break the components
+    const configData = readConfigSync()
+
+    let configObject
+
+    if (configData) {
+        configObject = JSON.parse(configData)
+    }
+    return configObject.UIConfig.language
+}
+
+const localization = require(`../lang/${getLanguage()}`)
 
 // ---------------------
 // --- Store Imports ---
@@ -68,7 +82,7 @@ export const LeftBlock: React.FC = () => {
     // -- Simple container that handles the left block of the screen.
     return (
         <div>
-            <ChangesSpace />
+            <ChangesSpace key={"ID_CHANGES_SPACE"}/>
             <CommitBox />
         </div>
     );
@@ -94,6 +108,8 @@ export const CommitBox: React.FC = () => {
                     <CommitMessageInput />
                     <CommitButton />
                 </div>
+                <p className={"commit-description-descriptor-name"}>Name</p>
+                <p className={"commit-description-descriptor"}> What Why</p>
                 <CommmitDescription />
             </div>
         </div>
@@ -128,7 +144,7 @@ const ChangesSpace: React.FC = () => {
                 content: changesAreaTree[i].content,
                 displayContent: changesAreaTree[i].displayContent,
                 staged: changesAreaTree[i].staged,
-                key: `ID${i}`,
+                key: `ID_STAGING_AREA_ELEMENT_${i}`,
                 index: i
             })
         )
@@ -139,7 +155,7 @@ const ChangesSpace: React.FC = () => {
     }
     else {
         title = [
-            React.createElement(GlobalStagingCheckboxElement),
+            <GlobalStagingCheckboxElement key={"ID_GLOBAL_STAGING_CHECKBOX"}/>,
             React.createElement(
                 'p', 
                 {
@@ -157,9 +173,89 @@ const ChangesSpace: React.FC = () => {
         onMouseLeave: restoreContextMenu
     }, elements)
     return (
-        <div className={'changes-area'}>
+        <div
+            id={"ID_STAGING_AREA"}
+            className={'changes-area'}
+        >
             {title}
             {changesList}
         </div>
     );
 };
+
+// --------------------------
+// --- Utility Components ---
+// --------------------------
+
+export const HideButtonLeft: React.FC = () => {
+
+    // TODO Make everything else recognize that the left bar is collapsed and resize accordingly
+
+    const handleHiding = () => {
+        const leftBlock = document.querySelector(".left-block") as HTMLDivElement
+        const hideSidebarButton = document.querySelector(".hide-sidebar-left-button") as HTMLDivElement
+        const mainBlock = document.querySelector(".main-block") as HTMLDivElement
+
+        const originalLeftBlockWidth = 287
+
+        const currentClassList = leftBlock.classList
+
+        if (currentClassList.contains("sidebar-hidden")) {
+            const currentClassList = leftBlock.classList
+
+            currentClassList.remove("sidebar-hidden")
+            currentClassList.add("sidebar-visible")
+
+            leftBlock.className = String(currentClassList)
+
+            hideSidebarButton.style.left = `${originalLeftBlockWidth}px`
+
+            mainBlock.style.left = `${originalLeftBlockWidth}px`
+            // TODO make the width read if right sidebar is collapsed and adjust accordingly
+            mainBlock.style.width = `calc(100vw - 293px - 250px)`
+
+            return
+        }
+
+        currentClassList.remove("sidebar-visible")
+        currentClassList.add("sidebar-hidden")
+
+        mainBlock.style.left = `0px`
+        mainBlock.style.width = `calc(100vw - 293px - 250px + ${originalLeftBlockWidth}px)`
+
+        leftBlock.className = String(currentClassList)
+
+        // FIXME this is 5px because when windowed the resize gobbles up all the space. it should be different values given if maximized or not
+        hideSidebarButton.style.left = "5px"
+
+        return
+    }
+
+    const handleHoverIn = () => {
+        const leftBlockHideSidebarButton = document.querySelector(".hide-sidebar-left-button") as HTMLDivElement
+
+        if (leftBlockHideSidebarButton.style.left ==="5px") {
+            leftBlockHideSidebarButton.textContent =" >"
+            return
+        }
+
+        leftBlockHideSidebarButton.textContent = "<"
+        return
+    }
+
+    const handleHoverOut = () => {
+        const leftBlockHideSidebarButton = document.querySelector(".hide-sidebar-left-button") as HTMLDivElement
+
+        leftBlockHideSidebarButton.textContent = ""
+        return
+    }
+
+    return (
+        <div
+            className={"hide-sidebar-left-button"}
+            onClick={handleHiding}
+            onMouseEnter={handleHoverIn}
+            onMouseLeave={handleHoverOut}
+        />
+    )
+}

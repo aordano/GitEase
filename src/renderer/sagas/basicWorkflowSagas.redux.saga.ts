@@ -66,19 +66,52 @@ function* doCommitAndPush() {
 
     // Grabs information from the state
     const message = store.getState()?.basicWorkflowReducer.commitMessage
-    const description = store.getState()?.basicWorkflowReducer.commitDescription
-    const remote = store.getState()?.basicWorkflowReducer.remote
-    const branch = store.getState()?.basicWorkflowReducer.branch
-    const workingDir = store.getState()?.basicWorkflowReducer.workingDir
+    const descriptionWhat = store.getState()?.basicWorkflowReducer.commitDescriptionWhat
+    const descriptionWhy = store.getState()?.basicWorkflowReducer.commitDescriptionWhy
+    const changedElements = store.getState()?.basicWorkflowReducer.changedElements
+    const remote = store.getState()?.configInformationReducer.CurrentGitConfig.currentRemote
+    const branch = store.getState()?.configInformationReducer.CurrentGitConfig.currentBranch
+    const workingDir = store.getState()?.configInformationReducer.ReposConfig.activeRepo
+
+    const composeDescription = (
+        descriptionWhat: string[],
+        descriptionWhy: string[],
+        changedElements: string[]
+    ) => {
+        let descriptionString = ""
+
+        for (let i = 0; i < changedElements.length; i += 1) {
+            if (i === 0) {
+                descriptionString = `//FILE// ${changedElements[i]} //WHAT// ${descriptionWhat[i]} //WHY// ${descriptionWhy[i]}`
+            }
+
+            descriptionString = `${descriptionString}\n//FILE//${changedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
+        }
+
+        return descriptionString
+    }
 
     // Then passes the information to the workflow constructor
-    const workflow = new BasicWorkflow(
-        message ?? "There was no supplied message.",
-        branch ?? 'master',
-        remote ?? 'origin',
-        description ?? "",
-        workingDir ?? ""
-    );
+
+    let workflow: BasicWorkflow
+
+    if (descriptionWhat && descriptionWhy && changedElements) {
+        workflow = new BasicWorkflow(
+            message ?? "There was no supplied message.",
+            branch ?? 'master',
+            remote ?? 'origin',
+            composeDescription(descriptionWhat, descriptionWhy, changedElements) ?? "",
+            workingDir ?? ""
+        );
+    } else {
+        workflow = new BasicWorkflow(
+            message ?? "There was no supplied message.",
+            branch ?? 'master',
+            remote ?? 'origin',
+            "",
+            workingDir ?? ""
+        );
+    }
 
     // -- Defines the async proccess for the displaying of the loader and the execution
     // of the commit, push and fetch.

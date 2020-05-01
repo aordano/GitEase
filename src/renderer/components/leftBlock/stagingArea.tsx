@@ -38,9 +38,23 @@ import {
 // --- Localization Imports ---
 // ----------------------------
 
-const mockData = require("../../data.mock")
+import { readConfigSync } from "../../functions/config"
 
-const localization = require(`../../lang/${mockData.lang}`)
+const getLanguage = () => { 
+
+    // ? We do this instead of reading from state because a 
+    // ? timeout or async function would get race conditions and break the components
+    const configData = readConfigSync()
+
+    let configObject
+
+    if (configData) {
+        configObject = JSON.parse(configData)
+    }
+    return configObject.UIConfig.language
+}
+
+const localization = require(`../../lang/${getLanguage()}`)
 
 // -------------------------------
 // --- Staging Area Components ---
@@ -91,7 +105,10 @@ export const ChangesListElement: React.FC<ChangesTreeType> = (
             onMouseEnter={changeContextMenuStagingAreaItem}
             onMouseLeave={changeContextMenuStagingArea}
         >
-            <StagingCheckboxElement index={index}/>
+            <StagingCheckboxElement
+                index={index}
+                key={`ID_STAGING_CHECKBOX_${index}`}
+            />
             {displayContent.slice(0,displayContent.lastIndexOf("/")+1)}
             <b className={"filename"}>{
                 displayContent.slice(displayContent.lastIndexOf("/")+1,displayContent.length)

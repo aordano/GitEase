@@ -45,6 +45,27 @@ div.left-block {
     height: 100%;
     position: absolute;
     z-index: 0;
+    transition-duration: 400ms;
+}
+
+div.hide-sidebar-left-button {
+    height: calc(100vh - 30px);
+    width: 4px;
+    margin: 0px;
+    position: absolute;
+    left: 291px;
+    background-color: rgba(0,0,0,0);
+    z-index: 9;
+    border: none;
+
+    &:hover {
+        width: 10px;
+        background-color: white;
+        border-radius: 3px;
+        border: 1px solid rgba(0,0,0,0.25);
+        line-height: calc(100vh - 30px);
+        cursor: pointer;
+    }
 }
 
 div.right-block {
@@ -68,6 +89,14 @@ br.separator {
 .fade-exit {
     transition:400ms ease-out;
     opacity: 0;
+}
+
+.sidebar-hidden {
+    display: none;
+}
+
+.sidebar-visible {
+    display: block;
 }
 
 @media screen and (min-width: 770px) {

@@ -41,11 +41,15 @@ export type BasicWorkflowAction =
 export const BasicWorkflowUpdateCommitMessageAction: 
     ActionCreator<BasicWorkflowUpdateCommitMessageType> = (
         message, 
-        description
+        descriptionWhat?,
+        descriptionWhy?,
+        changedElements?
 ) => {
         return {
             message,
-            description,
+            descriptionWhat,
+            descriptionWhy,
+            changedElements,
             type: BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE
         };
     };
@@ -59,15 +63,15 @@ export const BasicWorkflowInitAction: ActionCreator<BasicWorkflowInitType> = () 
 export const BasicWorkflowCommitAndPushAction: 
     ActionCreator<BasicWorkflowCommitAndPushType> = (
         message,
-        branch?,
-        remote?,
-        description?
+        descriptionWhat?,
+        descriptionWhy?,
+        changedElements?
 ) => {
         return {
             message,
-            description,
-            branch,
-            remote,
+            changedElements,
+            descriptionWhat,
+            descriptionWhy,
             type: BASIC_WORKFLOW_COMMIT_AND_PUSH
         };
     };

@@ -49,7 +49,7 @@ import {
 
 const mockData = require("../../data.mock")
 
-import { readConfigSync } from "../../functions/config"
+import { readConfigSync, readLabelsSync } from "../../functions/config"
 
 const getLanguage = () => { 
 
@@ -67,19 +67,13 @@ const getLanguage = () => {
 
 const localization = require(`../../lang/${getLanguage()}`)
 
-// -------------------------------------------
-// * --- Temporary statements for testing ---
-// -------------------------------------------
-
-import { data } from '../../data.mock';
-
 import {
     SetContextMenuIdAction,
     StoreCommitLabelAction,
     SetReactTagDataAction
 } from '../../actions/commonActions.redux.action';
 
-import { labelType, ContentNameType } from '../../types';
+import { ContentNameType } from '../../types';
 
 import { HistoryLabel } from "../rightBlock/history"
 
@@ -100,7 +94,9 @@ export const CommitMessageInput: React.FC = () => {
                 // -- Requires to pass both the message and description to the state so they
                 // mantain synchronization.
                 event.currentTarget.value,
-                currentState.commitDescription
+                currentState.commitDescriptionWhat,
+                currentState.commitDescriptionWhy,
+                currentState.changedElements
             )
         );
     };
@@ -134,7 +130,16 @@ export const CommitMessageInput: React.FC = () => {
         store.dispatch(StoreCommitLabelAction(tagsPayload))
 
         // FIXME replace this for the labels config
-        const availableLabels = mockData.labelsDictionary.map((value: labelType) => { return value.label })
+        const availableLabels = store.getState()!.reactTagDataReducer.tags.suggestions.map(
+            (value) => { return value.name }
+        )
+
+        const labelRawData = readLabelsSync()
+        let labelParsedData
+
+        if (labelRawData) {
+            labelParsedData = JSON.parse(labelRawData)
+        }
         
         return <div className={"commit-message-subwrapper"}>
                     <div
@@ -143,7 +148,7 @@ export const CommitMessageInput: React.FC = () => {
                     >
                         <HistoryLabel
                             label={tagsPayload}
-                            labelColor={mockData.labelsDictionary[availableLabels.indexOf(tagNames[0])].labelColor}
+                            labelColor={labelParsedData[availableLabels.indexOf(tagNames[0])].labelColor}
                         />
                     </div>
                     <input
@@ -179,10 +184,9 @@ export const CommitButton: React.FC = () => {
         store.dispatch(
             BasicWorkflowCommitAndPushAction(
                 `${commitLabel}${currentState.commitMessage}`,
-                currentState.commitDescription,
-                data.branch, // TODO Populate with values from config
-                data.remote,
-                store.getState()?.configInformationReducer.ReposConfig.activeRepo
+                currentState.changedElements,
+                currentState.commitDescriptionWhat,
+                currentState.commitDescriptionWhy,
             )
         );
     };
@@ -224,14 +228,17 @@ type CommitMetadataButtonType = {
 
 const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = ({ id }: CommitMetadataButtonType) => {
     
-    // TODO Add prompt to write out what has been changed on the file
+    const handleWhatMetadataPopup = () => {
+        // TODO Add prompt to write out what has been changed
 
-    // TODO Store in state the message
+        // TODO Store in state the message
 
-    // TODO Change the icon to circle-check once the prompt has ben filled
+        // TODO Change the icon to circle-check once the prompt has ben filled
+    }
 
     return (
         <a
+            onClick={handleWhatMetadataPopup}
             className={"commit-description-metadata-button"}
             id={id}
         >
@@ -242,14 +249,17 @@ const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = ({ id 
 
 const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = ({id}: CommitMetadataButtonType) => {
     
-    // TODO Add prompt to write out why the file has been changed
+    const handleWhyMetadataPopup = () => {
+        // TODO Add prompt to write out why the file has been changed
 
-    // TODO Store in state the message
+        // TODO Store in state the message
 
-    // TODO Change the icon to circle-check once the prompt has ben filled
+        // TODO Change the icon to circle-check once the prompt has ben filled
+    }
 
     return (
         <a
+            onClick={handleWhyMetadataPopup}
             className={"commit-description-metadata-button"}
             id={id}
         >

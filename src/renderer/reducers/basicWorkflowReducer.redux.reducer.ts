@@ -53,16 +53,15 @@ export type BasicWorkflowState = GitCommitType
 
 const basicWorkflowDefaultState: BasicWorkflowState = {
     commitMessage: '',
-    commitDescription: "",
-    branch: "master",
-    remote: "origin",
+    commitDescriptionWhat: [""],
+    commitDescriptionWhy: [""],
+    changedElements: [""],
     successStatus: {
         _v: {
             error: "none",
             success: "pending"
         }
     },
-    workingDir: ""
 };
 
 // ----------------
@@ -109,11 +108,9 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
         case COMMIT_SUCCESS_ALERT:
             displayCommitSuccessAlert()
             return Object.assign({}, state, {
-                commitMessage: "",
-                commitDescription: "",
                 successStatus: {
                     _v: {
-                        success: "pending"
+                        success: "success"
                     }
                 }
             });
@@ -126,26 +123,33 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
 
             return Object.assign({}, state, {
                 commitMessage: action.message,
-                commitDescription: action.description,
-                branch: action.branch,
-                remote: action.remote,
+                commitDescriptionWhat: action.descriptionWhat,
+                commitDescriptionWhy: action.descriptionWhy,
+                changedElements: action.changedElements,
                 successStatus: {
-                    success: "pending"
-                }
+                    _v: {
+                        error: "none",
+                        success: "pending"
+                    }
+                },
             });
         case BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE:
             // -- This reducer grabs the current input value of the message boxes and links it
             // to the reducer state.
             return Object.assign({}, state, {
                 commitMessage: action.message,
-                commitDescription: action.description
+                commitDescriptionWhat: action.descriptionWhat,
+                commitDescriptionWhy: action.descriptionWhy,
+                changedElements: action.changedElements,
 
             });
         case BASIC_WORKFLOW_INIT:
             // -- This reducer initializes the basic workflow.
             return Object.assign({}, state, {
                 commitMessage: '',
-                commitDescription: ""
+                commitDescriptionWhat: [""],
+                commitDescriptionWhy: [""],
+                changedElements: [""],
             });
         default:
             return state;

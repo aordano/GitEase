@@ -75,15 +75,17 @@ export interface ViewModifiedFilesType extends Action {
 export interface BasicWorkflowCommitAndPushType extends Action {
     type: 'BASIC_WORKFLOW_COMMIT_AND_PUSH';
     message: string;
-    description?: string;
-    branch?: string;
-    remote?: string;
+    descriptionWhat?: string[];
+    descriptionWhy?: string[];
+    changedElements: string[];
 }
 
 export interface BasicWorkflowUpdateCommitMessageType extends Action {
     type: 'BASIC_WORKFLOW_UPDATE_COMMIT_MESSAGE';
     message: string;
-    description: string;
+    descriptionWhat?: string[];
+    descriptionWhy?: string[];
+    changedElements: string[];
 }
 
 export interface BasicWorkflowInitType extends Action {
