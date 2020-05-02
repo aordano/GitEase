@@ -66,9 +66,32 @@ function* doCommitAndPush() {
 
     // Grabs information from the state
     const message = store.getState()?.basicWorkflowReducer.commitMessage
-    const descriptionWhat = store.getState()?.basicWorkflowReducer.commitDescriptionWhat
-    const descriptionWhy = store.getState()?.basicWorkflowReducer.commitDescriptionWhy
-    const changedElements = store.getState()?.basicWorkflowReducer.changedElements
+    const descriptionWhat = store.getState()?.gitCommitDescriptionReducer.descriptionWhat
+    const descriptionWhy = store.getState()?.gitCommitDescriptionReducer.descriptionWhat
+    const changedElements = store.getState()!.gitCommitDescriptionReducer.changedElements
+
+    // TODO Generare error result if not every element is readied
+    const elementsReadiedIndexes = store.getState()?.gitCommitDescriptionReducer.completionStatus
+        .map((value, index) => {
+            if (value.isWhatCompleted && value.isWhyCompleted) {
+                return index
+            }
+        })
+    
+    let readiedElements: (string | undefined)[] = []
+
+    if (elementsReadiedIndexes) {
+        let localIndex = 0
+        const localReadiedElements = changedElements
+        .map((value, index) => {
+            if (index === elementsReadiedIndexes[localIndex]) {
+                localIndex += 1
+                return value
+            }
+        })
+        readiedElements = localReadiedElements
+    }
+   
     const remote = store.getState()?.configInformationReducer.CurrentGitConfig.currentRemote
     const branch = store.getState()?.configInformationReducer.CurrentGitConfig.currentBranch
     const workingDir = store.getState()?.configInformationReducer.ReposConfig.activeRepo
@@ -76,16 +99,16 @@ function* doCommitAndPush() {
     const composeDescription = (
         descriptionWhat: string[],
         descriptionWhy: string[],
-        changedElements: string[]
+        readiedElements: (string | undefined)[]
     ) => {
         let descriptionString = ""
 
-        for (let i = 0; i < changedElements.length; i += 1) {
+        for (let i = 0; i < readiedElements.length; i += 1) {
             if (i === 0) {
-                descriptionString = `//FILE// ${changedElements[i]} //WHAT// ${descriptionWhat[i]} //WHY// ${descriptionWhy[i]}`
+                descriptionString = `//FILE//${readiedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
             }
 
-            descriptionString = `${descriptionString}\n//FILE//${changedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
+            descriptionString = `${descriptionString}\n//FILE//${readiedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
         }
 
         return descriptionString
@@ -95,12 +118,12 @@ function* doCommitAndPush() {
 
     let workflow: BasicWorkflow
 
-    if (descriptionWhat && descriptionWhy && changedElements) {
+    if (descriptionWhat && descriptionWhy && readiedElements) {
         workflow = new BasicWorkflow(
             message ?? "There was no supplied message.",
             branch ?? 'master',
             remote ?? 'origin',
-            composeDescription(descriptionWhat, descriptionWhy, changedElements) ?? "",
+            composeDescription(descriptionWhat, descriptionWhy, readiedElements) ?? "",
             workingDir ?? ""
         );
     } else {
