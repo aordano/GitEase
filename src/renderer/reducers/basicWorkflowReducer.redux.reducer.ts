@@ -93,6 +93,9 @@ export const basicWorkflowReducer: Reducer<BasicWorkflowState> = (
     state = basicWorkflowDefaultState,
     action: BasicWorkflowAction
 ) => {
+
+    // TODO Fix behaviour of basicWorkflowReducer as to only grab data from git CommitDescription state if it's valid
+
     switch (action.type) {
         case COMMIT_ERROR_ALERT:
             displayCommitErrorAlert(action.error)

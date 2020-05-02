@@ -197,7 +197,9 @@ const CommitInfoExtendedInformation: React.FC<nodeIndexType> = ({ nodeIndex }: n
             className={"commit-info-extended-information"}
         >
             <p>
-                Commit made on {Intl.DateTimeFormat(locale.replace("_", "-")).format(Date.parse(commitData.date))} by {commitData.author_name}.
+                Commit made on {
+                    Intl.DateTimeFormat(locale.replace("_", "-")).format(Date.parse(commitData.date))
+                } by {commitData.author_name}.
                 This commit was published on the {commitData.branch} branch, and it has unique identifier <a className={"commit-info-hash"}>{commitData.hash}</a>.
             </p>
         </div>

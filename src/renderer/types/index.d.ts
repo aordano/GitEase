@@ -50,7 +50,7 @@ export interface ModifiedFilesStructure {
     _d?: string[] | boolean;
     _h?: string[] | number;
     _n?: string[] | boolean;
-    _v: ModifiedFilesDescriptor;
+    _v: ModifiedFilesDescriptor | null;
 }
 
 interface ModifiedFilesDescriptor {

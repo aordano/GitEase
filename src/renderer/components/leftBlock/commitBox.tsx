@@ -48,14 +48,15 @@ import {
     UpdateCommitDescriptionElementNameAction,
     UpdateCommitDescriptionElementWhatAction,
     UpdateCommitDescriptionElementWhyAction,
-    UpdateCommitDescriptionElementCompletionStatusAction
+    UpdateCommitDescriptionElementCompletionStatusAction,
+    SetContextMenuIdAction,
+    StoreCommitLabelAction,
+    SetReactTagDataAction
 } from "../../actions/commonActions.redux.action"
 
 // ----------------------------
 // --- Localization Imports ---
 // ----------------------------
-
-const mockData = require("../../data.mock")
 
 import { readConfigSync, readLabelsSync } from "../../functions/config"
 
@@ -74,12 +75,6 @@ const getLanguage = () => {
 }
 
 const localization = require(`../../lang/${getLanguage()}`)
-
-import {
-    SetContextMenuIdAction,
-    StoreCommitLabelAction,
-    SetReactTagDataAction
-} from '../../actions/commonActions.redux.action';
 
 import { ContentNameType } from '../../types';
 
@@ -185,9 +180,12 @@ export const CommitButton: React.FC = () => {
     // TODO Change the button logic to dispatch the correct action given the workflow
 
     const currentState = useSelector(state => state.basicWorkflowReducer);
-    const commitLabel = useSelector(state => state.reactTagDataReducer.label)
+    
+    // ? Gets called in a child arrow function so we can't use a hook here
+    const commitLabel = store.getState()?.reactTagDataReducer.label
+
     const handleCommitButtonPress = () => {
-        const commitLabel = store.getState()?.reactTagDataReducer.label
+
         store.dispatch(
             BasicWorkflowCommitAndPushAction(
                 `${commitLabel}${currentState.commitMessage}`,

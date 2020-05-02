@@ -118,11 +118,11 @@ export interface UpdateViewTreeState {
 }
 
 export interface UpdateChangesAreaState {
-    upToDate: boolean;
     changesAreaTree: ChangesTreeType[];
 }
 
 export interface ViewModifiedFilesState {
+    upToDate: boolean,
     parsedData: ModifiedFilesStructure;
 }
 
@@ -207,11 +207,11 @@ export const updateViewTreeDefaultState: UpdateViewTreeState = {
 
 
 const updateChangesAreaDefaultState: UpdateChangesAreaState = {
-    upToDate: false,
     changesAreaTree: []
 };
 
 const viewModifiedFilesDefaultState: ViewModifiedFilesState = {
+    upToDate: false,
     parsedData: {
         _c: [],
         _s: 0,
@@ -345,157 +345,161 @@ export const updateChangesAreaReducer: Reducer<UpdateChangesAreaState> = (
             });
 
         case UPDATE_CHANGES_AREA:
-            // -- This reducer grabs the current file as parsed by the status command on the
-            // viewModifiedFilesReducer, and creates a tree of file status based on the data.
 
-            const changesTree: ChangesTreeType[] = [];
-            // * -- currentGlobalChangesTree is the same as currentChangesTree and changesTree
-            // * -- This is this way because block-scoped const definitions can't be repeated
-            // * outside their scope.
+            if (action.filesTree?._v) {
+                // -- This reducer grabs the current file as parsed by the status command on the
+                // viewModifiedFilesReducer, and creates a tree of file status based on the data.
 
-            // -- It may seem that repetition is pointless but it allows for easier extensibility
-            // in case we'd like to support more complex status or file handling in the future.
-            // -- It also prevents possible errors by bounding the possible status read from the parser.
+                const changesTree: ChangesTreeType[] = [];
+                // * -- currentGlobalChangesTree is the same as currentChangesTree and changesTree
+                // * -- This is this way because block-scoped const definitions can't be repeated
+                // * outside their scope.
 
-            if (action.filesTree?._v.modified !== undefined) {
-                for (let i = 0; i < action.filesTree?._v.modified?.length; i += 1) {
-                    if (state.changesAreaTree[i]?.staged) {
+                // -- It may seem that repetition is pointless but it allows for easier extensibility
+                // in case we'd like to support more complex status or file handling in the future.
+                // -- It also prevents possible errors by bounding the possible status read from the parser.
+
+                if (action.filesTree?._v.modified !== undefined) {
+                    for (let i = 0; i < action.filesTree?._v.modified?.length; i += 1) {
+                        if (state.changesAreaTree[i]?.staged) {
+                            const element: ChangesTreeType = {
+                                status: 'modified',
+                                content: removeQuotes(action.filesTree._v.modified[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree?._v.modified[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: state.changesAreaTree[i].staged
+                            };
+                            changesTree.push(element);
+                        } else {
+                            const element: ChangesTreeType = {
+                                status: 'modified',
+                                content: removeQuotes(action.filesTree._v.modified[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.modified[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: false
+                            };
+                            changesTree.push(element);
+                        }
+                    }
+                }
+                if (action.filesTree?._v.created !== undefined) {
+                    for (let i = 0; i < action.filesTree?._v.created?.length; i += 1) {
+                        if (state.changesAreaTree[i]?.staged) {
+                            const element: ChangesTreeType = {
+                                status: 'created',
+                                content: removeQuotes(action.filesTree._v.created[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.created[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: state.changesAreaTree[i].staged
+                            };
+                            changesTree.push(element);
+                        } else {
+                            const element: ChangesTreeType = {
+                                status: 'created',
+                                content: removeQuotes(action.filesTree._v.created[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.created[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: false
+                            };
+                            changesTree.push(element);
+                        }
+                    }
+                }
+                if (action.filesTree?._v.renamed !== undefined) {
+                    for (let i = 0; i < action.filesTree?._v.renamed?.length; i += 1) {
+                        // Renamed files by definition are staged so no need to check for it
                         const element: ChangesTreeType = {
-                            status: 'modified',
-                            content: removeQuotes(action.filesTree._v.modified[i]),
+                            status: 'renamed',
+                            content: {
+                                from: removeQuotes(action.filesTree._v.renamed[i].from),
+                                to: removeQuotes(action.filesTree._v.renamed[i].to)
+                            },
                             displayContent: truncate(
-                                removeQuotes(action.filesTree?._v.modified[i]),
+                                removeQuotes(action.filesTree._v.renamed[i].to),
                                 35
                             ),
                             // We truncate the filepath in a special way to display it properly
-                            staged: state.changesAreaTree[i].staged
-                        };
-                        changesTree.push(element);
-                    } else {
-                        const element: ChangesTreeType = {
-                            status: 'modified',
-                            content: removeQuotes(action.filesTree._v.modified[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.modified[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: false
+                            staged: true
                         };
                         changesTree.push(element);
                     }
                 }
-            }
-            if (action.filesTree?._v.created !== undefined) {
-                for (let i = 0; i < action.filesTree?._v.created?.length; i += 1) {
-                    if (state.changesAreaTree[i]?.staged) {
-                        const element: ChangesTreeType = {
-                            status: 'created',
-                            content: removeQuotes(action.filesTree._v.created[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.created[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: state.changesAreaTree[i].staged
-                        };
-                        changesTree.push(element);
-                    } else {
-                        const element: ChangesTreeType = {
-                            status: 'created',
-                            content: removeQuotes(action.filesTree._v.created[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.created[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: false
-                        };
-                        changesTree.push(element);
+                if (action.filesTree?._v.not_added !== undefined) {
+                    for (let i = 0; i < action.filesTree?._v.not_added?.length; i += 1) {
+                        if (state.changesAreaTree[i]?.staged) {
+                            const element: ChangesTreeType = {
+                                status: 'not_added',
+                                content: removeQuotes(action.filesTree._v.not_added[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.not_added[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: state.changesAreaTree[i].staged
+                            };
+                            changesTree.push(element);
+                        } else {
+                            const element: ChangesTreeType = {
+                                status: 'not_added',
+                                content: removeQuotes(action.filesTree._v.not_added[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.not_added[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: false
+                            };
+                            changesTree.push(element);
+                        }
                     }
                 }
-            }
-            if (action.filesTree?._v.renamed !== undefined) {
-                for (let i = 0; i < action.filesTree?._v.renamed?.length; i += 1) {
-                    // Renamed files by definition are staged so no need to check for it
-                    const element: ChangesTreeType = {
-                        status: 'renamed',
-                        content: {
-                            from: removeQuotes(action.filesTree._v.renamed[i].from),
-                            to: removeQuotes(action.filesTree._v.renamed[i].to)
-                        },
-                        displayContent: truncate(
-                            removeQuotes(action.filesTree._v.renamed[i].to),
-                            35
-                        ),
-                        // We truncate the filepath in a special way to display it properly
-                        staged: true
-                    };
-                    changesTree.push(element);
-                }
-            }
-            if (action.filesTree?._v.not_added !== undefined) {
-                for (let i = 0; i < action.filesTree?._v.not_added?.length; i += 1) {
-                    if (state.changesAreaTree[i]?.staged) {
-                        const element: ChangesTreeType = {
-                            status: 'not_added',
-                            content: removeQuotes(action.filesTree._v.not_added[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.not_added[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: state.changesAreaTree[i].staged
-                        };
-                        changesTree.push(element);
-                    } else {
-                        const element: ChangesTreeType = {
-                            status: 'not_added',
-                            content: removeQuotes(action.filesTree._v.not_added[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.not_added[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: false
-                        };
-                        changesTree.push(element);
+                if (action.filesTree?._v.deleted !== undefined) {
+                    for (let i = 0; i < action.filesTree?._v.deleted?.length; i += 1) {
+                        if (state.changesAreaTree[i]?.staged) {
+                            const element: ChangesTreeType = {
+                                status: 'deleted',
+                                content: removeQuotes(action.filesTree._v.deleted[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.deleted[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: state.changesAreaTree[i].staged
+                            };
+                            changesTree.push(element);
+                        } else {
+                            const element: ChangesTreeType = {
+                                status: 'deleted',
+                                content: removeQuotes(action.filesTree._v.deleted[i]),
+                                displayContent: truncate(
+                                    removeQuotes(action.filesTree._v.deleted[i]),
+                                    35
+                                ),
+                                // We truncate the filepath in a special way to display it properly
+                                staged: false
+                            };
+                            changesTree.push(element);
+                        }
                     }
                 }
+                // in the end pass the generated tree to the state.
+                return Object.assign({}, state, {
+                    changesAreaTree: changesTree
+                });
             }
-            if (action.filesTree?._v.deleted !== undefined) {
-                for (let i = 0; i < action.filesTree?._v.deleted?.length; i += 1) {
-                    if (state.changesAreaTree[i]?.staged) {
-                        const element: ChangesTreeType = {
-                            status: 'deleted',
-                            content: removeQuotes(action.filesTree._v.deleted[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.deleted[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: state.changesAreaTree[i].staged
-                        };
-                        changesTree.push(element);
-                    } else {
-                        const element: ChangesTreeType = {
-                            status: 'deleted',
-                            content: removeQuotes(action.filesTree._v.deleted[i]),
-                            displayContent: truncate(
-                                removeQuotes(action.filesTree._v.deleted[i]),
-                                35
-                            ),
-                            // We truncate the filepath in a special way to display it properly
-                            staged: false
-                        };
-                        changesTree.push(element);
-                    }
-                }
-            }
-            // in the end pass the generated tree to the state.
-            return Object.assign({}, state, {
-                changesAreaTree: changesTree
-            });
+    
         default:
             return state;
     }
@@ -516,9 +520,11 @@ export const viewModifiedFilesReducer: Reducer<ViewModifiedFilesState> = (
 ) => {
     switch (action.type) {
         case VIEW_MODIFIED_FILES:
+
             return Object.assign({}, state, {
                 parsedData: parseStatus()
             });
+        
         default:
             return state;
     }

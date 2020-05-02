@@ -80,6 +80,33 @@ export type UpdateCommitDescriptionAction =
 // ------------------------------
 
 export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (filesTree) => {
+    if (filesTree._v) {
+        return {
+            type: UPDATE_CHANGES_AREA,
+            filesTree: {
+                _c: filesTree._c,
+                _s: filesTree._s,
+                _d: filesTree._d,
+                _h: filesTree._h,
+                _n: filesTree._n,
+                _v: {
+                    not_added: filesTree._v.not_added,
+                    conflicted: filesTree._v.conflicted,
+                    created: filesTree._v.created,
+                    deleted: filesTree._v.deleted,
+                    modified: filesTree._v.modified,
+                    renamed: filesTree._v.renamed,
+                    files: filesTree._v.files,
+                    staged: filesTree._v.staged,
+                    ahead:  filesTree._v.ahead,
+                    behind:  filesTree._v.behind,
+                    current:  filesTree._v.current,
+                    tracking:  filesTree._v.tracking
+                }
+            }
+        }        
+    }
+
     return {
         type: UPDATE_CHANGES_AREA,
         filesTree: {
@@ -88,22 +115,10 @@ export const UpdateChangesAreaAction: ActionCreator<UpdateChangesAreaType> = (fi
             _d: filesTree._d,
             _h: filesTree._h,
             _n: filesTree._n,
-            _v: {
-                not_added: filesTree._v.not_added,
-                conflicted: filesTree._v.conflicted,
-                created: filesTree._v.created,
-                deleted: filesTree._v.deleted,
-                modified: filesTree._v.modified,
-                renamed: filesTree._v.renamed,
-                files: filesTree._v.files,
-                staged: filesTree._v.staged,
-                ahead:  filesTree._v.ahead,
-                behind:  filesTree._v.behind,
-                current:  filesTree._v.current,
-                tracking:  filesTree._v.tracking
-            }
+            _v: null
         }
     }
+    
 }
 
 export const ViewModifiedFilesAction: ActionCreator<ViewModifiedFilesType> = () => {

@@ -71,25 +71,26 @@ function* doCommitAndPush() {
     const changedElements = store.getState()!.gitCommitDescriptionReducer.changedElements
 
     // TODO Generare error result if not every element is readied
-    const elementsReadiedIndexes = store.getState()?.gitCommitDescriptionReducer.completionStatus
-        .map((value, index) => {
+    const elementsReadiedIndexes: number[] = []
+
+    store.getState()?.gitCommitDescriptionReducer.completionStatus
+        .forEach((value, index) => {
             if (value.isWhatCompleted && value.isWhyCompleted) {
-                return index
+                elementsReadiedIndexes.push(index)
             }
         })
     
-    let readiedElements: (string | undefined)[] = []
+    const readiedElements: string[] = []
 
     if (elementsReadiedIndexes) {
         let localIndex = 0
-        const localReadiedElements = changedElements
-        .map((value, index) => {
+        changedElements.forEach((value, index) => {
             if (index === elementsReadiedIndexes[localIndex]) {
                 localIndex += 1
-                return value
+                readiedElements.push(value)
             }
         })
-        readiedElements = localReadiedElements
+        
     }
    
     const remote = store.getState()?.configInformationReducer.CurrentGitConfig.currentRemote
@@ -99,20 +100,34 @@ function* doCommitAndPush() {
     const composeDescription = (
         descriptionWhat: string[],
         descriptionWhy: string[],
-        readiedElements: (string | undefined)[]
+        readiedElements: string[]
     ) => {
         let descriptionString = ""
 
         for (let i = 0; i < readiedElements.length; i += 1) {
             if (i === 0) {
-                descriptionString = `//FILE//${readiedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
+                descriptionString = `//FILE//${
+                        readiedElements[i]
+                    }//WHAT//${
+                        descriptionWhat[elementsReadiedIndexes[i]]
+                    }//WHY//${
+                        descriptionWhy[elementsReadiedIndexes[i]]
+                    }`
+            } else {
+                descriptionString = `${descriptionString}\n//FILE//${
+                    readiedElements[i]
+                }//WHAT//${
+                    descriptionWhat[elementsReadiedIndexes[i]]
+                }//WHY//${
+                    descriptionWhy[elementsReadiedIndexes[i]]
+                }`
             }
-
-            descriptionString = `${descriptionString}\n//FILE//${readiedElements[i]}//WHAT//${descriptionWhat[i]}//WHY//${descriptionWhy[i]}`
         }
 
         return descriptionString
     }
+
+    debugger
 
     // Then passes the information to the workflow constructor
 
