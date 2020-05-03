@@ -7,7 +7,7 @@
 // --- SimpleGit Imports ---
 // -------------------------
 
-import promise from 'simple-git/promise';
+import gitP, {SimpleGit} from 'simple-git/promise';
 
 // --------------------
 // --- Type Imports ---
@@ -52,7 +52,7 @@ export class BasicWorkflow {
         // to "origin" and "master" for remote and branch.
 
         // Calls the async git class and applies it to the set working dir
-        const git = promise(this.gitBasicWorkflowData.workingDir?? "");
+        const git: SimpleGit = gitP(this.gitBasicWorkflowData.workingDir?? "");
 
         // Makes the data accesible to nested arrow functions
         const basicWorkflowData = this.gitBasicWorkflowData
