@@ -67,7 +67,7 @@ export class BasicWorkflow {
         git.raw([
             "commit",
             "-m",
-            `${this.gitBasicWorkflowData.message}\n\n${this.gitBasicWorkflowData.description}`,
+            `${basicWorkflowData.message}\n\n${basicWorkflowData.description}`,
             
         ]).then(() => {
             // FIXME push is broken
