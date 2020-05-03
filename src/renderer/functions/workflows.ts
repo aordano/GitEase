@@ -19,7 +19,8 @@ import {store} from "../store/index.redux.store"
 
 import {
     CommitSuccessAlertAction,
-    CommitErrorAlertAction
+    CommitErrorAlertAction,
+    UpdateViewTreeAction
 } from "../actions/commonActions.redux.action"
 
 // -----------------------------
@@ -73,6 +74,7 @@ export class BasicWorkflow {
                         // Once origin is fetched the success/error conditions are given.
                         () => {
                             store.dispatch(CommitSuccessAlertAction())
+                            store.dispatch(UpdateViewTreeAction())
                         },
                         // TODO | -- Add error handling, more in point check if the fetching error
                         // TODO | was because of a conflict when fetching and take action to fix
