@@ -44,7 +44,7 @@ export class BasicWorkflow {
         remote: gitComposedBasicWorkflowDataType['remote'],
         workingDir: gitComposedBasicWorkflowDataType['workingDir']
     ) {
-        this.gitBasicWorkflowData = { branch, description, message, remote, workingDir };
+        this.gitBasicWorkflowData = { message, description, branch, remote, workingDir };
     }
     
     commitAndPush() {
