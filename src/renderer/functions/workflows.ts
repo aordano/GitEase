@@ -54,11 +54,16 @@ export class BasicWorkflow {
         // Calls the async git class and applies it to the set working dir
         const git: SimpleGit = gitP(this.gitBasicWorkflowData.workingDir?? "");
 
-        // Makes the data accesible to nested arrow functions
-        const basicWorkflowData = this.gitBasicWorkflowData
+        // ? Makes the data accessible to nested arrow functions
+        const basicWorkflowData: gitComposedBasicWorkflowDataType = {
+            message: this.gitBasicWorkflowData.message,     // ? Yes it is absurd but the constructor for some reason 
+            description: this.gitBasicWorkflowData.remote,  // scrambles the props and need to be reassigned this way
+            branch: this.gitBasicWorkflowData.description,
+            remote: this.gitBasicWorkflowData.branch,
+            workingDir: this.gitBasicWorkflowData.workingDir
+        }    
 
         // Commits, pushes and then fetches origin.
-        // FIXME commit is killing the description
         git.raw([
             "commit",
             "-m",
