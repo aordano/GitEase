@@ -58,11 +58,15 @@ export class BasicWorkflow {
         const basicWorkflowData = this.gitBasicWorkflowData
 
         // Commits, pushes and then fetches origin.
-        git.commit([
-            this.gitBasicWorkflowData.message, 
-            this.gitBasicWorkflowData.description ?? ""
+        // FIXME commit is killing the description
+        git.raw([
+            "commit",
+            "-m",
+            this.gitBasicWorkflowData.message,
+            "-m",
+            this.gitBasicWorkflowData.description
         ]).then(() => {
-            debugger
+            // FIXME push is broken
             git.push(basicWorkflowData.remote, basicWorkflowData.branch).then(() => {
                 git.fetch("origin",basicWorkflowData.branch).then(
                     // Once origin is fetched the success/error conditions are given.
