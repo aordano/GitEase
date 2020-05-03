@@ -623,7 +623,8 @@ export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, Upd
                 currentChangedElements[action.index] = action.name
                 
                 return Object.assign({}, state, {
-                    changedElements: currentChangedElements
+                    changedElements: currentChangedElements,
+                    currentIndex: action.index
                 });
 
             } 
@@ -640,10 +641,11 @@ export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, Upd
             const currentDescriptionWhat = state.descriptionWhat
             
             if (currentDescriptionWhat.length > action.index) {
-                currentDescriptionWhat[action.index] = action.what
+                currentDescriptionWhat.splice(action.index, 1, action.what)
                 
                 return Object.assign({}, state, {
-                    descriptionWhat: currentDescriptionWhat
+                    descriptionWhat: currentDescriptionWhat,
+                    currentIndex: action.index
                 });
 
             } 
@@ -660,10 +662,11 @@ export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, Upd
             const currentDescriptionWhy = state.descriptionWhy
             
             if (currentDescriptionWhy.length > action.index) {
-                currentDescriptionWhy[action.index] = action.why
+                currentDescriptionWhy.splice(action.index, 1, action.why)
                 
                 return Object.assign({}, state, {
-                    descriptionWhy: currentDescriptionWhy
+                    descriptionWhy: currentDescriptionWhy,
+                    currentIndex: action.index
                 });
 
             } 
@@ -671,7 +674,7 @@ export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, Upd
             currentDescriptionWhy.push(action.why)
 
             return Object.assign({}, state, {
-                descriptionWhat: currentDescriptionWhy,
+                descriptionWhy: currentDescriptionWhy,
                 currentIndex: currentDescriptionWhy.length - 1
             });
         
@@ -683,7 +686,8 @@ export const gitCommitDescriptionReducer: Reducer<GitCommitDescriptionState, Upd
                 currentCompletionStatus[action.index] = action.completionStatus
                 
                 return Object.assign({}, state, {
-                    completionStatus: currentCompletionStatus
+                    completionStatus: currentCompletionStatus,
+                    currentIndex: action.index
                 });
 
             } 

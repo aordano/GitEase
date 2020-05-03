@@ -127,8 +127,6 @@ function* doCommitAndPush() {
         return descriptionString
     }
 
-    debugger
-
     // Then passes the information to the workflow constructor
 
     let workflow: BasicWorkflow

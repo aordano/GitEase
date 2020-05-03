@@ -90,6 +90,7 @@ export const CommitMessageInput: React.FC = () => {
     const [input, setInput] = useState('');
     
     const currentState = useSelector(state => state.basicWorkflowReducer);
+
     const handleCommitTextChange = (event: React.FormEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value);
         store.dispatch(
@@ -241,9 +242,10 @@ const CommitMetadataInputButtonWhat: React.FC<CommitMetadataButtonType> = (
     const completionStatus = useSelector(state => state.gitCommitDescriptionReducer.completionStatus)[index]
     
     const handleWhatMetadataPopup = () => {
-        
+
         store.dispatch(UpdateCommitDescriptionViewAction("what"))
         store.dispatch(UpdateCommitDescriptionElementNameAction(index, name))
+        window.localStorage.setItem("currentSelectedIndex", String(index))
     }
 
     return (
@@ -270,6 +272,7 @@ const CommitMetadataInputButtonWhy: React.FC<CommitMetadataButtonType> = (
     const handleWhyMetadataPopup = () => {
         store.dispatch(UpdateCommitDescriptionViewAction("why"))
         store.dispatch(UpdateCommitDescriptionElementNameAction(index, name))
+        window.localStorage.setItem("currentSelectedIndex", String(index))
     }
 
     return (
@@ -320,13 +323,18 @@ const CommitDescriptionTextArea: React.FC<CommitDescriptionElement> = (
 ) => {
     const [input, setInput] = useState('');
 
-    const index = useSelector(state => state.gitCommitDescriptionReducer.currentIndex)
-
     const handleDescriptionTextChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
         setInput(event.currentTarget.value)
     };
 
     const handleTextApproval = () => {
+
+        const indexValueString = window.localStorage.getItem("currentSelectedIndex")
+        let index = store.getState()!.gitCommitDescriptionReducer.currentIndex
+
+        if (indexValueString) {
+            index = parseInt(indexValueString, 10) 
+        }
 
         const currentCompletionStatus = store.getState()!.gitCommitDescriptionReducer.completionStatus[index]
 
