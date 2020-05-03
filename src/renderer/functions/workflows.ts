@@ -62,33 +62,25 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.message, 
             this.gitBasicWorkflowData.description ?? ""
         ]).then(() => {
-            git.raw([
-                "remote",
-                "set-url",
-                "--push",
-                "origin",
-                basicWorkflowData.remote ?? "origin"
-            ]).then(() => {
-                git.push().then(() => {
-                    git.fetch("origin",basicWorkflowData.branch).then(
-                        // Once origin is fetched the success/error conditions are given.
-                        () => {
-                            store.dispatch(CommitSuccessAlertAction())
-                            store.dispatch(UpdateViewTreeAction())
-                        },
-                        // TODO | -- Add error handling, more in point check if the fetching error
-                        // TODO | was because of a conflict when fetching and take action to fix
-                        // TODO | the conflict
-                        () => {
-                            store.dispatch(CommitErrorAlertAction())
-                        }
-                    )
-                },
-                // On Push error
-                // TODO Add handling for the error and revert everything as it were
-                () => {
-                    store.dispatch(CommitErrorAlertAction())
-                })
+            git.push(basicWorkflowData.remote, basicWorkflowData.branch).then(() => {
+                git.fetch("origin",basicWorkflowData.branch).then(
+                    // Once origin is fetched the success/error conditions are given.
+                    () => {
+                        store.dispatch(CommitSuccessAlertAction())
+                        store.dispatch(UpdateViewTreeAction())
+                    },
+                    // TODO | -- Add error handling, more in point check if the fetching error
+                    // TODO | was because of a conflict when fetching and take action to fix
+                    // TODO | the conflict
+                    () => {
+                        store.dispatch(CommitErrorAlertAction())
+                    }
+                )
+            },
+            // On Push error
+            // TODO Add handling for the error and revert everything as it were
+            () => {
+                store.dispatch(CommitErrorAlertAction())
             })
         },
         // On Commit error
