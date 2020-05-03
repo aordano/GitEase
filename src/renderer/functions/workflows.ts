@@ -62,6 +62,7 @@ export class BasicWorkflow {
             this.gitBasicWorkflowData.message, 
             this.gitBasicWorkflowData.description ?? ""
         ]).then(() => {
+            debugger
             git.push(basicWorkflowData.remote, basicWorkflowData.branch).then(() => {
                 git.fetch("origin",basicWorkflowData.branch).then(
                     // Once origin is fetched the success/error conditions are given.
