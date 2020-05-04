@@ -10,6 +10,12 @@
 import gitP, {SimpleGit} from 'simple-git/promise';
 
 // --------------------
+// --- YAML Imports ---
+// --------------------
+
+import * as YAML from "js-yaml"
+
+// --------------------
 // --- Type Imports ---
 // --------------------
 
@@ -56,10 +62,10 @@ export class BasicWorkflow {
 
         // ? Makes the data accessible to nested arrow functions
         const basicWorkflowData: gitComposedBasicWorkflowDataType = {
-            message: this.gitBasicWorkflowData.message,     // ? Yes it is absurd but the constructor for some reason 
-            description: this.gitBasicWorkflowData.remote,  // scrambles the props and need to be reassigned this way
-            branch: this.gitBasicWorkflowData.description,
-            remote: this.gitBasicWorkflowData.branch,
+            message: this.gitBasicWorkflowData.message, 
+            description: this.gitBasicWorkflowData.description,
+            branch: this.gitBasicWorkflowData.branch,
+            remote: this.gitBasicWorkflowData.remote,
             workingDir: this.gitBasicWorkflowData.workingDir
         }    
 
@@ -67,7 +73,7 @@ export class BasicWorkflow {
         git.raw([
             "commit",
             "-m",
-            `${basicWorkflowData.message}\n\n${basicWorkflowData.description}`,
+            `${basicWorkflowData.message}\n\n${YAML.safeDump(basicWorkflowData.description)}`,
             
         ]).then(() => {
             // FIXME push is broken

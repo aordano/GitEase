@@ -12,10 +12,16 @@ export type gitBasicWorkflowDataType = {
 
 export type gitComposedBasicWorkflowDataType = {
     message: string;
-    description: string;
+    description: gitDescriptionObjectType[];
     branch: string;
     remote: string;
     workingDir: string;
+}
+
+export type gitDescriptionObjectType = {
+    name: string;
+    what: string;
+    why: string;
 }
 
 export type workingDirDataType = {

@@ -18,6 +18,12 @@ import {
 
 import { store } from "../store/index.redux.store"
 
+// --------------------
+// --- Type Imports ---
+// --------------------
+
+import { gitDescriptionObjectType } from "../types"
+
 // ----------------------
 // --- Action Imports ---
 // ----------------------
@@ -102,29 +108,20 @@ function* doCommitAndPush() {
         descriptionWhy: string[],
         readiedElements: string[]
     ) => {
-        let descriptionString = ""
+        const descriptionObject: gitDescriptionObjectType[] = []
 
         for (let i = 0; i < readiedElements.length; i += 1) {
-            if (i === 0) {
-                descriptionString = `//FILE//${
-                        readiedElements[i]
-                    }//WHAT//${
-                        descriptionWhat[elementsReadiedIndexes[i]]
-                    }//WHY//${
-                        descriptionWhy[elementsReadiedIndexes[i]]
-                    }`
-            } else {
-                descriptionString = `${descriptionString}\n//FILE//${
-                    readiedElements[i]
-                }//WHAT//${
-                    descriptionWhat[elementsReadiedIndexes[i]]
-                }//WHY//${
-                    descriptionWhy[elementsReadiedIndexes[i]]
-                }`
-            }
+            
+            descriptionObject.push({
+                name: readiedElements[i],
+                what: descriptionWhat[elementsReadiedIndexes[i]],
+                why: descriptionWhy[elementsReadiedIndexes[i]]
+            })
         }
 
-        return descriptionString
+        debugger
+
+        return descriptionObject
     }
 
     // Then passes the information to the workflow constructor
@@ -134,17 +131,17 @@ function* doCommitAndPush() {
     if (descriptionWhat && descriptionWhy && readiedElements) {
         workflow = new BasicWorkflow(
             message ?? "There was no supplied message.",
+            composeDescription(descriptionWhat, descriptionWhy, readiedElements),
             branch ?? 'master',
             remote ?? 'origin',
-            composeDescription(descriptionWhat, descriptionWhy, readiedElements) ?? "",
             workingDir ?? ""
         );
     } else {
         workflow = new BasicWorkflow(
             message ?? "There was no supplied message.",
+            [],
             branch ?? 'master',
             remote ?? 'origin',
-            "",
             workingDir ?? ""
         );
     }
