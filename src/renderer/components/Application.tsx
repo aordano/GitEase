@@ -71,32 +71,44 @@ const Application = () => {
 
     const leftBlock = React.createElement(
         "div", 
-        { className: "left-block" }, 
+        {
+            className: "left-block",
+            key: "ID_LEFT_WRAPPER"
+        }, 
         [
-            <LeftBlock key={"IDLEFT"}/>
+            <LeftBlock key={"ID_LEFT"}/>
         ]
     )
         
 
     const mainBlock = React.createElement(
         "div", 
-        { className: "main-block"}, 
+        {
+            className: "main-block",
+            key: "ID_MAIN_WRAPPER"
+        }, 
         [
-            <BottomBlock key={"IDBOTTOM"}/>,
+            <BottomBlock key={"ID_MAIN"}/>,
         ]
     )
 
     const rightBlock = React.createElement(
         "div", 
-        { className: "right-block"}, 
-        <RightBlock key={"IDRIGHT"}/>
+        {
+            className: "right-block",
+            key: "ID_RIGHT_WRAPPER"
+        }, 
+        <RightBlock key={"ID_RIGHT"}/>
     )
 
     const currentContextMenu = useSelector(state => state.setContextMenuIdReducer.id)
 
     const contextMenuTrigger = React.createElement(
         ContextMenuTrigger,
-        { id: currentContextMenu },
+        {
+            id: currentContextMenu,
+            key: "ID_CONTEXT_MENU_TRIGGER"
+        },
         [
             leftBlock,
             <HideButtonLeft key={"ID_HIDE_LEFT_SIDEBAR"}/>,
@@ -119,7 +131,10 @@ const Application = () => {
 
     // TODO finish fixing the router for transitions between routes
 
-    return <div className={"main-app"}>
+    return <div
+        className={"main-app"}
+        key={"ID_MAIN_APP"}
+    >
                 <Router
                     initialEntries={["/","/firstwizardgreeting"]}
                 >
