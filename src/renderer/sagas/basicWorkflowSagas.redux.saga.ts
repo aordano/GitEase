@@ -73,7 +73,7 @@ function* doCommitAndPush() {
     // Grabs information from the state
     const message = store.getState()?.basicWorkflowReducer.commitMessage
     const descriptionWhat = store.getState()?.gitCommitDescriptionReducer.descriptionWhat
-    const descriptionWhy = store.getState()?.gitCommitDescriptionReducer.descriptionWhat
+    const descriptionWhy = store.getState()?.gitCommitDescriptionReducer.descriptionWhy
     const changedElements = store.getState()!.gitCommitDescriptionReducer.changedElements
 
     // TODO Generare error result if not every element is readied
@@ -118,8 +118,6 @@ function* doCommitAndPush() {
                 why: descriptionWhy[elementsReadiedIndexes[i]]
             })
         }
-
-        debugger
 
         return descriptionObject
     }

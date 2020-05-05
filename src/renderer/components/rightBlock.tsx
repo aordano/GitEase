@@ -120,17 +120,30 @@ const History: React.FC = () => {
         const elements = []
         for (let i = 0; i < history.length ; i += 1) {
             // -- Creates the <ChangesListElement /> elements required.
-            elements.push(
-                React.createElement(HistoryElement,{
-                    author_name: history[i].author_name,
-                    date: history[i].date,
-                    hash: history[i].hash,
-                    message: history[i].message,
-                    branch: history[i].branch,
-                    parentHash: history[i].parentHash,
-                    key: `ID_HISTORY${i}`
-                })
-            )
+            history[i].messageBody
+            ?   elements.push(
+                    React.createElement(HistoryElement,{
+                        author_name: history[i].author_name,
+                        date: history[i].date,
+                        hash: history[i].hash,
+                        message: history[i].message,
+                        messageBody: history[i].messageBody,
+                        branch: history[i].branch,
+                        parentHash: history[i].parentHash,
+                        key: `ID_HISTORY${i}`
+                    })
+                )
+            :   elements.push(
+                    React.createElement(HistoryElement,{
+                        author_name: history[i].author_name,
+                        date: history[i].date,
+                        hash: history[i].hash,
+                        message: history[i].message,
+                        branch: history[i].branch,
+                        parentHash: history[i].parentHash,
+                        key: `ID_HISTORY${i}`
+                    })
+                )
         }
 
          // -- Creates the <ul> element that contains the staging area element list.

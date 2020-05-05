@@ -51,17 +51,19 @@ export const parseLogTree = async (workingDir?: string) => {
     const logList = [];
 
     const logListString = await Promise.resolve(
-        git.raw(['log', '--full-history', '--topo-order', '--format=%H%%%%%an%%%%%s%%%%%ad%%%%'])
+        git.raw(['log', '--full-history', '--topo-order', '--format=%H%%%%%an%%%%%s%%%%%ad%%%%%b%n%%%%'])
     );
 
-    const logListSplitted = logListString.split('\n');
+    const logListSplitted = logListString.split('\n%%');
+
     for (let i = 0; i < logListSplitted.length; i += 1) {
         const logListSplittedElement = logListSplitted[i].split('%%');
         logList.push({
-            hash: logListSplittedElement[0],
+            hash: logListSplittedElement[0].replace("\n",""),
             author_name: logListSplittedElement[1],
             message: logListSplittedElement[2],
-            date: logListSplittedElement[3]
+            date: logListSplittedElement[3],
+            messageBody: logListSplittedElement[4]
         });
     }
 
@@ -101,15 +103,26 @@ export const parseLogTree = async (workingDir?: string) => {
 
     for (let i = 0; i < logList.length; i += 1) {
 
-
-        fullHistory.push({
-            author_name: logList[i].author_name,
-            date: logList[i].date,
-            hash: logList[i].hash,
-            parentHash: parentHashList[i],
-            message: logList[i].message,
-            branch: branchNameList[i]
-        });
+        if (logList[i].messageBody) {
+            fullHistory.push({
+                author_name: logList[i].author_name,
+                date: logList[i].date,
+                hash: logList[i].hash,
+                parentHash: parentHashList[i],
+                message: logList[i].message,
+                messageBody: logList[i].messageBody,
+                branch: branchNameList[i]
+            })
+        } else {
+            fullHistory.push({
+                author_name: logList[i].author_name,
+                date: logList[i].date,
+                hash: logList[i].hash,
+                parentHash: parentHashList[i],
+                message: logList[i].message,
+                branch: branchNameList[i]
+            })
+        }
     }    
 
     const metadataList = generateGraphMetadata(hashList, parentHashList, fullHistory, branchesList);
@@ -149,7 +162,7 @@ export const generateGraphData = async (
     return {
         nodes: nodeList,
         links: linkList.flat(200),
-        focusedNodeId: "" // ? It works really buggy so better leave it empty for now, it should be nodeList[0].id
+        focusedNodeId: nodeList[0].id // ? It works really buggy so better leave it empty for now, it should be nodeList[0].id
     };
 };
 

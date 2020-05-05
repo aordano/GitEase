@@ -202,6 +202,7 @@ const ChangesSpace: React.FC = () => {
             React.createElement(
                 'p', 
                 {
+                    key: "ID_CHANGES_LIST_TITLE",
                     className: "changes-list-title"
                 }, 
                 `${changesAreaTree.length} ${localization.changesAreaChangesTitle}`

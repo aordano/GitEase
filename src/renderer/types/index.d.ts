@@ -139,6 +139,7 @@ export type GitLogObjectType = {
     hash: string;
     parentHash: string;
     message: string;
+    messageBody?: string;
     branch: string;
 };
 

@@ -54,6 +54,60 @@
         border-bottom: 1px solid rgba(0,0,0,0.25);
     }
 
+    & .commit-info-diff-message-list {
+        overflow-y: auto;
+        max-height: calc(100vh - 700px);
+        font-weight: 400;
+        list-style: none;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        overflow-x: hidden;
+        font-size: 16px;
+
+        & .commit-info-diff-message-element {
+            border-bottom: 1px solid rgba(0,0,0,0.25);
+            width: 80%;
+            margin: auto;
+
+            & .commit-info-diff-message-element-name {
+                border-radius: 5px;
+                text-align: center;
+                background-color: rgba(169, 81, 118, 0.75);
+                padding: 10px;
+                border: 5px solid rgba(255,255,255,0.25);
+                color: white;
+            }
+
+            & .commit-info-diff-message-element-what {
+                line-height: 24px;
+
+                &::before {
+                    content: "Cambios";
+                    border-radius: 3px;
+                    text-align: center;
+                    background-color: rgba(81, 129, 169, 0.75);
+                    padding: 3px;
+                    border: 3px solid rgba(255,255,255,0.25);
+                    margin-right: 5px;
+                }
+            }
+
+            & .commit-info-diff-message-element-why {
+                line-height: 24px;
+
+                &::before {
+                    content: "Motivo";
+                    border-radius: 3px;
+                    text-align: center;
+                    background-color: rgba(81, 169, 107, 0.75);
+                    padding: 3px;
+                    border: 3px solid rgba(255,255,255,0.25);
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
     & .commit-info-extended-information {
         border-bottom: 1px solid rgba(0,0,0,0.25);
 

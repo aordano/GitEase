@@ -45,11 +45,18 @@ import { SpinnerComponent } from '../misc';
 import store from '../../store/index.redux.store';
 
 // --------------------
+// --- YAML Imports ---
+// --------------------
+
+import * as YAML from "js-yaml"
+
+
+// --------------------
 // --- Type Imports ---
 // --------------------
 
 import { 
-    labelType
+    labelType, gitDescriptionObjectType
 } from '../../types';
 
 import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
@@ -177,14 +184,73 @@ const CommitInfoHeader: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType)
 
 const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndexType) => {
 
-    // TODO parse metadata from commit message and display it here as a list separated by element and its what and why descriptions
+    const commitDescription = useSelector(state =>
+        state.updateViewTreeReducer.dataPromise.history._v.fullHistory
+    )[nodeIndex].messageBody
+
+    const elementsList: React.ReactElement<HTMLLIElement>[] = []
+
+    if (commitDescription) {
+
+        const descriptionObject: gitDescriptionObjectType[] = YAML.safeLoad(commitDescription)
+
+        if (descriptionObject && typeof descriptionObject !== "string") {
+            for (let i = 0; i < descriptionObject.length; i += 1) {
+                elementsList.push(
+                    <li
+                        className={"commit-info-diff-message-element"}
+                        key={`ID_COMMIT_INFO_DIFF_MESSAGE_ELEMENT_${i}`}
+                    >
+                        <p
+                            className={"commit-info-diff-message-element-name"}
+                        >
+                            {descriptionObject[i].name}
+                        </p>
+                        <p
+                            className={"commit-info-diff-message-element-what"}
+                        >
+                            {descriptionObject[i].what}
+                        </p>
+                        <p
+                            className={"commit-info-diff-message-element-why"}
+                        >
+                            {descriptionObject[i].why}
+                        </p>
+                    </li>
+                )
+            }
+        } else {
+            elementsList.push(
+                <li className={"commit-info-diff-message-element"}>
+                        <p
+                            className={"commit-info-diff-message-element-what"}
+                        >
+                            {commitDescription}
+                        </p>
+                    </li>
+            )
+        }
+
+    } else {
+        elementsList.push(
+            <li className={"commit-info-diff-message-element"}>
+                    <p
+                        className={"commit-info-diff-message-element-name"}
+                    >
+                        Esta confirmacion no contiene una descripcion valida.
+                    </p>
+                </li>
+        )
+    }
+
+    
 
     return (
-        <div
-            className={"commit-info-diff-message"}
+        <ul
+            className={"commit-info-diff-message-list"}
         >
-            <p>Here goes the metadata of the commit including what was changed and why.</p>
-        </div>
+            {elementsList}
+        </ul>
     )
 }
 

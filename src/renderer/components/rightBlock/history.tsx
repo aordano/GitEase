@@ -77,7 +77,7 @@ const localization = require(`../../lang/${locale}`)
 
 export const HistoryElement: React.FC<GitLogObjectType> = (
     // -- Component that creates the list element based on the different status.
-    { author_name, date, hash, message, branch }: GitLogObjectType
+    { author_name, date, hash, parentHash, message, messageBody, branch }: GitLogObjectType
 ) => {
 
     const openCommitInfoPane = () => {
@@ -161,12 +161,12 @@ export const HistoryElement: React.FC<GitLogObjectType> = (
     }
 
     const hashesList = store.getState()?.updateViewTreeReducer.dataPromise.history._v.hashes.hashList
+    const graphData = store.getState()?.updateViewTreeReducer.dataPromise.graphData._v
 
     let branchColor
     
-    if (hashesList) {
-        branchColor = store.getState()?.updateViewTreeReducer
-        .dataPromise.graphData._v.nodes[hashesList.indexOf(hash)].color
+    if (hashesList && graphData) {
+        branchColor = graphData.nodes[hashesList.indexOf(hash)].color
     }
 
     return (

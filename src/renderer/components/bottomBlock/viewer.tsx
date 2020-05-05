@@ -141,7 +141,7 @@ export const ViewerComponent: React.FC = () => {
 
     const onClickNode = (nodeId: string) => {
         // ? We call store.getState() even tho we are in the body of a react component because the 
-        // ? function is called outside the component. Yes, weird but is handled by Graph.js library
+        // ? function is called outside the component. 
         const currentUIConfig = store.getState()!.configInformationReducer.UIConfig
 
         store.dispatch(SetUIConfigInformationAction({
@@ -329,7 +329,6 @@ export const ViewerComponent: React.FC = () => {
                 data: graphData,
                 id: "graphViewer",
                 config: graphConfig,
-                // onClickNode: onClickNode,
             }
         )
     }
