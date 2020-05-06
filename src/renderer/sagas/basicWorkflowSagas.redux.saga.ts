@@ -42,28 +42,16 @@ import {
     displayCommitInProcessAlert
 } from '../functions';
 
-import { UpdateViewTreeAction } from '../actions/commonActions.redux.action';
+import { UpdateViewTreeAction, ViewModifiedFilesAction } from '../actions/commonActions.redux.action';
 
 // --------------------
 // --- Effect Sagas ---
 // --------------------
 
-function* clearCommitBox() {
-    // -- This generator is in place because sometimes because of race conditions the 
-    // state cleared on the success alert reducer may not get late enough as to keep cleared.
-    // -- Generator that yields a dispatch by the put() method as to clear commit boxes.
-    yield put(BasicWorkflowUpdateCommitMessageAction("",""))
-    const commitMessageBox: HTMLInputElement = 
-        document.querySelector(".commit-box .commit-message") as HTMLInputElement
-    const commitMessageDescription: HTMLTextAreaElement = 
-        document.querySelector(".commit-box .commit-description") as HTMLTextAreaElement
-    commitMessageBox.value  = ""
-    commitMessageDescription.value = ""
-}
-
-function* updateViewTree() {
+function* updateViewTreeAndModifiedFiles() {
     // -- 
     yield put(UpdateViewTreeAction())
+    yield put(ViewModifiedFilesAction())
 }
 
 
@@ -160,8 +148,7 @@ function* doCommitAndPush() {
 function* watchCommit() {
     // -- Watch generator that looks for a commit succes flag and fires up a saga 
     // to clear the commit textbox.
-    yield takeLatest('COMMIT_SUCCESS_ALERT',clearCommitBox);
-    yield takeLatest('COMMIT_SUCCESS_ALERT',updateViewTree);
+    yield takeLatest('COMMIT_SUCCESS_ALERT',updateViewTreeAndModifiedFiles);
 }
 
 function* watchCommitSuccessStatus() {

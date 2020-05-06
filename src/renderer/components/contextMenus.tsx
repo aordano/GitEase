@@ -68,6 +68,7 @@ export const contextMenus: React.ReactNode =
         <div className="context-menus">
             <ContextMenu
                 id="defaultContextMenu"
+                hideOnLeave={true}
                 key={"IDDEFAULT_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
@@ -116,6 +117,7 @@ export const contextMenus: React.ReactNode =
             </ContextMenu>,
             <ContextMenu
                 id="nodeGraphContextMenu"
+                hideOnLeave={true}
                 key={"IDNODE_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
@@ -151,6 +153,7 @@ export const contextMenus: React.ReactNode =
             </ContextMenu>,
             <ContextMenu
                 id="graphBackgroundContextMenu"
+                hideOnLeave={true}
                 key={"IDGRAPH_BACKGROUND_CONTEXT_MENU"}
             >
                 <MenuItem
@@ -185,6 +188,7 @@ export const contextMenus: React.ReactNode =
             </ContextMenu>,
             <ContextMenu
                 id="commitButtonContextMenu"
+                hideOnLeave={true}
                 key={"IDCOMMIT_BUTTON_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
@@ -207,6 +211,7 @@ export const contextMenus: React.ReactNode =
             </ContextMenu>,
             <ContextMenu
                 id="stagingAreaContextMenu"
+                hideOnLeave={true}
                 key={"IDSTAGING_AREA_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
@@ -230,6 +235,7 @@ export const contextMenus: React.ReactNode =
             </ContextMenu>,
             <ContextMenu
                 id="stagingAreaItemContextMenu"
+                hideOnLeave={true}
                 key={"IDSTAGING_AREA_ITEM_CONTEXT_MENU"}
             >
                 <MenuItem data={{foo: 'bar'}}>
