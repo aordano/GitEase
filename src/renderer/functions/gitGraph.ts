@@ -4,7 +4,9 @@
 // --- SimpleGit Imports ---
 // -------------------------
 
-import promise from 'simple-git/promise';
+import gitP, {SimpleGit} from 'simple-git/promise';
+
+import { Graph } from "react-d3-graph";
 
 // --------------------
 // --- Type Imports ---
@@ -19,25 +21,14 @@ import {
     GitLinkType
 } from '../types';
 
-// ----------------------------
-// --- Localization Imports ---
-// ----------------------------
-
-const mockData = require("../data.mock")
-
-const localization = require(`../lang/${mockData.lang}`);
-
 // ------------------------
 // --- Function Imports ---
 // ------------------------
 
-import { getAllIndexes } from './index';
-
-// ---------------------------
-// * --- Mock Data Imports ---
-// ---------------------------
-
-import { data } from '../data.mock';
+import {
+    getAllIndexes,
+    gitPath
+} from './index';
 
 // ------------------------------------
 // --- Git-Viewer Related Functions ---
@@ -45,7 +36,8 @@ import { data } from '../data.mock';
 
 export const parseLogTree = async (workingDir?: string) => {
 
-    const git = promise(workingDir);
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
 
     const fullHistory: GitLogObjectType[] = [];
     const logList = [];
@@ -162,13 +154,15 @@ export const generateGraphData = async (
     return {
         nodes: nodeList,
         links: linkList.flat(200),
-        focusedNodeId: nodeList[0].id // ? It works really buggy so better leave it empty for now, it should be nodeList[0].id
+        focusedNodeId: "" // ? It works really buggy so better leave it empty for now, it should be nodeList[0].id
     };
 };
 
 const parseBranchNames = async (workingDir?: string) => {
     
-    const git = promise(workingDir)
+    const git: SimpleGit = gitP(workingDir);
+    git.customBinary(gitPath())
+
     const rawBranchNameInformationString = await Promise.resolve(git.raw([
         "show-branch",
         "--all",
@@ -499,6 +493,7 @@ const generateBranchesColors = (branchesList: string[]) => {
 
     return branches;
 };
+
 
 // Polyfill Array.prototype.flat implementation
 // from https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/flat#Polyfill

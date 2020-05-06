@@ -545,8 +545,27 @@ export const updateViewTreeReducer: Reducer<UpdateViewTreeState> = (
 ) => {
     switch (action.type) {
         case UPDATE_VIEW_TREE:
-            const history = Promise.resolve(parseLogTree())
-            const graphData = Promise.resolve(generateGraphData())
+            // ? We read from the config file instead of state because passing state from the root reducer 
+            // might prove a headache.
+
+            const configData = readConfigSync()
+
+            let configObject
+        
+            if (configData) {
+                configObject = JSON.parse(configData)
+            }
+            const activeRepo = configObject.ReposConfig.activeRepo
+
+            let history
+            let graphData
+            if (activeRepo) {
+                history = Promise.resolve(parseLogTree(activeRepo))
+                graphData = Promise.resolve(generateGraphData(activeRepo))
+            } else {
+                history = Promise.resolve(parseLogTree())
+                graphData = Promise.resolve(generateGraphData())
+            }
             return Object.assign({}, state, {
                 dataPromise: {
                     graphData,
