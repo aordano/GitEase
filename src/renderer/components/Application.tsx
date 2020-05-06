@@ -107,6 +107,7 @@ const Application = () => {
         ContextMenuTrigger,
         {
             id: currentContextMenu,
+            holdToDisplay: -1,
             key: "ID_CONTEXT_MENU_TRIGGER"
         },
         [
