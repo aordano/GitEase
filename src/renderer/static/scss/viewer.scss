@@ -26,6 +26,10 @@ div.bottom-block {
     & .node path {
         transition-duration: 400ms;
     }
+
+    & .link path {
+        transition-duration: 400ms;
+    }
 }
 
 .spinner-graph {

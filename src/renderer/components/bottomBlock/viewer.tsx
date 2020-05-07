@@ -213,6 +213,19 @@ const locateNodes = (nodes: any[]) => {
     });
 };
 
+const reverseVerticalNodeLocations = (nodes: any[]) => {
+
+    return nodes.map((currentNode, index) => {
+        
+        const oppositeNode = nodes[nodes.length - 1 - index]
+
+        return Object.assign({}, currentNode, {
+            y: oppositeNode.y,
+        })
+
+    })
+}
+
 export const ViewerComponent: React.FC = () => {
 
     const onClickNode = (nodeId: string) => {
@@ -438,7 +451,7 @@ export const ViewerComponent: React.FC = () => {
     }
 
     else {
-        graphData.nodes = locateNodes(graphData.nodes)
+        graphData.nodes = reverseVerticalNodeLocations(locateNodes(graphData.nodes))
         shownElement = React.createElement(
             Graph,
             {
