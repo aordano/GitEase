@@ -58,7 +58,7 @@ import store from '../../store/index.redux.store';
 
 import { SetUIConfigInformationAction } from "../../actions/configActions.redux.action"
 
-import { ReactD3GraphNodeType, GitGraphNodeMetadataType, GitLogObjectType, colorTripletType } from '../../types';
+import { ReactD3GraphNodeType, GitNodeType } from '../../types';
 import { SetContextMenuIdAction } from '../../actions/commonActions.redux.action';
 
 // ----------------------------
@@ -137,6 +137,82 @@ const generateLabelProperty = (node: ReactD3GraphNodeType) => {
     }
 }
 
+const locateNodes = (nodes: any[]) => {
+
+    const reversedNodes = nodes.reverse()
+
+    const nodesMetadata = store.getState()!.updateViewTreeReducer.dataPromise.history._v.metadataList.reverse()
+    const hashesList = store.getState()!.updateViewTreeReducer.dataPromise.history._v.hashes.hashList.reverse()
+    const nodesHashes: string[] = reversedNodes.map((node: any) => { return node.id })
+
+    const previousCoordinates: number[] = [0,0]
+
+    return reversedNodes.map((currentNode: any, index: number) => {
+
+        const currentNodeIndex = hashesList.indexOf(currentNode.id)
+        const currentNodeMetadata = nodesMetadata[currentNodeIndex]
+        const parentNodes = currentNodeMetadata.childrenOf
+
+        if (currentNodeMetadata.isInitial) {
+            return Object.assign({}, currentNode, {
+                x: 0,
+                y: 0,
+            })
+        }
+
+        if (parentNodes.length === 1) {
+
+            const parentNodeIndex = nodesHashes.indexOf(parentNodes[0])
+            
+            const parentNodeMetadata = nodesMetadata[parentNodeIndex]
+
+            const currentNodeParentIndex = parentNodeMetadata.parentOf.indexOf(currentNode.id)
+
+            const xCoordinate = ( previousCoordinates[0] + (40 * currentNodeParentIndex) )
+            const yCoordinate = ( previousCoordinates[1] + 40 )
+
+            previousCoordinates[0] = xCoordinate
+            previousCoordinates[1] = yCoordinate
+
+            return Object.assign({}, currentNode, {
+                x: xCoordinate,
+                y: yCoordinate,
+            })
+        }
+
+        const parentsNodeIndexes = parentNodes.map(hash => { return nodesHashes.indexOf(hash) })
+        
+        const parentNodesMetadata = parentsNodeIndexes.map(index => { return nodesMetadata[index] })
+
+        const nodeParentIndexes = parentNodesMetadata.map(metadata => {
+            return metadata.parentOf.indexOf(currentNode.id)
+        }) 
+
+        let maxIndex = 0
+
+        for (let i = 0; i < nodeParentIndexes.length; i += 1) {
+            if (i === 0) {
+                maxIndex = nodeParentIndexes[i]
+            } else {
+                maxIndex = Math.max(nodeParentIndexes[i-1], nodeParentIndexes[i])
+            }
+        }
+
+        const xCoordinate = ( previousCoordinates[0] + (40 * maxIndex) )
+        const yCoordinate = ( previousCoordinates[1] + 40 )
+
+        previousCoordinates[0] = xCoordinate
+        previousCoordinates[1] = yCoordinate
+
+        return Object.assign({}, currentNode, {
+            x: xCoordinate,
+            y: yCoordinate,
+        })
+
+
+    });
+};
+
 export const ViewerComponent: React.FC = () => {
 
     const onClickNode = (nodeId: string) => {
@@ -152,7 +228,46 @@ export const ViewerComponent: React.FC = () => {
             showSidePanelsByDefault: currentUIConfig.showSidePanelsByDefault,
             theme: currentUIConfig.theme
         }))
-    }    
+    }
+
+    const onMouseOverLink = (source: string, target: string) => {
+
+        const graphData = store.getState()!.updateViewTreeReducer.dataPromise.graphData._v.nodes
+
+        const history =  store.getState()!.updateViewTreeReducer.dataPromise.history._v
+        const hashes = history.hashes.hashList
+        const sourceIndex = hashes!.indexOf(target) 
+
+        const linkSVG = document.getElementById(`${source},${target}`) as unknown as SVGElement
+
+        // --------------------------------------------------------------------
+
+        // Highlight the link
+
+        if (linkSVG) {
+            setTimeout(() => {
+                linkSVG.setAttribute("marker-end","")
+                linkSVG.style.strokeWidth = String(parseFloat(linkSVG.style.strokeWidth) * 4)
+                linkSVG.style.stroke = graphData[sourceIndex].color
+            }, 5)
+        }
+
+    };
+
+    const onMouseOutLink = (source: string, target: string) => {
+
+        const linkSVG = document.getElementById(`${source},${target}`) as unknown as SVGElement
+
+        // --------------------------------------------------------------------
+
+        // Highlight the link
+
+        if (linkSVG) {
+            linkSVG.setAttribute("marker-end","url(#marker-large)")
+            linkSVG.style.strokeWidth = String(parseFloat(linkSVG.style.strokeWidth) / 4)
+        }
+
+    };
     
     const onMouseOverNode = (nodeId: string) => {
         // ? Likewise onClickNode()
@@ -186,7 +301,7 @@ export const ViewerComponent: React.FC = () => {
         // Highlight the node
 
         if (nodeSVG) {
-            nodeSVG.setAttribute("transform", "scale(3)")
+            nodeSVG.setAttribute("transform", "scale(2)")
             nodeSVG.setAttribute("opacity", "0.9")
             nodeSVG.setAttribute("stroke-width", "0.5")
             nodeSVG.setAttribute("stroke-dasharray","2 1")
@@ -228,22 +343,25 @@ export const ViewerComponent: React.FC = () => {
 
     const graphConfig = {
         nodeHighlightBehavior: false,
+        linkHighlightBehavior: true,
         // highlightOpacity: 0.2,
         height: mainBlockRect?.height ?? 200,
         width: mainBlockRect?.width ?? 200,
         collapsible: false,
         directed: true,
-        staticGraph: false,
+        staticGraph: true,
+        // staticGraphWithDragAndDrop: true,
         // highlightDegree: 2,
-        automaticRearrangeAfterDropNode: true,
+        automaticRearrangeAfterDropNode: false,
         minZoom: 0.01,
         panAndZoom: true,
-        d3: {
-            gravity: -1000,
-            alphaTarget: 1,
+        /* d3: {
+            gravity: 0,
+            alphaTarget: 0,
             linkLength: 5,
-            linkStrength: 2
-        },
+            linkStrength: 0,
+            disableLinkForce: true,
+        }, */ 
         node: {
             strokeColor: "rgba(0,0,0,0.75)",
             renderLabel: true,
@@ -252,8 +370,8 @@ export const ViewerComponent: React.FC = () => {
             labelProperty: generateLabelProperty
         },
         link: {
-            highlightColor: "rgba(0,0,0,0.25)",
-            type: "STRAIGHT",
+            highlightColor: "SAME",
+            type: "CURVE_SMOOTH",
             strokeWidth: 2,
             color: "rgba(0,0,0,0.35)",
             markerWidth: 3,
@@ -320,11 +438,14 @@ export const ViewerComponent: React.FC = () => {
     }
 
     else {
+        graphData.nodes = locateNodes(graphData.nodes)
         shownElement = React.createElement(
             Graph,
             {
                 onMouseOverNode,
                 onMouseOutNode,
+                onMouseOverLink,
+                onMouseOutLink,
                 onClickNode,
                 data: graphData,
                 id: "graphViewer",
@@ -332,13 +453,8 @@ export const ViewerComponent: React.FC = () => {
             }
         )
     }
-
-    const generateGraph = () => {
-        return shownElement
-    }
-
     
-    return generateGraph()
+    return shownElement
 
     
 };
