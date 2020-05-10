@@ -42,7 +42,12 @@ import {
     displayCommitInProcessAlert
 } from '../functions';
 
-import { UpdateViewTreeAction, ViewModifiedFilesAction } from '../actions/commonActions.redux.action';
+import {
+    UpdateViewTreeAction,
+    ViewModifiedFilesAction,
+    SetReactTagDataAction,
+    StoreCommitLabelAction
+} from '../actions/commonActions.redux.action';
 
 // --------------------
 // --- Effect Sagas ---
@@ -52,6 +57,20 @@ function* updateViewTreeAndModifiedFiles() {
     // -- 
     yield put(UpdateViewTreeAction())
     yield put(ViewModifiedFilesAction())
+
+    const tags = store.getState()!.reactTagDataReducer.tags
+
+    const workingTags = tags.tagData
+    workingTags!.forEach(() => { workingTags!.shift() })
+
+    yield put(SetReactTagDataAction({ tagData: workingTags, suggestions: tags.suggestions }))
+    yield put(StoreCommitLabelAction(""))
+
+    const commitTextElement = document.querySelector(".commit-message") as HTMLInputElement
+
+    commitTextElement.value = ""
+    commitTextElement.setAttribute("value","")
+
 }
 
 
