@@ -286,14 +286,16 @@ export const ViewerComponent: React.FC = () => {
         // ? Likewise onClickNode()
         const history =  store.getState()!.updateViewTreeReducer.dataPromise.history._v
         const hashes = history?.hashes.hashList
-        const nodeIndex = hashes!.indexOf(nodeId) // ? If this gets called the data should be present
+        //debugger
+        const nodeIndex = hashes.length - hashes!.indexOf(nodeId) - 1
         const nodeData = history!.fullHistory[nodeIndex]
-        const nodeSVG = document.getElementById(`${nodeData.hash}`)?.children[0] as SVGElement
+        const nodeSVG = document.getElementById(`${nodeId}`)?.children[0] as SVGElement
 
-        const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeData.hash}`) as HTMLLIElement
+        const historyListElement = document.getElementById(`ID_HISTORY_ELEMENT_${nodeId}`) as HTMLLIElement
 
         const mouseOverBranchInfoElement = document.querySelector(".mouse-over-branch-info-tag") as HTMLHeadingElement
-        const branchColor = store.getState()!.updateViewTreeReducer.dataPromise.graphData._v.nodes[nodeIndex].color
+        const branchColor = store.getState()!
+            .updateViewTreeReducer.dataPromise.graphData._v.nodes[hashes!.indexOf(nodeId)].color
         
         const parsedBranchColor = (color: string) => {
             const firstIndex = color.indexOf("(")
