@@ -205,7 +205,25 @@ export const CommitButton: React.FC = () => {
         store.dispatch(SetContextMenuIdAction("defaultContextMenu"))
     }
 
-    if (commitLabel === "") {
+    const descriptionState = store.getState()!.gitCommitDescriptionReducer
+
+    let allDescriptionsFullfilled = false
+
+    for (let i = 0; i < descriptionState.descriptionWhat.length; i += 1) {
+        if (
+            descriptionState.descriptionWhat[i] !== "" &&
+            descriptionState.descriptionWhy[i] !== ""
+        ) {
+            allDescriptionsFullfilled = true
+        } else {
+            allDescriptionsFullfilled = false
+        }
+    }
+
+    if (
+        commitLabel === "" ||
+        !allDescriptionsFullfilled
+    ) {
         return null
     }
 
