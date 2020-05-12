@@ -28,10 +28,12 @@ const localization = require(`../lang/${getLanguage()}`)
 
 import { Titlebar, Color } from 'custom-electron-titlebar'
 
-import{ remote } from "electron"
+
+import * as Electron from "electron"
 
 const encodeAsImage = (iconName: string) => {
-    return remote.nativeImage.createFromDataURL(`data:image/png,/src/renderer/static/icons/SVG/${iconName}.svg`)
+    return Electron.remote.nativeImage
+        .createFromDataURL(`data:image/png,${Electron.remote.app.getAppPath()}/../appIcons/${iconName}.svg`)
 }
 
 /*
@@ -60,16 +62,9 @@ updateIcon() {
 
 export const createMenu = () => {
 
-    const titlebar = new Titlebar({
-        backgroundColor: Color.fromHex('#FFFFFF'),
-        unfocusEffect: true
-    });
-    
-    titlebar.updateItemBGColor(Color.fromHex('#333333'));
-
-    const menu = new remote.Menu();
+    const menu = new Electron.remote.Menu();
  
-    menu.append(new remote.MenuItem({
+    menu.append(new Electron.remote.MenuItem({
         label: localization.applicationMenuView,
         submenu: [
             {
@@ -150,7 +145,7 @@ export const createMenu = () => {
         ]
     }));
 
-    menu.append(new remote.MenuItem({
+    menu.append(new Electron.remote.MenuItem({
         label: localization.applicationMenuChanges,
         submenu: [
             {
@@ -256,7 +251,7 @@ export const createMenu = () => {
     }));
 
     
-    menu.append(new remote.MenuItem({
+    menu.append(new Electron.remote.MenuItem({
         label: localization.applicationMenuManage,
         submenu: [
             {
@@ -309,7 +304,7 @@ export const createMenu = () => {
         ]
     }));
     
-    menu.append(new remote.MenuItem({
+    menu.append(new Electron.remote.MenuItem({
         label: localization.applicationMenuSettings,
         submenu: [
             {
@@ -352,7 +347,16 @@ export const createMenu = () => {
             },
         ]
     }));
-    
-    titlebar.updateMenu(menu);
-    titlebar.updateTitle("GitEase")
+
+    setTimeout(() => {
+
+        const titlebar = new Titlebar({
+            menu,
+            backgroundColor: Color.fromHex('#FFFFFF'),
+            unfocusEffect: true
+        });
+
+        titlebar.updateItemBGColor(Color.fromHex('#333333'));
+        titlebar.updateTitle("GitEase")
+    }, 5)
 }

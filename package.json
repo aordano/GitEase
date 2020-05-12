@@ -55,7 +55,10 @@
   "build": {
     "productName": "GitEase",
     "appId": "org.nodoambiental.gitease",
-    "extraResources": "bin/",
+    "extraResources": [
+      "bin/",
+      "appIcons/"
+    ],
     "directories": {
       "output": "release"
     },
