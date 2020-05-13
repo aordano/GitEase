@@ -1,3 +1,9 @@
+body {
+    --changes-name: "Changes";
+    --reason-name: "Reason";
+}
+
+
 .commit-info-pane {
     height: calc(100vh - 32px);
     width: calc( 100vw - 293px - 250px - 40px);
@@ -82,7 +88,7 @@
                 line-height: 24px;
 
                 &::before {
-                    content: "Cambios";
+                    content: var(--changes-name);
                     border-radius: 3px;
                     text-align: center;
                     background-color: rgba(81, 129, 169, 0.75);
@@ -96,7 +102,7 @@
                 line-height: 24px;
 
                 &::before {
-                    content: "Motivo";
+                    content: var(--reason-name);
                     border-radius: 3px;
                     text-align: center;
                     background-color: rgba(81, 169, 107, 0.75);

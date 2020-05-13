@@ -31,6 +31,8 @@ export const commitInfoPaneCommitDataMessagePublishedOn = " Esta confirmación f
 export const commitInfoPaneCommitDataMessageBranchAndHash = ", y tiene identificador único "
 export const commitInfoPaneNavigatorGraphView = "Vista gráfica"
 export const commitInfoPaneNavigatorDiffView = "Vista de diferencias"
+export const commitInfoPaneChanges = "Cambios"
+export const commitInfoPaneReason = "Motivo"
 
 // --------------------------
 // --- Commit Box Alerts ---

@@ -223,7 +223,7 @@ const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndex
             elementsList.push(
                 <li className={"commit-info-diff-message-element"}>
                         <p
-                            className={"commit-info-diff-message-element-what"}
+                            className={"commit-info-diff-message-element-name"}
                         >
                             {commitDescription}
                         </p>
@@ -243,7 +243,9 @@ const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndex
         )
     }
 
-    
+    const body = document.querySelector("body") as HTMLBodyElement
+
+    body.setAttribute("style", `--changes-name: "${localization.commitInfoPaneChanges}"; --reason-name: "${localization.commitInfoPaneReason}";`)
 
     return (
         <ul

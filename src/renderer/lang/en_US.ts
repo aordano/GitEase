@@ -31,6 +31,8 @@ export const commitInfoPaneCommitDataMessagePublishedOn = " This commit was publ
 export const commitInfoPaneCommitDataMessageBranchAndHash = " branch, and it has unique identifier "
 export const commitInfoPaneNavigatorGraphView = "To graph view"
 export const commitInfoPaneNavigatorDiffView = "To diff view"
+export const commitInfoPaneChanges = "Changes"
+export const commitInfoPaneReason = "Reason"
 
 // --------------------------
 // --- Commit Box Alerts ---
