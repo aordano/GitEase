@@ -124,8 +124,12 @@ export const CommitBox: React.FC = () => {
                     <CommitMessageInput />
                     <CommitButton />
                 </div>
-                <p className={"commit-description-descriptor-name"}>Name</p>
-                <p className={"commit-description-descriptor"}> What Why</p>
+                <p className={"commit-description-descriptor-name"}>{localization.commitBoxDescriptionName}</p>
+                <p className={"commit-description-descriptor"}>{
+                    localization.commitBoxDescriptionWhat
+                } | {
+                    localization.commitBoxDescriptionWhy
+                }</p>
                 <CommmitDescription />
             </div>
         </div>

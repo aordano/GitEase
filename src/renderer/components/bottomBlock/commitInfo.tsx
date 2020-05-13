@@ -237,7 +237,7 @@ const CommitInfoDiffMessage: React.FC<nodeIndexType> = ({ nodeIndex }: nodeIndex
                     <p
                         className={"commit-info-diff-message-element-name"}
                     >
-                        Esta confirmacion no contiene una descripcion valida.
+                        {localization.commitInfoPaneInvalidDescription}
                     </p>
                 </li>
         )
@@ -263,10 +263,14 @@ const CommitInfoExtendedInformation: React.FC<nodeIndexType> = ({ nodeIndex }: n
             className={"commit-info-extended-information"}
         >
             <p>
-                Commit made on {
+                {localization.commitInfoPaneCommitDataMessageCommitMade}{
                     Intl.DateTimeFormat(locale.replace("_", "-")).format(Date.parse(commitData.date))
-                } by {commitData.author_name}.
-                This commit was published on the {commitData.branch} branch, and it has unique identifier <a className={"commit-info-hash"}>{commitData.hash}</a>.
+                }{localization.commitInfoPaneCommitDataMessageCommitBy}{commitData.author_name}. 
+                {
+                    localization.commitInfoPaneCommitDataMessagePublishedOn
+                }{commitData.branch}{
+                    localization.commitInfoPaneCommitDataMessageBranchAndHash
+                }<a className={"commit-info-hash"}>{commitData.hash}</a>.
             </p>
         </div>
     )
@@ -339,12 +343,12 @@ const CommitInfoNavigator: React.FC = () => {
             <a
                 onClick={backToGraphView}
                 className={"commit-info-navigator-button"}
-            ><Icon.GitCommit color={"black"} size={50} /> <p>Back to graph view</p>
+            ><Icon.GitCommit color={"black"} size={50} /> <p>{localization.commitInfoPaneNavigatorGraphView}</p>
             </a>
             <a
                 onClick={backToDiffView}
                 className={"commit-info-navigator-button"}
-            ><Icon.Columns color={"black"} size={50} /> <p>Back to diff view</p>
+            ><Icon.Columns color={"black"} size={50} /> <p>{localization.commitInfoPaneNavigatorDiffView}</p>
             </a>
         </div>
     )

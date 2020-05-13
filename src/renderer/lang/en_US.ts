@@ -12,8 +12,25 @@ export const commitMessageTooltip = "Make it a short one that succintly describe
 export const commitMessagePlaceholder = "Give a name to your changes"
 export const commitButtonTooltip = "Publish your changes."
 export const commitButtonText = "Go"
-export const commitDescriptionPlaceholder = 'Describe what you did with a short explanation'
+export const commitWhatDescriptionPlaceholder = 'Describe what you did with a short explanation'
+export const commitWhyDescriptionPlaceholder = 'Describe why you changed this file with a short explanation'
 export const commitBoxTitle = "Commit your changes:"
+export const commitBoxTagsPlaceholder = "Add a tag"
+export const commitBoxDescriptionName = "File"
+export const commitBoxDescriptionWhat = "What"
+export const commitBoxDescriptionWhy = "Why"
+
+// ------------------------
+// --- Commit Info Pane ---
+// ------------------------
+
+export const commitInfoPaneInvalidDescription = "This commit does not contain a valid description"
+export const commitInfoPaneCommitDataMessageCommitMade = "Commit made on "
+export const commitInfoPaneCommitDataMessageCommitBy = " by "
+export const commitInfoPaneCommitDataMessagePublishedOn = " This commit was published on the "
+export const commitInfoPaneCommitDataMessageBranchAndHash = " branch, and it has unique identifier "
+export const commitInfoPaneNavigatorGraphView = "To graph view"
+export const commitInfoPaneNavigatorDiffView = "To diff view"
 
 // --------------------------
 // --- Commit Box Alerts ---

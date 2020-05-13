@@ -12,8 +12,25 @@ export const commitMessageTooltip = "Dale un nombre corto y breve que los descri
 export const commitMessagePlaceholder = "Nombra tus cambios"
 export const commitButtonTooltip = "Publica tus cambios."
 export const commitButtonText = "Ir"
-export const commitDescriptionPlaceholder = "Describe lo que hiciste con una explicación breve."
 export const commitBoxTitle = "Confirma tus cambios:"
+export const commitWhatDescriptionPlaceholder = 'Describe lo que hiciste, con una explicación breve'
+export const commitWhyDescriptionPlaceholder = 'Describe por qué realizaste los cambios, con una explicación breve'
+export const commitBoxTagsPlaceholder = "Agrega una etiqueta"
+export const commitBoxDescriptionName = "Archivo"
+export const commitBoxDescriptionWhat = "Qué"
+export const commitBoxDescriptionWhy = "Por qué"
+
+// ------------------------
+// --- Commit Info Pane ---
+// ------------------------
+
+export const commitInfoPaneInvalidDescription = "Esta confirmación no contiene una descripción válida"
+export const commitInfoPaneCommitDataMessageCommitMade = "Confirmación realizada el "
+export const commitInfoPaneCommitDataMessageCommitBy = " por "
+export const commitInfoPaneCommitDataMessagePublishedOn = " Esta confirmación fue publicada en la rama "
+export const commitInfoPaneCommitDataMessageBranchAndHash = ", y tiene identificador único "
+export const commitInfoPaneNavigatorGraphView = "Vista gráfica"
+export const commitInfoPaneNavigatorDiffView = "Vista de diferencias"
 
 // --------------------------
 // --- Commit Box Alerts ---

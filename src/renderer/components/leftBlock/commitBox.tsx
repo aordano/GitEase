@@ -166,6 +166,7 @@ export const CommitMessageInput: React.FC = () => {
 
     return (
         <ReactTags
+            placeholder={localization.commitBoxTagsPlaceholder}
             suggestions={tags.suggestions as any}
             handleDelete={handleDelete}
             handleAddition={handleAddition}
@@ -379,6 +380,7 @@ const CommitDescriptionTextArea: React.FC<CommitDescriptionElement> = (
     return (
         <div className={"commit-description-textarea-wrapper"}>
             <textarea
+                placeholder={isWhat ? localization.commitWhatDescriptionPlaceholder : localization.commitWhyDescriptionPlaceholder}
                 className={"commit-description-textarea"}
                 value={input}
                 onChange={handleDescriptionTextChange}
