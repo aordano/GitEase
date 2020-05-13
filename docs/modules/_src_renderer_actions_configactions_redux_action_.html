@@ -1,0 +1,499 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>&quot;src/renderer/actions/configActions.redux.action&quot; | GitEase</title>
+	<meta name="description" content="Documentation for GitEase">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">GitEase</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="_src_renderer_actions_configactions_redux_action_.html">&quot;src/renderer/actions/configActions.redux.action&quot;</a>
+				</li>
+			</ul>
+			<h1>Module &quot;src/renderer/actions/configActions.redux.action&quot;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#configinformationaction" class="tsd-kind-icon">Config<wbr>Information<wbr>Action</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#saveconfigtofileaction" class="tsd-kind-icon">Save<wbr>Config<wbr>ToFile<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setcurrentgitconfiginformationaction" class="tsd-kind-icon">Set<wbr>Current<wbr>Git<wbr>Config<wbr>Information<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setcurrentprojectconfiginformationaction" class="tsd-kind-icon">Set<wbr>Current<wbr>Project<wbr>Config<wbr>Information<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setreposconfiginformationaction" class="tsd-kind-icon">Set<wbr>Repos<wbr>Config<wbr>Information<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setsshconfiginformationaction" class="tsd-kind-icon">SetSSHConfig<wbr>Information<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setuiconfiginformationaction" class="tsd-kind-icon">SetUIConfig<wbr>Information<wbr>Action</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_actions_configactions_redux_action_.html#setuserdataconfiginformationaction" class="tsd-kind-icon">Set<wbr>User<wbr>Data<wbr>Config<wbr>Information<wbr>Action</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="configinformationaction" class="tsd-anchor"></a>
+					<h3>Config<wbr>Information<wbr>Action</h3>
+					<div class="tsd-signature tsd-kind-icon">Config<wbr>Information<wbr>Action<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_src_renderer_types_constants_.setuiconfiginformationtype.html" class="tsd-signature-type">SetUIConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.setsshconfiginformationtype.html" class="tsd-signature-type">SetSSHConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.setcurrentgitconfiginformationtype.html" class="tsd-signature-type">SetCurrentGitConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.setreposconfiginformationtype.html" class="tsd-signature-type">SetReposConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.setcurrentprojectconfiginformationtype.html" class="tsd-signature-type">SetCurrentProjectConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.setuserdataconfiginformationtype.html" class="tsd-signature-type">SetUserDataConfigInformationType</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_types_constants_.saveconfigtofiletype.html" class="tsd-signature-type">SaveConfigToFileType</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L51">src/renderer/actions/configActions.redux.action.ts:51</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="saveconfigtofileaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Save<wbr>Config<wbr>ToFile<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Save<wbr>Config<wbr>ToFile<wbr>Action<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_configreducers_redux_reducer_.configinformationstate.html" class="tsd-signature-type">ConfigInformationState</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SAVE_CONFIG_TO_FILE"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L120">src/renderer/actions/configActions.redux.action.ts:120</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>config: <a href="../interfaces/_src_renderer_reducers_configreducers_redux_reducer_.configinformationstate.html" class="tsd-signature-type">ConfigInformationState</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SAVE_CONFIG_TO_FILE"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SAVE_CONFIG_TO_FILE"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setcurrentgitconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Set<wbr>Current<wbr>Git<wbr>Config<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Set<wbr>Current<wbr>Git<wbr>Config<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>GitConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#gitconfigtype" class="tsd-signature-type">GitConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>GitConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentBranch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>currentRemote<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>enforceAllHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostMergeHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePreCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePrePushHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>excludedPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>submodules<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>submodulesPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_GIT_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L84">src/renderer/actions/configActions.redux.action.ts:84</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>GitConfig: <a href="_src_renderer_types_index_.html#gitconfigtype" class="tsd-signature-type">GitConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>GitConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentBranch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>currentRemote<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>enforceAllHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostMergeHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePreCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePrePushHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>excludedPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>submodules<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>submodulesPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_GIT_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>Git<wbr>Config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentBranch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>currentRemote<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>enforceAllHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePostMergeHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePreCommitHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>enforcePrePushHooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>excludedPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>submodules<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>submodulesPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>current<wbr>Branch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>current<wbr>Remote<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>enforce<wbr>All<wbr>Hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>enforce<wbr>Post<wbr>Commit<wbr>Hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>enforce<wbr>Post<wbr>Merge<wbr>Hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>enforce<wbr>Pre<wbr>Commit<wbr>Hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>enforce<wbr>Pre<wbr>Push<wbr>Hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>excluded<wbr>Paths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>submodules<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>submodules<wbr>Paths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_GIT_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setcurrentprojectconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Set<wbr>Current<wbr>Project<wbr>Config<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Set<wbr>Current<wbr>Project<wbr>Config<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>ProjectConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#projectconfigtype" class="tsd-signature-type">ProjectConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ProjectConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>autoSaveChanges<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>autoSaveTimeoutMinutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>currentWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>handholding<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>integration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>opinionatedWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>resolveSubmodulesAsIndependentRepos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_PROJECT_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L102">src/renderer/actions/configActions.redux.action.ts:102</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ProjectConfig: <a href="_src_renderer_types_index_.html#projectconfigtype" class="tsd-signature-type">ProjectConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>ProjectConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>autoSaveChanges<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>autoSaveTimeoutMinutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>currentWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>handholding<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>integration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>opinionatedWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>resolveSubmodulesAsIndependentRepos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_PROJECT_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>Project<wbr>Config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>autoSaveChanges<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>autoSaveTimeoutMinutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>currentWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>handholding<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>integration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>opinionatedWorkflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>resolveSubmodulesAsIndependentRepos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>auto<wbr>Save<wbr>Changes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>auto<wbr>Save<wbr>Timeout<wbr>Minutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>current<wbr>Workflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>handholding<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>integration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>opinionated<wbr>Workflow<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>resolve<wbr>Submodules<wbr>AsIndependent<wbr>Repos<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_PROJECT_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setreposconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Set<wbr>Repos<wbr>Config<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Set<wbr>Repos<wbr>Config<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>ReposConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#reposconfigtype" class="tsd-signature-type">ReposConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>ReposConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>activeRepo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_REPOS_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L93">src/renderer/actions/configActions.redux.action.ts:93</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ReposConfig: <a href="_src_renderer_types_index_.html#reposconfigtype" class="tsd-signature-type">ReposConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>ReposConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>activeRepo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_REPOS_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>Repos<wbr>Config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>activeRepo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>reposLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>active<wbr>Repo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>repos<wbr>Default<wbr>Location<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>repos<wbr>Locations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_REPOS_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setsshconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> SetSSHConfig<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">SetSSHConfig<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>SSHConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#sshconfigtype" class="tsd-signature-type">SSHConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>SSHConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentKeysLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_SSH_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L75">src/renderer/actions/configActions.redux.action.ts:75</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>SSHConfig: <a href="_src_renderer_types_index_.html#sshconfigtype" class="tsd-signature-type">SSHConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>SSHConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentKeysLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_SSH_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>SSHConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentKeysLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysDefaultLocation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>keysLocations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>current<wbr>Keys<wbr>Location<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>keys<wbr>Default<wbr>Location<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>keys<wbr>Locations<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_SSH_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setuiconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> SetUIConfig<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">SetUIConfig<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>UIConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#uiconfigtype" class="tsd-signature-type">UIConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>UIConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>language<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>mainView<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>selectedCommit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>showAdditionalInformation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>showSidePanelsByDefault<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>theme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_UI_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L66">src/renderer/actions/configActions.redux.action.ts:66</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>UIConfig: <a href="_src_renderer_types_index_.html#uiconfigtype" class="tsd-signature-type">UIConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>UIConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>language<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>mainView<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>selectedCommit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>showAdditionalInformation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>showSidePanelsByDefault<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>theme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_UI_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>UIConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>language<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>mainView<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>selectedCommit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>showAdditionalInformation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>showSidePanelsByDefault<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>theme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>language<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>main<wbr>View<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>selected<wbr>Commit<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>show<wbr>Additional<wbr>Information<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>show<wbr>Side<wbr>Panels<wbr>ByDefault<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>theme<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_UI_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setuserdataconfiginformationaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Set<wbr>User<wbr>Data<wbr>Config<wbr>Information<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Set<wbr>User<wbr>Data<wbr>Config<wbr>Information<wbr>Action<span class="tsd-signature-symbol">(</span>UserDataConfig<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdataconfigtype" class="tsd-signature-type">UserDataConfigType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>UserDataConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentUser<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">; </span>usersList<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_USER_DATA_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/actions/configActions.redux.action.ts#L111">src/renderer/actions/configActions.redux.action.ts:111</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>UserDataConfig: <a href="_src_renderer_types_index_.html#userdataconfigtype" class="tsd-signature-type">UserDataConfigType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>UserDataConfig<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentUser<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">; </span>usersList<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_USER_DATA_CONFIG_INFORMATION"</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>User<wbr>Data<wbr>Config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>currentUser<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">; </span>usersList<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>current<wbr>User<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>users<wbr>List<span class="tsd-signature-symbol">: </span><a href="_src_renderer_types_index_.html#userdatatype" class="tsd-signature-type">UserDataType</a><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"SET_CURRENT_USER_DATA_CONFIG_INFORMATION"</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html">&quot;src/renderer/actions/config<wbr>Actions.redux.action&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#configinformationaction" class="tsd-kind-icon">Config<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#saveconfigtofileaction" class="tsd-kind-icon">Save<wbr>Config<wbr>ToFile<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setcurrentgitconfiginformationaction" class="tsd-kind-icon">Set<wbr>Current<wbr>Git<wbr>Config<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setcurrentprojectconfiginformationaction" class="tsd-kind-icon">Set<wbr>Current<wbr>Project<wbr>Config<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setreposconfiginformationaction" class="tsd-kind-icon">Set<wbr>Repos<wbr>Config<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setsshconfiginformationaction" class="tsd-kind-icon">SetSSHConfig<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setuiconfiginformationaction" class="tsd-kind-icon">SetUIConfig<wbr>Information<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_actions_configactions_redux_action_.html#setuserdataconfiginformationaction" class="tsd-kind-icon">Set<wbr>User<wbr>Data<wbr>Config<wbr>Information<wbr>Action</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

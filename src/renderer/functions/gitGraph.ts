@@ -499,16 +499,17 @@ const generateBranchesColors = (branchesList: string[]) => {
 // from https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/flat#Polyfill
 if (!Array.prototype.flat) {
     Array.prototype.flat = function(depth: any) {
-      var flattend = [];
-      (function flat(array, depth) {
-        for (let el of array) {
-          if (Array.isArray(el) && depth > 0) {
-            flat(el, depth - 1); 
-          } else {
-            flattend.push(el);
-          }
-        }
-      })(this, Math.floor(depth) || 1);
-      return flattend;
+        const flattened: any = [];
+        function flat(array: any[], depth: any) {
+            for (const element of array) {
+                if (Array.isArray(element) && depth > 0) {
+                    flat(element, depth - 1); 
+                } else {
+                    flattened.push(element);
+                }
+            }
+        } (this, Math.floor(depth) || 1);
+        
+        return flattened;
     };
-  }
+}

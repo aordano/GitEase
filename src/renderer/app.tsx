@@ -1,16 +1,54 @@
+/**
+ * # app.tsx
+ * 
+ * ## This file is the entry point for the renderer side of Electron.
+ * 
+ * ## It contains mainly imports from other parts of the application, plus a couple of things that must be executed first;
+ * 
+ * * Renders the react view
+ * * Generates the titlebar
+ * * Fires the selected workflow (WIP)
+ * * Fires the action for the main view
+ * * Fires the action for the changes area
+ *  
+ * @packageDocumentation
+ */
+
+// ---------------------
+// --- React imports ---
+// ---------------------
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+
+// ---------------------
+// --- Redux imports ---
+// ---------------------
+
 import { Provider } from 'react-redux';
-import { AppContainer } from 'react-hot-loader';
 
 import { BasicWorkflowInitAction } from './actions/basicWorkflowActions.redux.action';
+import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions.redux.action';
 
-import Application from './components/Application';
 import { store, sagaMiddleware } from './store/index.redux.store';
 
-// Imports Sagas
+// --------------------------
+// --- Redux Saga imports ---
+// --------------------------
+
 import { rootSaga } from './sagas/index.redux.saga';
-import { ViewModifiedFilesAction, UpdateViewTreeAction } from './actions/commonActions.redux.action';
+
+// ---------------------------
+// --- Hot Loading imports ---
+// ---------------------------
+
+import { AppContainer } from 'react-hot-loader';
+
+// --------------------------
+// --- Components imports ---
+// --------------------------
+
+import Application from './components/Application';
 
 import { createMenu } from "./components/menuBar"
 

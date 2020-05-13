@@ -15,7 +15,7 @@ import {
     LAUNCH_FIRST_TIME_WIZARD,
     LaunchRepoConfigurationWizardType,
     LaunchFirstTimeWizardType
-} from '../types/constants.d';
+} from '../types/constants';
 
 // ---------------------------------------
 // --- Viable Action Types Definitions ---

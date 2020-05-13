@@ -18,7 +18,7 @@ import {
     SET_CURRENT_PROJECT_CONFIG_INFORMATION,
     SET_CURRENT_USER_DATA_CONFIG_INFORMATION,
     SAVE_CONFIG_TO_FILE,
-} from "../types/constants.d"
+} from "../types/constants"
 
 import {
     UIConfigType,

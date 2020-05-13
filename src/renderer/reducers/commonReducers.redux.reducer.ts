@@ -28,7 +28,7 @@ import {
     UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHAT,
     UPDATE_COMMIT_DESCRIPTION_ELEMENT_WHY,
     UPDATE_COMMIT_DESCRIPTION_ELEMENT_COMPLETION_STATUS
-} from '../types/constants.d';
+} from '../types/constants';
 
 import {
     ModifiedFilesStructure,

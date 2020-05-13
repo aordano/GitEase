@@ -13,7 +13,7 @@ import { Reducer } from 'redux';
 
 import {
     LAUNCH_REPO_CONFIGURATION_WIZARD
-} from '../types/constants.d';
+} from '../types/constants';
 
 import {
     RepoConfigDataType

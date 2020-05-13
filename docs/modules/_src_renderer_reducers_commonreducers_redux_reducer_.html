@@ -1,0 +1,962 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>&quot;src/renderer/reducers/commonReducers.redux.reducer&quot; | GitEase</title>
+	<meta name="description" content="Documentation for GitEase">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">GitEase</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html">&quot;src/renderer/reducers/commonReducers.redux.reducer&quot;</a>
+				</li>
+			</ul>
+			<h1>Module &quot;src/renderer/reducers/commonReducers.redux.reducer&quot;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-kind-icon">Git<wbr>Commit<wbr>Description<wbr>State</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-kind-icon">React<wbr>Tag<wbr>Data<wbr>State</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-kind-icon">Set<wbr>Context<wbr>Menu<wbr>IdState</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-kind-icon">Update<wbr>Changes<wbr>Area<wbr>State</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-kind-icon">Update<wbr>View<wbr>Tree<wbr>State</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-kind-icon">View<wbr>Modified<wbr>Files<wbr>State</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#labelnames" class="tsd-kind-icon">label<wbr>Names</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#localization" class="tsd-kind-icon">localization</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#suggestions" class="tsd-kind-icon">suggestions</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#getlanguage" class="tsd-kind-icon">get<wbr>Language</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#gitcommitdescriptionreducer" class="tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Reducer</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#reacttagdatareducer" class="tsd-kind-icon">react<wbr>Tag<wbr>Data<wbr>Reducer</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#setcontextmenuidreducer" class="tsd-kind-icon">set<wbr>Context<wbr>Menu<wbr>IdReducer</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updatechangesareareducer" class="tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Reducer</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updateviewtreereducer" class="tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Reducer</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#viewmodifiedfilesreducer" class="tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Reducer</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#reacttagdatadefaultstate" class="tsd-kind-icon">React<wbr>Tag<wbr>Data<wbr>Default<wbr>State</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#setcontextmenuiddefaultstate" class="tsd-kind-icon">Set<wbr>Context<wbr>Menu<wbr>IdDefault<wbr>State</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#gitcommitdescriptiondefaultstate" class="tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Default<wbr>State</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updatechangesareadefaultstate" class="tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Default<wbr>State</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updateviewtreedefaultstate" class="tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Default<wbr>State</a></li>
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#viewmodifiedfilesdefaultstate" class="tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Default<wbr>State</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="labelnames" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> label<wbr>Names</h3>
+					<div class="tsd-signature tsd-kind-icon">label<wbr>Names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = localization.labelsDictionary.map((value: labelType) &#x3D;&gt; { return value.label })</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L248">src/renderer/reducers/commonReducers.redux.reducer.ts:248</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="localization" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> localization</h3>
+					<div class="tsd-signature tsd-kind-icon">localization<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = require(&#x60;../lang/${getLanguage()}&#x60;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L91">src/renderer/reducers/commonReducers.redux.reducer.ts:91</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="suggestions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> suggestions</h3>
+					<div class="tsd-signature tsd-kind-icon">suggestions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L250">src/renderer/reducers/commonReducers.redux.reducer.ts:250</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="getlanguage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Language</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Language<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L77">src/renderer/reducers/commonReducers.redux.reducer.ts:77</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="gitcommitdescriptionreducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> git<wbr>Commit<wbr>Description<wbr>Reducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Reducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-signature-type">GitCommitDescriptionState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#updatecommitdescriptionaction" class="tsd-signature-type">UpdateCommitDescriptionAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-signature-type">GitCommitDescriptionState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L626">src/renderer/reducers/commonReducers.redux.reducer.ts:626</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-signature-type">GitCommitDescriptionState</a><span class="tsd-signature-symbol"> = gitCommitDescriptionDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#updatecommitdescriptionaction" class="tsd-signature-type">UpdateCommitDescriptionAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-signature-type">GitCommitDescriptionState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="reacttagdatareducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> react<wbr>Tag<wbr>Data<wbr>Reducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">react<wbr>Tag<wbr>Data<wbr>Reducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-signature-type">ReactTagDataState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#reacttagdataaction" class="tsd-signature-type">ReactTagDataAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-signature-type">ReactTagDataState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L595">src/renderer/reducers/commonReducers.redux.reducer.ts:595</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-signature-type">ReactTagDataState</a><span class="tsd-signature-symbol"> = ReactTagDataDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#reacttagdataaction" class="tsd-signature-type">ReactTagDataAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-signature-type">ReactTagDataState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="setcontextmenuidreducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> set<wbr>Context<wbr>Menu<wbr>IdReducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Context<wbr>Menu<wbr>IdReducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-signature-type">SetContextMenuIdState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#setcontextmenuidaction" class="tsd-signature-type">SetContextMenuIdAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-signature-type">SetContextMenuIdState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L580">src/renderer/reducers/commonReducers.redux.reducer.ts:580</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-signature-type">SetContextMenuIdState</a><span class="tsd-signature-symbol"> = SetContextMenuIdDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#setcontextmenuidaction" class="tsd-signature-type">SetContextMenuIdAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-signature-type">SetContextMenuIdState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="updatechangesareareducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> update<wbr>Changes<wbr>Area<wbr>Reducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Reducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-signature-type">UpdateChangesAreaState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#updatechangesareaaction" class="tsd-signature-type">UpdateChangesAreaAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-signature-type">UpdateChangesAreaState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L278">src/renderer/reducers/commonReducers.redux.reducer.ts:278</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-signature-type">UpdateChangesAreaState</a><span class="tsd-signature-symbol"> = updateChangesAreaDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#updatechangesareaaction" class="tsd-signature-type">UpdateChangesAreaAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-signature-type">UpdateChangesAreaState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="updateviewtreereducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> update<wbr>View<wbr>Tree<wbr>Reducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Reducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-signature-type">UpdateViewTreeState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#updateviewtreeaction" class="tsd-signature-type">UpdateViewTreeAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-signature-type">UpdateViewTreeState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L533">src/renderer/reducers/commonReducers.redux.reducer.ts:533</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-signature-type">UpdateViewTreeState</a><span class="tsd-signature-symbol"> = updateViewTreeDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#updateviewtreeaction" class="tsd-signature-type">UpdateViewTreeAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-signature-type">UpdateViewTreeState</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="viewmodifiedfilesreducer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> view<wbr>Modified<wbr>Files<wbr>Reducer</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Reducer<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-signature-type">ViewModifiedFilesState</a>, action<span class="tsd-signature-symbol">: </span><a href="_src_renderer_actions_commonactions_redux_action_.html#viewmodifiedfilesaction" class="tsd-signature-type">ViewModifiedFilesAction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-signature-type">ViewModifiedFilesState</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L508">src/renderer/reducers/commonReducers.redux.reducer.ts:508</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-signature-type">ViewModifiedFilesState</a><span class="tsd-signature-symbol"> = viewModifiedFilesDefaultState</span></h5>
+								</li>
+								<li>
+									<h5>action: <a href="_src_renderer_actions_commonactions_redux_action_.html#viewmodifiedfilesaction" class="tsd-signature-type">ViewModifiedFilesAction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-signature-type">ViewModifiedFilesState</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="reacttagdatadefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> React<wbr>Tag<wbr>Data<wbr>Default<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">React<wbr>Tag<wbr>Data<wbr>Default<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L254">src/renderer/reducers/commonReducers.redux.reducer.ts:254</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="reacttagdatadefaultstate.label" class="tsd-anchor"></a>
+						<h3>label</h3>
+						<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L259">src/renderer/reducers/commonReducers.redux.reducer.ts:259</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="reacttagdatadefaultstate.tags" class="tsd-anchor"></a>
+						<h3>tags</h3>
+						<div class="tsd-signature tsd-kind-icon">tags<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L255">src/renderer/reducers/commonReducers.redux.reducer.ts:255</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="reacttagdatadefaultstate.tags.suggestions-1" class="tsd-anchor"></a>
+							<h3>suggestions</h3>
+							<div class="tsd-signature tsd-kind-icon">suggestions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L256">src/renderer/reducers/commonReducers.redux.reducer.ts:256</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="reacttagdatadefaultstate.tags.tagdata" class="tsd-anchor"></a>
+							<h3>tag<wbr>Data</h3>
+							<div class="tsd-signature tsd-kind-icon">tag<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L257">src/renderer/reducers/commonReducers.redux.reducer.ts:257</a></li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="setcontextmenuiddefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Set<wbr>Context<wbr>Menu<wbr>IdDefault<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">Set<wbr>Context<wbr>Menu<wbr>IdDefault<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L244">src/renderer/reducers/commonReducers.redux.reducer.ts:244</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="setcontextmenuiddefaultstate.id" class="tsd-anchor"></a>
+						<h3>id</h3>
+						<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;defaultContextMenu&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L245">src/renderer/reducers/commonReducers.redux.reducer.ts:245</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="gitcommitdescriptiondefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> git<wbr>Commit<wbr>Description<wbr>Default<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Default<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L262">src/renderer/reducers/commonReducers.redux.reducer.ts:262</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.changedelements" class="tsd-anchor"></a>
+						<h3>changed<wbr>Elements</h3>
+						<div class="tsd-signature tsd-kind-icon">changed<wbr>Elements<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&quot;&quot;]</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L271">src/renderer/reducers/commonReducers.redux.reducer.ts:271</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.completionstatus" class="tsd-anchor"></a>
+						<h3>completion<wbr>Status</h3>
+						<div class="tsd-signature tsd-kind-icon">completion<wbr>Status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>isWhatCompleted<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">; </span>isWhyCompleted<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{isWhatCompleted: false,isWhyCompleted: false}]</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L265">src/renderer/reducers/commonReducers.redux.reducer.ts:265</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.currentindex" class="tsd-anchor"></a>
+						<h3>current<wbr>Index</h3>
+						<div class="tsd-signature tsd-kind-icon">current<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L264">src/renderer/reducers/commonReducers.redux.reducer.ts:264</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.currentview" class="tsd-anchor"></a>
+						<h3>current<wbr>View</h3>
+						<div class="tsd-signature tsd-kind-icon">current<wbr>View<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;list&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L263">src/renderer/reducers/commonReducers.redux.reducer.ts:263</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.descriptionwhat" class="tsd-anchor"></a>
+						<h3>description<wbr>What</h3>
+						<div class="tsd-signature tsd-kind-icon">description<wbr>What<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&quot;&quot;]</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L269">src/renderer/reducers/commonReducers.redux.reducer.ts:269</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="gitcommitdescriptiondefaultstate.descriptionwhy" class="tsd-anchor"></a>
+						<h3>description<wbr>Why</h3>
+						<div class="tsd-signature tsd-kind-icon">description<wbr>Why<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&quot;&quot;]</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L270">src/renderer/reducers/commonReducers.redux.reducer.ts:270</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="updatechangesareadefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> update<wbr>Changes<wbr>Area<wbr>Default<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Default<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L209">src/renderer/reducers/commonReducers.redux.reducer.ts:209</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="updatechangesareadefaultstate.changesareatree" class="tsd-anchor"></a>
+						<h3>changes<wbr>Area<wbr>Tree</h3>
+						<div class="tsd-signature tsd-kind-icon">changes<wbr>Area<wbr>Tree<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L210">src/renderer/reducers/commonReducers.redux.reducer.ts:210</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module">
+					<a name="updateviewtreedefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> update<wbr>View<wbr>Tree<wbr>Default<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Default<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L154">src/renderer/reducers/commonReducers.redux.reducer.ts:154</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+						<a name="updateviewtreedefaultstate.datapromise" class="tsd-anchor"></a>
+						<h3>data<wbr>Promise</h3>
+						<div class="tsd-signature tsd-kind-icon">data<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L155">src/renderer/reducers/commonReducers.redux.reducer.ts:155</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+							<a name="updateviewtreedefaultstate.datapromise.graphdata" class="tsd-anchor"></a>
+							<h3>graph<wbr>Data</h3>
+							<div class="tsd-signature tsd-kind-icon">graph<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L156">src/renderer/reducers/commonReducers.redux.reducer.ts:156</a></li>
+								</ul>
+							</aside>
+							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+								<a name="updateviewtreedefaultstate.datapromise.graphdata._v" class="tsd-anchor"></a>
+								<h3>_v</h3>
+								<div class="tsd-signature tsd-kind-icon">_v<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L157">src/renderer/reducers/commonReducers.redux.reducer.ts:157</a></li>
+									</ul>
+								</aside>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.graphdata._v.focusednodeid" class="tsd-anchor"></a>
+									<h3>focused<wbr>Node<wbr>Id</h3>
+									<div class="tsd-signature tsd-kind-icon">focused<wbr>Node<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;placeholder&quot;</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L173">src/renderer/reducers/commonReducers.redux.reducer.ts:173</a></li>
+										</ul>
+									</aside>
+								</section>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.graphdata._v.links" class="tsd-anchor"></a>
+									<h3>links</h3>
+									<div class="tsd-signature tsd-kind-icon">links<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{source: &quot;placeholder&quot;,target: &quot;placeholder&quot;,color: &quot;rgb(200,200,200)&quot;}]</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L166">src/renderer/reducers/commonReducers.redux.reducer.ts:166</a></li>
+										</ul>
+									</aside>
+								</section>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.graphdata._v.nodes" class="tsd-anchor"></a>
+									<h3>nodes</h3>
+									<div class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>color<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>symbolType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{id: &quot;placeholder&quot;,color: &quot;placeholder&quot;,size: 200,symbolType: &quot;placeholder&quot;}]</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L158">src/renderer/reducers/commonReducers.redux.reducer.ts:158</a></li>
+										</ul>
+									</aside>
+								</section>
+							</section>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+							<a name="updateviewtreedefaultstate.datapromise.history" class="tsd-anchor"></a>
+							<h3>history</h3>
+							<div class="tsd-signature tsd-kind-icon">history<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L176">src/renderer/reducers/commonReducers.redux.reducer.ts:176</a></li>
+								</ul>
+							</aside>
+							<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+								<a name="updateviewtreedefaultstate.datapromise.history._v-1" class="tsd-anchor"></a>
+								<h3>_v</h3>
+								<div class="tsd-signature tsd-kind-icon">_v<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L177">src/renderer/reducers/commonReducers.redux.reducer.ts:177</a></li>
+									</ul>
+								</aside>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.history._v-1.brancheslist" class="tsd-anchor"></a>
+									<h3>branches<wbr>List</h3>
+									<div class="tsd-signature tsd-kind-icon">branches<wbr>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L179">src/renderer/reducers/commonReducers.redux.reducer.ts:179</a></li>
+										</ul>
+									</aside>
+								</section>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.history._v-1.fullhistory" class="tsd-anchor"></a>
+									<h3>full<wbr>History</h3>
+									<div class="tsd-signature tsd-kind-icon">full<wbr>History<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L178">src/renderer/reducers/commonReducers.redux.reducer.ts:178</a></li>
+										</ul>
+									</aside>
+								</section>
+								<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.history._v-1.metadatalist" class="tsd-anchor"></a>
+									<h3>metadata<wbr>List</h3>
+									<div class="tsd-signature tsd-kind-icon">metadata<wbr>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>childrenOf<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>isDivergence<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">; </span>isInitial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">; </span>isLast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">; </span>isMerge<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol">; </span>parentOf<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>branch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{isInitial: false,isDivergence: false,isMerge: false,isLast: false,childrenOf: [&quot;placeholder&quot;],parentOf: [&quot;placeholder&quot;],branch: {branchName: &quot;placeholder&quot;,branchColor: {r: 200,g: 200,b: 200}}}]</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L180">src/renderer/reducers/commonReducers.redux.reducer.ts:180</a></li>
+										</ul>
+									</aside>
+								</section>
+								<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal">
+									<a name="updateviewtreedefaultstate.datapromise.history._v-1.hashes" class="tsd-anchor"></a>
+									<h3>hashes</h3>
+									<div class="tsd-signature tsd-kind-icon">hashes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+									<aside class="tsd-sources">
+										<ul>
+											<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L198">src/renderer/reducers/commonReducers.redux.reducer.ts:198</a></li>
+										</ul>
+									</aside>
+									<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+										<a name="updateviewtreedefaultstate.datapromise.history._v-1.hashes.hashlist" class="tsd-anchor"></a>
+										<h3>hash<wbr>List</h3>
+										<div class="tsd-signature tsd-kind-icon">hash<wbr>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L199">src/renderer/reducers/commonReducers.redux.reducer.ts:199</a></li>
+											</ul>
+										</aside>
+									</section>
+									<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+										<a name="updateviewtreedefaultstate.datapromise.history._v-1.hashes.parenthashlist" class="tsd-anchor"></a>
+										<h3>parent<wbr>Hash<wbr>List</h3>
+										<div class="tsd-signature tsd-kind-icon">parent<wbr>Hash<wbr>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+										<aside class="tsd-sources">
+											<ul>
+												<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L200">src/renderer/reducers/commonReducers.redux.reducer.ts:200</a></li>
+											</ul>
+										</aside>
+									</section>
+								</section>
+							</section>
+						</section>
+					</section>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="viewmodifiedfilesdefaultstate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> view<wbr>Modified<wbr>Files<wbr>Default<wbr>State</h3>
+					<div class="tsd-signature tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Default<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L213">src/renderer/reducers/commonReducers.redux.reducer.ts:213</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="viewmodifiedfilesdefaultstate.uptodate" class="tsd-anchor"></a>
+						<h3>up<wbr>ToDate</h3>
+						<div class="tsd-signature tsd-kind-icon">up<wbr>ToDate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L214">src/renderer/reducers/commonReducers.redux.reducer.ts:214</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="viewmodifiedfilesdefaultstate.parseddata" class="tsd-anchor"></a>
+						<h3>parsed<wbr>Data</h3>
+						<div class="tsd-signature tsd-kind-icon">parsed<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L215">src/renderer/reducers/commonReducers.redux.reducer.ts:215</a></li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._c" class="tsd-anchor"></a>
+							<h3>_c</h3>
+							<div class="tsd-signature tsd-kind-icon">_c<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L216">src/renderer/reducers/commonReducers.redux.reducer.ts:216</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._d" class="tsd-anchor"></a>
+							<h3>_d</h3>
+							<div class="tsd-signature tsd-kind-icon">_d<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L218">src/renderer/reducers/commonReducers.redux.reducer.ts:218</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._h" class="tsd-anchor"></a>
+							<h3>_h</h3>
+							<div class="tsd-signature tsd-kind-icon">_h<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L219">src/renderer/reducers/commonReducers.redux.reducer.ts:219</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._n" class="tsd-anchor"></a>
+							<h3>_n</h3>
+							<div class="tsd-signature tsd-kind-icon">_n<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L220">src/renderer/reducers/commonReducers.redux.reducer.ts:220</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._s" class="tsd-anchor"></a>
+							<h3>_s</h3>
+							<div class="tsd-signature tsd-kind-icon">_s<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L217">src/renderer/reducers/commonReducers.redux.reducer.ts:217</a></li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="viewmodifiedfilesdefaultstate.parseddata._v-2" class="tsd-anchor"></a>
+							<h3>_v</h3>
+							<div class="tsd-signature tsd-kind-icon">_v<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L221">src/renderer/reducers/commonReducers.redux.reducer.ts:221</a></li>
+								</ul>
+							</aside>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.ahead" class="tsd-anchor"></a>
+								<h3>ahead</h3>
+								<div class="tsd-signature tsd-kind-icon">ahead<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L236">src/renderer/reducers/commonReducers.redux.reducer.ts:236</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.behind" class="tsd-anchor"></a>
+								<h3>behind</h3>
+								<div class="tsd-signature tsd-kind-icon">behind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L237">src/renderer/reducers/commonReducers.redux.reducer.ts:237</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.conflicted" class="tsd-anchor"></a>
+								<h3>conflicted</h3>
+								<div class="tsd-signature tsd-kind-icon">conflicted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L223">src/renderer/reducers/commonReducers.redux.reducer.ts:223</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.created" class="tsd-anchor"></a>
+								<h3>created</h3>
+								<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L224">src/renderer/reducers/commonReducers.redux.reducer.ts:224</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.current" class="tsd-anchor"></a>
+								<h3>current</h3>
+								<div class="tsd-signature tsd-kind-icon">current<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;master&quot;</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L238">src/renderer/reducers/commonReducers.redux.reducer.ts:238</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.deleted" class="tsd-anchor"></a>
+								<h3>deleted</h3>
+								<div class="tsd-signature tsd-kind-icon">deleted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L225">src/renderer/reducers/commonReducers.redux.reducer.ts:225</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.files" class="tsd-anchor"></a>
+								<h3>files</h3>
+								<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>index<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>working_dir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [{path: &#x27;&#x27;,index: &#x27; &#x27;,working_dir: &#x27;M&#x27;}]</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L228">src/renderer/reducers/commonReducers.redux.reducer.ts:228</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.modified" class="tsd-anchor"></a>
+								<h3>modified</h3>
+								<div class="tsd-signature tsd-kind-icon">modified<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L226">src/renderer/reducers/commonReducers.redux.reducer.ts:226</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.not_added" class="tsd-anchor"></a>
+								<h3>not_<wbr>added</h3>
+								<div class="tsd-signature tsd-kind-icon">not_<wbr>added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L222">src/renderer/reducers/commonReducers.redux.reducer.ts:222</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.renamed" class="tsd-anchor"></a>
+								<h3>renamed</h3>
+								<div class="tsd-signature tsd-kind-icon">renamed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L227">src/renderer/reducers/commonReducers.redux.reducer.ts:227</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.staged" class="tsd-anchor"></a>
+								<h3>staged</h3>
+								<div class="tsd-signature tsd-kind-icon">staged<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L235">src/renderer/reducers/commonReducers.redux.reducer.ts:235</a></li>
+									</ul>
+								</aside>
+							</section>
+							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+								<a name="viewmodifiedfilesdefaultstate.parseddata._v-2.tracking" class="tsd-anchor"></a>
+								<h3>tracking</h3>
+								<div class="tsd-signature tsd-kind-icon">tracking<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;origin/master&quot;</span></div>
+								<aside class="tsd-sources">
+									<ul>
+										<li>Defined in <a href="https://github.com/aordano/GitEase/blob/ad5ce05/src/renderer/reducers/commonReducers.redux.reducer.ts#L239">src/renderer/reducers/commonReducers.redux.reducer.ts:239</a></li>
+									</ul>
+								</aside>
+							</section>
+						</section>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html">&quot;src/renderer/reducers/common<wbr>Reducers.redux.reducer&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.gitcommitdescriptionstate.html" class="tsd-kind-icon">Git<wbr>Commit<wbr>Description<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.reacttagdatastate.html" class="tsd-kind-icon">React<wbr>Tag<wbr>Data<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.setcontextmenuidstate.html" class="tsd-kind-icon">Set<wbr>Context<wbr>Menu<wbr>IdState</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updatechangesareastate.html" class="tsd-kind-icon">Update<wbr>Changes<wbr>Area<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.updateviewtreestate.html" class="tsd-kind-icon">Update<wbr>View<wbr>Tree<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/_src_renderer_reducers_commonreducers_redux_reducer_.viewmodifiedfilesstate.html" class="tsd-kind-icon">View<wbr>Modified<wbr>Files<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#labelnames" class="tsd-kind-icon">label<wbr>Names</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#localization" class="tsd-kind-icon">localization</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#suggestions" class="tsd-kind-icon">suggestions</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#getlanguage" class="tsd-kind-icon">get<wbr>Language</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#gitcommitdescriptionreducer" class="tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#reacttagdatareducer" class="tsd-kind-icon">react<wbr>Tag<wbr>Data<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#setcontextmenuidreducer" class="tsd-kind-icon">set<wbr>Context<wbr>Menu<wbr>IdReducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updatechangesareareducer" class="tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updateviewtreereducer" class="tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#viewmodifiedfilesreducer" class="tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#reacttagdatadefaultstate" class="tsd-kind-icon">React<wbr>Tag<wbr>Data<wbr>Default<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#setcontextmenuiddefaultstate" class="tsd-kind-icon">Set<wbr>Context<wbr>Menu<wbr>IdDefault<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#gitcommitdescriptiondefaultstate" class="tsd-kind-icon">git<wbr>Commit<wbr>Description<wbr>Default<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updatechangesareadefaultstate" class="tsd-kind-icon">update<wbr>Changes<wbr>Area<wbr>Default<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#updateviewtreedefaultstate" class="tsd-kind-icon">update<wbr>View<wbr>Tree<wbr>Default<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_src_renderer_reducers_commonreducers_redux_reducer_.html#viewmodifiedfilesdefaultstate" class="tsd-kind-icon">view<wbr>Modified<wbr>Files<wbr>Default<wbr>State</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

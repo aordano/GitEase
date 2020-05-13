@@ -43,7 +43,7 @@ import {
     UpdateCommitDescriptionElementWhatType,
     UpdateCommitDescriptionElementWhyType,
     UpdateCommitDescriptionElementCompletionStatusType
-} from '../types/constants.d';
+} from '../types/constants';
 
 import { ReactTagTagType, CompletionStatusType } from "../types"
 

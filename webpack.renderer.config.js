@@ -2,9 +2,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const Path = require("path");
-const Electron = require("electron")
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 
@@ -77,6 +75,13 @@ module.exports = merge.smart(baseConfig, {
         new HtmlWebpackPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+        }),
+        new TypedocWebpackPlugin({
+            name: 'GitEase',
+            mode: 'file',
+            theme: './typedoc-theme/',
+            includeDeclarations: false,
+            ignoreCompilerErrors: true,
         }),
     ]
 });

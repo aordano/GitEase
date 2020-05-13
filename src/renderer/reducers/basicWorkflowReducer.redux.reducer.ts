@@ -17,7 +17,7 @@ import {
     BASIC_WORKFLOW_COMMIT_AND_PUSH,
     COMMIT_SUCCESS_ALERT,
     COMMIT_ERROR_ALERT
-} from '../types/constants.d';
+} from '../types/constants';
 
 import {
     GitCommitType
